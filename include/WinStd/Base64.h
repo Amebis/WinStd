@@ -40,18 +40,46 @@ namespace winstd
     class base64_enc
     {
     public:
-        base64_enc() : num(0) {};
+        inline base64_enc() : num(0) {};
 
 
         ///
-        /// Encodes one block of information
+        /// Encodes one block of information, and _appends_ it to the output
         ///
         /// \param[out] out      Output
         /// \param[in ] data     Data to encode
         /// \param[in ] size     Length of `data` in bytes
         /// \param[in ] is_last  Is this the last block of data?
         ///
-        void encode(_Out_ std::string &out, _In_bytecount_(size) const void *data, _In_ size_t size, _In_opt_ bool is_last = true);
+        template<class _Elem, class _Traits, class _Ax>
+        inline void encode(_Out_ std::basic_string<_Elem, _Traits, _Ax> &out, _In_bytecount_(size) const void *data, _In_ size_t size, _In_opt_ bool is_last = true)
+        {
+            assert(data || !size);
+
+            size_t i = 0, j = 0;
+
+            // Convert data character by character.
+            for (;;) {
+                if (num >= 3) {
+                    encode(out, buf);
+                    num = 0;
+                    j += 4;
+                }
+
+                if (i >= size)
+                    break;
+
+                buf[num++] = ((unsigned char*)data)[i++];
+            }
+
+            // If this is the last block, flush the buffer.
+            if (is_last && num) {
+                encode(out, buf, num);
+                num = 0;
+                j += 4;
+            }
+        }
+
 
 
         ///
@@ -77,7 +105,8 @@ namespace winstd
 
 
     protected:
-        static inline void encode(_Inout_ std::string &out, _In_ const unsigned char buf[3])
+        template<class _Elem, class _Traits, class _Ax>
+        static inline void encode(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &out, _In_ const unsigned char buf[3])
         {
             out += lookup[                  buf[0] >> 2         ];
             out += lookup[((buf[0] << 4) | (buf[1] >> 4)) & 0x3f];
@@ -86,7 +115,8 @@ namespace winstd
         }
 
 
-        static inline void encode(_Inout_ std::string &out, _In_count_(size) const unsigned char buf[3], _In_ size_t size)
+        template<class _Elem, class _Traits, class _Ax>
+        static inline void encode(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &out, _In_count_(size) const unsigned char buf[3], _In_ size_t size)
         {
             if (size > 0) {
                 out += lookup[buf[0] >> 2];
@@ -126,14 +156,39 @@ namespace winstd
 
 
         ///
-        /// Decodes one block of information
+        /// Decodes one block of information, and _appends_ it to the output
         ///
         /// \param[out] out      Output
         /// \param[in ] data     Data to decode
         /// \param[in ] size     Length of `data` in bytes
         /// \param[in ] is_last  Was this the last block of data?
         ///
-        void decode(_Out_ std::vector<unsigned char> &out, _Out_ bool &is_last, _In_z_count_(size) const char *data, _In_ size_t size);
+        template <class T>
+        inline void decode(_Out_ std::vector<unsigned char> &out, _Out_ bool &is_last, _In_z_count_(size) const T *data, _In_ size_t size)
+        {
+            size_t i = 0, j = 0, nibbles;
+
+            is_last = false;
+
+            for (;;) {
+                if (num >= 4) {
+                    // Buffer full; decode it.
+                    nibbles = decode(out, buf);
+                    j += nibbles;
+                    num = 0;
+                    if (nibbles < 3) {
+                        is_last = true;
+                        break;
+                    }
+                }
+
+                if (i >= size || !data[i])
+                    break;
+
+                if ((buf[num] = lookup[(unsigned char)data[i++]]) != 255)
+                    num++;
+            }
+        }
 
 
         ///
