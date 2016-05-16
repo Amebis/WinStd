@@ -63,8 +63,6 @@ inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _
     return _vsnwprintf(str, capacity, format, arg);
 }
 
-#pragma warning(pop)
-
 
 ///
 /// Formats string using `printf()`.
@@ -99,6 +97,8 @@ inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _P
 
     return count;
 }
+
+#pragma warning(pop)
 
 
 ///
