@@ -197,6 +197,62 @@ namespace winstd
 
 
     ///
+    /// Deleter for unique_ptr using LocalFree
+    ///
+    template <class _Ty> struct LocalFree_delete
+    {
+        typedef LocalFree_delete<_Ty> _Myt;
+
+        ///
+        /// Default construct
+        ///
+        LocalFree_delete() {}
+
+        ///
+        /// Construct from another LocalFree_delete
+        ///
+        template <class _Ty2> LocalFree_delete(const LocalFree_delete<_Ty2>&) {}
+
+        ///
+        /// Delete a pointer
+        ///
+        void operator()(_Ty *_Ptr) const
+        {
+            LocalFree(_Ptr);
+        }
+    };
+
+    ///
+    /// Deleter for unique_ptr to array of unknown size using LocalFree
+    ///
+    template <class _Ty> struct LocalFree_delete<_Ty[]>
+    {
+        typedef LocalFree_delete<_Ty> _Myt;
+
+        ///
+        /// Default construct
+        ///
+        LocalFree_delete() {}
+
+        ///
+        /// Delete a pointer
+        ///
+        void operator()(_Ty *_Ptr) const
+        {
+            LocalFree(_Ptr);
+        }
+
+        ///
+        /// Delete a pointer of another type
+        ///
+        template<class _Other>
+        void operator()(_Other *) const
+        {
+            LocalFree(_Ptr);
+        }
+    };
+
+    ///
     /// \defgroup WinStdSysHandles System Handles
     /// Simplifies work with object handles of various type
     ///
