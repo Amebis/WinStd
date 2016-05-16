@@ -14,6 +14,9 @@
     <ClCompile Include="..\src\StdAfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Base64.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\StdAfx.h">
@@ -41,6 +44,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\WinStd\Sec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\WinStd\Base64.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

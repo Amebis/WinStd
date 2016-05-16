@@ -20,6 +20,7 @@
 
 #pragma once
 
+#include "../include/WinStd/Base64.h"
 #include "../include/WinStd/Crypt.h"
 #include "../include/WinStd/EAP.h"
 #include "../include/WinStd/Common.h"

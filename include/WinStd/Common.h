@@ -29,6 +29,18 @@
 #include <string>
 
 
+///
+/// Public function calling convention
+///
+#if defined(WINSTD_DLL)
+#define WINSTD_API      __declspec(dllexport)
+#elif defined(WINSTD_DLLIMP)
+#define WINSTD_API      __declspec(dllimport)
+#else
+#define WINSTD_API
+#endif
+
+
 #ifndef WINSTD_STACK_BUFFER_BYTES
 ///
 /// Size of the stack buffer in bytes used for initial system function call

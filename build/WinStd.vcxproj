@@ -72,6 +72,7 @@
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
   </PropertyGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Base64.cpp" />
     <ClCompile Include="..\src\StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -80,6 +81,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\WinStd\Base64.h" />
     <ClInclude Include="..\include\WinStd\Crypt.h" />
     <ClInclude Include="..\include\WinStd\EAP.h" />
     <ClInclude Include="..\include\WinStd\Common.h" />
