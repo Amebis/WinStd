@@ -115,6 +115,60 @@ inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _P
 
 
 ///
+/// Formats and sends a string to the debugger for display.
+///
+/// \sa [OutputDebugString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx)
+///
+inline VOID OutputDebugStrV(_In_ LPCSTR lpOutputString, _In_ va_list arg)
+{
+    std::string str;
+    vsprintf(str, lpOutputString, arg);
+    OutputDebugStringA(str.c_str());
+}
+
+
+///
+/// Formats and sends a string to the debugger for display.
+///
+/// \sa [OutputDebugString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx)
+///
+inline VOID OutputDebugStrV(_In_ LPCWSTR lpOutputString, _In_ va_list arg)
+{
+    std::wstring str;
+    vsprintf(str, lpOutputString, arg);
+    OutputDebugStringW(str.c_str());
+}
+
+
+///
+/// Formats and sends a string to the debugger for display.
+///
+/// \sa [OutputDebugString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx)
+///
+inline VOID OutputDebugStr(_In_ LPCSTR lpOutputString, ...)
+{
+    va_list arg;
+    va_start(arg, lpOutputString);
+    OutputDebugStrV(lpOutputString, arg);
+    va_end(arg);
+}
+
+
+///
+/// Formats and sends a string to the debugger for display.
+///
+/// \sa [OutputDebugString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx)
+///
+inline VOID OutputDebugStr(_In_ LPCWSTR lpOutputString, ...)
+{
+    va_list arg;
+    va_start(arg, lpOutputString);
+    OutputDebugStrV(lpOutputString, arg);
+    va_end(arg);
+}
+
+
+///
 /// Formats string using `printf()`.
 ///
 /// \param[out] str     Formatted string
@@ -525,6 +579,13 @@ namespace winstd
     typedef basic_string_printf<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>> wstring_printf;
 
 
+#ifdef _UNICODE
+    typedef wstring_printf tstring_printf;
+#else
+    typedef string_printf tstring_printf;
+#endif
+
+
     ///
     /// Base template class to support string formatting using `FormatMessage()` style templates
     ///
@@ -591,15 +652,25 @@ namespace winstd
         /// @}
     };
 
+
     ///
     /// Single-byte character implementation of a class to support string formatting using `FormatMessage()` style templates
     ///
     typedef basic_string_msg<char, std::char_traits<char>, std::allocator<char> > string_msg;
 
+
     ///
     /// Wide character implementation of a class to support string formatting using `FormatMessage()` style templates
     ///
     typedef basic_string_msg<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > wstring_msg;
+
+
+#ifdef _UNICODE
+    typedef wstring_msg tstring_msg;
+#else
+    typedef string_msg tstring_msg;
+#endif
+
 
     /// @}
 
