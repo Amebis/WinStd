@@ -75,7 +75,7 @@ inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
 ///
 /// \sa [CryptGetHashParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379947.aspx)
 ///
-inline BOOL CryptGetHashParam(_In_ HCRYPTHASH  hHash, _In_ DWORD dwParam, _Out_ std::vector<BYTE> &aData, _In_ DWORD dwFlags)
+inline BOOL CryptGetHashParam(_In_ HCRYPTHASH  hHash, _In_ DWORD dwParam, _Out_ std::vector<unsigned char> &aData, _In_ DWORD dwFlags)
 {
     DWORD dwHashSize;
 
@@ -95,7 +95,7 @@ inline BOOL CryptGetHashParam(_In_ HCRYPTHASH  hHash, _In_ DWORD dwParam, _Out_ 
 ///
 /// \sa [CryptExportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379931.aspx)
 ///
-inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<BYTE> &aData)
+inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<unsigned char> &aData)
 {
     DWORD dwKeyBLOBSize;
 
@@ -138,18 +138,18 @@ namespace winstd
         /// Creates the certificate context.
         ///
         /// \return
-        /// - TRUE when creation succeeds;
-        /// - FALSE when creation fails. For extended error information, call `GetLastError()`.
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
         /// \sa [CertCreateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376033.aspx)
         ///
-        inline BOOL create(_In_  DWORD dwCertEncodingType, _In_  const BYTE *pbCertEncoded, _In_  DWORD cbCertEncoded)
+        inline bool create(_In_  DWORD dwCertEncodingType, _In_  const unsigned char *pbCertEncoded, _In_  DWORD cbCertEncoded)
         {
             handle_type h = CertCreateCertificateContext(dwCertEncodingType, pbCertEncoded, cbCertEncoded);
             if (h) {
                 attach(h);
-                return TRUE;
+                return true;
             } else
-                return FALSE;
+                return false;
         }
 
     protected:
@@ -200,18 +200,18 @@ namespace winstd
         /// Creates the certificate chain context.
         ///
         /// \return
-        /// - TRUE when creation succeeds;
-        /// - FALSE when creation fails. For extended error information, call `GetLastError()`.
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
         /// \sa [CertGetCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376078.aspx)
         ///
-        inline BOOL create(_In_opt_ HCERTCHAINENGINE hChainEngine, _In_ PCCERT_CONTEXT pCertContext, _In_opt_ LPFILETIME pTime, _In_opt_ HCERTSTORE hAdditionalStore, _In_ PCERT_CHAIN_PARA pChainPara, _In_ DWORD dwFlags, __reserved LPVOID pvReserved)
+        inline bool create(_In_opt_ HCERTCHAINENGINE hChainEngine, _In_ PCCERT_CONTEXT pCertContext, _In_opt_ LPFILETIME pTime, _In_opt_ HCERTSTORE hAdditionalStore, _In_ PCERT_CHAIN_PARA pChainPara, _In_ DWORD dwFlags, __reserved LPVOID pvReserved)
         {
             handle_type h;
             if (CertGetCertificateChain(hChainEngine, pCertContext, pTime, hAdditionalStore, pChainPara, dwFlags, pvReserved, &h)) {
                 attach(h);
-                return TRUE;
+                return true;
             } else
-                return FALSE;
+                return false;
         }
 
     protected:
@@ -262,18 +262,18 @@ namespace winstd
         /// Opens the certificate store.
         ///
         /// \return
-        /// - TRUE when creation succeeds;
-        /// - FALSE when creation fails. For extended error information, call `GetLastError()`.
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
         /// \sa [CertOpenStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376559.aspx)
         ///
-        inline BOOL create(_In_ LPCSTR lpszStoreProvider, _In_ DWORD dwEncodingType, _In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ DWORD dwFlags, _In_opt_ const void *pvPara)
+        inline bool create(_In_ LPCSTR lpszStoreProvider, _In_ DWORD dwEncodingType, _In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ DWORD dwFlags, _In_opt_ const void *pvPara)
         {
             handle_type h = CertOpenStore(lpszStoreProvider, dwEncodingType, hCryptProv, dwFlags, pvPara);
             if (h) {
                 attach(h);
-                return TRUE;
+                return true;
             } else
-                return FALSE;
+                return false;
         }
 
     protected:
@@ -310,18 +310,18 @@ namespace winstd
         /// Acquires the cryptographic context.
         ///
         /// \return
-        /// - TRUE when creation succeeds;
-        /// - FALSE when creation fails. For extended error information, call `GetLastError()`.
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
         /// \sa [CryptAcquireContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379886.aspx)
         ///
-        inline BOOL create(_In_opt_ LPCTSTR szContainer, _In_opt_ LPCTSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags)
+        inline bool create(_In_opt_ LPCTSTR szContainer, _In_opt_ LPCTSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags)
         {
             handle_type h;
             if (CryptAcquireContext(&h, szContainer, szProvider, dwProvType, dwFlags)) {
                 attach(h);
-                return TRUE;
+                return true;
             } else
-                return FALSE;
+                return false;
         }
 
     protected:
@@ -358,18 +358,18 @@ namespace winstd
         /// Creates the hash context.
         ///
         /// \return
-        /// - TRUE when creation succeeds;
-        /// - FALSE when creation fails. For extended error information, call `GetLastError()`.
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
         /// \sa [CryptCreateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379908.aspx)
         ///
-        inline BOOL create(_In_ HCRYPTPROV  hProv, _In_ ALG_ID Algid, _In_ HCRYPTKEY hKey, _In_ DWORD dwFlags)
+        inline bool create(_In_ HCRYPTPROV  hProv, _In_ ALG_ID Algid, _In_ HCRYPTKEY hKey, _In_ DWORD dwFlags)
         {
             handle_type h;
             if (CryptCreateHash(hProv, Algid, hKey, dwFlags, &h)) {
                 attach(h);
-                return TRUE;
+                return true;
             } else
-                return FALSE;
+                return false;
         }
 
     protected:
@@ -422,14 +422,14 @@ namespace winstd
         ///
         /// \sa [CryptGenKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379941.aspx)
         ///
-        inline BOOL generate(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ DWORD dwFlags)
+        inline bool generate(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ DWORD dwFlags)
         {
             handle_type h;
             if (CryptGenKey(hProv, Algid, dwFlags, &h)) {
                 attach(h);
-                return TRUE;
+                return true;
             } else
-                return FALSE;
+                return false;
         }
 
         ///
@@ -437,14 +437,14 @@ namespace winstd
         ///
         /// \sa [CryptImportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380207.aspx)
         ///
-        inline BOOL import(_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) CONST BYTE *pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags)
+        inline bool import(_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) const unsigned char *pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags)
         {
             handle_type h;
             if (CryptImportKey(hProv, pbData, dwDataLen, hPubKey, dwFlags, &h)) {
                 attach(h);
-                return TRUE;
+                return true;
             } else
-                return FALSE;
+                return false;
         }
 
         ///
@@ -452,14 +452,14 @@ namespace winstd
         ///
         /// \sa [CryptImportPublicKeyInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380209.aspx)
         ///
-        inline BOOL import_public(_In_ HCRYPTPROV hCryptProv, _In_ DWORD dwCertEncodingType, _In_ PCERT_PUBLIC_KEY_INFO pInfo)
+        inline bool import_public(_In_ HCRYPTPROV hCryptProv, _In_ DWORD dwCertEncodingType, _In_ PCERT_PUBLIC_KEY_INFO pInfo)
         {
             handle_type h;
             if (CryptImportPublicKeyInfo(hCryptProv, dwCertEncodingType, pInfo, &h)) {
                 attach(h);
-                return TRUE;
+                return true;
             } else
-                return FALSE;
+                return false;
         }
 
     protected:

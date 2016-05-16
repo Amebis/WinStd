@@ -215,11 +215,11 @@ inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::wstring
 
 
 ///
-/// Reads bytes from a record stream field into a std::vector<BYTE> buffer.
+/// Reads bytes from a record stream field into a std::vector buffer.
 ///
 /// \sa [MsiRecordReadStream function](https://msdn.microsoft.com/en-us/library/aa370370.aspx)
 ///
-inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::vector<BYTE> &binData)
+inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::vector<unsigned char> &binData)
 {
     DWORD dwSize = 0;
     UINT uiResult;

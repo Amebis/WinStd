@@ -155,11 +155,11 @@ inline int GetWindowTextW(_In_ HWND hWnd, _Out_ std::wstring &sValue)
 
 
 ///
-/// Retrieves version information for the specified file and stores it in a std::string string.
+/// Retrieves version information for the specified file and stores it in a std::vector buffer.
 ///
 /// \sa [GetFileVersionInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms647003.aspx)
 ///
-inline BOOL GetFileVersionInfoA(_In_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<BYTE> &aValue)
+inline BOOL GetFileVersionInfoA(_In_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<unsigned char> &aValue)
 {
     // Get version info size.
     DWORD dwVerInfoSize = ::GetFileVersionInfoSizeA(lptstrFilename, &dwHandle);
@@ -173,11 +173,11 @@ inline BOOL GetFileVersionInfoA(_In_ LPCSTR lptstrFilename, __reserved DWORD dwH
 
 
 ///
-/// Retrieves version information for the specified file and stores it in a std::wstring string.
+/// Retrieves version information for the specified file and stores it in a std::vector buffer.
 ///
 /// \sa [GetFileVersionInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms647003.aspx)
 ///
-inline BOOL GetFileVersionInfoW(_In_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<BYTE> &aValue)
+inline BOOL GetFileVersionInfoW(_In_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<unsigned char> &aValue)
 {
     // Get version info size.
     DWORD dwVerInfoSize = ::GetFileVersionInfoSizeW(lptstrFilename, &dwHandle);
@@ -405,11 +405,11 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
 
 
 ///
-/// Retrieves the type and data for the specified value name associated with an open registry key and stores the data in a std::vector<BYTE> buffer.
+/// Retrieves the type and data for the specified value name associated with an open registry key and stores the data in a std::vector buffer.
 ///
 /// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
 ///
-inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<BYTE> &aData)
+inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<unsigned char> &aData)
 {
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
@@ -433,11 +433,11 @@ inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __r
 
 
 ///
-/// Retrieves the type and data for the specified value name associated with an open registry key and stores the data in a std::vector<BYTE> buffer.
+/// Retrieves the type and data for the specified value name associated with an open registry key and stores the data in a std::vector buffer.
 ///
 /// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
 ///
-inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<BYTE> &aData)
+inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<unsigned char> &aData)
 {
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
@@ -530,7 +530,7 @@ namespace winstd
     ///
     /// Module handle wrapper
     ///
-    class CAtlLibrary : public handle<HMODULE>
+    class library : public handle<HMODULE>
     {
     public:
         ///
@@ -538,7 +538,7 @@ namespace winstd
         ///
         /// \sa [FreeLibrary](https://msdn.microsoft.com/en-us/library/windows/desktop/ms683152.aspx)
         ///
-        virtual ~CAtlLibrary()
+        virtual ~library()
         {
             if (m_h)
                 FreeLibrary(m_h);
@@ -549,14 +549,14 @@ namespace winstd
         ///
         /// \sa [LoadLibraryEx](https://msdn.microsoft.com/en-us/library/windows/desktop/ms684179.aspx)
         ///
-        inline BOOL Load(_In_ LPCTSTR lpFileName, __reserved handle_type hFile, _In_ DWORD dwFlags)
+        inline bool Load(_In_ LPCTSTR lpFileName, __reserved handle_type hFile, _In_ DWORD dwFlags)
         {
             handle_type h = LoadLibraryEx(lpFileName, hFile, dwFlags);
             if (h) {
                 attach(h);
-                return TRUE;
+                return true;
             } else
-                return FALSE;
+                return false;
         }
 
     protected:

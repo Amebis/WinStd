@@ -380,15 +380,15 @@ namespace winstd
         /// \param[in] h  Object handle of existing object
         ///
         /// \return
-        /// - TRUE when duplication succeeds;
-        /// - FALSE when duplication fails. In case of failure obtaining the extended error information is object type specific (for example: `GetLastError()`).
+        /// - true when duplication succeeds;
+        /// - false when duplication fails. In case of failure obtaining the extended error information is object type specific (for example: `GetLastError()`).
         ///
         inline bool attach_duplicated(_In_opt_ handle_type h)
         {
             if (m_h)
                 free_internal();
 
-            return h ? (m_h = duplicate_internal(h)) != NULL : (m_h = NULL, TRUE);
+            return h ? (m_h = duplicate_internal(h)) != NULL : (m_h = NULL, true);
         }
 
         //
