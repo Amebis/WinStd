@@ -122,6 +122,13 @@ inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Pr
 
 namespace winstd
 {
+#ifdef _UNICODE
+    typedef std::wstring tstring;
+#else
+    typedef std::string tstring;
+#endif
+
+
     ///
     /// \defgroup WinStdSysHandles System Handles
     /// Simplifies work with object handles of various type
