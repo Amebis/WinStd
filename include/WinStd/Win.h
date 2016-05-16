@@ -1,5 +1,6 @@
 /*
     Copyright 1991-2016 Amebis
+    Copyright 2016 GÉANT
 
     This file is part of WinStd.
 
