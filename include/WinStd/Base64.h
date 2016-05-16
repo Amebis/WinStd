@@ -166,14 +166,14 @@ namespace winstd
         template <class T>
         inline void decode(_Out_ std::vector<unsigned char> &out, _Out_ bool &is_last, _In_z_count_(size) const T *data, _In_ size_t size)
         {
-            size_t i = 0, j = 0, nibbles;
+            size_t i = 0, j = 0;
 
             is_last = false;
 
             for (;;) {
                 if (num >= 4) {
                     // Buffer full; decode it.
-                    nibbles = decode(out, buf);
+                    size_t nibbles = decode(out, buf);
                     j += nibbles;
                     num = 0;
                     if (nibbles < 3) {
@@ -185,7 +185,8 @@ namespace winstd
                 if (i >= size || !data[i])
                     break;
 
-                if ((buf[num] = lookup[(unsigned char)data[i++]]) != 255)
+                int x = data[i++];
+                if ((buf[num] = x < _countof(lookup) ? lookup[x] : 255) != 255)
                     num++;
             }
         }
