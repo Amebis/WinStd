@@ -177,8 +177,6 @@ inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _
 template<class _Elem, class _Traits, class _Ax>
 inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg)
 {
-    assert(0); // TODO: Test this code.
-
     _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
 
     // Try with stack buffer first.
