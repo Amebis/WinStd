@@ -737,28 +737,180 @@ namespace winstd
     ///
     /// @{
 
+    // winstd::sanitizing_allocator::destroy() member generates _Ptr parameter not used warning for primitive datatypes _Ty.
+    #pragma warning(push)
+    #pragma warning(disable: 4100)
+
     ///
     /// An allocator template that sanitizes each memory block before it is destroyed or reallocated
     ///
     /// \note
-    /// sanitizing_allocator introduces a performance penalty. However, it provides an additional level of security.
+    /// `sanitizing_allocator` introduces a performance penalty. However, it provides an additional level of security.
     /// Use for security sensitive data memory storage only.
     ///
-    template <class _Ty>
-    class sanitizing_allocator : public std::allocator<_Ty> {
+    template<class _Ty>
+    class sanitizing_allocator : public std::_Allocator_base<_Ty>
+    {
     public:
+        typedef std::_Allocator_base<_Ty> _Mybase;
+        typedef typename _Mybase::value_type value_type;
+
+        typedef value_type _FARQ *pointer;
+        typedef value_type _FARQ& reference;
+        typedef const value_type _FARQ *const_pointer;
+        typedef const value_type _FARQ& const_reference;
+
+        typedef _SIZT size_type;
+        typedef _PDFT difference_type;
+
+
         ///
-        /// Sanitizes memory before freeing it
+        /// Convert this type to sanitizing_allocator<_Other>
         ///
-        /// \param[in] p  Pointer to heap memory block
+        template<class _Other>
+        struct rebind
+        {
+            typedef sanitizing_allocator<_Other> other;
+        };
+
+
         ///
-        void deallocate(_In_ pointer p, _In_ size_type count)
+        /// Return address of mutable _Val
+        ///
+        inline pointer address(_In_ reference _Val) const
+        {
+            return ((pointer) &(char&)_Val);
+        }
+
+
+        ///
+        /// Return address of nonmutable _Val
+        ///
+        inline const_pointer address(_In_ const_reference _Val) const
+        {
+            return ((const_pointer) &(char&)_Val);
+        }
+
+
+        ///
+        /// Construct default allocator
+        ///
+        inline sanitizing_allocator()
+        {
+        }
+
+
+        ///
+        /// Construct by copying
+        ///
+        inline sanitizing_allocator(_In_ const sanitizing_allocator<_Ty>&)
+        {
+        }
+
+
+        ///
+        /// Construct from a related allocator
+        template<class _Other>
+        inline sanitizing_allocator(_In_ const sanitizing_allocator<_Other>&)
+        {
+        }
+
+
+        ///
+        /// Assign from a related allocator
+        ///
+        template<class _Other>
+        inline sanitizing_allocator<_Ty>& operator=(_In_ const sanitizing_allocator<_Other>&)
+        {
+            return (*this);
+        }
+
+
+        ///
+        /// Deallocate object at _Ptr sanitizing its content first
+        ///
+        inline void deallocate(_In_ pointer _Ptr, _In_ size_type _Count)
         {
             // Sanitize then free.
-            SecureZeroMemory(p, sizeof(_Ty)*count);
-            std::allocator<_Ty>::deallocate(p, count);
+            SecureZeroMemory(_Ptr, sizeof(_Ty)*_Count);
+            ::operator delete(_Ptr);
+        }
+
+
+        ///
+        /// Allocate array of _Count elements
+        ///
+        inline pointer allocate(_In_ size_type _Count)
+        {
+            void *_Ptr = 0;
+
+            if (_Count <= 0)
+                _Count = 0;
+            else if (((_SIZT)(-1)/sizeof(_Ty) < _Count) || (_Ptr = ::operator new(_Count * sizeof(_Ty))) == 0)
+                _THROW_NCEE(bad_alloc, 0);
+
+            return ((_Ty _FARQ *)_Ptr);
+        }
+
+
+        ///
+        /// Allocate array of _Count elements
+        ///
+        inline pointer allocate(_In_ size_type _Count, _In_ const void _FARQ *)
+        {
+            return (allocate(_Count));
+        }
+
+
+        ///
+        /// Construct object at _Ptr with value _Val
+        ///
+        inline void construct(_In_ pointer _Ptr, _In_ const _Ty& _Val)
+        {
+            void _FARQ *_Vptr = _Ptr;
+            ::new (_Vptr)_Ty1(_STD forward<_Ty2>(_Val));
+        }
+
+
+        ///
+        /// Construct object at _Ptr with value _Val
+        ///
+        inline void construct(_In_ pointer _Ptr, _In_ _Ty&& _Val)
+        {
+            ::new ((void _FARQ *)_Ptr) _Ty(_STD forward<_Ty>(_Val));
+        }
+
+
+        ///
+        /// Construct object at _Ptr with value _Val
+        ///
+        template<class _Other>
+        inline void construct(_In_ pointer _Ptr, _In_ _Other&& _Val)
+        {
+            ::new ((void _FARQ *)_Ptr) _Ty(_STD forward<_Other>(_Val));
+        }
+
+
+        ///
+        /// Destroy object at _Ptr
+        ///
+        inline void destroy(_In_ pointer _Ptr)
+        {
+            _Ptr->~_Ty();
+        }
+
+
+        ///
+        /// Estimate maximum array size
+        ///
+        inline _SIZT max_size() const
+        {
+            _SIZT _Count = (_SIZT)(-1) / sizeof (_Ty);
+            return (0 < _Count ? _Count : 1);
         }
     };
+
+    #pragma warning(pop)
 
     /// @}
 }
