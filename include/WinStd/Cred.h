@@ -28,9 +28,9 @@ namespace winstd
 {
     template <class _Ty> struct CredFree_delete;
     template <class _Ty> struct CredFree_delete<_Ty[]>;
-    class credential;
 }
 
+inline BOOL CredEnumerate(_In_ LPCTSTR Filter, _In_ DWORD Flags, _Out_ DWORD *Count, _Out_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials);
 template<class _Elem, class _Traits, class _Ax> inline BOOL CredProtectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
 template<class _Elem, class _Traits, class _Ax> inline BOOL CredProtectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
 template<class _Elem, class _Traits, class _Ax> inline BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials);
@@ -98,36 +98,6 @@ namespace winstd
         void operator()(_Other *) const
         {
             CredFree(_Ptr);
-        }
-    };
-
-
-    ///
-    /// PCREDENTIAL wrapper class
-    ///
-    class credential : public handle<PCREDENTIAL>
-    {
-    public:
-        ///
-        /// Closes the credential.
-        ///
-        /// \sa [CredFree function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374796.aspx)
-        ///
-        virtual ~credential()
-        {
-            if (m_h)
-                CredFree(m_h);
-        }
-
-    protected:
-        ///
-        /// Closes the credential.
-        ///
-        /// \sa [CredFree function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374796.aspx)
-        ///
-        virtual void free_internal()
-        {
-            CredFree(m_h);
         }
     };
 
