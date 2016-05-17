@@ -39,11 +39,12 @@
 ///
 /// \sa [GetModuleFileName function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms683197.aspx)
 ///
-inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::string &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
-    CHAR szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+    _Elem szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
 
     // Try with stack buffer first.
     DWORD dwResult = ::GetModuleFileNameA(hModule, szBuffer, _countof(szBuffer));
@@ -52,9 +53,9 @@ inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::string &sVa
         sValue.assign(szBuffer, dwResult);
         return dwResult;
     } else {
-        for (DWORD dwCapacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR);; dwCapacity *= 2) {
+        for (DWORD dwCapacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem);; dwCapacity *= 2) {
             // Allocate on heap and retry.
-            auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[dwCapacity]);
+            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwCapacity]);
             dwResult = ::GetModuleFileNameA(hModule, szBuffer.get(), dwCapacity);
             if (dwResult < dwCapacity) {
                 sValue.assign(szBuffer.get(), dwResult);
@@ -70,11 +71,12 @@ inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::string &sVa
 ///
 /// \sa [GetModuleFileName function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms683197.aspx)
 ///
-inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::wstring &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
-    WCHAR szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+    _Elem szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
 
     // Try with stack buffer first.
     DWORD dwResult = ::GetModuleFileNameW(hModule, szBuffer, _countof(szBuffer));
@@ -83,9 +85,9 @@ inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::wstring &sV
         sValue.assign(szBuffer, dwResult);
         return dwResult;
     } else {
-        for (DWORD dwCapacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR);; dwCapacity *= 2) {
+        for (DWORD dwCapacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem);; dwCapacity *= 2) {
             // Allocate on heap and retry.
-            auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[dwCapacity]);
+            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwCapacity]);
             dwResult = ::GetModuleFileNameW(hModule, szBuffer.get(), dwCapacity);
             if (dwResult < dwCapacity) {
                 sValue.assign(szBuffer.get(), dwResult);
@@ -101,7 +103,8 @@ inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::wstring &sV
 ///
 /// \sa [GetWindowText function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633520.aspx)
 ///
-inline int GetWindowTextA(_In_ HWND hWnd, _Out_ std::string &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -110,14 +113,14 @@ inline int GetWindowTextA(_In_ HWND hWnd, _Out_ std::string &sValue)
     // Query the final string length first.
     iResult = ::GetWindowTextLengthA(hWnd);
     if (iResult > 0) {
-        if (++iResult < WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)) {
+        if (++iResult < WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)) {
             // Read string data to stack.
-            CHAR szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+            _Elem szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
             iResult = ::GetWindowTextA(hWnd, szBuffer, _countof(szBuffer));
             sValue.assign(szBuffer, iResult);
         } else {
             // Allocate buffer on heap and read the string data into it.
-            auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[++iResult]);
+            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++iResult]);
             iResult = ::GetWindowTextA(hWnd, szBuffer.get(), iResult);
             sValue.assign(szBuffer.get(), iResult);
         }
@@ -134,7 +137,8 @@ inline int GetWindowTextA(_In_ HWND hWnd, _Out_ std::string &sValue)
 ///
 /// \sa [GetWindowText function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633520.aspx)
 ///
-inline int GetWindowTextW(_In_ HWND hWnd, _Out_ std::wstring &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -143,14 +147,14 @@ inline int GetWindowTextW(_In_ HWND hWnd, _Out_ std::wstring &sValue)
     // Query the final string length first.
     iResult = ::GetWindowTextLengthW(hWnd);
     if (iResult > 0) {
-        if (++iResult < WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)) {
+        if (++iResult < WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)) {
             // Read string data to stack.
-            WCHAR szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+            _Elem szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
             iResult = ::GetWindowTextW(hWnd, szBuffer, _countof(szBuffer));
             sValue.assign(szBuffer, iResult);
         } else {
             // Allocate buffer on heap and read the string data into it.
-            auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[++iResult]);
+            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++iResult]);
             iResult = ::GetWindowTextW(hWnd, szBuffer.get(), iResult);
             sValue.assign(szBuffer.get(), iResult);
         }
@@ -167,7 +171,8 @@ inline int GetWindowTextW(_In_ HWND hWnd, _Out_ std::wstring &sValue)
 ///
 /// \sa [GetFileVersionInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms647003.aspx)
 ///
-inline BOOL GetFileVersionInfoA(_In_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<unsigned char> &aValue)
+template<class _Ty, class _Ax>
+inline BOOL GetFileVersionInfoA(_In_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -175,7 +180,7 @@ inline BOOL GetFileVersionInfoA(_In_ LPCSTR lptstrFilename, __reserved DWORD dwH
     DWORD dwVerInfoSize = ::GetFileVersionInfoSizeA(lptstrFilename, &dwHandle);
     if (dwVerInfoSize != 0) {
         // Read version info.
-        aValue.resize(dwVerInfoSize);
+        aValue.resize((dwVerInfoSize + sizeof(_Ty) - 1) / sizeof(_Ty));
         return ::GetFileVersionInfoA(lptstrFilename, dwHandle, dwVerInfoSize, aValue.data());
     } else
         return FALSE;
@@ -187,7 +192,8 @@ inline BOOL GetFileVersionInfoA(_In_ LPCSTR lptstrFilename, __reserved DWORD dwH
 ///
 /// \sa [GetFileVersionInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms647003.aspx)
 ///
-inline BOOL GetFileVersionInfoW(_In_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<unsigned char> &aValue)
+template<class _Ty, class _Ax>
+inline BOOL GetFileVersionInfoW(_In_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -195,7 +201,7 @@ inline BOOL GetFileVersionInfoW(_In_ LPCWSTR lptstrFilename, __reserved DWORD dw
     DWORD dwVerInfoSize = ::GetFileVersionInfoSizeW(lptstrFilename, &dwHandle);
     if (dwVerInfoSize != 0) {
         // Read version info.
-        aValue.resize(dwVerInfoSize);
+        aValue.resize((dwVerInfoSize + sizeof(_Ty) - 1) / sizeof(_Ty));
         return ::GetFileVersionInfoW(lptstrFilename, dwHandle, dwVerInfoSize, aValue.data());
     } else
         return FALSE;
@@ -207,13 +213,14 @@ inline BOOL GetFileVersionInfoW(_In_ LPCWSTR lptstrFilename, __reserved DWORD dw
 ///
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
-inline DWORD ExpandEnvironmentStringsW(_In_ LPCSTR lpSrc, std::string &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline DWORD ExpandEnvironmentStringsW(_In_ LPCSTR lpSrc, std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
     for (DWORD dwSizeOut = (DWORD)strlen(lpSrc) + 0x100;;) {
         DWORD dwSizeIn = dwSizeOut;
-        auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[dwSizeIn + 2]); // Note: ANSI version requires one extra char.
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSizeIn + 2]); // Note: ANSI version requires one extra char.
         dwSizeOut = ::ExpandEnvironmentStringsA(lpSrc, szBuffer.get(), dwSizeIn);
         if (dwSizeOut == 0) {
             // Error.
@@ -235,13 +242,14 @@ inline DWORD ExpandEnvironmentStringsW(_In_ LPCSTR lpSrc, std::string &sValue)
 ///
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
-inline DWORD ExpandEnvironmentStringsW(_In_ LPCWSTR lpSrc, std::wstring &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline DWORD ExpandEnvironmentStringsW(_In_ LPCWSTR lpSrc, std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
     for (DWORD dwSizeOut = (DWORD)wcslen(lpSrc) + 0x100;;) {
         DWORD dwSizeIn = dwSizeOut;
-        auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[dwSizeIn + 1]);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSizeIn + 1]);
         dwSizeOut = ::ExpandEnvironmentStringsW(lpSrc, szBuffer.get(), dwSizeIn);
         if (dwSizeOut == 0) {
             // Error.
@@ -264,7 +272,8 @@ inline DWORD ExpandEnvironmentStringsW(_In_ LPCWSTR lpSrc, std::wstring &sValue)
 /// \param[in ] lpGuid  Pointer to GUID
 /// \param[out] str     String to store the result to
 ///
-inline VOID GuidToString(_In_ LPCGUID lpGuid, _Out_ std::string &str)
+template<class _Elem, class _Traits, class _Ax>
+inline VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str)
 {
     assert(0); // TODO: Test this code.
 
@@ -283,7 +292,8 @@ inline VOID GuidToString(_In_ LPCGUID lpGuid, _Out_ std::string &str)
 /// \param[in ] lpGuid  Pointer to GUID
 /// \param[out] str     String to store the result to
 ///
-inline VOID GuidToString(_In_ LPCGUID lpGuid, _Out_ std::wstring &str)
+template<class _Elem, class _Traits, class _Ax>
+inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str)
 {
     assert(0); // TODO: Test this code.
 
@@ -294,6 +304,12 @@ inline VOID GuidToString(_In_ LPCGUID lpGuid, _Out_ std::wstring &str)
         lpGuid->Data4[0], lpGuid->Data4[1],
         lpGuid->Data4[2], lpGuid->Data4[3], lpGuid->Data4[4], lpGuid->Data4[5], lpGuid->Data4[6], lpGuid->Data4[7]);
 }
+
+#ifdef _UNICODE
+#define GuidToString GuidToStringW
+#else
+#define GuidToString GuidToStringA
+#endif
 
 
 ///
@@ -314,7 +330,8 @@ inline VOID GuidToString(_In_ LPCGUID lpGuid, _Out_ std::wstring &str)
 /// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
-inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::string &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -327,10 +344,10 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
     if (lResult == ERROR_SUCCESS) {
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ.
-            sValue.assign((CHAR*)aStackBuffer, dwSize / sizeof(CHAR));
+            sValue.assign((_Elem*)aStackBuffer, dwSize / sizeof(_Elem));
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Expand it from stack buffer.
-            if (::ExpandEnvironmentStringsW((const CHAR*)aStackBuffer, sValue) == 0)
+            if (::ExpandEnvironmentStringsW((const _Elem*)aStackBuffer, sValue) == 0)
                 lResult = ::GetLastError();
         } else {
             // The value is not a string type.
@@ -339,14 +356,14 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
     } else if (lResult == ERROR_MORE_DATA) {
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ. Read it now.
-            auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[dwSize / sizeof(CHAR)]);
+            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize / sizeof(_Elem)]);
             if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS)
-                sValue.assign(szBuffer.get(), dwSize / sizeof(CHAR));
+                sValue.assign(szBuffer.get(), dwSize / sizeof(_Elem));
             else
                 sValue.clear();
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Read it and expand environment variables.
-            auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[dwSize / sizeof(CHAR)]);
+            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize / sizeof(_Elem)]);
             if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS) {
                 if (::ExpandEnvironmentStringsW(szBuffer.get(), sValue) == 0)
                     lResult = ::GetLastError();
@@ -380,7 +397,8 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
 /// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
-inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::wstring &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -393,10 +411,10 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
     if (lResult == ERROR_SUCCESS) {
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ.
-            sValue.assign((WCHAR*)aStackBuffer, dwSize / sizeof(WCHAR));
+            sValue.assign((_Elem*)aStackBuffer, dwSize / sizeof(_Elem));
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Expand it from stack buffer.
-            if (::ExpandEnvironmentStringsW((const WCHAR*)aStackBuffer, sValue) == 0)
+            if (::ExpandEnvironmentStringsW((const _Elem*)aStackBuffer, sValue) == 0)
                 lResult = ::GetLastError();
         } else {
             // The value is not a string type.
@@ -405,14 +423,14 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
     } else if (lResult == ERROR_MORE_DATA) {
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ. Read it now.
-            auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[dwSize / sizeof(WCHAR)]);
+            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize / sizeof(_Elem)]);
             if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS)
-                sValue.assign(szBuffer.get(), dwSize / sizeof(WCHAR));
+                sValue.assign(szBuffer.get(), dwSize / sizeof(_Elem));
             else
                 sValue.clear();
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Read it and expand environment variables.
-            auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[dwSize / sizeof(WCHAR)]);
+            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize / sizeof(_Elem)]);
             if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS) {
                 if (::ExpandEnvironmentStringsW(szBuffer.get(), sValue) == 0)
                     lResult = ::GetLastError();
@@ -433,7 +451,8 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
 ///
 /// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
 ///
-inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<unsigned char> &aData)
+template<class _Ty, class _Ax>
+inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData)
 {
     assert(0); // TODO: Test this code.
 
@@ -444,12 +463,12 @@ inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __r
     // Try with stack buffer first.
     lResult = RegQueryValueExA(hKey, lpValueName, lpReserved, NULL, aStackBuffer, &dwSize);
     if (lResult == ERROR_SUCCESS) {
-        // Allocate buffer on heap, copy from stack buffer.
-        aData.resize(dwSize);
+        // Copy from stack buffer.
+        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
         memcpy(aData.data(), aStackBuffer, dwSize);
     } else if (lResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap and retry.
-        aData.resize(dwSize);
+        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
         if ((lResult = RegQueryValueExA(hKey, lpValueName, lpReserved, lpType, aData.data(), &dwSize)) != ERROR_SUCCESS)
             aData.clear();
     }
@@ -463,7 +482,8 @@ inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __r
 ///
 /// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
 ///
-inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<unsigned char> &aData)
+template<class _Ty, class _Ax>
+inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData)
 {
     assert(0); // TODO: Test this code.
 
@@ -474,12 +494,12 @@ inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_ LPCWSTR lpValueName, __
     // Try with stack buffer first.
     lResult = RegQueryValueExW(hKey, lpValueName, lpReserved, NULL, aStackBuffer, &dwSize);
     if (lResult == ERROR_SUCCESS) {
-        // Allocate buffer on heap, copy from stack buffer.
-        aData.resize(dwSize);
+        // Copy from stack buffer.
+        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
         memcpy(aData.data(), aStackBuffer, dwSize);
     } else if (lResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap and retry.
-        aData.resize(dwSize);
+        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
         if ((lResult = RegQueryValueExW(hKey, lpValueName, lpReserved, lpType, aData.data(), &dwSize)) != ERROR_SUCCESS)
             aData.clear();
     }
@@ -495,12 +515,13 @@ inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_ LPCWSTR lpValueName, __
 ///
 /// \sa [RegLoadMUIString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724890.aspx)
 ///
-inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_ LPCSTR pszValue, _Out_ std::string &sOut, _In_ DWORD Flags, _In_opt_ LPCSTR pszDirectory)
+template<class _Elem, class _Traits, class _Ax>
+inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_ LPCSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_ LPCSTR pszDirectory)
 {
     assert(0); // TODO: Test this code.
 
     LSTATUS lResult;
-    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize;
 
     Flags &= ~REG_MUI_STRING_TRUNCATE;
@@ -512,7 +533,7 @@ inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_ LPCSTR pszValue, _Out_
         sOut.assign(szStackBuffer, dwSize);
     } else if (lResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap and retry.
-        auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[dwSize + 1]);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize + 1]);
         sOut.assign(szBuffer.get(), (lResult = RegLoadMUIStringA(hKey, pszValue, szBuffer.get(), dwSize, &dwSize, Flags, pszDirectory)) == ERROR_SUCCESS ? dwSize : 0);
     }
 
@@ -525,12 +546,13 @@ inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_ LPCSTR pszValue, _Out_
 ///
 /// \sa [RegLoadMUIString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724890.aspx)
 ///
-inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_ LPCWSTR pszValue, _Out_ std::wstring &sOut, _In_ DWORD Flags, _In_opt_ LPCWSTR pszDirectory)
+template<class _Elem, class _Traits, class _Ax>
+inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_ LPCWSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_ LPCWSTR pszDirectory)
 {
     assert(0); // TODO: Test this code.
 
     LSTATUS lResult;
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize;
 
     Flags &= ~REG_MUI_STRING_TRUNCATE;
@@ -542,7 +564,7 @@ inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_ LPCWSTR pszValue, _Out
         sOut.assign(szStackBuffer, dwSize);
     } else if (lResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap and retry.
-        auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[dwSize + 1]);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize + 1]);
         sOut.assign(szBuffer.get(), (lResult = RegLoadMUIStringW(hKey, pszValue, szBuffer.get(), dwSize, &dwSize, Flags, pszDirectory)) == ERROR_SUCCESS ? dwSize : 0);
     }
 

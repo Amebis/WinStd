@@ -44,7 +44,8 @@ extern DWORD (WINAPI *pfnWlanReasonCodeToString)(__in DWORD dwReasonCode, __in D
 /// Since Wlanapi.dll is not always present, the \c pfnWlanReasonCodeToString pointer to \c WlanReasonCodeToString
 /// function must be loaded dynamically.
 ///
-inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::wstring &sValue, __reserved PVOID pReserved)
+template<class _Elem, class _Traits, class _Ax>
+inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved)
 {
     assert(0); // TODO: Test this code.
 
@@ -55,7 +56,7 @@ inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::wstring 
 
     for (;;) {
         // Increment size and allocate buffer.
-        auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[dwSize += 1024]);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize += 1024]);
 
         // Try!
         DWORD dwResult = ::pfnWlanReasonCodeToString(dwReasonCode, dwSize, szBuffer.get(), pReserved);

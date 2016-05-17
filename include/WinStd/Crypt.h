@@ -39,7 +39,8 @@
 ///
 /// \sa [CertGetNameString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376086.aspx)
 ///
-inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::string &sNameString)
+template<class _Elem, class _Traits, class _Ax>
+inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
 {
     assert(0); // TODO: Test this code.
 
@@ -47,7 +48,7 @@ inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
     DWORD dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
 
     // Allocate buffer on heap to format the string data into and read it.
-    auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[dwSize]);
+    auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize]);
     dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, szBuffer.get(), dwSize);
     sNameString.assign(szBuffer.get(), dwSize);
     return dwSize;
@@ -59,7 +60,8 @@ inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
 ///
 /// \sa [CertGetNameString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376086.aspx)
 ///
-inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::wstring &sNameString)
+template<class _Elem, class _Traits, class _Ax>
+inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
 {
     assert(0); // TODO: Test this code.
 
@@ -67,7 +69,7 @@ inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
     DWORD dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
 
     // Allocate buffer on heap to format the string data into and read it.
-    auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[dwSize]);
+    auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize]);
     dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, szBuffer.get(), dwSize);
     sNameString.assign(szBuffer.get(), dwSize);
     return dwSize;
@@ -79,14 +81,15 @@ inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
 ///
 /// \sa [CryptGetHashParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379947.aspx)
 ///
-inline BOOL CryptGetHashParam(_In_ HCRYPTHASH  hHash, _In_ DWORD dwParam, _Out_ std::vector<unsigned char> &aData, _In_ DWORD dwFlags)
+template<class _Ty, class _Ax>
+inline BOOL CryptGetHashParam(_In_ HCRYPTHASH  hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
 {
     assert(0); // TODO: Test this code.
 
     DWORD dwHashSize;
 
     if (CryptGetHashParam(hHash, dwParam, NULL, &dwHashSize, dwFlags)) {
-        aData.resize(dwHashSize);
+        aData.resize((dwHashSize + sizeof(_Ty) - 1) / sizeof(_Ty));
         if (CryptGetHashParam(hHash, dwParam, aData.data(), &dwHashSize, dwFlags))
             return TRUE;
     }
@@ -101,14 +104,15 @@ inline BOOL CryptGetHashParam(_In_ HCRYPTHASH  hHash, _In_ DWORD dwParam, _Out_ 
 ///
 /// \sa [CryptExportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379931.aspx)
 ///
-inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<unsigned char> &aData)
+template<class _Ty, class _Ax>
+inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData)
 {
     assert(0); // TODO: Test this code.
 
     DWORD dwKeyBLOBSize;
 
     if (CryptExportKey(hKey, hExpKey, dwBlobType, dwFlags, NULL, &dwKeyBLOBSize)) {
-        aData.resize(dwKeyBLOBSize);
+        aData.resize((dwKeyBLOBSize + sizeof(_Ty) - 1) / sizeof(_Ty));
         if (CryptExportKey(hKey, hExpKey, dwBlobType, dwFlags, aData.data(), &dwKeyBLOBSize))
             return TRUE;
     }

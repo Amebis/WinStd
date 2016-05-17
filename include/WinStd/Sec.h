@@ -36,11 +36,12 @@
 ///
 /// \sa [GetUserNameEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724435.aspx)
 ///
-BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::string &sName)
+template<class _Elem, class _Traits, class _Ax>
+BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sName)
 {
     assert(0); // TODO: Test this code.
 
-    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     ULONG ulSize = _countof(szStackBuffer);
 
     // Try with stack buffer first.
@@ -51,7 +52,7 @@ BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::string &
     } else {
         if (::GetLastError() == ERROR_MORE_DATA) {
             // Allocate buffer on heap and retry.
-            auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[ulSize]);
+            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[ulSize]);
             if (::GetUserNameExA(NameFormat, szBuffer.get(), &ulSize)) {
                 sName.assign(szBuffer.get(), ulSize);
                 return TRUE;
@@ -69,11 +70,12 @@ BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::string &
 ///
 /// \sa [GetUserNameEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724435.aspx)
 ///
-BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::wstring &sName)
+template<class _Elem, class _Traits, class _Ax>
+BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sName)
 {
     assert(0); // TODO: Test this code.
 
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     ULONG ulSize = _countof(szStackBuffer);
 
     // Try with stack buffer first.
@@ -84,7 +86,7 @@ BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::wstring 
     } else {
         if (::GetLastError() == ERROR_MORE_DATA) {
             // Allocate buffer on heap and retry.
-            auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[ulSize]);
+            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[ulSize]);
             if (::GetUserNameExW(NameFormat, szBuffer.get(), &ulSize)) {
                 sName.assign(szBuffer.get(), ulSize);
                 return TRUE;

@@ -224,6 +224,7 @@ namespace winstd
         }
     };
 
+
     ///
     /// Deleter for unique_ptr to array of unknown size using LocalFree
     ///
@@ -253,6 +254,7 @@ namespace winstd
             LocalFree(_Ptr);
         }
     };
+
 
     ///
     /// \defgroup WinStdSysHandles System Handles

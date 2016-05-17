@@ -39,11 +39,12 @@
 ///
 /// \sa [MsiGetProperty function](https://msdn.microsoft.com/en-us/library/aa370134.aspx)
 ///
-inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ std::string &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
-    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
 
@@ -55,7 +56,7 @@ inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ s
         return NO_ERROR;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to read the string data into and read it.
-        auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[++dwSize]);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
         uiResult = ::MsiGetPropertyA(hInstall, szName, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == NO_ERROR ? dwSize : 0);
         return uiResult;
@@ -71,11 +72,12 @@ inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ s
 ///
 /// \sa [MsiGetProperty function](https://msdn.microsoft.com/en-us/library/aa370134.aspx)
 ///
-inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ std::wstring &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
 
@@ -87,7 +89,7 @@ inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ 
         return NO_ERROR;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to read the string data into and read it.
-        auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[++dwSize]);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
         uiResult = ::MsiGetPropertyW(hInstall, szName, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == NO_ERROR ? dwSize : 0);
         return uiResult;
@@ -103,11 +105,12 @@ inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ 
 ///
 /// \sa [MsiRecordGetString function](https://msdn.microsoft.com/en-us/library/aa370368.aspx)
 ///
-inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::string &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
-    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
 
@@ -119,7 +122,7 @@ inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
         return NO_ERROR;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to read the string data into and read it.
-        auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[++dwSize]);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
         uiResult = ::MsiRecordGetStringA(hRecord, iField, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == NO_ERROR ? dwSize : 0);
         return uiResult;
@@ -135,11 +138,12 @@ inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 ///
 /// \sa [MsiRecordGetString function](https://msdn.microsoft.com/en-us/library/aa370368.aspx)
 ///
-inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::wstring &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
 
@@ -151,7 +155,7 @@ inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
         return NO_ERROR;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to read the string data into and read it.
-        auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[++dwSize]);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
         uiResult = ::MsiRecordGetStringW(hRecord, iField, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == NO_ERROR ? dwSize : 0);
         return uiResult;
@@ -167,11 +171,12 @@ inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 ///
 /// \sa [MsiFormatRecord function](https://msdn.microsoft.com/en-us/library/aa370109.aspx)
 ///
-inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::string &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
-    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
 
@@ -183,7 +188,7 @@ inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::string 
         return NO_ERROR;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[++dwSize]);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
         uiResult = ::MsiFormatRecordA(hInstall, hRecord, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == NO_ERROR ? dwSize : 0);
         return uiResult;
@@ -199,11 +204,12 @@ inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::string 
 ///
 /// \sa [MsiFormatRecord function](https://msdn.microsoft.com/en-us/library/aa370109.aspx)
 ///
-inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::wstring &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
 
@@ -215,7 +221,7 @@ inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::wstring
         return NO_ERROR;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[++dwSize]);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
         uiResult = ::MsiFormatRecordW(hInstall, hRecord, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == NO_ERROR ? dwSize : 0);
         return uiResult;
@@ -231,7 +237,8 @@ inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::wstring
 ///
 /// \sa [MsiRecordReadStream function](https://msdn.microsoft.com/en-us/library/aa370370.aspx)
 ///
-inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::vector<unsigned char> &binData)
+template<class _Ty, class _Ax>
+inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::vector<_Ty, _Ax> &binData)
 {
     assert(0); // TODO: Test this code.
 
@@ -241,7 +248,7 @@ inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
     // Query the actual data length first.
     uiResult = ::MsiRecordReadStream(hRecord, iField, NULL, &dwSize);
     if (uiResult == NO_ERROR) {
-        binData.resize(dwSize);
+        binData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
         return ::MsiRecordReadStream(hRecord, iField, (char*)binData.data(), &dwSize);
     } else {
         // Return error code.
@@ -255,11 +262,12 @@ inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 ///
 /// \sa [MsiGetTargetPath function](https://msdn.microsoft.com/en-us/library/aa370303.aspx)
 ///
-inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Out_ std::string &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
-    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
 
@@ -271,7 +279,7 @@ inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Ou
         return NO_ERROR;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[++dwSize]);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
         uiResult = ::MsiGetTargetPathA(hInstall, szFolder, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == NO_ERROR ? dwSize : 0);
         return uiResult;
@@ -287,11 +295,12 @@ inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Ou
 ///
 /// \sa [MsiGetTargetPath function](https://msdn.microsoft.com/en-us/library/aa370303.aspx)
 ///
-inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _Out_ std::wstring &sValue)
+template<class _Elem, class _Traits, class _Ax>
+inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
 
@@ -303,7 +312,7 @@ inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _O
         return NO_ERROR;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[++dwSize]);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
         uiResult = ::MsiGetTargetPathW(hInstall, szFolder, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == NO_ERROR ? dwSize : 0);
         return uiResult;

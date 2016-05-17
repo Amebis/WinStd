@@ -34,12 +34,13 @@
 ///
 /// \sa [PathCanonicalize function](https://msdn.microsoft.com/en-us/library/windows/desktop/bb773569.aspx)
 ///
-inline BOOL PathCanonicalizeA(__out std::string &sValue, __in LPCSTR pszPath)
+template<class _Elem, class _Traits, class _Ax>
+inline BOOL PathCanonicalizeA(__out std::basic_string<_Elem, _Traits, _Ax> &sValue, __in LPCSTR pszPath)
 {
     assert(0); // TODO: Test this code.
 
     // Allocate buffer on heap and read into it.
-    CHAR szBuffer[MAX_PATH + 1];
+    _Elem szBuffer[MAX_PATH + 1];
     BOOL bResult = ::PathCanonicalizeA(szBuffer, pszPath);
     sValue.assign(szBuffer, bResult ? MAX_PATH : 0);
     return bResult;
@@ -51,11 +52,12 @@ inline BOOL PathCanonicalizeA(__out std::string &sValue, __in LPCSTR pszPath)
 ///
 /// \sa [PathCanonicalize function](https://msdn.microsoft.com/en-us/library/windows/desktop/bb773569.aspx)
 ///
-inline BOOL PathCanonicalizeW(__out std::wstring &sValue, __in LPCWSTR pszPath)
+template<class _Elem, class _Traits, class _Ax>
+inline BOOL PathCanonicalizeW(__out std::basic_string<_Elem, _Traits, _Ax> &sValue, __in LPCWSTR pszPath)
 {
     assert(0); // TODO: Test this code.
 
-    WCHAR szBuffer[MAX_PATH + 1];
+    _Elem szBuffer[MAX_PATH + 1];
     BOOL bResult = ::PathCanonicalizeW(szBuffer, pszPath);
     sValue.assign(szBuffer, bResult ? MAX_PATH : 0);
     return bResult;
