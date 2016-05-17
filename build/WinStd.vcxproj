@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\WinStd\Base64.h" />
+    <ClInclude Include="..\include\WinStd\Cred.h" />
     <ClInclude Include="..\include\WinStd\Crypt.h" />
     <ClInclude Include="..\include\WinStd\EAP.h" />
     <ClInclude Include="..\include\WinStd\Common.h" />
