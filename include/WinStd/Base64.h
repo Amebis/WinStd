@@ -58,10 +58,13 @@ namespace winstd
 
             size_t i = 0, j = 0;
 
+            // Preallocate output
+            out.reserve(out.size() + enc_size(size));
+
             // Convert data character by character.
             for (;;) {
                 if (num >= 3) {
-                    encode(out, buf);
+                    encode(out);
                     num = 0;
                     j += 4;
                 }
@@ -74,7 +77,7 @@ namespace winstd
 
             // If this is the last block, flush the buffer.
             if (is_last && num) {
-                encode(out, buf, num);
+                encode(out, num);
                 num = 0;
                 j += 4;
             }
@@ -106,7 +109,7 @@ namespace winstd
 
     protected:
         template<class _Elem, class _Traits, class _Ax>
-        static inline void encode(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &out, _In_ const unsigned char buf[3])
+        inline void encode(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &out)
         {
             out += lookup[                  buf[0] >> 2         ];
             out += lookup[((buf[0] << 4) | (buf[1] >> 4)) & 0x3f];
@@ -116,7 +119,7 @@ namespace winstd
 
 
         template<class _Elem, class _Traits, class _Ax>
-        static inline void encode(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &out, _In_count_(size) const unsigned char buf[3], _In_ size_t size)
+        inline void encode(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &out, _In_ size_t size)
         {
             if (size > 0) {
                 out += lookup[buf[0] >> 2];
@@ -163,17 +166,24 @@ namespace winstd
         /// \param[in ] size     Length of `data` in bytes
         /// \param[in ] is_last  Was this the last block of data?
         ///
-        template <class T>
-        inline void decode(_Out_ std::vector<unsigned char> &out, _Out_ bool &is_last, _In_z_count_(size) const T *data, _In_ size_t size)
+        template<class _Ty, class _Ax, class _Tchr>
+        inline void decode(_Out_ std::vector<_Ty, _Ax> &out, _Out_ bool &is_last, _In_z_count_(size) const _Tchr *data, _In_ size_t size)
         {
             size_t i = 0, j = 0;
 
             is_last = false;
 
+            // Trim data size to first terminator.
+            for (size_t k = 0; k < size; k++)
+                if (!data[k]) { size = k; break; }
+
+            // Preallocate output
+            out.reserve(out.size() + dec_size(size));
+
             for (;;) {
                 if (num >= 4) {
                     // Buffer full; decode it.
-                    size_t nibbles = decode(out, buf);
+                    size_t nibbles = decode(out);
                     j += nibbles;
                     num = 0;
                     if (nibbles < 3) {
@@ -182,7 +192,7 @@ namespace winstd
                     }
                 }
 
-                if (i >= size || !data[i])
+                if (i >= size)
                     break;
 
                 int x = data[i++];
@@ -215,13 +225,14 @@ namespace winstd
 
 
     protected:
-        static inline size_t decode(_Inout_ std::vector<unsigned char> &out, _In_ const unsigned char buf[4])
+        template<class _Ty, class _Ax>
+        inline size_t decode(_Inout_ std::vector<_Ty, _Ax> &out)
         {
-            out.push_back((unsigned char)(((buf[0] << 2) | (buf[1] >> 4)) & 0xff));
+            out.push_back((_Ty)(((buf[0] << 2) | (buf[1] >> 4)) & 0xff));
             if (buf[2] < 64) {
-                out.push_back((unsigned char)(((buf[1] << 4) | (buf[2] >> 2)) & 0xff));
+                out.push_back((_Ty)(((buf[1] << 4) | (buf[2] >> 2)) & 0xff));
                 if (buf[3] < 64) {
-                    out.push_back((unsigned char)(((buf[2] << 6) | buf[3]) & 0xff));
+                    out.push_back((_Ty)(((buf[2] << 6) | buf[3]) & 0xff));
                     return 3;
                 } else
                     return 2;
