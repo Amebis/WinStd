@@ -18,15 +18,102 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
-
 #include <Windows.h>
 
-#include <assert.h>
 #include <stdarg.h>
 
-#include <memory>
 #include <string>
+
+inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg);
+inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg);
+template<class _Elem, class _Traits, class _Ax> inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg);
+template<class _Elem, class _Traits, class _Ax> inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...);
+inline VOID OutputDebugStrV(_In_ LPCSTR lpOutputString, _In_ va_list arg);
+inline VOID OutputDebugStrV(_In_ LPCWSTR lpOutputString, _In_ va_list arg);
+inline VOID OutputDebugStr(_In_ LPCSTR lpOutputString, ...);
+inline VOID OutputDebugStr(_In_ LPCWSTR lpOutputString, ...);
+namespace winstd
+{
+#ifdef _UNICODE
+    typedef std::wstring tstring;
+#else
+    typedef std::string tstring;
+#endif
+
+
+    template <class _Ty> struct LocalFree_delete;
+    template <class _Ty> struct LocalFree_delete<_Ty[]>;
+    template <class T> class handle;
+    template <class T> class dplhandle;
+    template<class _Elem, class _Traits = char_traits<_Elem>, class _Ax = allocator<_Elem> > class basic_string_printf;
+
+    ///
+    /// Single-byte character implementation of a class to support string formatting using `printf()` style templates
+    ///
+    typedef basic_string_printf<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > string_printf;
+
+    ///
+    /// Wide character implementation of a class to support string formatting using `printf()` style templates
+    ///
+    typedef basic_string_printf<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>> wstring_printf;
+
+#ifdef _UNICODE
+    typedef wstring_printf tstring_printf;
+#else
+    typedef string_printf tstring_printf;
+#endif
+
+    template<class _Elem, class _Traits = char_traits<_Elem>, class _Ax = allocator<_Elem> > class basic_string_msg;
+
+    ///
+    /// Single-byte character implementation of a class to support string formatting using `FormatMessage()` style templates
+    ///
+    typedef basic_string_msg<char, std::char_traits<char>, std::allocator<char> > string_msg;
+
+    ///
+    /// Wide character implementation of a class to support string formatting using `FormatMessage()` style templates
+    ///
+    typedef basic_string_msg<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > wstring_msg;
+
+#ifdef _UNICODE
+    typedef wstring_msg tstring_msg;
+#else
+    typedef string_msg tstring_msg;
+#endif
+
+    template<class _Ty> class sanitizing_allocator;
+    template<class _Ty> class sanitizing_vector;
+
+    ///
+    /// A sanitizing variant of std::string
+    ///
+    /// \note
+    /// `sanitizing_string` introduces a performance penalty. However, it provides an additional level of security.
+    /// Use for security sensitive data memory storage only.
+    ///
+    typedef std::basic_string<char, std::char_traits<char>, sanitizing_allocator<char> > sanitizing_string;
+
+    ///
+    /// A sanitizing variant of std::wstring
+    ///
+    /// \note
+    /// `sanitizing_wstring` introduces a performance penalty. However, it provides an additional level of security.
+    /// Use for security sensitive data memory storage only.
+    ///
+    typedef std::basic_string<wchar_t, std::char_traits<wchar_t>, sanitizing_allocator<wchar_t> > sanitizing_wstring;
+
+#ifdef _UNICODE
+    typedef sanitizing_wstring sanitizing_tstring;
+#else
+    typedef sanitizing_string sanitizing_tstring;
+#endif
+}
+
+#pragma once
+
+#include <assert.h>
+
+#include <memory>
 #include <vector>
 
 
@@ -118,6 +205,25 @@ inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _P
 
 
 ///
+/// Formats string using `printf()`.
+///
+/// \param[out] str     Formatted string
+/// \param[in ] format  String template using `printf()` style
+///
+/// \returns Number of characters in result.
+///
+template<class _Elem, class _Traits, class _Ax>
+inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...)
+{
+    va_list arg;
+    va_start(arg, format);
+    int res = vsprintf(str, format, arg);
+    va_end(arg);
+    return res;
+}
+
+
+///
 /// Formats and sends a string to the debugger for display.
 ///
 /// \sa [OutputDebugString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx)
@@ -171,34 +277,8 @@ inline VOID OutputDebugStr(_In_ LPCWSTR lpOutputString, ...)
 }
 
 
-///
-/// Formats string using `printf()`.
-///
-/// \param[out] str     Formatted string
-/// \param[in ] format  String template using `printf()` style
-///
-/// \returns Number of characters in result.
-///
-template<class _Elem, class _Traits, class _Ax>
-inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...)
-{
-    va_list arg;
-    va_start(arg, format);
-    int res = vsprintf(str, format, arg);
-    va_end(arg);
-    return res;
-}
-
-
 namespace winstd
 {
-#ifdef _UNICODE
-    typedef std::wstring tstring;
-#else
-    typedef std::string tstring;
-#endif
-
-
     ///
     /// Deleter for unique_ptr using LocalFree
     ///
@@ -268,7 +348,8 @@ namespace winstd
     ///
     /// It provides basic operators and methods common to all descendands of this class establishing a base to ease the replacement of native object handle type with classes in object-oriented approach.
     ///
-    template <class T> class handle
+    template <class T>
+    class handle
     {
     public:
         ///
@@ -564,7 +645,7 @@ namespace winstd
     ///
     /// Base template class to support string formatting using `printf()` style templates
     ///
-    template<class _Elem, class _Traits = char_traits<_Elem>, class _Ax = allocator<_Elem> >
+    template<class _Elem, class _Traits, class _Ax>
     class basic_string_printf : public std::basic_string<_Elem, _Traits, _Ax>
     {
     public:
@@ -629,28 +710,9 @@ namespace winstd
 
 
     ///
-    /// Single-byte character implementation of a class to support string formatting using `printf()` style templates
-    ///
-    typedef basic_string_printf<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > string_printf;
-
-
-    ///
-    /// Wide character implementation of a class to support string formatting using `printf()` style templates
-    ///
-    typedef basic_string_printf<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>> wstring_printf;
-
-
-#ifdef _UNICODE
-    typedef wstring_printf tstring_printf;
-#else
-    typedef string_printf tstring_printf;
-#endif
-
-
-    ///
     /// Base template class to support string formatting using `FormatMessage()` style templates
     ///
-    template<class _Elem, class _Traits = char_traits<_Elem>, class _Ax = allocator<_Elem> >
+    template<class _Elem, class _Traits, class _Ax>
     class basic_string_msg : public std::basic_string<_Elem, _Traits, _Ax>
     {
     public:
@@ -712,26 +774,6 @@ namespace winstd
 
         /// @}
     };
-
-
-    ///
-    /// Single-byte character implementation of a class to support string formatting using `FormatMessage()` style templates
-    ///
-    typedef basic_string_msg<char, std::char_traits<char>, std::allocator<char> > string_msg;
-
-
-    ///
-    /// Wide character implementation of a class to support string formatting using `FormatMessage()` style templates
-    ///
-    typedef basic_string_msg<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > wstring_msg;
-
-
-#ifdef _UNICODE
-    typedef wstring_msg tstring_msg;
-#else
-    typedef string_msg tstring_msg;
-#endif
-
 
     /// @}
 
@@ -927,33 +969,6 @@ namespace winstd
     class sanitizing_vector : public std::vector<_Ty, sanitizing_allocator<_Ty> >
     {
     };
-
-
-    ///
-    /// A sanitizing variant of std::string
-    ///
-    /// \note
-    /// `sanitizing_string` introduces a performance penalty. However, it provides an additional level of security.
-    /// Use for security sensitive data memory storage only.
-    ///
-    typedef std::basic_string<char, std::char_traits<char>, sanitizing_allocator<char> > sanitizing_string;
-
-
-    ///
-    /// A sanitizing variant of std::wstring
-    ///
-    /// \note
-    /// `sanitizing_wstring` introduces a performance penalty. However, it provides an additional level of security.
-    /// Use for security sensitive data memory storage only.
-    ///
-    typedef std::basic_string<wchar_t, std::char_traits<wchar_t>, sanitizing_allocator<wchar_t> > sanitizing_wstring;
-
-
-#ifdef _UNICODE
-    typedef sanitizing_wstring sanitizing_tstring;
-#else
-    typedef sanitizing_string sanitizing_tstring;
-#endif
 
     /// @}
 }

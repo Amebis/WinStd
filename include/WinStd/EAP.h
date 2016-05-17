@@ -18,9 +18,16 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+#include "Common.h"
 
 #include <eaptypes.h>
+
+namespace winstd
+{
+    class eap_attr;
+}
+
+#pragma once
 
 
 namespace winstd

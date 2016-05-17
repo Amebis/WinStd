@@ -18,14 +18,24 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
-
 #include "Common.h"
 
 #include <MsiQuery.h>
 
 #include <string>
 #include <vector>
+
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Ty, class _Ax> inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::vector<_Ty, _Ax> &binData);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+
+#pragma once
 
 
 ///

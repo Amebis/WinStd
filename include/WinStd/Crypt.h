@@ -18,14 +18,28 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
-
 #include "Common.h"
 
 #include <WinCrypt.h>
 
 #include <string>
 #include <vector>
+
+template<class _Elem, class _Traits, class _Ax> inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
+template<class _Elem, class _Traits, class _Ax> inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
+template<class _Ty, class _Ax> inline BOOL CryptGetHashParam(_In_ HCRYPTHASH  hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
+template<class _Ty, class _Ax> inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData);
+namespace winstd
+{
+    class cert_context;
+    class cert_chain_context;
+    class cert_store;
+    class crypt_prov;
+    class crypt_hash;
+    class crypt_key;
+}
+
+#pragma once
 
 
 ///

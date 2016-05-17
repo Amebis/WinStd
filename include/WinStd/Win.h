@@ -18,14 +18,44 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
-
 #include "Common.h"
 
 #include <Windows.h>
 
 #include <string>
 #include <vector>
+
+template<class _Elem, class _Traits, class _Ax> inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Ty, class _Ax> inline BOOL GetFileVersionInfoA(_In_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue);
+template<class _Ty, class _Ax> inline BOOL GetFileVersionInfoW(_In_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue);
+template<class _Elem, class _Traits, class _Ax> inline DWORD ExpandEnvironmentStringsW(_In_ LPCSTR lpSrc, std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline DWORD ExpandEnvironmentStringsW(_In_ LPCWSTR lpSrc, std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str);
+template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str);
+#ifdef _UNICODE
+#define GuidToString GuidToStringW
+#else
+#define GuidToString GuidToStringA
+#endif
+template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Ty, class _Ax> inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData);
+template<class _Ty, class _Ax> inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData);
+#if _WIN32_WINNT >= _WIN32_WINNT_VISTA
+template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_ LPCSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_ LPCSTR pszDirectory);
+template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_ LPCWSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_ LPCWSTR pszDirectory);
+#endif
+template<class _Elem, class _Traits, class _Ax> inline int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sMultiByteStr, _In_opt_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
+template<class _Elem, class _Traits, class _Ax> inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sWideCharStr);
+namespace winstd
+{
+    class library;
+}
+
+#pragma once
 
 
 ///
@@ -304,12 +334,6 @@ inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _T
         lpGuid->Data4[0], lpGuid->Data4[1],
         lpGuid->Data4[2], lpGuid->Data4[3], lpGuid->Data4[4], lpGuid->Data4[5], lpGuid->Data4[6], lpGuid->Data4[7]);
 }
-
-#ifdef _UNICODE
-#define GuidToString GuidToStringW
-#else
-#define GuidToString GuidToStringA
-#endif
 
 
 ///

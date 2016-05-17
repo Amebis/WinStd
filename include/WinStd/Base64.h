@@ -18,12 +18,18 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
-
 #include "Common.h"
 
 #include <string>
 #include <vector>
+
+namespace winstd
+{
+    class WINSTD_API base64_enc;
+    class WINSTD_API base64_dec;
+}
+
+#pragma once
 
 
 namespace winstd
@@ -37,7 +43,7 @@ namespace winstd
     ///
     /// Base64 encoding session
     ///
-    class base64_enc
+    class WINSTD_API base64_enc
     {
     public:
         inline base64_enc() : num(0) {};

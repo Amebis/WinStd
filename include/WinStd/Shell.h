@@ -18,10 +18,17 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "Common.h"
+
+#include <Shlwapi.h>
+
+#include <string>
+
+template<class _Elem, class _Traits, class _Ax> inline BOOL PathCanonicalizeA(__out std::basic_string<_Elem, _Traits, _Ax> &sValue, __in LPCSTR pszPath);
+template<class _Elem, class _Traits, class _Ax> inline BOOL PathCanonicalizeW(__out std::basic_string<_Elem, _Traits, _Ax> &sValue, __in LPCWSTR pszPath);
+
 #pragma once
 
-#include <atlstr.h>
-#include <Shlwapi.h>
 
 ///
 /// \defgroup WinStdShellWAPI Shell API

@@ -18,11 +18,16 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+#include "Common.h"
 
 #include <Security.h>
 
 #include <string>
+
+template<class _Elem, class _Traits, class _Ax> BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sName);
+template<class _Elem, class _Traits, class _Ax> BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sName);
+
+#pragma once
 
 
 ///

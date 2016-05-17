@@ -18,15 +18,19 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+#include "Common.h"
 
-#include <atlstr.h>
 #include <wlanapi.h>
 
+#include <string>
 
 // Must not statically link to Wlanapi.dll as it is not available on Windows
 // without a WLAN interface.
 extern DWORD (WINAPI *pfnWlanReasonCodeToString)(__in DWORD dwReasonCode, __in DWORD dwBufferSize, __in_ecount(dwBufferSize) PWCHAR pStringBuffer, __reserved PVOID pReserved);
+
+template<class _Elem, class _Traits, class _Ax> inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved);
+
+#pragma once
 
 
 ///
