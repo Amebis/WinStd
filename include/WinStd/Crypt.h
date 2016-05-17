@@ -41,6 +41,8 @@
 ///
 inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::string &sNameString)
 {
+    assert(0); // TODO: Test this code.
+
     // Query the final string length first.
     DWORD dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
 
@@ -59,6 +61,8 @@ inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
 ///
 inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::wstring &sNameString)
 {
+    assert(0); // TODO: Test this code.
+
     // Query the final string length first.
     DWORD dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
 
@@ -77,6 +81,8 @@ inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
 ///
 inline BOOL CryptGetHashParam(_In_ HCRYPTHASH  hHash, _In_ DWORD dwParam, _Out_ std::vector<unsigned char> &aData, _In_ DWORD dwFlags)
 {
+    assert(0); // TODO: Test this code.
+
     DWORD dwHashSize;
 
     if (CryptGetHashParam(hHash, dwParam, NULL, &dwHashSize, dwFlags)) {
@@ -97,6 +103,8 @@ inline BOOL CryptGetHashParam(_In_ HCRYPTHASH  hHash, _In_ DWORD dwParam, _Out_ 
 ///
 inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<unsigned char> &aData)
 {
+    assert(0); // TODO: Test this code.
+
     DWORD dwKeyBLOBSize;
 
     if (CryptExportKey(hKey, hExpKey, dwBlobType, dwFlags, NULL, &dwKeyBLOBSize)) {

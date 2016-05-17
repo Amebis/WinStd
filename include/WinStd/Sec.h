@@ -38,6 +38,8 @@
 ///
 BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::string &sName)
 {
+    assert(0); // TODO: Test this code.
+
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
     ULONG ulSize = _countof(szStackBuffer);
 
@@ -69,6 +71,8 @@ BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::string &
 ///
 BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::wstring &sName)
 {
+    assert(0); // TODO: Test this code.
+
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
     ULONG ulSize = _countof(szStackBuffer);
 

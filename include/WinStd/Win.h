@@ -41,6 +41,8 @@
 ///
 inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::string &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     CHAR szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
 
     // Try with stack buffer first.
@@ -70,6 +72,8 @@ inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::string &sVa
 ///
 inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::wstring &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     WCHAR szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
 
     // Try with stack buffer first.
@@ -99,6 +103,8 @@ inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::wstring &sV
 ///
 inline int GetWindowTextA(_In_ HWND hWnd, _Out_ std::string &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     int iResult;
 
     // Query the final string length first.
@@ -130,6 +136,8 @@ inline int GetWindowTextA(_In_ HWND hWnd, _Out_ std::string &sValue)
 ///
 inline int GetWindowTextW(_In_ HWND hWnd, _Out_ std::wstring &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     int iResult;
 
     // Query the final string length first.
@@ -161,6 +169,8 @@ inline int GetWindowTextW(_In_ HWND hWnd, _Out_ std::wstring &sValue)
 ///
 inline BOOL GetFileVersionInfoA(_In_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<unsigned char> &aValue)
 {
+    assert(0); // TODO: Test this code.
+
     // Get version info size.
     DWORD dwVerInfoSize = ::GetFileVersionInfoSizeA(lptstrFilename, &dwHandle);
     if (dwVerInfoSize != 0) {
@@ -179,6 +189,8 @@ inline BOOL GetFileVersionInfoA(_In_ LPCSTR lptstrFilename, __reserved DWORD dwH
 ///
 inline BOOL GetFileVersionInfoW(_In_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<unsigned char> &aValue)
 {
+    assert(0); // TODO: Test this code.
+
     // Get version info size.
     DWORD dwVerInfoSize = ::GetFileVersionInfoSizeW(lptstrFilename, &dwHandle);
     if (dwVerInfoSize != 0) {
@@ -197,6 +209,8 @@ inline BOOL GetFileVersionInfoW(_In_ LPCWSTR lptstrFilename, __reserved DWORD dw
 ///
 inline DWORD ExpandEnvironmentStringsW(_In_ LPCSTR lpSrc, std::string &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     for (DWORD dwSizeOut = (DWORD)strlen(lpSrc) + 0x100;;) {
         DWORD dwSizeIn = dwSizeOut;
         auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[dwSizeIn + 2]); // Note: ANSI version requires one extra char.
@@ -223,6 +237,8 @@ inline DWORD ExpandEnvironmentStringsW(_In_ LPCSTR lpSrc, std::string &sValue)
 ///
 inline DWORD ExpandEnvironmentStringsW(_In_ LPCWSTR lpSrc, std::wstring &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     for (DWORD dwSizeOut = (DWORD)wcslen(lpSrc) + 0x100;;) {
         DWORD dwSizeIn = dwSizeOut;
         auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[dwSizeIn + 1]);
@@ -250,6 +266,8 @@ inline DWORD ExpandEnvironmentStringsW(_In_ LPCWSTR lpSrc, std::wstring &sValue)
 ///
 inline VOID GuidToString(_In_ LPCGUID lpGuid, _Out_ std::string &str)
 {
+    assert(0); // TODO: Test this code.
+
     sprintf(str, "{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}",
         lpGuid->Data1,
         lpGuid->Data2,
@@ -267,6 +285,8 @@ inline VOID GuidToString(_In_ LPCGUID lpGuid, _Out_ std::string &str)
 ///
 inline VOID GuidToString(_In_ LPCGUID lpGuid, _Out_ std::wstring &str)
 {
+    assert(0); // TODO: Test this code.
+
     sprintf(str, L"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}",
         lpGuid->Data1,
         lpGuid->Data2,
@@ -296,6 +316,8 @@ inline VOID GuidToString(_In_ LPCGUID lpGuid, _Out_ std::wstring &str)
 ///
 inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::string &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = sizeof(aStackBuffer), dwType;
@@ -360,6 +382,8 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
 ///
 inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::wstring &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = sizeof(aStackBuffer), dwType;
@@ -411,6 +435,8 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
 ///
 inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<unsigned char> &aData)
 {
+    assert(0); // TODO: Test this code.
+
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = sizeof(aStackBuffer);
@@ -439,6 +465,8 @@ inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __r
 ///
 inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<unsigned char> &aData)
 {
+    assert(0); // TODO: Test this code.
+
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = sizeof(aStackBuffer);
@@ -469,6 +497,8 @@ inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_ LPCWSTR lpValueName, __
 ///
 inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_ LPCSTR pszValue, _Out_ std::string &sOut, _In_ DWORD Flags, _In_opt_ LPCSTR pszDirectory)
 {
+    assert(0); // TODO: Test this code.
+
     LSTATUS lResult;
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
     DWORD dwSize;
@@ -497,6 +527,8 @@ inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_ LPCSTR pszValue, _Out_
 ///
 inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_ LPCWSTR pszValue, _Out_ std::wstring &sOut, _In_ DWORD Flags, _In_opt_ LPCWSTR pszDirectory)
 {
+    assert(0); // TODO: Test this code.
+
     LSTATUS lResult;
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
     DWORD dwSize;

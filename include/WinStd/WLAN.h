@@ -46,6 +46,8 @@ extern DWORD (WINAPI *pfnWlanReasonCodeToString)(__in DWORD dwReasonCode, __in D
 ///
 inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::wstring &sValue, __reserved PVOID pReserved)
 {
+    assert(0); // TODO: Test this code.
+
     DWORD dwSize = 0;
 
     if (!::pfnWlanReasonCodeToString)

@@ -41,6 +41,8 @@
 ///
 inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ std::string &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
@@ -71,6 +73,8 @@ inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ s
 ///
 inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ std::wstring &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
@@ -101,6 +105,8 @@ inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ 
 ///
 inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::string &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
@@ -131,6 +137,8 @@ inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 ///
 inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::wstring &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
@@ -161,6 +169,8 @@ inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 ///
 inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::string &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
@@ -191,6 +201,8 @@ inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::string 
 ///
 inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::wstring &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
@@ -221,6 +233,8 @@ inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::wstring
 ///
 inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::vector<unsigned char> &binData)
 {
+    assert(0); // TODO: Test this code.
+
     DWORD dwSize = 0;
     UINT uiResult;
 
@@ -243,6 +257,8 @@ inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 ///
 inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Out_ std::string &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
@@ -273,6 +289,8 @@ inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Ou
 ///
 inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _Out_ std::wstring &sValue)
 {
+    assert(0); // TODO: Test this code.
+
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;

@@ -36,6 +36,8 @@
 ///
 inline BOOL PathCanonicalizeA(__out std::string &sValue, __in LPCSTR pszPath)
 {
+    assert(0); // TODO: Test this code.
+
     // Allocate buffer on heap and read into it.
     CHAR szBuffer[MAX_PATH + 1];
     BOOL bResult = ::PathCanonicalizeA(szBuffer, pszPath);
@@ -51,6 +53,8 @@ inline BOOL PathCanonicalizeA(__out std::string &sValue, __in LPCSTR pszPath)
 ///
 inline BOOL PathCanonicalizeW(__out std::wstring &sValue, __in LPCWSTR pszPath)
 {
+    assert(0); // TODO: Test this code.
+
     WCHAR szBuffer[MAX_PATH + 1];
     BOOL bResult = ::PathCanonicalizeW(szBuffer, pszPath);
     sValue.assign(szBuffer, bResult ? MAX_PATH : 0);
