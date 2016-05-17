@@ -27,6 +27,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 
 ///
@@ -913,6 +914,46 @@ namespace winstd
     };
 
     #pragma warning(pop)
+
+
+    ///
+    /// A sanitizing variant of std::vector
+    ///
+    /// \note
+    /// `sanitizing_vector` introduces a performance penalty. However, it provides an additional level of security.
+    /// Use for security sensitive data memory storage only.
+    ///
+    template<class _Ty>
+    class sanitizing_vector : public std::vector<_Ty, sanitizing_allocator<_Ty> >
+    {
+    };
+
+
+    ///
+    /// A sanitizing variant of std::string
+    ///
+    /// \note
+    /// `sanitizing_string` introduces a performance penalty. However, it provides an additional level of security.
+    /// Use for security sensitive data memory storage only.
+    ///
+    typedef std::basic_string<char, std::char_traits<char>, sanitizing_allocator<char> > sanitizing_string;
+
+
+    ///
+    /// A sanitizing variant of std::wstring
+    ///
+    /// \note
+    /// `sanitizing_wstring` introduces a performance penalty. However, it provides an additional level of security.
+    /// Use for security sensitive data memory storage only.
+    ///
+    typedef std::basic_string<wchar_t, std::char_traits<wchar_t>, sanitizing_allocator<wchar_t> > sanitizing_wstring;
+
+
+#ifdef _UNICODE
+    typedef sanitizing_wstring sanitizing_tstring;
+#else
+    typedef sanitizing_string sanitizing_tstring;
+#endif
 
     /// @}
 }
