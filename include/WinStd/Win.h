@@ -573,6 +573,60 @@ inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_ LPCWSTR pszValue, _Out
 
 #endif
 
+
+///
+/// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
+///
+/// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
+///
+template<class _Elem, class _Traits, class _Ax>
+inline int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sMultiByteStr, _In_opt_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
+{
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
+    if (cch) {
+        // Copy from stack.
+        sMultiByteStr.assign(szStackBuffer, cch);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[cch]);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.assign(szBuffer.get(), cch);
+    }
+
+    return cch;
+}
+
+
+///
+/// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
+///
+/// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
+///
+template<class _Elem, class _Traits, class _Ax>
+inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sWideCharStr)
+{
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
+    if (cch) {
+        // Copy from stack.
+        sWideCharStr.assign(szStackBuffer, cch);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
+        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[cch]);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szBuffer.get(), cch);
+        sWideCharStr.assign(szBuffer.get(), cch);
+    }
+
+    return cch;
+}
+
 /// @}
 
 
