@@ -18,6 +18,20 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
+///
+/// Public function calling convention
+///
+#ifndef WINSTD_API
+#if defined(WINSTD_DLL)
+#define WINSTD_API      __declspec(dllexport)
+#elif defined(WINSTD_DLLIMP)
+#define WINSTD_API      __declspec(dllimport)
+#else
+#define WINSTD_API
+#endif
+#endif
+
+
 #include <Windows.h>
 
 #include <stdarg.h>
@@ -115,18 +129,6 @@ namespace winstd
 
 #include <memory>
 #include <vector>
-
-
-///
-/// Public function calling convention
-///
-#if defined(WINSTD_DLL)
-#define WINSTD_API      __declspec(dllexport)
-#elif defined(WINSTD_DLLIMP)
-#define WINSTD_API      __declspec(dllimport)
-#else
-#define WINSTD_API
-#endif
 
 
 #ifndef WINSTD_STACK_BUFFER_BYTES
