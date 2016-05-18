@@ -544,7 +544,7 @@ namespace winstd
         ///
         /// Destroys the object
         ///
-        inline void Free()
+        inline void free()
         {
             if (m_h) {
                 free_internal();
