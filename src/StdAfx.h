@@ -21,6 +21,7 @@
 #pragma once
 
 #include "../include/WinStd/Base64.h"
+#include "../include/WinStd/COM.h"
 #include "../include/WinStd/Cred.h"
 #include "../include/WinStd/Crypt.h"
 #include "../include/WinStd/EAP.h"
