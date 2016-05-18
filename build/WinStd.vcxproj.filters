@@ -55,5 +55,8 @@
     <ClInclude Include="..\include\WinStd\COM.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\WinStd\ETW.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
