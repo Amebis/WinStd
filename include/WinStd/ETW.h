@@ -29,20 +29,7 @@
 namespace winstd
 {
     class event_provider;
-    class event_auto;
-    template <class T> class event_auto_res;
 }
-
-#define WINSTD_ETW_ERROR(ep, key, f, ...)      (ep).write                               (    TRACE_LEVEL_ERROR      , key, _T("  ") _T(__FUNCTION__) _T(" ") f, ##__VA_ARGS__)
-#define WINSTD_ETW_WARNING(ep, key, f, ...)    (ep).write                               (    TRACE_LEVEL_WARNING    , key, _T("  ") _T(__FUNCTION__) _T(" ") f, ##__VA_ARGS__)
-#define WINSTD_ETW_INFO(ep, key, f, ...)       (ep).write                               (    TRACE_LEVEL_INFORMATION, key, _T("  ") _T(__FUNCTION__) _T(" ") f, ##__VA_ARGS__)
-#define WINSTD_ETW_DEBUG(ep, key, f, ...)      (ep).write                               (    TRACE_LEVEL_VERBOSE    , key, _T("  ") _T(__FUNCTION__) _T(" ") f, ##__VA_ARGS__)
-#define WINSTD_ETW_FN_VOID_WARNING(ep, key)    winstd::event_auto            _event_auto(ep, TRACE_LEVEL_WARNING    , key, _T("->") _T(__FUNCTION__), _T("<-") _T(__FUNCTION__))
-#define WINSTD_ETW_FN_VOID_INFO(ep, key)       winstd::event_auto            _event_auto(ep, TRACE_LEVEL_INFORMATION, key, _T("->") _T(__FUNCTION__), _T("<-") _T(__FUNCTION__))
-#define WINSTD_ETW_FN_VOID_DEBUG(ep, key)      winstd::event_auto            _event_auto(ep, TRACE_LEVEL_VERBOSE    , key, _T("->") _T(__FUNCTION__), _T("<-") _T(__FUNCTION__))
-#define WINSTD_ETW_FN_WARNING(ep, key, res)    winstd::event_auto_res<DWORD> _event_auto(ep, TRACE_LEVEL_WARNING    , key, _T("->") _T(__FUNCTION__), _T("<-") _T(__FUNCTION__) _T(" (%ld)"), res)
-#define WINSTD_ETW_FN_INFO(ep, key, res)       winstd::event_auto_res<DWORD> _event_auto(ep, TRACE_LEVEL_INFORMATION, key, _T("->") _T(__FUNCTION__), _T("<-") _T(__FUNCTION__) _T(" (%ld)"), res)
-#define WINSTD_ETW_FN_DEBUG(ep, key, res)      winstd::event_auto_res<DWORD> _event_auto(ep, TRACE_LEVEL_VERBOSE    , key, _T("->") _T(__FUNCTION__), _T("<-") _T(__FUNCTION__) _T(" (%ld)"), res)
 
 #pragma once
 
@@ -94,18 +81,104 @@ namespace winstd
 
 
         ///
+        /// Writes an event.
+        ///
+        /// \return
+        /// - `ERROR_SUCCESS` when write succeeds;
+        /// - error code otherwise.
+        ///
+        /// \sa [EventWrite function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363752.aspx)
+        ///
+        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ ULONG UserDataCount = 0, _In_opt_count_(UserDataCount) PEVENT_DATA_DESCRIPTOR UserData = NULL)
+        {
+            assert(m_h);
+            return EventWrite(m_h, EventDescriptor, UserDataCount, UserData);
+        }
+
+
+        ///
+        /// Writes an event with no parameters.
+        ///
+        /// \return
+        /// - `ERROR_SUCCESS` when write succeeds;
+        /// - error code otherwise.
+        ///
+        /// \sa [EventWrite function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363752.aspx)
+        ///
+        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor)
+        {
+            assert(m_h);
+            return EventWrite(m_h, EventDescriptor, 0, NULL);
+        }
+
+
+        ///
+        /// Writes an event with one parameter.
+        ///
+        /// \return
+        /// - `ERROR_SUCCESS` when write succeeds;
+        /// - error code otherwise.
+        ///
+        /// \sa [EventWrite function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363752.aspx)
+        ///
+        template <class T1>
+        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ const T1 param1)
+        {
+            assert(m_h);
+            EVENT_DATA_DESCRIPTOR edd;
+            EventDataDescCreate(&edd, &param1, (ULONG)(sizeof(T1)));
+            return EventWrite(m_h, EventDescriptor, 1, &edd);
+        }
+
+
+        ///
+        /// Writes an event with one string as parameter.
+        ///
+        /// \return
+        /// - `ERROR_SUCCESS` when write succeeds;
+        /// - error code otherwise.
+        ///
+        /// \sa [EventWrite function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363752.aspx)
+        ///
+        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ const char *param1)
+        {
+            assert(m_h);
+            EVENT_DATA_DESCRIPTOR edd;
+            EventDataDescCreate(&edd, param1, (ULONG)(strlen(param1) + 1)*sizeof(*param1));
+            return EventWrite(m_h, EventDescriptor, 1, &edd);
+        }
+
+
+        ///
+        /// Writes an event with one wide string as parameter.
+        ///
+        /// \return
+        /// - `ERROR_SUCCESS` when write succeeds;
+        /// - error code otherwise.
+        ///
+        /// \sa [EventWrite function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363752.aspx)
+        ///
+        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ const wchar_t *param1)
+        {
+            assert(m_h);
+            EVENT_DATA_DESCRIPTOR edd;
+            EventDataDescCreate(&edd, param1, (ULONG)(wcslen(param1) + 1)*sizeof(*param1));
+            return EventWrite(m_h, EventDescriptor, 1, &edd);
+        }
+
+
+        ///
         /// Writes a string event.
         ///
         /// \return
-        /// - `ERROR_SUCCESS` when creation succeeds;
+        /// - `ERROR_SUCCESS` when write succeeds;
         /// - error code otherwise.
         ///
         /// \sa [EventWriteString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363750v=vs.85.aspx)
         ///
         inline ULONG write(_In_ UCHAR Level, _In_ ULONGLONG Keyword, _In_ PCWSTR String, ...)
         {
-            if (!m_h)
-                return ERROR_NOT_SUPPORTED;
+            assert(m_h);
 
             std::wstring msg;
             va_list arg;
@@ -161,63 +234,6 @@ namespace winstd
         }
     };
 
-    // winstd::event_auto actually and winstd::event_auto_res<> do not need an assignment operator actually, so the C4512 warning is safely ignored.
-    #pragma warning(push)
-    #pragma warning(disable: 4512)
-
-    ///
-    /// Helper class to write a string event on entry/exit of scope.
-    ///
-    /// It writes one string event at creation and another at destruction.
-    ///
-    class event_auto {
-    public:
-        inline event_auto(_In_ event_provider &ep, _In_ UCHAR Level, _In_ ULONGLONG Keyword, _In_z_ PCWSTR pszFormatEntry, _In_z_ PCWSTR pszFormatExit) :
-            m_ep(ep),
-            m_level(Level),
-            m_keyword(Keyword),
-            m_pszFormatExit(pszFormatExit)
-        {
-            m_ep.write(m_level, m_keyword, pszFormatEntry);
-        }
-
-        inline ~event_auto()
-        {
-            m_ep.write(m_level, m_keyword, m_pszFormatExit);
-        }
-
-    protected:
-        event_provider &m_ep;           // Reference to event provider in use
-        UCHAR          m_level;         // Event level
-        ULONGLONG      m_keyword;       // Event keyword mask
-        PCWSTR         m_pszFormatExit; // Pointer to string for string event at destruction
-    };
-
-
-    ///
-    /// Helper template to write a string event on entry/exit of scope with one parameter (typically result).
-    ///
-    /// It writes one string event at creation and another at destruction, with allowing one sprintf type parameter for string event at destruction.
-    ///
-    template <class T>
-    class event_auto_res : public event_auto {
-    public:
-        inline event_auto_res(_In_ event_provider &ep, _In_ UCHAR Level, _In_ ULONGLONG Keyword, _In_z_ PCWSTR pszFormatEntry, _In_z_ PCWSTR pszFormatExit, _In_ T &tResult) :
-            m_tResult(tResult),
-            event_auto(ep, Level, Keyword, pszFormatEntry, pszFormatExit)
-        {
-        }
-
-        inline ~event_auto_res()
-        {
-            m_ep.write(m_level, m_keyword, m_pszFormatExit, m_tResult);
-        }
-
-    protected:
-        T &m_tResult;   // Parameter for string event at destruction.
-    };
-
-    #pragma warning(pop)
 
     /// @}
 }
