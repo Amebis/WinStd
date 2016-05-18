@@ -45,7 +45,7 @@ namespace winstd
     template <class _Ty> struct LocalFree_delete<_Ty[]>;
     template <class T> class handle;
     template <class T> class dplhandle;
-    template<class _Elem, class _Traits = char_traits<_Elem>, class _Ax = allocator<_Elem> > class basic_string_printf;
+    template<class _Elem, class _Traits = std::char_traits<_Elem>, class _Ax = std::allocator<_Elem> > class basic_string_printf;
 
     ///
     /// Single-byte character implementation of a class to support string formatting using `printf()` style templates
@@ -63,7 +63,7 @@ namespace winstd
     typedef string_printf tstring_printf;
 #endif
 
-    template<class _Elem, class _Traits = char_traits<_Elem>, class _Ax = allocator<_Elem> > class basic_string_msg;
+    template<class _Elem, class _Traits = std::char_traits<_Elem>, class _Ax = std::allocator<_Elem> > class basic_string_msg;
 
     ///
     /// Single-byte character implementation of a class to support string formatting using `FormatMessage()` style templates
