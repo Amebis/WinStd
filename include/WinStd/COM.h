@@ -44,7 +44,6 @@ namespace winstd
     class com_obj : public handle<T>
     {
     public:
-
         ///
         /// Initializes a new class instance with the object set to NULL.
         ///

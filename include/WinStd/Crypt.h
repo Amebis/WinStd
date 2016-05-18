@@ -166,6 +166,7 @@ namespace winstd
         /// \return
         /// - true when creation succeeds;
         /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
         /// \sa [CertCreateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376033.aspx)
         ///
         inline bool create(_In_  DWORD dwCertEncodingType, _In_  const unsigned char *pbCertEncoded, _In_  DWORD cbCertEncoded)
@@ -228,6 +229,7 @@ namespace winstd
         /// \return
         /// - true when creation succeeds;
         /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
         /// \sa [CertGetCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376078.aspx)
         ///
         inline bool create(_In_opt_ HCERTCHAINENGINE hChainEngine, _In_ PCCERT_CONTEXT pCertContext, _In_opt_ LPFILETIME pTime, _In_opt_ HCERTSTORE hAdditionalStore, _In_ PCERT_CHAIN_PARA pChainPara, _In_ DWORD dwFlags, __reserved LPVOID pvReserved)
@@ -290,6 +292,7 @@ namespace winstd
         /// \return
         /// - true when creation succeeds;
         /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
         /// \sa [CertOpenStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376559.aspx)
         ///
         inline bool create(_In_ LPCSTR lpszStoreProvider, _In_ DWORD dwEncodingType, _In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ DWORD dwFlags, _In_opt_ const void *pvPara)
@@ -338,6 +341,7 @@ namespace winstd
         /// \return
         /// - true when creation succeeds;
         /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
         /// \sa [CryptAcquireContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379886.aspx)
         ///
         inline bool create(_In_opt_ LPCTSTR szContainer, _In_opt_ LPCTSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags)
@@ -386,6 +390,7 @@ namespace winstd
         /// \return
         /// - true when creation succeeds;
         /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
         /// \sa [CryptCreateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379908.aspx)
         ///
         inline bool create(_In_ HCRYPTPROV  hProv, _In_ ALG_ID Algid, _In_ HCRYPTKEY hKey, _In_ DWORD dwFlags)
