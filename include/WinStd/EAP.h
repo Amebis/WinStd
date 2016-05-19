@@ -24,7 +24,7 @@
 
 namespace winstd
 {
-    class eap_attr;
+    class WINSTD_API eap_attr;
 }
 
 #pragma once
@@ -41,7 +41,7 @@ namespace winstd
     ///
     /// EAP_ATTRIBUTE wrapper class
     ///
-    class eap_attr : public EAP_ATTRIBUTE
+    class WINSTD_API eap_attr : public EAP_ATTRIBUTE
     {
     public:
         ///

@@ -31,12 +31,12 @@ template<class _Ty, class _Ax> inline BOOL CryptGetHashParam(_In_ HCRYPTHASH  hH
 template<class _Ty, class _Ax> inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData);
 namespace winstd
 {
-    class cert_context;
-    class cert_chain_context;
-    class cert_store;
-    class crypt_prov;
-    class crypt_hash;
-    class crypt_key;
+    class WINSTD_API cert_context;
+    class WINSTD_API cert_chain_context;
+    class WINSTD_API cert_store;
+    class WINSTD_API crypt_prov;
+    class WINSTD_API crypt_hash;
+    class WINSTD_API crypt_key;
 }
 
 #pragma once
@@ -146,7 +146,7 @@ namespace winstd
     ///
     /// PCCERT_CONTEXT wrapper class
     ///
-    class cert_context : public dplhandle<PCCERT_CONTEXT>
+    class WINSTD_API cert_context : public dplhandle<PCCERT_CONTEXT>
     {
     public:
         ///
@@ -209,7 +209,7 @@ namespace winstd
     ///
     /// PCCERT_CHAIN_CONTEXT wrapper class
     ///
-    class cert_chain_context : public dplhandle<PCCERT_CHAIN_CONTEXT>
+    class WINSTD_API cert_chain_context : public dplhandle<PCCERT_CHAIN_CONTEXT>
     {
     public:
         ///
@@ -272,7 +272,7 @@ namespace winstd
     ///
     /// HCERTSTORE wrapper class
     ///
-    class cert_store : public handle<HCERTSTORE>
+    class WINSTD_API cert_store : public handle<HCERTSTORE>
     {
     public:
         ///
@@ -321,7 +321,7 @@ namespace winstd
     ///
     /// HCRYPTPROV wrapper class
     ///
-    class crypt_prov : public handle<HCRYPTPROV>
+    class WINSTD_API crypt_prov : public handle<HCRYPTPROV>
     {
     public:
         ///
@@ -370,7 +370,7 @@ namespace winstd
     ///
     /// HCRYPTHASH wrapper class
     ///
-    class crypt_hash : public dplhandle<HCRYPTHASH>
+    class WINSTD_API crypt_hash : public dplhandle<HCRYPTHASH>
     {
     public:
         ///
@@ -434,7 +434,7 @@ namespace winstd
     ///
     /// HCRYPTKEY wrapper class
     ///
-    class crypt_key : public dplhandle<HCRYPTKEY>
+    class WINSTD_API crypt_key : public dplhandle<HCRYPTKEY>
     {
     public:
         ///
