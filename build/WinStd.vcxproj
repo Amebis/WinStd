@@ -73,6 +73,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Base64.cpp" />
+    <ClCompile Include="..\src\ETW.cpp" />
     <ClCompile Include="..\src\StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

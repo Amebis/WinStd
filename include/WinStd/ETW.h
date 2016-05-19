@@ -25,10 +25,12 @@
 #include <stdarg.h>
 
 #include <string>
+#include <vector>
 
 namespace winstd
 {
-    class event_provider;
+    class WINSTD_API event_data;
+    class WINSTD_API event_provider;
 }
 
 #pragma once
@@ -44,9 +46,79 @@ namespace winstd
 
 
     ///
+    /// EVENT_DATA_DESCRIPTOR wrapper
+    ///
+    class WINSTD_API event_data : public EVENT_DATA_DESCRIPTOR
+    {
+    public:
+        ///
+        /// Construct empty class.
+        ///
+        inline event_data()
+        {
+            Ptr      = 0;
+            Size     = 0;
+            Reserved = 0;
+        }
+
+
+        ///
+        /// Template to construct class with generic data.
+        ///
+        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        template<class T>
+        inline event_data(_In_ const T &data)
+        {
+            EventDataDescCreate(this, &data, (ULONG)(sizeof(T)));
+        }
+
+
+        ///
+        /// Construct class with string.
+        ///
+        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        inline event_data(_In_ const char *data)
+        {
+            EventDataDescCreate(this, data, (ULONG)((strlen(data) + 1) * sizeof(*data)));
+        }
+
+
+        ///
+        /// Construct class with wide string.
+        ///
+        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        inline event_data(_In_ const wchar_t *data)
+        {
+            EventDataDescCreate(this, data, (ULONG)((wcslen(data) + 1) * sizeof(*data)));
+        }
+
+
+        ///
+        /// Template to construct class with string.
+        ///
+        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        template<class _Elem, class _Traits, class _Ax>
+        inline event_data(_In_ const std::basic_string<_Elem, _Traits, _Ax> &data)
+        {
+            EventDataDescCreate(this, data.c_str(), (ULONG)((data.length() + 1) * sizeof(_Elem)));
+        }
+
+
+        ///
+        /// Blank event data used as terminator.
+        ///
+        static const event_data blank;
+    };
+
+
+    ///
     /// ETW event provider
     ///
-    class event_provider : public handle<REGHANDLE>
+    class WINSTD_API event_provider : public handle<REGHANDLE>
     {
     public:
         ///
@@ -81,22 +153,6 @@ namespace winstd
 
 
         ///
-        /// Writes an event.
-        ///
-        /// \return
-        /// - `ERROR_SUCCESS` when write succeeds;
-        /// - error code otherwise.
-        ///
-        /// \sa [EventWrite function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363752.aspx)
-        ///
-        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ ULONG UserDataCount = 0, _In_opt_count_(UserDataCount) PEVENT_DATA_DESCRIPTOR UserData = NULL)
-        {
-            assert(m_h);
-            return EventWrite(m_h, EventDescriptor, UserDataCount, UserData);
-        }
-
-
-        ///
         /// Writes an event with no parameters.
         ///
         /// \return
@@ -113,7 +169,7 @@ namespace winstd
 
 
         ///
-        /// Writes an event with one parameter.
+        /// Writes an event with parameters stored in array.
         ///
         /// \return
         /// - `ERROR_SUCCESS` when write succeeds;
@@ -121,18 +177,15 @@ namespace winstd
         ///
         /// \sa [EventWrite function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363752.aspx)
         ///
-        template <class T1>
-        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ const T1 param1)
+        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ ULONG UserDataCount = 0, _In_opt_count_(UserDataCount) PEVENT_DATA_DESCRIPTOR UserData = NULL)
         {
             assert(m_h);
-            EVENT_DATA_DESCRIPTOR edd;
-            EventDataDescCreate(&edd, &param1, (ULONG)(sizeof(T1)));
-            return EventWrite(m_h, EventDescriptor, 1, &edd);
+            return EventWrite(m_h, EventDescriptor, UserDataCount, UserData);
         }
 
 
         ///
-        /// Writes an event with one string as parameter.
+        /// Writes an event with one or more parameter.
         ///
         /// \return
         /// - `ERROR_SUCCESS` when write succeeds;
@@ -140,30 +193,33 @@ namespace winstd
         ///
         /// \sa [EventWrite function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363752.aspx)
         ///
-        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ const char *param1)
+        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ const EVENT_DATA_DESCRIPTOR &param1, ...)
         {
             assert(m_h);
-            EVENT_DATA_DESCRIPTOR edd;
-            EventDataDescCreate(&edd, param1, (ULONG)(strlen(param1) + 1)*sizeof(*param1));
-            return EventWrite(m_h, EventDescriptor, 1, &edd);
-        }
 
+            va_list arg;
+            std::vector<EVENT_DATA_DESCRIPTOR> params;
+            ULONG param_count;
 
-        ///
-        /// Writes an event with one wide string as parameter.
-        ///
-        /// \return
-        /// - `ERROR_SUCCESS` when write succeeds;
-        /// - error code otherwise.
-        ///
-        /// \sa [EventWrite function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363752.aspx)
-        ///
-        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ const wchar_t *param1)
-        {
-            assert(m_h);
-            EVENT_DATA_DESCRIPTOR edd;
-            EventDataDescCreate(&edd, param1, (ULONG)(wcslen(param1) + 1)*sizeof(*param1));
-            return EventWrite(m_h, EventDescriptor, 1, &edd);
+            // Preallocate array.
+            va_start(arg, param1);
+            for (param_count = 1;; param_count++) {
+                EVENT_DATA_DESCRIPTOR &p = va_arg(arg, EVENT_DATA_DESCRIPTOR);
+                if (!p.Ptr) break;
+            }
+            va_end(arg);
+            params.reserve(param_count);
+
+            // Copy parameters to array.
+            va_start(arg, param1);
+            for (params.push_back(param1);;) {
+                EVENT_DATA_DESCRIPTOR &p = va_arg(arg, EVENT_DATA_DESCRIPTOR);
+                if (!p.Ptr) break;
+                params.push_back(p);
+            }
+            va_end(arg);
+
+            return EventWrite(m_h, EventDescriptor, param_count, params.data());
         }
 
 
