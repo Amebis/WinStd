@@ -31,6 +31,9 @@ namespace winstd
 {
     class WINSTD_API event_data;
     class WINSTD_API event_provider;
+
+    template <const EVENT_DESCRIPTOR *event_cons, const EVENT_DESCRIPTOR *event_dest> class event_fn_auto;
+    template<class T, const EVENT_DESCRIPTOR *event_cons, const EVENT_DESCRIPTOR *event_dest> class event_fn_auto_ret;
 }
 
 #pragma once
@@ -81,7 +84,10 @@ namespace winstd
         ///
         inline event_data(_In_ const char *data)
         {
-            EventDataDescCreate(this, data, (ULONG)((strlen(data) + 1) * sizeof(*data)));
+            if (data)
+                EventDataDescCreate(this, data, (ULONG)((strlen(data) + 1) * sizeof(*data)));
+            else
+                EventDataDescCreate(this, NULL, 0);
         }
 
 
@@ -92,7 +98,10 @@ namespace winstd
         ///
         inline event_data(_In_ const wchar_t *data)
         {
-            EventDataDescCreate(this, data, (ULONG)((wcslen(data) + 1) * sizeof(*data)));
+            if (data)
+                EventDataDescCreate(this, data, (ULONG)((wcslen(data) + 1) * sizeof(*data)));
+            else
+                EventDataDescCreate(this, NULL, 0);
         }
 
 
@@ -105,6 +114,17 @@ namespace winstd
         inline event_data(_In_ const std::basic_string<_Elem, _Traits, _Ax> &data)
         {
             EventDataDescCreate(this, data.c_str(), (ULONG)((data.length() + 1) * sizeof(_Elem)));
+        }
+
+
+        ///
+        /// Construct class with binary data.
+        ///
+        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        inline event_data(_In_bytecount_(size) const void *data, ULONG size)
+        {
+            EventDataDescCreate(this, data, size);
         }
 
 
@@ -140,7 +160,7 @@ namespace winstd
         /// - `ERROR_SUCCESS` when creation succeeds;
         /// - error code otherwise.
         ///
-        /// \sa [CertOpenStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376559.aspx)
+        /// \sa [EventRegister function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363744.aspx)
         ///
         inline ULONG create(_In_ LPCGUID ProviderId)
         {
@@ -289,6 +309,66 @@ namespace winstd
                 assert(0); // Where did the "this" pointer get lost?
         }
     };
+
+
+    // event_fn_auto actually and winstd::event_auto_res<> do not need an assignment operator actually, so the C4512 warning is safely ignored.
+    #pragma warning(push)
+    #pragma warning(disable: 4512)
+
+    ///
+    /// Helper class to write an event on entry/exit of scope.
+    ///
+    /// It writes one string event at creation and another at destruction.
+    ///
+    template <const EVENT_DESCRIPTOR *event_cons, const EVENT_DESCRIPTOR *event_dest>
+    class event_fn_auto
+    {
+    public:
+        inline event_fn_auto(_In_ event_provider &ep, _In_z_ LPCSTR pszFnName) : m_ep(ep)
+        {
+            EventDataDescCreate(&m_fn_name, pszFnName, (ULONG)(strlen(pszFnName) + 1)*sizeof(*pszFnName));
+            m_ep.write(event_cons, 1, &m_fn_name);
+        }
+
+        inline ~event_fn_auto()
+        {
+            m_ep.write(event_dest, 1, &m_fn_name);
+        }
+
+    protected:
+        event_provider &m_ep;               ///< Reference to event provider in use
+        EVENT_DATA_DESCRIPTOR m_fn_name;    ///< Function name
+    };
+
+
+    ///
+    /// Helper template to write an event on entry/exit of scope with one parameter (typically result).
+    ///
+    /// It writes one string event at creation and another at destruction, with allowing one sprintf type parameter for string event at destruction.
+    ///
+    template<class T, const EVENT_DESCRIPTOR *event_cons, const EVENT_DESCRIPTOR *event_dest>
+    class event_fn_auto_ret
+    {
+    public:
+        inline event_fn_auto_ret(_In_ event_provider &ep, _In_z_ LPCSTR pszFnName, T &result) : m_ep(ep), m_result(result)
+        {
+            EventDataDescCreate(m_desc + 0, pszFnName, (ULONG)(strlen(pszFnName) + 1)*sizeof(*pszFnName));
+            m_ep.write(event_cons, 1, m_desc);
+        }
+
+        inline ~event_fn_auto_ret()
+        {
+            EventDataDescCreate(m_desc + 1, &m_result, sizeof(T));
+            m_ep.write(event_dest, 2, m_desc);
+        }
+
+    protected:
+        event_provider &m_ep;               ///< Reference to event provider in use
+        T &m_result;                        ///< Function result
+        EVENT_DATA_DESCRIPTOR m_desc[2];    ///< Function name and return value
+    };
+
+    #pragma warning(pop)
 
     /// @}
 }
