@@ -290,6 +290,5 @@ namespace winstd
         }
     };
 
-
     /// @}
 }

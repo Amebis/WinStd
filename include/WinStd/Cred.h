@@ -41,7 +41,7 @@ template<class _Elem, class _Traits, class _Ax> inline BOOL CredUnprotectW(_In_ 
 
 namespace winstd
 {
-    /// \addtogroup ATLCryptoAPI
+    /// \addtogroup WinStdCryptoAPI
     /// @{
 
     ///

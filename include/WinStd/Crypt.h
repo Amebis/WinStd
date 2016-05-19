@@ -242,7 +242,7 @@ inline BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BO
 
 namespace winstd
 {
-    /// \addtogroup ATLCryptoAPI
+    /// \addtogroup WinStdCryptoAPI
     /// @{
 
     ///

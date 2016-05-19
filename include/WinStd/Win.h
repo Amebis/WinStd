@@ -52,7 +52,8 @@ template<class _Elem, class _Traits, class _Ax> inline int WideCharToMultiByte(_
 template<class _Elem, class _Traits, class _Ax> inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sWideCharStr);
 namespace winstd
 {
-    class library;
+    class WINSTD_API library;
+    class WINSTD_API heap;
 }
 
 #pragma once
@@ -104,8 +105,6 @@ inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_strin
 template<class _Elem, class _Traits, class _Ax>
 inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
-    assert(0); // TODO: Test this code.
-
     _Elem szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
 
     // Try with stack buffer first.
@@ -656,13 +655,13 @@ inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_cou
 
 namespace winstd
 {
-    /// \addtogroup ATLWinAPI
+    /// \addtogroup WinStdWinAPI
     /// @{
 
     ///
     /// Module handle wrapper
     ///
-    class library : public handle<HMODULE>
+    class WINSTD_API library : public handle<HMODULE>
     {
     public:
         ///
@@ -681,7 +680,7 @@ namespace winstd
         ///
         /// \sa [LoadLibraryEx](https://msdn.microsoft.com/en-us/library/windows/desktop/ms684179.aspx)
         ///
-        inline bool Load(_In_ LPCTSTR lpFileName, __reserved handle_type hFile, _In_ DWORD dwFlags)
+        inline bool load(_In_ LPCTSTR lpFileName, __reserved handle_type hFile, _In_ DWORD dwFlags)
         {
             handle_type h = LoadLibraryEx(lpFileName, hFile, dwFlags);
             if (h) {
@@ -700,6 +699,51 @@ namespace winstd
         virtual void free_internal()
         {
             FreeLibrary(m_h);
+        }
+    };
+
+
+    ///
+    /// Heap handle wrapper
+    ///
+    class WINSTD_API heap : public handle<HANDLE>
+    {
+    public:
+        ///
+        /// Destroys the heap.
+        ///
+        /// \sa [HeapDestroy](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366700.aspx)
+        ///
+        virtual ~heap()
+        {
+            if (m_h)
+                HeapDestroy(m_h);
+        }
+
+        ///
+        /// Creates the heap.
+        ///
+        /// \sa [HeapCreate](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366599.aspx)
+        ///
+        inline bool create(_In_ DWORD flOptions, _In_ SIZE_T dwInitialSize, _In_ SIZE_T dwMaximumSize)
+        {
+            handle_type h = HeapCreate(flOptions, dwInitialSize, dwMaximumSize);
+            if (h) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+    protected:
+        ///
+        /// Destroys the heap.
+        ///
+        /// \sa [HeapDestroy](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366700.aspx)
+        ///
+        virtual void free_internal()
+        {
+            HeapDestroy(m_h);
         }
     };
 
