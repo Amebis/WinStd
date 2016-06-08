@@ -93,6 +93,7 @@
     <ClInclude Include="..\include\WinStd\EAP.h" />
     <ClInclude Include="..\include\WinStd\Common.h" />
     <ClInclude Include="..\include\WinStd\ETW.h" />
+    <ClInclude Include="..\include\WinStd\Hex.h" />
     <ClInclude Include="..\include\WinStd\MSI.h" />
     <ClInclude Include="..\include\WinStd\Sec.h" />
     <ClInclude Include="..\include\WinStd\Shell.h" />
