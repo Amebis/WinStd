@@ -20,7 +20,8 @@
 
 #include "Common.h"
 
-#include <eaptypes.h>
+#include <Windows.h>
+#include <eaptypes.h> // Must include after <Windows.h>
 
 namespace winstd
 {

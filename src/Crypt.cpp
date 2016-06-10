@@ -20,6 +20,8 @@
 
 #include "StdAfx.h"
 
+#pragma comment(lib, "Crypt32.lib")
+
 
 //////////////////////////////////////////////////////////////////////
 // winstd::cert_context
