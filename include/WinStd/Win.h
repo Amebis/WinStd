@@ -818,6 +818,10 @@ namespace winstd
         ///
         /// \sa [LoadLibraryEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms684179.aspx)
         ///
+        /// \return
+        /// - \c true when succeeds;
+        /// - \c false when fails. Use `GetLastError()` for failure reason.
+        ///
         inline bool load(_In_ LPCTSTR lpFileName, __reserved handle_type hFile, _In_ DWORD dwFlags)
         {
             handle_type h = LoadLibraryEx(lpFileName, hFile, dwFlags);
@@ -855,6 +859,10 @@ namespace winstd
         /// Creates the heap.
         ///
         /// \sa [HeapCreate function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366599.aspx)
+        ///
+        /// \return
+        /// - \c true when succeeds;
+        /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
         inline bool create(_In_ DWORD flOptions, _In_ SIZE_T dwInitialSize, _In_ SIZE_T dwMaximumSize)
         {
