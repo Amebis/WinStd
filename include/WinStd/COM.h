@@ -183,7 +183,6 @@ namespace winstd
         ///
         inline UINT length() const
         {
-            assert(m_h);
             return SysStringLen(m_h);
         }
 
