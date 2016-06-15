@@ -144,13 +144,13 @@ namespace winstd
 
                 int x = data[i];
                 if ('0' <= x && x <= '9') {
-                    buf = (buf << 4) | (unsigned char)(x - '0');
+                    buf = ((buf & 0xf) << 4) | (unsigned char)(x - '0');
                     num++;
                 } else if ('A' <= x && x <= 'F') {
-                    buf = (buf << 4) | (unsigned char)(x - ('A' - 10));
+                    buf = ((buf & 0xf) << 4) | (unsigned char)(x - ('A' - 10));
                     num++;
                 } else if ('a' <= x && x <= 'f') {
-                    buf = (buf << 4) | (unsigned char)(x - ('a' - 10));
+                    buf = ((buf & 0xf) << 4) | (unsigned char)(x - ('a' - 10));
                     num++;
                 }
             }
