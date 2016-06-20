@@ -42,9 +42,12 @@ namespace winstd
     class WINSTD_API crypt_prov;
     class WINSTD_API crypt_hash;
     class WINSTD_API crypt_key;
+    class WINSTD_API data_blob;
 }
 
 #pragma once
+
+#include <assert.h>
 
 
 ///
@@ -827,6 +830,127 @@ namespace winstd
         /// \sa [CryptDuplicateKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379920.aspx)
         ///
         virtual handle_type duplicate_internal(_In_ handle_type h) const;
+    };
+
+
+    ///
+    /// DATA_BLOB wrapper class
+    ///
+    class WINSTD_API data_blob : public DATA_BLOB
+    {
+    public:
+        ///
+        /// Initializes an empty BLOB.
+        ///
+        data_blob()
+        {
+            cbData = 0;
+            pbData = NULL;
+        }
+
+        ///
+        /// Initializes a BLOB from existing data.
+        ///
+        data_blob(_In_count_(size) BYTE *data, _In_ DWORD size)
+        {
+            cbData = size;
+            pbData = data;
+        }
+
+        ///
+        /// Duplicate an existing BLOB.
+        ///
+        data_blob(_In_ const DATA_BLOB &other)
+        {
+            cbData = other.cbData;
+            if (cbData) {
+                pbData = (BYTE*)LocalAlloc(LMEM_FIXED, other.cbData);
+                assert(pbData);
+                memcpy(pbData, other.pbData, other.cbData);
+            } else
+                pbData = NULL;
+        }
+
+        ///
+        /// Move an existing BLOB.
+        ///
+        data_blob(_Inout_ DATA_BLOB &&other)
+        {
+            cbData = other.cbData;
+            pbData = other.pbData;
+            other.cbData = 0;
+            other.pbData = NULL;
+        }
+
+        ///
+        /// Destroys the BLOB.
+        ///
+        virtual ~data_blob()
+        {
+            if (pbData)
+                LocalFree(pbData);
+        }
+
+        ///
+        /// Copy an existing BLOB.
+        ///
+        data_blob& operator=(_In_ const DATA_BLOB &other)
+        {
+            if (this != &other) {
+                cbData = other.cbData;
+                if (pbData)
+                    LocalFree(pbData);
+                if (cbData) {
+                    pbData = (BYTE*)LocalAlloc(LMEM_FIXED, other.cbData);
+                    assert(pbData);
+                    memcpy(pbData, other.pbData, other.cbData);
+                } else
+                    pbData = NULL;
+            }
+
+            return *this;
+        }
+
+        ///
+        /// Move an existing BLOB.
+        ///
+        data_blob& operator=(_Inout_ DATA_BLOB &&other)
+        {
+            if (this != &other) {
+                cbData = other.cbData;
+                if (pbData)
+                    LocalFree(pbData);
+                pbData = other.pbData;
+                other.cbData = 0;
+                other.pbData = NULL;
+            }
+
+            return *this;
+        }
+
+        ///
+        /// Get BLOB size.
+        ///
+        DWORD size() const
+        {
+            return cbData;
+        }
+
+        ///
+        /// Get BLOB buffer.
+        ///
+        const BYTE* data() const
+        {
+            return pbData;
+        }
+
+        ///
+        /// Get BLOB buffer.
+        ///
+        BYTE* data()
+        {
+            return pbData;
+        }
     };
 
     /// @}
