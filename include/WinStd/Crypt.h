@@ -230,19 +230,29 @@ template<class _Ty, class _Ax>
 inline BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
 {
     DWORD
-        dwDataLen = (DWORD)(aData.size() * sizeof(_Ty)),
+        dwDataLen = (DWORD)(aData.size()     * sizeof(_Ty)),
         dwBufLen  = (DWORD)(aData.capacity() * sizeof(_Ty)),
-        dwEncLen;
+        dwEncLen  = dwDataLen,
+        dwResult;
 
-    aData.resize(dwBufLen);
-    dwEncLen = dwDataLen;
-    if (CryptEncrypt(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &dwEncLen, dwBufLen)) {
-        // Encryption succeeded.
-        assert(dwEncLen <= dwBufLen);
-        if (dwEncLen < dwBufLen)
-            aData.resize((dwEncLen + sizeof(_Ty) - 1) / sizeof(_Ty));
-        return TRUE;
-    } else if (GetLastError() == ERROR_MORE_DATA) {
+    if (dwBufLen) {
+        aData.resize(dwBufLen);
+        if (CryptEncrypt(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &dwEncLen, dwBufLen)) {
+            // Encryption succeeded.
+            assert(dwEncLen <= dwBufLen);
+            if (dwEncLen < dwBufLen)
+                aData.resize((dwEncLen + sizeof(_Ty) - 1) / sizeof(_Ty));
+            return TRUE;
+        } else
+            dwResult = GetLastError();
+    } else if (CryptEncrypt(hKey, NULL, Final, dwFlags, NULL, &dwEncLen, 0)) {
+        // CryptEncrypt() always succeeds for output data size queries.
+        // dwEncLen contains required output data size. Continue as if the buffer was to small. Actually, the output buffer _was_ too small!
+        dwResult = ERROR_MORE_DATA;
+    } else
+        dwResult = GetLastError();
+
+    if (dwResult == ERROR_MORE_DATA) {
         // Encrypted data will be longer. Reserve more space and retry.
         aData.resize(((dwBufLen = dwEncLen) + sizeof(_Ty) - 1) / sizeof(_Ty));
         dwEncLen = dwDataLen;
