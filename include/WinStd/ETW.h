@@ -32,11 +32,13 @@ namespace winstd
     class WINSTD_API event_data;
     class WINSTD_API event_provider;
 
-    template <const EVENT_DESCRIPTOR *event_cons, const EVENT_DESCRIPTOR *event_dest> class event_fn_auto;
-    template<class T, const EVENT_DESCRIPTOR *event_cons, const EVENT_DESCRIPTOR *event_dest> class event_fn_auto_ret;
+    class event_fn_auto;
+    template<class T> class event_fn_auto_ret;
 }
 
 #pragma once
+
+#include <assert.h>
 
 
 namespace winstd
@@ -290,39 +292,94 @@ namespace winstd
     };
 
 
-    // event_fn_auto and winstd::event_auto_res<> do not need an assignment operator actually, so the C4512 warning is safely ignored.
-    #pragma warning(push)
-    #pragma warning(disable: 4512)
-
     ///
     /// Helper class to write an event on entry/exit of scope.
     ///
     /// It writes one string event at creation and another at destruction.
     ///
-    template <const EVENT_DESCRIPTOR *event_cons, const EVENT_DESCRIPTOR *event_dest>
     class event_fn_auto
     {
     public:
         ///
         /// Writes the `event_cons` event
         ///
-        inline event_fn_auto(_In_ event_provider &ep, _In_z_ LPCSTR pszFnName) : m_ep(ep)
+        inline event_fn_auto(_In_ event_provider &ep, _In_ const EVENT_DESCRIPTOR *event_cons, _In_ const EVENT_DESCRIPTOR *event_dest, _In_z_ LPCSTR pszFnName) :
+            m_ep(ep),
+            m_event_dest(event_dest)
         {
             EventDataDescCreate(&m_fn_name, pszFnName, (ULONG)(strlen(pszFnName) + 1)*sizeof(*pszFnName));
             m_ep.write(event_cons, 1, &m_fn_name);
         }
+
+
+        ///
+        /// Copies the object
+        ///
+        inline event_fn_auto(_In_ const event_fn_auto &other) :
+            m_ep(other.m_ep),
+            m_event_dest(other.m_event_dest),
+            m_fn_name(other.m_fn_name)
+        {
+        }
+
+
+        ///
+        /// Moves the object
+        ///
+        inline event_fn_auto(_Inout_ event_fn_auto &&other) :
+            m_ep(other.m_ep),
+            m_event_dest(other.m_event_dest),
+            m_fn_name(std::move(other.m_fn_name))
+        {
+            other.m_event_dest = NULL;
+        }
+
 
         ///
         /// Writes the `event_dest` event
         ///
         inline ~event_fn_auto()
         {
-            m_ep.write(event_dest, 1, &m_fn_name);
+            if (m_event_dest)
+                m_ep.write(m_event_dest, 1, &m_fn_name);
         }
 
+
+        ///
+        /// Copies the object
+        ///
+        inline event_fn_auto& operator=(_In_ const event_fn_auto &other)
+        {
+            if (this != &other) {
+                assert(&m_ep == &other.m_ep);
+                m_event_dest = other.m_event_dest;
+                m_fn_name    = other.m_fn_name;
+            }
+
+            return *this;
+        }
+
+
+        ///
+        /// Moves the object
+        ///
+        inline event_fn_auto& operator=(_Inout_ event_fn_auto &&other)
+        {
+            if (this != &other) {
+                assert(&m_ep == &other.m_ep);
+                m_event_dest = other.m_event_dest;
+                m_fn_name    = std::move(other.m_fn_name);
+                other.m_event_dest = NULL;
+            }
+
+            return *this;
+        }
+
+
     protected:
-        event_provider &m_ep;               ///< Reference to event provider in use
-        EVENT_DATA_DESCRIPTOR m_fn_name;    ///< Function name
+        event_provider &m_ep;                   ///< Reference to event provider in use
+        const EVENT_DESCRIPTOR *m_event_dest;   ///< Event descriptor at destruction
+        EVENT_DATA_DESCRIPTOR m_fn_name;        ///< Function name
     };
 
 
@@ -331,35 +388,99 @@ namespace winstd
     ///
     /// It writes one string event at creation and another at destruction, with allowing one sprintf type parameter for string event at destruction.
     ///
-    template<class T, const EVENT_DESCRIPTOR *event_cons, const EVENT_DESCRIPTOR *event_dest>
+    template<class T>
     class event_fn_auto_ret
     {
     public:
         ///
         /// Writes the `event_cons` event
         ///
-        inline event_fn_auto_ret(_In_ event_provider &ep, _In_z_ LPCSTR pszFnName, T &result) : m_ep(ep), m_result(result)
+        inline event_fn_auto_ret(_In_ event_provider &ep, _In_ const EVENT_DESCRIPTOR *event_cons, _In_ const EVENT_DESCRIPTOR *event_dest, _In_z_ LPCSTR pszFnName, T &result) :
+            m_ep(ep),
+            m_event_dest(event_dest),
+            m_result(result)
         {
             EventDataDescCreate(m_desc + 0, pszFnName, (ULONG)(strlen(pszFnName) + 1)*sizeof(*pszFnName));
             m_ep.write(event_cons, 1, m_desc);
         }
+
+
+        ///
+        /// Copies the object
+        ///
+        inline event_fn_auto_ret(_In_ const event_fn_auto_ret<T> &other) :
+            m_ep(other.m_ep),
+            m_event_dest(other.m_event_dest),
+            m_result(other.m_result)
+        {
+            m_desc[0] = other.m_desc[0];
+        }
+
+
+        ///
+        /// Moves the object
+        ///
+        inline event_fn_auto_ret(_Inout_ event_fn_auto_ret<T> &&other) :
+            m_ep(other.m_ep),
+            m_event_dest(other.m_event_dest),
+            m_result(other.m_result)
+        {
+            m_desc[0] = std::move(other.m_desc[0]);
+            other.m_event_dest = NULL;
+        }
+
 
         ///
         /// Writes the `event_dest` event
         ///
         inline ~event_fn_auto_ret()
         {
-            EventDataDescCreate(m_desc + 1, &m_result, sizeof(T));
-            m_ep.write(event_dest, 2, m_desc);
+            if (m_event_dest) {
+                EventDataDescCreate(m_desc + 1, &m_result, sizeof(T));
+                m_ep.write(m_event_dest, 2, m_desc);
+            }
         }
 
-    protected:
-        event_provider &m_ep;               ///< Reference to event provider in use
-        T &m_result;                        ///< Function result
-        EVENT_DATA_DESCRIPTOR m_desc[2];    ///< Function name and return value
-    };
 
-    #pragma warning(pop)
+        ///
+        /// Copies the object
+        ///
+        inline event_fn_auto_ret& operator=(_In_ const event_fn_auto_ret<T> &other)
+        {
+            if (this != &other) {
+                assert(&m_ep == &other.m_ep);
+                m_event_dest = other.m_event_dest;
+                m_desc[0] = other.m_desc[0];
+                assert(&m_result == &other.m_result);
+            }
+
+            return *this;
+        }
+
+
+        ///
+        /// Moves the object
+        ///
+        inline event_fn_auto_ret& operator=(_Inout_ event_fn_auto_ret<T> &&other)
+        {
+            if (this != &other) {
+                assert(&m_ep == &other.m_ep);
+                m_event_dest = other.m_event_dest;
+                m_desc[0] = std::move(other.m_desc[0]);
+                assert(&m_result == &other.m_result);
+                other.m_event_dest = NULL;
+            }
+
+            return *this;
+        }
+
+
+    protected:
+        event_provider &m_ep;                   ///< Reference to event provider in use
+        const EVENT_DESCRIPTOR *m_event_dest;   ///< Event descriptor at destruction
+        EVENT_DATA_DESCRIPTOR m_desc[2];        ///< Function name and return value
+        T &m_result;                            ///< Function result
+    };
 
     /// @}
 }
