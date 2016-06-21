@@ -66,4 +66,41 @@ VOID NTAPI winstd::event_provider::enable_callback(_In_ LPCGUID SourceId, _In_ U
         assert(0); // Where did the "this" pointer get lost?
 }
 
+
+//////////////////////////////////////////////////////////////////////
+// winstd::event_session
+//////////////////////////////////////////////////////////////////////
+
+winstd::event_session::~event_session()
+{
+    if (m_h) {
+        EVENT_TRACE_PROPERTIES *prop = m_prop.get();
+        ControlTrace(m_h, (LPCTSTR)((const char*)prop + prop->LoggerNameOffset), prop, EVENT_TRACE_CONTROL_STOP);
+    }
+}
+
+
+void winstd::event_session::free_internal()
+{
+    EVENT_TRACE_PROPERTIES *prop = m_prop.get();
+    ControlTrace(m_h, (LPCTSTR)((const char*)prop + prop->LoggerNameOffset), prop, EVENT_TRACE_CONTROL_STOP);
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// winstd::event_trace
+//////////////////////////////////////////////////////////////////////
+
+winstd::event_trace::~event_trace()
+{
+    if (m_h)
+        CloseTrace(m_h);
+}
+
+
+void winstd::event_trace::free_internal()
+{
+    CloseTrace(m_h);
+}
+
 #endif

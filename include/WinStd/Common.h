@@ -368,7 +368,7 @@ namespace winstd
         ///
         handle<handle_type>& operator=(_Inout_ handle<handle_type> &&h)
         {
-            if (this != &h) {
+            if (this != std::addressof(h)) {
                 // Transfer handle.
                 if (m_h)
                     free_internal();

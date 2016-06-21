@@ -20,10 +20,12 @@
 
 #include "Common.h"
 
+#include <assert.h>
 #include <evntprov.h>
 #include <evntcons.h>
 #include <stdarg.h>
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -31,14 +33,14 @@ namespace winstd
 {
     class WINSTD_API event_data;
     class WINSTD_API event_provider;
+    class WINSTD_API event_session;
+    class WINSTD_API event_trace;
 
     class event_fn_auto;
     template<class T> class event_fn_auto_ret;
 }
 
 #pragma once
-
-#include <assert.h>
 
 
 namespace winstd
@@ -289,6 +291,209 @@ namespace winstd
         /// \sa [EnableCallback callback function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363707.aspx)
         ///
         static VOID NTAPI enable_callback(_In_ LPCGUID SourceId, _In_ ULONG IsEnabled, _In_ UCHAR Level, _In_ ULONGLONG MatchAnyKeyword, _In_ ULONGLONG MatchAllKeyword, _In_opt_ PEVENT_FILTER_DESCRIPTOR FilterData, _Inout_opt_ PVOID CallbackContext);
+    };
+
+
+    ///
+    /// ETW session
+    ///
+    class WINSTD_API event_session : public handle<TRACEHANDLE>
+    {
+    public:
+        ///
+        /// Initializes a new empty session.
+        ///
+        inline event_session()
+        {
+        }
+
+        ///
+        /// Initializes a new session with an already available object handle.
+        ///
+        /// \param[in] h     Initial session handle value
+        /// \param[in] prop  Session properties
+        ///
+        inline event_session(_In_opt_ handle_type h, _In_ const EVENT_TRACE_PROPERTIES *prop) :
+            m_prop((EVENT_TRACE_PROPERTIES*)new char[prop->Wnode.BufferSize]),
+            handle(h)
+        {
+            memcpy(m_prop.get(), prop, prop->Wnode.BufferSize);
+        }
+
+        ///
+        /// Move constructor
+        ///
+        /// \param[inout] other  A rvalue reference of another session
+        ///
+        inline event_session(_Inout_ event_session &&other) :
+            m_prop(std::move(other.m_prop)),
+            handle(std::move(other))
+        {
+        }
+
+
+        ///
+        /// Closes the session.
+        ///
+        /// \sa [ControlTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363696.aspx)
+        ///
+        virtual ~event_session();
+
+
+        ///
+        /// Move assignment
+        ///
+        /// \param[inout] other  A rvalue reference of another session
+        ///
+        inline event_session& operator=(_Inout_ event_session &&other)
+        {
+            if (this != std::addressof(other)) {
+                (handle<handle_type>&&)*this = std::move(other);
+                m_prop                       = std::move(other.m_prop);
+            }
+            return *this;
+        }
+
+
+        ///
+        /// Sets a new session handle for the class
+        ///
+        /// When the current session handle of the class is non-NULL, the session is destroyed first.
+        ///
+        /// \param[in] h     New session handle
+        /// \param[in] prop  Session properties
+        ///
+        inline void attach(_In_opt_ handle_type h, _In_ EVENT_TRACE_PROPERTIES *prop)
+        {
+            handle<handle_type>::attach(h);
+            m_prop.reset(prop);
+        }
+
+
+        ///
+        /// Registers and starts an event tracing session.
+        ///
+        /// \return
+        /// - `ERROR_SUCCESS` when creation succeeds;
+        /// - error code otherwise.
+        ///
+        /// \sa [StartTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa364117.aspx)
+        ///
+        inline ULONG create(_In_ LPCTSTR SessionName, _In_ const EVENT_TRACE_PROPERTIES *Properties)
+        {
+            handle_type h;
+            std::unique_ptr<EVENT_TRACE_PROPERTIES> prop((EVENT_TRACE_PROPERTIES*)new char[Properties->Wnode.BufferSize]);
+            memcpy(prop.get(), Properties, Properties->Wnode.BufferSize);
+            ULONG ulRes = StartTrace(&h, SessionName, prop.get());
+            if (ulRes == ERROR_SUCCESS)
+                attach(h, prop.release());
+            return ulRes;
+        }
+
+
+        ///
+        /// Enables the specified event trace provider.
+        ///
+        /// \return
+        /// - `ERROR_SUCCESS` when succeeds;
+        /// - error code otherwise.
+        ///
+        /// \sa [EnableTraceEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363711.aspx)
+        ///
+        inline ULONG enable_trace(_In_ LPCGUID ProviderId, _In_ UCHAR Level, _In_opt_ ULONGLONG MatchAnyKeyword = 0, _In_opt_ ULONGLONG MatchAllKeyword = 0, _In_opt_ ULONG EnableProperty = 0, _In_opt_ PEVENT_FILTER_DESCRIPTOR EnableFilterDesc = NULL)
+        {
+            assert(m_h);
+            return EnableTraceEx(
+                ProviderId,
+                &m_prop->Wnode.Guid,
+                m_h,
+                EVENT_CONTROL_CODE_ENABLE_PROVIDER,
+                Level,
+                MatchAnyKeyword,
+                MatchAllKeyword,
+                EnableProperty,
+                EnableFilterDesc);
+        }
+
+
+        ///
+        /// Disables the specified event trace provider.
+        ///
+        /// \return
+        /// - `ERROR_SUCCESS` when succeeds;
+        /// - error code otherwise.
+        ///
+        /// \sa [EnableTraceEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363711.aspx)
+        ///
+        inline ULONG disable_trace(_In_ LPCGUID ProviderId, _In_ UCHAR Level, _In_opt_ ULONGLONG MatchAnyKeyword = 0, _In_opt_ ULONGLONG MatchAllKeyword = 0, _In_opt_ ULONG EnableProperty = 0, _In_opt_ PEVENT_FILTER_DESCRIPTOR EnableFilterDesc = NULL)
+        {
+            assert(m_h);
+            return EnableTraceEx(
+                ProviderId,
+                &m_prop->Wnode.Guid,
+                m_h,
+                EVENT_CONTROL_CODE_DISABLE_PROVIDER,
+                Level,
+                MatchAnyKeyword,
+                MatchAllKeyword,
+                EnableProperty,
+                EnableFilterDesc);
+        }
+
+
+    protected:
+        ///
+        /// Releases the session.
+        ///
+        /// \sa [ControlTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363696.aspx)
+        ///
+        virtual void free_internal();
+
+    protected:
+        std::unique_ptr<EVENT_TRACE_PROPERTIES> m_prop; ///< Session properties
+    };
+
+
+    ///
+    /// ETW trace
+    ///
+    class WINSTD_API event_trace : public handle<TRACEHANDLE>
+    {
+    public:
+        ///
+        /// Closes the trace.
+        ///
+        /// \sa [CloseTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363686.aspx)
+        ///
+        virtual ~event_trace();
+
+
+        ///
+        /// Opens a real-time trace session or log file for consuming.
+        ///
+        /// \return
+        /// - `ERROR_SUCCESS` when creation succeeds;
+        /// - error code otherwise.
+        ///
+        /// \sa [OpenTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa364089.aspx)
+        ///
+        inline bool create(_Inout_ PEVENT_TRACE_LOGFILE Logfile)
+        {
+            handle_type h = OpenTrace(Logfile);
+            if (h != (TRACEHANDLE)INVALID_HANDLE_VALUE) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+    protected:
+        ///
+        /// Closes the trace.
+        ///
+        /// \sa [CloseTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363686.aspx)
+        ///
+        virtual void free_internal();
     };
 
 
