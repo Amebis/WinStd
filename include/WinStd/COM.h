@@ -28,6 +28,7 @@ namespace winstd
 
     class WINSTD_API bstr;
     class WINSTD_API variant;
+    class WINSTD_API com_initializer;
 }
 
 #pragma once
@@ -913,4 +914,52 @@ namespace winstd
     };
 
     /// @}
+
+
+    class WINSTD_API com_initializer
+    {
+    public:
+        ///
+        /// Initializes the COM library on the current thread and identifies the concurrency model as single-thread apartment (STA).
+        ///
+        /// \sa [CoInitialize function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms678543.aspx)
+        ///
+        inline com_initializer(_In_opt_ LPVOID pvReserved)
+        {
+            m_result = CoInitialize(pvReserved);
+        }
+
+
+        ///
+        /// Initializes the COM library for use by the calling thread, sets the thread's concurrency model, and creates a new apartment for the thread if one is required.
+        ///
+        /// \sa [CoInitializeEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms695279.aspx)
+        ///
+        inline com_initializer(_In_opt_ LPVOID pvReserved, _In_ DWORD dwCoInit)
+        {
+            m_result = CoInitializeEx(pvReserved, dwCoInit);
+        }
+
+
+        ///
+        /// Uninitializes COM.
+        ///
+        /// \sa [CoUninitialize function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms688715.aspx)
+        ///
+        virtual ~com_initializer();
+
+
+        ///
+        /// Return result of `CoInitialize()` call.
+        ///
+        /// \sa [CoInitialize function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms678543.aspx)
+        ///
+        inline HRESULT status() const
+        {
+            return m_result;
+        }
+
+    protected:
+        HRESULT m_result;   ///< Result of CoInitialize call
+    };
 }

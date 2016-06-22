@@ -52,3 +52,14 @@ winstd::variant::~variant()
 {
     VariantClear(this);
 }
+
+
+//////////////////////////////////////////////////////////////////////
+// winstd::com_initializer
+//////////////////////////////////////////////////////////////////////
+
+winstd::com_initializer::~com_initializer()
+{
+    if (SUCCEEDED(m_result))
+        CoUninitialize();
+}
