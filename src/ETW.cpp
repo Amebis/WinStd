@@ -73,17 +73,34 @@ VOID NTAPI winstd::event_provider::enable_callback(_In_ LPCGUID SourceId, _In_ U
 
 winstd::event_session::~event_session()
 {
-    if (m_h) {
-        EVENT_TRACE_PROPERTIES *prop = m_prop.get();
-        ControlTrace(m_h, (LPCTSTR)((const char*)prop + prop->LoggerNameOffset), prop, EVENT_TRACE_CONTROL_STOP);
-    }
+    if (m_h)
+        ControlTrace(m_h, name(), m_prop.get(), EVENT_TRACE_CONTROL_STOP);
 }
 
 
 void winstd::event_session::free_internal()
 {
-    EVENT_TRACE_PROPERTIES *prop = m_prop.get();
-    ControlTrace(m_h, (LPCTSTR)((const char*)prop + prop->LoggerNameOffset), prop, EVENT_TRACE_CONTROL_STOP);
+    ControlTrace(m_h, name(), m_prop.get(), EVENT_TRACE_CONTROL_STOP);
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// winstd::event_trace_enabler
+//////////////////////////////////////////////////////////////////////
+
+winstd::event_trace_enabler::~event_trace_enabler()
+{
+    if (m_status == ERROR_SUCCESS)
+        EnableTraceEx(
+            m_provider_id,
+            m_source_id,
+            m_trace_handle,
+            EVENT_CONTROL_CODE_DISABLE_PROVIDER,
+            m_level,
+            m_match_any_keyword,
+            m_match_all_keyword,
+            m_enable_property,
+            m_enable_filter_desc);
 }
 
 

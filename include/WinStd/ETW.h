@@ -35,6 +35,7 @@ namespace winstd
     class WINSTD_API event_provider;
     class WINSTD_API event_session;
     class WINSTD_API event_trace;
+    class WINSTD_API event_trace_enabler;
 
     class event_fn_auto;
     template<class T> class event_fn_auto_ret;
@@ -356,6 +357,29 @@ namespace winstd
 
 
         ///
+        /// Auto-typecasting operator
+        ///
+        /// \return Session properties
+        ///
+        inline operator const EVENT_TRACE_PROPERTIES*() const
+        {
+            return m_prop.get();
+        }
+
+
+        ///
+        /// Auto-typecasting operator
+        ///
+        /// \return Session properties
+        ///
+        inline LPCTSTR name() const
+        {
+            const EVENT_TRACE_PROPERTIES *prop = m_prop.get();
+            return (LPCTSTR)((const char*)prop + prop->LoggerNameOffset);
+        }
+
+
+        ///
         /// Sets a new session handle for the class
         ///
         /// When the current session handle of the class is non-NULL, the session is destroyed first.
@@ -451,6 +475,114 @@ namespace winstd
 
     protected:
         std::unique_ptr<EVENT_TRACE_PROPERTIES> m_prop; ///< Session properties
+    };
+
+
+    ///
+    /// Helper class to enable event provider in constructor and disables it in destructor
+    ///
+    class WINSTD_API event_trace_enabler
+    {
+    public:
+        ///
+        /// Enables event trace
+        ///
+        /// \sa [EnableTraceEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363711.aspx)
+        ///
+        inline event_trace_enabler(
+            _In_opt_ LPCGUID                  SourceId,
+            _In_     TRACEHANDLE              TraceHandle,
+            _In_     LPCGUID                  ProviderId,
+            _In_     UCHAR                    Level,
+            _In_opt_ ULONGLONG                MatchAnyKeyword  = 0,
+            _In_opt_ ULONGLONG                MatchAllKeyword  = 0,
+            _In_opt_ ULONG                    EnableProperty   = 0,
+            _In_opt_ PEVENT_FILTER_DESCRIPTOR EnableFilterDesc = NULL) :
+            m_provider_id(ProviderId),
+            m_source_id(SourceId),
+            m_trace_handle(TraceHandle),
+            m_level(Level),
+            m_match_any_keyword(MatchAnyKeyword),
+            m_match_all_keyword(MatchAllKeyword),
+            m_enable_property(EnableProperty),
+            m_enable_filter_desc(EnableFilterDesc)
+        {
+            m_status = EnableTraceEx(
+                m_provider_id,
+                m_source_id,
+                m_trace_handle,
+                EVENT_CONTROL_CODE_ENABLE_PROVIDER,
+                m_level,
+                m_match_any_keyword,
+                m_match_all_keyword,
+                m_enable_property,
+                m_enable_filter_desc);
+        }
+
+
+        ///
+        /// Enables event trace
+        ///
+        /// \sa [EnableTraceEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363711.aspx)
+        ///
+        inline event_trace_enabler(
+            _In_     const event_session            &session,
+            _In_           LPCGUID                  ProviderId,
+            _In_           UCHAR                    Level,
+            _In_opt_       ULONGLONG                MatchAnyKeyword  = 0,
+            _In_opt_       ULONGLONG                MatchAllKeyword  = 0,
+            _In_opt_       ULONG                    EnableProperty   = 0,
+            _In_opt_       PEVENT_FILTER_DESCRIPTOR EnableFilterDesc = NULL) :
+            m_provider_id(ProviderId),
+            m_source_id(&((const EVENT_TRACE_PROPERTIES*)session)->Wnode.Guid),
+            m_trace_handle(session),
+            m_level(Level),
+            m_match_any_keyword(MatchAnyKeyword),
+            m_match_all_keyword(MatchAllKeyword),
+            m_enable_property(EnableProperty),
+            m_enable_filter_desc(EnableFilterDesc)
+        {
+            m_status = EnableTraceEx(
+                m_provider_id,
+                m_source_id,
+                m_trace_handle,
+                EVENT_CONTROL_CODE_ENABLE_PROVIDER,
+                m_level,
+                m_match_any_keyword,
+                m_match_all_keyword,
+                m_enable_property,
+                m_enable_filter_desc);
+        }
+
+
+        ///
+        /// Return status of `EnableTraceEx()` call
+        ///
+        /// \sa [EnableTraceEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363711.aspx)
+        ///
+        inline ULONG status() const
+        {
+            return m_status;
+        }
+
+
+        ///
+        /// Disables event trace
+        ///
+        /// \sa [EnableTraceEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363711.aspx)
+        ///
+        virtual ~event_trace_enabler();
+
+    protected:
+        ULONG m_status;                                 ///< Status of EnableTraceEx call
+        LPCGUID m_provider_id;                          ///< Provider ID
+        LPCGUID m_source_id;                            ///< Session ID
+        TRACEHANDLE m_trace_handle;                     ///< Trace handle
+        UCHAR m_level;                                  ///< Logging level
+        ULONGLONG m_match_any_keyword;                  ///< Keyword match mask (any)
+        ULONGLONG m_match_all_keyword;                  ///< Keyword match mask (all)
+        ULONG m_enable_property;                        ///< Enable property
+        PEVENT_FILTER_DESCRIPTOR m_enable_filter_desc;  ///< Event filter descriptor
     };
 
 
