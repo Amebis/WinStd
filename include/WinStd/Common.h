@@ -49,6 +49,9 @@ inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _
 template<class _Elem, class _Traits, class _Ax> inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg);
 template<class _Elem, class _Traits, class _Ax> inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...);
 
+template<class _Traits, class _Ax> inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments);
+template<class _Traits, class _Ax> inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments);
+
 namespace winstd
 {
     ///
@@ -244,6 +247,38 @@ inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Pr
     int res = vsprintf(str, format, arg);
     va_end(arg);
     return res;
+}
+
+
+///
+/// Formats a message string.
+///
+/// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
+///
+template<class _Traits, class _Ax>
+inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
+{
+    std::unique_ptr<CHAR[], winstd::LocalFree_delete<CHAR[]> > lpBuffer;
+    DWORD dwResult = FormatMessageA(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, (LPSTR)&lpBuffer, 0, Arguments);
+    if (dwResult)
+        str.assign(lpBuffer.get(), dwResult);
+    return dwResult;
+}
+
+
+///
+/// Formats a message string.
+///
+/// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
+///
+template<class _Traits, class _Ax>
+inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
+{
+    std::unique_ptr<WCHAR[], winstd::LocalFree_delete<WCHAR[]> > lpBuffer;
+    DWORD dwResult = FormatMessageW(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, (LPWSTR)&lpBuffer, 0, Arguments);
+    if (dwResult)
+        str.assign(lpBuffer.get(), dwResult);
+    return dwResult;
 }
 
 
@@ -675,7 +710,7 @@ namespace winstd
         ///
         /// \param[in] format  String template using `printf()` style
         ///
-        basic_string_printf(_In_z_ _Printf_format_string_ const _Elem *format, ...)
+        inline basic_string_printf(_In_z_ _Printf_format_string_ const _Elem *format, ...)
         {
             va_list arg;
             va_start(arg, format);
@@ -694,7 +729,7 @@ namespace winstd
         /// \param[in] hInstance  Resource module handle
         /// \param[in] nFormatID  Resource ID of the string template using `printf()` style
         ///
-        basic_string_printf(_In_ HINSTANCE hInstance, _In_ UINT nFormatID, ...)
+        inline basic_string_printf(_In_ HINSTANCE hInstance, _In_ UINT nFormatID, ...)
         {
             _Myt format;
             ATLENSURE(format.LoadString(hInstance, nFormatID));
@@ -712,7 +747,7 @@ namespace winstd
         /// \param[in] wLanguageID  Resource language
         /// \param[in] nFormatID    Resource ID of the string template using `printf()` style
         ///
-        basic_string_printf(_In_ HINSTANCE hInstance, _In_ WORD wLanguageID, _In_ UINT nFormatID, ...)
+        inline basic_string_printf(_In_ HINSTANCE hInstance, _In_ WORD wLanguageID, _In_ UINT nFormatID, ...)
         {
             _Myt format;
             ATLENSURE(format.LoadString(hInstance, nFormatID, wLanguageID));
@@ -742,11 +777,11 @@ namespace winstd
         ///
         /// \param[in] format  String template using `FormatMessage()` style
         ///
-        basic_string_msg(_In_z_ _FormatMessage_format_string_ const _Elem *format, ...)
+        inline basic_string_msg(_In_z_ _FormatMessage_format_string_ const _Elem *format, ...)
         {
             va_list arg;
             va_start(arg, format);
-            FormatMessageV(format, &arg);
+            FormatMessage(FORMAT_MESSAGE_FROM_STRING, format, 0, 0, *this, &arg);
             va_end(arg);
         }
 
@@ -761,14 +796,14 @@ namespace winstd
         /// \param[in] hInstance  Resource module handle
         /// \param[in] nFormatID  Resource ID of the string template using `FormatMessage()` style
         ///
-        basic_string_msg(_In_ HINSTANCE hInstance, _In_ UINT nFormatID, ...)
+        inline basic_string_msg(_In_ HINSTANCE hInstance, _In_ UINT nFormatID, ...)
         {
             _Myt format(GetManager());
             ATLENSURE(format.LoadString(hInstance, nFormatID));
 
             va_list arg;
             va_start(arg, nFormatID);
-            FormatMessageV(format, &arg);
+            FormatMessage(FORMAT_MESSAGE_FROM_STRING, format, 0, 0, *this, &arg);
             va_end(arg);
         }
 
@@ -779,18 +814,29 @@ namespace winstd
         /// \param[in] wLanguageID  Resource language
         /// \param[in] nFormatID    Resource ID of the string template using `FormatMessage()` style
         ///
-        basic_string_msg(_In_ HINSTANCE hInstance, _In_ WORD wLanguageID, _In_ UINT nFormatID, ...)
+        inline basic_string_msg(_In_ HINSTANCE hInstance, _In_ WORD wLanguageID, _In_ UINT nFormatID, ...)
         {
             _Myt format(GetManager());
             ATLENSURE(format.LoadString(hInstance, nFormatID, wLanguageID));
 
             va_list arg;
             va_start(arg, nFormatID);
-            FormatMessageV(format, &arg);
+            FormatMessage(FORMAT_MESSAGE_FROM_STRING, format, 0, 0, *this, &arg);
             va_end(arg);
         }
 
         /// @}
+
+
+        ///
+        /// Initializes a new string and formats its contents using `FormatMessage()` style.
+        ///
+        /// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
+        ///
+        inline basic_string_msg(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _In_opt_ va_list *Arguments)
+        {
+            FormatMessage(dwFlags, lpSource, dwMessageId, dwLanguageId, *this, &arg);
+        }
     };
 
     /// @}
