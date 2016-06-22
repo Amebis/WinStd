@@ -24,10 +24,13 @@
 #include <evntprov.h>
 #include <evntcons.h>
 #include <stdarg.h>
+#include <tdh.h>
 
 #include <memory>
 #include <string>
 #include <vector>
+
+inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info);
 
 namespace winstd
 {
@@ -42,6 +45,33 @@ namespace winstd
 }
 
 #pragma once
+
+
+///
+/// Retrieves metadata about an event.
+///
+/// \sa [TdhGetEventInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964840.aspx)
+///
+inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info)
+{
+    BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
+    ULONG ulSize = sizeof(szBuffer), ulResult;
+
+    // Try with stack buffer first.
+    ulResult = TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, (PTRACE_EVENT_INFO)szBuffer, &ulSize);
+    if (ulResult == ERROR_SUCCESS) {
+        // Copy from stack.
+        info.reset((PTRACE_EVENT_INFO)new char[ulSize]);
+        memcpy(info.get(), szBuffer, ulSize);
+        return ERROR_SUCCESS;
+    } else if (ulResult == ERROR_INSUFFICIENT_BUFFER) {
+        // Create buffer on heap and retry.
+        info.reset((PTRACE_EVENT_INFO)new char[ulSize]);
+        return TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, info.get(), &ulSize);
+    }
+
+    return ulResult;
+}
 
 
 namespace winstd
@@ -556,7 +586,7 @@ namespace winstd
 
 
         ///
-        /// Return status of `EnableTraceEx()` call
+        /// Return result of `EnableTraceEx()` call.
         ///
         /// \sa [EnableTraceEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363711.aspx)
         ///
@@ -567,14 +597,14 @@ namespace winstd
 
 
         ///
-        /// Disables event trace
+        /// Disables event trace.
         ///
         /// \sa [EnableTraceEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363711.aspx)
         ///
         virtual ~event_trace_enabler();
 
     protected:
-        ULONG m_status;                                 ///< Status of EnableTraceEx call
+        ULONG m_status;                                 ///< Result of EnableTraceEx call
         LPCGUID m_provider_id;                          ///< Provider ID
         LPCGUID m_source_id;                            ///< Session ID
         TRACEHANDLE m_trace_handle;                     ///< Trace handle
