@@ -842,7 +842,7 @@ namespace winstd
         ///
         /// Initializes an empty BLOB.
         ///
-        data_blob()
+        inline data_blob()
         {
             cbData = 0;
             pbData = NULL;
@@ -851,7 +851,7 @@ namespace winstd
         ///
         /// Initializes a BLOB from existing data.
         ///
-        data_blob(_In_count_(size) BYTE *data, _In_ DWORD size)
+        inline data_blob(_In_count_(size) BYTE *data, _In_ DWORD size)
         {
             cbData = size;
             pbData = data;
@@ -860,7 +860,7 @@ namespace winstd
         ///
         /// Duplicate an existing BLOB.
         ///
-        data_blob(_In_ const DATA_BLOB &other)
+        inline data_blob(_In_ const DATA_BLOB &other)
         {
             cbData = other.cbData;
             if (cbData) {
@@ -874,7 +874,7 @@ namespace winstd
         ///
         /// Move an existing BLOB.
         ///
-        data_blob(_Inout_ DATA_BLOB &&other)
+        inline data_blob(_Inout_ DATA_BLOB &&other)
         {
             cbData = other.cbData;
             pbData = other.pbData;
@@ -885,16 +885,12 @@ namespace winstd
         ///
         /// Destroys the BLOB.
         ///
-        virtual ~data_blob()
-        {
-            if (pbData)
-                LocalFree(pbData);
-        }
+        virtual ~data_blob();
 
         ///
         /// Copy an existing BLOB.
         ///
-        data_blob& operator=(_In_ const DATA_BLOB &other)
+        inline data_blob& operator=(_In_ const DATA_BLOB &other)
         {
             if (this != &other) {
                 cbData = other.cbData;
@@ -914,7 +910,7 @@ namespace winstd
         ///
         /// Move an existing BLOB.
         ///
-        data_blob& operator=(_Inout_ DATA_BLOB &&other)
+        inline data_blob& operator=(_Inout_ DATA_BLOB &&other)
         {
             if (this != &other) {
                 cbData = other.cbData;
@@ -931,7 +927,7 @@ namespace winstd
         ///
         /// Get BLOB size.
         ///
-        DWORD size() const
+        inline DWORD size() const
         {
             return cbData;
         }
@@ -939,7 +935,7 @@ namespace winstd
         ///
         /// Get BLOB buffer.
         ///
-        const BYTE* data() const
+        inline const BYTE* data() const
         {
             return pbData;
         }
@@ -947,7 +943,7 @@ namespace winstd
         ///
         /// Get BLOB buffer.
         ///
-        BYTE* data()
+        inline BYTE* data()
         {
             return pbData;
         }

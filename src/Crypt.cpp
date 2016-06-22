@@ -149,3 +149,14 @@ winstd::crypt_key::handle_type winstd::crypt_key::duplicate_internal(_In_ handle
     handle_type hNew = NULL;
     return CryptDuplicateKey(h, NULL, 0, &hNew) ? hNew : NULL;
 }
+
+
+//////////////////////////////////////////////////////////////////////
+// winstd::data_blob
+//////////////////////////////////////////////////////////////////////
+
+winstd::data_blob::~data_blob()
+{
+    if (pbData)
+        LocalFree(pbData);
+}
