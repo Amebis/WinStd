@@ -31,6 +31,7 @@
 #include <vector>
 
 inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info);
+inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Out_ std::unique_ptr<EVENT_MAP_INFO> &info);
 
 namespace winstd
 {
@@ -68,6 +69,33 @@ inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhCon
         // Create buffer on heap and retry.
         info.reset((PTRACE_EVENT_INFO)new char[ulSize]);
         return TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, info.get(), &ulSize);
+    }
+
+    return ulResult;
+}
+
+
+///
+/// Retrieves information about the event map contained in the event.
+///
+/// \sa [TdhGetEventMapInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964841.aspx)
+///
+inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Out_ std::unique_ptr<EVENT_MAP_INFO> &info)
+{
+    BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
+    ULONG ulSize = sizeof(szBuffer), ulResult;
+
+    // Try with stack buffer first.
+    ulResult = TdhGetEventMapInformation(pEvent, pMapName, (PEVENT_MAP_INFO)szBuffer, &ulSize);
+    if (ulResult == ERROR_SUCCESS) {
+        // Copy from stack.
+        info.reset((PEVENT_MAP_INFO)new char[ulSize]);
+        memcpy(info.get(), szBuffer, ulSize);
+        return ERROR_SUCCESS;
+    } else if (ulResult == ERROR_INSUFFICIENT_BUFFER) {
+        // Create buffer on heap and retry.
+        info.reset((PEVENT_MAP_INFO)new char[ulSize]);
+        return TdhGetEventMapInformation(pEvent, pMapName, info.get(), &ulSize);
     }
 
     return ulResult;
