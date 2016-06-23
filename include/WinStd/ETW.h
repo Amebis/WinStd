@@ -32,6 +32,7 @@
 
 inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info);
 inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Out_ std::unique_ptr<EVENT_MAP_INFO> &info);
+template<class _Ty, class _Ax> inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_ PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Out_ std::vector<_Ty, _Ax> &aData);
 
 namespace winstd
 {
@@ -96,6 +97,28 @@ inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pM
         // Create buffer on heap and retry.
         info.reset((PEVENT_MAP_INFO)new char[ulSize]);
         return TdhGetEventMapInformation(pEvent, pMapName, info.get(), &ulSize);
+    }
+
+    return ulResult;
+}
+
+
+///
+/// Retrieves a property value from the event data.
+///
+/// \sa [TdhGetProperty function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964843.aspx)
+///
+template<class _Ty, class _Ax>
+inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_ PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Out_ std::vector<_Ty, _Ax> &aData)
+{
+    ULONG ulSize, ulResult;
+
+    // Query property size.
+    ulResult = TdhGetPropertySize(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, &ulSize);
+    if (ulResult == ERROR_SUCCESS) {
+        // Query property value.
+        aData.resize((ulSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        ulResult = TdhGetProperty(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, ulSize, (LPBYTE)aData.data());
     }
 
     return ulResult;
