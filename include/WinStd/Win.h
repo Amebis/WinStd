@@ -58,6 +58,9 @@ inline VOID OutputDebugStr(_In_ LPCSTR lpOutputString, ...);
 inline VOID OutputDebugStr(_In_ LPCWSTR lpOutputString, ...);
 template<class _Elem, class _Traits, class _Ax> inline int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_ LPCSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate);
 template<class _Elem, class _Traits, class _Ax> inline int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_ LPCWSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate);
+template<class _Elem, class _Traits, class _Ax> inline BOOL LookupAccountSidA(_In_opt_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse);
+template<class _Elem, class _Traits, class _Ax> inline BOOL LookupAccountSidW(_In_opt_ LPCWSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse);
+
 
 namespace winstd
 {
@@ -790,6 +793,86 @@ template<class _Elem, class _Traits, class _Ax> inline int GetDateFormatW(_In_ L
     }
 
     return iResult;
+}
+
+
+///
+/// Retrieves the name of the account for this SID and the name of the first domain on which this SID is found.
+///
+/// \sa [LookupAccountSid function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379166.aspx)
+///
+template<class _Elem, class _Traits, class _Ax>
+inline BOOL LookupAccountSidA(_In_opt_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse)
+{
+    assert(0); // TODO: Test this code.
+
+    DWORD dwNameLen = 0, dwRefDomainLen = 0;
+
+    if (LookupAccountSidA(lpSystemName, lpSid,
+        NULL, sName                 ? &dwNameLen      : NULL,
+        NULL, sReferencedDomainName ? &dwRefDomainLen : NULL,
+        peUse))
+    {
+        // Name and domain is blank.
+        if (sName                ) sName                ->clear();
+        if (sReferencedDomainName) sReferencedDomainName->clear();
+        return TRUE;
+    } else if (GetLastError() == ERROR_MORE_DATA) {
+        // Allocate on heap and retry.
+        std::unique_ptr<_Elem[]> bufName     (new _Elem[dwNameLen     ]);
+        std::unique_ptr<_Elem[]> bufRefDomain(new _Elem[dwRefDomainLen]);
+        if (LookupAccountSidA(lpSystemName, lpSid,
+            bufName     .get(), sName                 ? &dwNameLen      : NULL,
+            bufRefDomain.get(), sReferencedDomainName ? &dwRefDomainLen : NULL,
+            peUse))
+        {
+            if (sName                ) sName                ->assign(bufName     .get(), dwNameLen      - 1);
+            if (sReferencedDomainName) sReferencedDomainName->assign(bufRefDomain.get(), dwRefDomainLen - 1);
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+
+///
+/// Retrieves the name of the account for this SID and the name of the first domain on which this SID is found.
+///
+/// \sa [LookupAccountSid function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379166.aspx)
+///
+template<class _Elem, class _Traits, class _Ax>
+inline BOOL LookupAccountSidW(_In_opt_ LPCWSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse)
+{
+    assert(0); // TODO: Test this code.
+
+    DWORD dwNameLen = 0, dwRefDomainLen = 0;
+
+    if (LookupAccountSidW(lpSystemName, lpSid,
+        NULL, sName                 ? &dwNameLen      : NULL,
+        NULL, sReferencedDomainName ? &dwRefDomainLen : NULL,
+        peUse))
+    {
+        // Name and domain is blank.
+        if (sName                ) sName                ->clear();
+        if (sReferencedDomainName) sReferencedDomainName->clear();
+        return TRUE;
+    } else if (GetLastError() == ERROR_MORE_DATA) {
+        // Allocate on heap and retry.
+        std::unique_ptr<_Elem[]> bufName     (new _Elem[dwNameLen     ]);
+        std::unique_ptr<_Elem[]> bufRefDomain(new _Elem[dwRefDomainLen]);
+        if (LookupAccountSidW(lpSystemName, lpSid,
+            bufName     .get(), sName                 ? &dwNameLen      : NULL,
+            bufRefDomain.get(), sReferencedDomainName ? &dwRefDomainLen : NULL,
+            peUse))
+        {
+            if (sName                ) sName                ->assign(bufName     .get(), dwNameLen      - 1);
+            if (sReferencedDomainName) sReferencedDomainName->assign(bufRefDomain.get(), dwRefDomainLen - 1);
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
 
 /// @}
