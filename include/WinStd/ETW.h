@@ -178,11 +178,39 @@ namespace winstd
 
 
         ///
+        /// Construct class with string.
+        ///
+        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        inline event_data(_In_ char *data)
+        {
+            if (data)
+                EventDataDescCreate(this, data, (ULONG)((strlen(data) + 1) * sizeof(*data)));
+            else
+                EventDataDescCreate(this, NULL, 0);
+        }
+
+
+        ///
         /// Construct class with wide string.
         ///
         /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
         ///
         inline event_data(_In_ const wchar_t *data)
+        {
+            if (data)
+                EventDataDescCreate(this, data, (ULONG)((wcslen(data) + 1) * sizeof(*data)));
+            else
+                EventDataDescCreate(this, NULL, 0);
+        }
+
+
+        ///
+        /// Construct class with wide string.
+        ///
+        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        inline event_data(_In_ wchar_t *data)
         {
             if (data)
                 EventDataDescCreate(this, data, (ULONG)((wcslen(data) + 1) * sizeof(*data)));
