@@ -362,7 +362,7 @@ namespace winstd
         ///
         /// \sa [EventWriteString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363750v=vs.85.aspx)
         ///
-        inline ULONG write(_In_ UCHAR Level, _In_ ULONGLONG Keyword, _In_ PCWSTR String, ...)
+        inline ULONG write(_In_ UCHAR Level, _In_ ULONGLONG Keyword, _In_ _Printf_format_string_ PCWSTR String, ...)
         {
             assert(m_h);
 
