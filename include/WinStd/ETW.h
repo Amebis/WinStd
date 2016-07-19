@@ -317,6 +317,8 @@ namespace winstd
         ///
         /// Writes an event with one or more parameter.
         ///
+        /// \note The list must be terminated with `winstd::event_data::blank`.
+        ///
         /// \return
         /// - `ERROR_SUCCESS` when write succeeds;
         /// - error code otherwise.
@@ -326,28 +328,50 @@ namespace winstd
         inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ const EVENT_DATA_DESCRIPTOR &param1, ...)
         {
             assert(m_h);
+            UNREFERENCED_PARAMETER(param1);
 
             va_list arg;
+            va_start(arg, EventDescriptor);
+            ULONG ulResult = write(EventDescriptor, arg);
+            va_end(arg);
+
+            return ulResult;
+        }
+
+
+        ///
+        /// Writes an event with variable number of parameters.
+        ///
+        /// \note The list must be terminated with `winstd::event_data::blank`.
+        ///
+        /// \return
+        /// - `ERROR_SUCCESS` when write succeeds;
+        /// - error code otherwise.
+        ///
+        /// \sa [EventWrite function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363752.aspx)
+        ///
+        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ va_list arg)
+        {
+            assert(m_h);
+
+            va_list arg_start = arg;
             std::vector<EVENT_DATA_DESCRIPTOR> params;
             ULONG param_count;
 
             // Preallocate array.
-            va_start(arg, param1);
-            for (param_count = 1;; param_count++) {
+            for (param_count = 0;; param_count++) {
                 EVENT_DATA_DESCRIPTOR &p = va_arg(arg, EVENT_DATA_DESCRIPTOR);
                 if (!p.Ptr) break;
             }
-            va_end(arg);
             params.reserve(param_count);
 
             // Copy parameters to array.
-            va_start(arg, param1);
-            for (params.push_back(param1);;) {
+            arg = arg_start;
+            for (;;) {
                 EVENT_DATA_DESCRIPTOR &p = va_arg(arg, EVENT_DATA_DESCRIPTOR);
                 if (!p.Ptr) break;
                 params.push_back(p);
             }
-            va_end(arg);
 
             return EventWrite(m_h, EventDescriptor, param_count, params.data());
         }
