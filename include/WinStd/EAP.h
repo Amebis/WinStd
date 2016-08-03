@@ -26,6 +26,7 @@
 namespace winstd
 {
     class WINSTD_API eap_attr;
+    class WINSTD_API eap_method_prop;
 }
 
 #pragma once
@@ -129,6 +130,58 @@ namespace winstd
                     pValue = NULL;
             }
             return *this;
+        }
+    };
+
+
+    ///
+    /// EAP_METHOD_PROPERTY wrapper class
+    ///
+    class WINSTD_API eap_method_prop : public EAP_METHOD_PROPERTY
+    {
+    public:
+        ///
+        /// Constructs a BOOL method property
+        ///
+        /// \param[in] type   EAP method property type
+        /// \param[in] value  Property value
+        ///
+        inline eap_method_prop(_In_ EAP_METHOD_PROPERTY_TYPE type, _In_ BOOL value)
+        {
+            eapMethodPropertyType                  = type;
+            eapMethodPropertyValueType             = empvtBool;
+            eapMethodPropertyValue.empvBool.length = sizeof(BOOL);
+            eapMethodPropertyValue.empvBool.value  = value;
+        }
+
+
+        ///
+        /// Constructs a DWORD method property
+        ///
+        /// \param[in] type   EAP method property type
+        /// \param[in] value  Property value
+        ///
+        inline eap_method_prop(_In_ EAP_METHOD_PROPERTY_TYPE type, _In_ DWORD value)
+        {
+            eapMethodPropertyType                   = type;
+            eapMethodPropertyValueType              = empvtDword;
+            eapMethodPropertyValue.empvDword.length = sizeof(DWORD);
+            eapMethodPropertyValue.empvDword.value  = value;
+        }
+
+
+        ///
+        /// Constructs a Unicode string method property
+        ///
+        /// \param[in] type   EAP method property type
+        /// \param[in] value  Property value
+        ///
+        inline eap_method_prop(_In_ EAP_METHOD_PROPERTY_TYPE type, _In_z_ LPCWSTR value)
+        {
+            eapMethodPropertyType                    = type;
+            eapMethodPropertyValueType               = empvtString;
+            eapMethodPropertyValue.empvString.length = (DWORD)(sizeof(WCHAR)*(wcslen(value) + 1));
+            eapMethodPropertyValue.empvString.value  = (BYTE*)value;
         }
     };
 
