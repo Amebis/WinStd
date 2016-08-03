@@ -42,6 +42,7 @@
 
 #include <stdarg.h>
 
+#include <memory>
 #include <string>
 
 inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg);
