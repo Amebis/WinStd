@@ -27,9 +27,12 @@ namespace winstd
 {
     class WINSTD_API eap_attr;
     class WINSTD_API eap_method_prop;
+    class WINSTD_API eap_packet;
 }
 
 #pragma once
+
+#include <eapmethodtypes.h>
 
 
 namespace winstd
@@ -183,6 +186,169 @@ namespace winstd
             eapMethodPropertyValue.empvString.length = (DWORD)(sizeof(WCHAR)*(wcslen(value) + 1));
             eapMethodPropertyValue.empvString.value  = (BYTE*)value;
         }
+    };
+
+
+    ///
+    /// EapPacket wrapper class
+    ///
+    class WINSTD_API eap_packet : public dplhandle<EapPacket*>
+    {
+    public:
+        ///
+        /// Initializes a new class instance with the EAP packet set to NULL.
+        ///
+        inline eap_packet()
+        {
+        }
+
+
+        ///
+        /// Initializes a new class instance with the duplicated EAP packet.
+        ///
+        /// \param[in] h  Initial EAP packet value
+        ///
+        inline eap_packet(_In_ handle_type h)
+        {
+            m_h = duplicate_internal(h);
+        }
+
+
+        ///
+        /// Destroys the EAP packet.
+        ///
+        virtual ~eap_packet();
+
+
+        ///
+        /// Create new EAP packet
+        ///
+        /// \param[in] code  EAP code (one of EapCode enum values)
+        /// \param[in] id    Packet ID
+        /// \param[in] size  Initial packet size. Must be at least 4.
+        ///
+        /// \note Packet data (beyond first 4B) is not initialized.
+        ///
+        /// \return
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
+        inline bool create(_In_ EapCode code, _In_ BYTE id, _In_ WORD size)
+        {
+            assert(size >= 4); // EAP packets must contain at least 4B.
+
+            handle_type h = (handle_type)HeapAlloc(GetProcessHeap(), 0, size);
+            if (h) {
+                        h->Code   = (BYTE)      code ;
+                        h->Id     =             id   ;
+                *(WORD*)h->Length =       htons(size);
+
+                attach(h);
+                return true;
+            } else {
+                SetLastError(ERROR_OUTOFMEMORY);
+                return false;
+            }
+        }
+
+
+        ///
+        /// Create new EAP Request packet
+        ///
+        /// \param[in] id        Packet ID
+        /// \param[in] protocol  Protocol ID
+        /// \param[in] flags     Request flags
+        /// \param[in] size      Initial packet size. Must be at least 6.
+        ///
+        /// \note Packet data (beyond first 6B) is not initialized.
+        ///
+        /// \return
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
+        inline bool create_request(_In_ BYTE id, _In_ BYTE protocol, _In_ BYTE flags, _In_opt_ WORD size = 6)
+        {
+            assert(size >= 6); // EAP Request packets must contain at least 6B.
+
+            if (!create(EapCodeRequest, id, size))
+                return false;
+
+            m_h->Data[0] = protocol;
+            m_h->Data[1] = flags;
+
+            return true;
+        }
+
+
+        ///
+        /// Create new EAP Response packet
+        ///
+        /// \param[in] id        Packet ID
+        /// \param[in] protocol  Protocol ID
+        /// \param[in] flags     Response flags
+        /// \param[in] size      Initial packet size. Must be at least 6.
+        ///
+        /// \note Packet data (beyond first 6B) is not initialized.
+        ///
+        /// \return
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
+        inline bool create_response(_In_ BYTE id, _In_ BYTE protocol, _In_ BYTE flags, _In_opt_ WORD size = 6)
+        {
+            assert(size >= 6); // EAP Response packets must contain at least 6B.
+
+            if (!create(EapCodeResponse, id, size))
+                return false;
+
+            m_h->Data[0] = protocol;
+            m_h->Data[1] = flags;
+
+            return true;
+        }
+
+
+        ///
+        /// Create Accept EAP packet
+        ///
+        /// \param[in] id  ID of EAP packet this packet is rejecting
+        ///
+        inline bool create_accept(_In_ BYTE id)
+        {
+            return create(EapCodeSuccess, id + 1, 4);
+        }
+
+
+        ///
+        /// Create Reject EAP packet
+        ///
+        /// \param[in] id  ID of EAP packet this packet is rejecting
+        ///
+        inline bool create_reject(_In_ BYTE id)
+        {
+            return create(EapCodeFailure, id + 1, 4);
+        }
+
+
+        ///
+        /// Returns total EAP packet size in bytes.
+        ///
+        inline WORD size() const
+        {
+            return m_h ? ntohs(*(WORD*)m_h->Length) : 0;
+        }
+
+
+    protected:
+        ///
+        /// Destroys the EAP packet.
+        ///
+        virtual void free_internal();
+
+        ///
+        /// Duplicates the EAP packet.
+        ///
+        virtual handle_type duplicate_internal(_In_ handle_type h) const;
     };
 
     /// @}

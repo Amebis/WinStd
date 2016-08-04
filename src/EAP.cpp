@@ -25,9 +25,40 @@
 // winstd::eap_attr
 //////////////////////////////////////////////////////////////////////
 
-
 winstd::eap_attr::~eap_attr()
 {
     if (pValue)
         delete []pValue;
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// winstd::eap_packet
+//////////////////////////////////////////////////////////////////////
+
+winstd::eap_packet::~eap_packet()
+{
+    if (m_h)
+        HeapFree(GetProcessHeap(), 0, m_h);
+}
+
+
+void winstd::eap_packet::free_internal()
+{
+    HeapFree(GetProcessHeap(), 0, m_h);
+}
+
+
+winstd::eap_packet::handle_type winstd::eap_packet::duplicate_internal(_In_ handle_type h) const
+{
+    WORD n = ntohs(*(WORD*)h->Length);
+    handle_type h2 = (handle_type)HeapAlloc(GetProcessHeap(), 0, n);
+    if (!h2) {
+        SetLastError(ERROR_OUTOFMEMORY);
+        return NULL;
+    }
+
+    memcpy(h2, h, n);
+
+    return h2;
 }
