@@ -25,6 +25,8 @@
 
 namespace winstd
 {
+    enum eap_type_t;
+
     class WINSTD_API eap_attr;
     class WINSTD_API eap_method_prop;
     class WINSTD_API eap_packet;
@@ -42,6 +44,21 @@ namespace winstd
     /// Integrates WinStd classes with Microsoft EAP API
     ///
     /// @{
+
+    ///
+    /// EAP method numbers
+    ///
+    /// \sa [Extensible Authentication Protocol (EAP) Registry (Chapter: Method Types)](https://www.iana.org/assignments/eap-numbers/eap-numbers.xhtml#eap-numbers-4)
+    ///
+    enum eap_type_t {
+        eap_type_undefined = 0,     ///< Undefined EAP type
+        eap_type_tls       = 13,    ///< EAP-TLS
+        eap_type_ttls      = 21,    ///< EAP-TTLS
+        eap_type_peap      = 25,    ///< EAP-PEAP
+        eap_type_mschapv2  = 26,    ///< EAP-MSCHAPv2
+        eap_type_pap       = 192,   ///< PAP (Not actually an EAP method; Moved to the Unassigned area)
+    };
+
 
     ///
     /// EAP_ATTRIBUTE wrapper class
@@ -255,10 +272,10 @@ namespace winstd
         ///
         /// Create new EAP Request packet
         ///
-        /// \param[in] id        Packet ID
-        /// \param[in] protocol  Protocol ID
-        /// \param[in] flags     Request flags
-        /// \param[in] size      Initial packet size. Must be at least 6.
+        /// \param[in] id     Packet ID
+        /// \param[in] type   Protocol ID
+        /// \param[in] flags  Request flags
+        /// \param[in] size   Initial packet size. Must be at least 6.
         ///
         /// \note Packet data (beyond first 6B) is not initialized.
         ///
@@ -266,15 +283,15 @@ namespace winstd
         /// - true when creation succeeds;
         /// - false when creation fails. For extended error information, call `GetLastError()`.
         ///
-        inline bool create_request(_In_ BYTE id, _In_ BYTE protocol, _In_ BYTE flags, _In_opt_ WORD size = 6)
+        inline bool create_request(_In_ BYTE id, _In_ eap_type_t type, _In_ BYTE flags, _In_opt_ WORD size = 6)
         {
             assert(size >= 6); // EAP Request packets must contain at least 6B.
 
             if (!create(EapCodeRequest, id, size))
                 return false;
 
-            m_h->Data[0] = protocol;
-            m_h->Data[1] = flags;
+            m_h->Data[0] = (BYTE)type;
+            m_h->Data[1] =       flags;
 
             return true;
         }
@@ -283,10 +300,10 @@ namespace winstd
         ///
         /// Create new EAP Response packet
         ///
-        /// \param[in] id        Packet ID
-        /// \param[in] protocol  Protocol ID
-        /// \param[in] flags     Response flags
-        /// \param[in] size      Initial packet size. Must be at least 6.
+        /// \param[in] id     Packet ID
+        /// \param[in] type   Protocol ID
+        /// \param[in] flags  Response flags
+        /// \param[in] size   Initial packet size. Must be at least 6.
         ///
         /// \note Packet data (beyond first 6B) is not initialized.
         ///
@@ -294,15 +311,15 @@ namespace winstd
         /// - true when creation succeeds;
         /// - false when creation fails. For extended error information, call `GetLastError()`.
         ///
-        inline bool create_response(_In_ BYTE id, _In_ BYTE protocol, _In_ BYTE flags, _In_opt_ WORD size = 6)
+        inline bool create_response(_In_ BYTE id, _In_ eap_type_t type, _In_ BYTE flags, _In_opt_ WORD size = 6)
         {
             assert(size >= 6); // EAP Response packets must contain at least 6B.
 
             if (!create(EapCodeResponse, id, size))
                 return false;
 
-            m_h->Data[0] = protocol;
-            m_h->Data[1] = flags;
+            m_h->Data[0] = (BYTE)type;
+            m_h->Data[1] =       flags;
 
             return true;
         }
