@@ -810,6 +810,21 @@ namespace winstd
                 return false;
         }
 
+        ///
+        /// Generates cryptographic session keys derived from a base data value.
+        ///
+        /// \sa [CryptDeriveKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379916.aspx)
+        ///
+        inline bool derive(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ HCRYPTHASH hBaseData, _In_ DWORD dwFlags)
+        {
+            handle_type h;
+            if (CryptDeriveKey(hProv, Algid, hBaseData, dwFlags, &h)) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
     protected:
         ///
         /// Destroys the key.
