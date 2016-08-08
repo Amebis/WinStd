@@ -43,6 +43,7 @@
 #include <stdarg.h>
 
 #include <memory>
+#include <stdexcept>
 #include <string>
 
 inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg);
@@ -69,6 +70,17 @@ namespace winstd
     template <class T> class handle;
     template <class T> class dplhandle;
 
+    ///
+    /// \defgroup WinStdExceptions Exceptions
+    /// Additional exceptions
+    ///
+    /// @{
+
+    template <typename _Tn> class num_runtime_error;
+    class WINSTD_API win_runtime_error;
+
+    /// @}
+
     /// \addtogroup WinStdStrFormat
     /// @{
 
@@ -77,7 +89,7 @@ namespace winstd
     ///
     /// Single-byte character implementation of a class to support string formatting using `printf()` style templates
     ///
-    typedef basic_string_printf<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > string_printf;
+    typedef basic_string_printf<char, std::char_traits<char>, std::allocator<char> > string_printf;
 
     ///
     /// Wide character implementation of a class to support string formatting using `printf()` style templates
@@ -680,6 +692,150 @@ namespace winstd
         ///
         virtual handle_type duplicate_internal(_In_ handle_type h) const = 0;
     };
+
+    /// @}
+
+    ///
+    /// \defgroup WinStdExceptions Exceptions
+    /// Additional exceptions
+    ///
+    /// @{
+
+    ///
+    /// Windows runtime error
+    ///
+    template <typename _Tn>
+    class num_runtime_error : public std::runtime_error
+    {
+    public:
+        typedef _Tn error_type;
+
+    public:
+        ///
+        /// Constructs an exception
+        ///
+        /// \param[in] error  Numeric error code
+        /// \param[in] msg    Error message
+        ///
+        inline num_runtime_error(_In_ error_type num, _In_ const std::string& msg) :
+            m_num(num),
+            runtime_error(msg.c_str())
+        {
+        }
+
+
+        ///
+        /// Constructs an exception
+        ///
+        /// \param[in] num  Numeric error code
+        /// \param[in] msg  Error message
+        ///
+        inline num_runtime_error(_In_ error_type num, _In_z_ const char *msg) :
+            m_num(num),
+            runtime_error(msg)
+        {
+        }
+
+
+        ///
+        /// Copies an exception
+        ///
+        /// \param[in] other  Exception to copy from
+        ///
+        inline num_runtime_error(const num_runtime_error<_Tn> &other) :
+            m_num(other.m_num),
+            runtime_error(other)
+        {
+        }
+
+
+        ///
+        /// Copies an exception
+        ///
+        /// \param[in] other  Exception to copy from
+        ///
+        inline num_runtime_error& operator=(const num_runtime_error<_Tn> &other)
+        {
+            if (this != addressof(other)) {
+                *(runtime_error*)this = other;
+                m_num                 = other.m_num;
+            }
+
+            return *this;
+        }
+
+
+        ///
+        /// Returns the Windows error number
+        ///
+        inline error_type number() const
+        {
+            return m_num;
+        }
+
+    protected:
+        error_type m_num;  ///< Numeric error code
+    };
+
+
+    ///
+    /// Windows runtime error
+    ///
+    class WINSTD_API win_runtime_error : public num_runtime_error<DWORD>
+    {
+    public:
+        ///
+        /// Constructs an exception
+        ///
+        /// \param[in] error  Windows error code
+        /// \param[in] msg    Error message
+        ///
+        inline win_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<DWORD>(num, msg.c_str())
+        {
+        }
+
+
+        ///
+        /// Constructs an exception
+        ///
+        /// \param[in] num  Numeric error code
+        /// \param[in] msg  Error message
+        ///
+        inline win_runtime_error(_In_ error_type num, _In_z_ const char *msg) : num_runtime_error<DWORD>(num, msg)
+        {
+        }
+
+
+        ///
+        /// Constructs an exception using `GetLastError()`
+        ///
+        /// \param[in] msg  Error message
+        ///
+        inline win_runtime_error(_In_ const std::string& msg) : num_runtime_error<DWORD>(GetLastError(), msg.c_str())
+        {
+        }
+
+
+        ///
+        /// Constructs an exception using `GetLastError()`
+        ///
+        /// \param[in] msg  Error message
+        ///
+        inline win_runtime_error(_In_z_ const char *msg) : num_runtime_error<DWORD>(GetLastError(), msg)
+        {
+        }
+
+
+        ///
+        /// Copies an exception
+        ///
+        /// \param[in] other  Exception to copy from
+        ///
+        inline win_runtime_error(const win_runtime_error &other) : num_runtime_error<DWORD>(other)
+        {
+        }
+    };
+
 
     /// @}
 

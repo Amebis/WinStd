@@ -29,6 +29,19 @@ namespace winstd
     class WINSTD_API bstr;
     class WINSTD_API variant;
     class WINSTD_API com_initializer;
+
+    ///
+    /// \defgroup WinStdExceptions Exceptions
+    /// Additional exceptions
+    ///
+    /// @{
+
+    ///
+    /// COM runtime error
+    ///
+    typedef num_runtime_error<HRESULT> com_runtime_error;
+
+    /// @}
 }
 
 #pragma once
