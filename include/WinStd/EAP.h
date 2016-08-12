@@ -151,6 +151,18 @@ namespace winstd
             }
             return *this;
         }
+
+        ///
+        /// Creates MS-MPPE-Send-Key or MS-MPPE-Recv-Key
+        ///
+        /// \sa [RADIUS Vendor-Specific](https://tools.ietf.org/html/rfc2865#section-5.26)
+        /// \sa [MS-MPPE-Send-Key](https://tools.ietf.org/html/rfc2548#section-2.4.2)
+        /// \sa [MS-MPPE-Recv-Key](https://tools.ietf.org/html/rfc2548#section-2.4.3)
+        ///
+        void create_ms_mppe_key(_In_ BYTE bVendorType, _In_count_(nKeySize) LPCBYTE pbKey, _In_ BYTE nKeySize);
+
+    public:
+        static const EAP_ATTRIBUTE blank;
     };
 
 

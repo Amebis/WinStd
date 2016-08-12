@@ -32,6 +32,43 @@ winstd::eap_attr::~eap_attr()
 }
 
 
+void winstd::eap_attr::create_ms_mppe_key(_In_ BYTE bVendorType, _In_count_(nKeySize) LPCBYTE pbKey, _In_ BYTE nKeySize)
+{
+    BYTE nPaddingLength = (BYTE)((16 - (1 + nKeySize)) % 16);
+    DWORD dwLengthNew =
+        4              + // Vendor-Id
+        1              + // Vendor type
+        1              + // Vendor length
+        2              + // Salt
+        1              + // Key-Length
+        nKeySize       + // Key
+        nPaddingLength;  // Padding
+
+    LPBYTE p = new BYTE[dwLengthNew];
+    p[0] = 0x00;                                    // Vendor-Id (0x137 = 311 = Microsoft)
+    p[1] = 0x00;                                    // --|
+    p[2] = 0x01;                                    // --|
+    p[3] = 0x37;                                    // --^
+    p[4] = bVendorType;                             // Vendor type
+    p[5] = (BYTE)(dwLengthNew - 4);                 // Vendor length
+    p[6] = 0x00;                                    // Salt
+    p[7] = 0x00;                                    // --^
+    p[8] = nKeySize;                                // Key-Length
+    memcpy(p + 9, pbKey, nKeySize);                 // Key
+    memset(p + 9 + nKeySize, 0, nPaddingLength);    // Padding
+
+    if (pValue)
+        delete [] pValue;
+
+    eaType   = eatVendorSpecific;
+    dwLength = dwLengthNew;
+    pValue   = p;
+}
+
+
+const EAP_ATTRIBUTE winstd::eap_attr::blank = {};
+
+
 //////////////////////////////////////////////////////////////////////
 // winstd::eap_packet
 //////////////////////////////////////////////////////////////////////
