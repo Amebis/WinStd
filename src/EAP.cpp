@@ -34,7 +34,7 @@ winstd::eap_attr::~eap_attr()
 
 void winstd::eap_attr::create_ms_mppe_key(_In_ BYTE bVendorType, _In_count_(nKeySize) LPCBYTE pbKey, _In_ BYTE nKeySize)
 {
-    BYTE nPaddingLength = (BYTE)((16 - (1 + nKeySize)) % 16);
+    BYTE nPaddingLength = (BYTE)((16 - (1 + (DWORD)nKeySize)) % 16);
     DWORD dwLengthNew =
         4              + // Vendor-Id
         1              + // Vendor type

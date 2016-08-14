@@ -63,7 +63,7 @@ namespace winstd
     ///
     /// EAP_ATTRIBUTE wrapper class
     ///
-    class WINSTD_API eap_attr : public EAP_ATTRIBUTE
+    class WINSTD_API __declspec(novtable) eap_attr : public EAP_ATTRIBUTE
     {
     public:
         ///
@@ -94,13 +94,14 @@ namespace winstd
         ///
         /// Moves an existing EAP attribute.
         ///
-        inline eap_attr(_Inout_ EAP_ATTRIBUTE &&a)
+        inline eap_attr(_Inout_ eap_attr &&a)
         {
             eaType   = a.eaType;
             dwLength = a.dwLength;
             if (a.dwLength) {
-                pValue = a.pValue;
-                a.pValue = NULL;
+                pValue     = a.pValue;
+                a.dwLength = 0;
+                a.pValue   = NULL;
             } else
                 pValue = NULL;
         }
@@ -108,7 +109,7 @@ namespace winstd
         ///
         /// Destroys the EAP attribute.
         ///
-        virtual ~eap_attr();
+        ~eap_attr();
 
         ///
         /// Copies an existing EAP attribute.
@@ -136,7 +137,7 @@ namespace winstd
         ///
         /// Moves an existing EAP attribute.
         ///
-        inline eap_attr& operator=(_Inout_ EAP_ATTRIBUTE &&a)
+        inline eap_attr& operator=(_Inout_ eap_attr &&a)
         {
             if (this != &a) {
                 eaType   = a.eaType;
@@ -144,8 +145,9 @@ namespace winstd
                 if (pValue)
                     delete [] pValue;
                 if (a.dwLength) {
-                    pValue = a.pValue;
-                    a.pValue = NULL;
+                    pValue     = a.pValue;
+                    a.dwLength = 0;
+                    a.pValue   = NULL;
                 } else
                     pValue = NULL;
             }
@@ -169,7 +171,7 @@ namespace winstd
     ///
     /// EAP_METHOD_PROPERTY wrapper class
     ///
-    class WINSTD_API eap_method_prop : public EAP_METHOD_PROPERTY
+    class WINSTD_API __declspec(novtable) eap_method_prop : public EAP_METHOD_PROPERTY
     {
     public:
         ///
