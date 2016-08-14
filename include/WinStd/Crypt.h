@@ -825,6 +825,16 @@ namespace winstd
                 return false;
         }
 
+        ///
+        /// Creates Exponent-of-one key
+        ///
+        /// \sa [How to export and import plain text session keys by using CryptoAPI](https://support.microsoft.com/en-us/kb/228786)
+        ///
+        /// \param[in] hProv      Handle of cryptographics provider to use
+        /// \param[in] dwKeySpec  Key specification (`AT_KEYEXCHANGE` or `AT_SIGNATURE`)
+        ///
+        bool create_exp1(_In_ HCRYPTPROV hProv, _In_ DWORD dwKeySpec);
+
     protected:
         ///
         /// Destroys the key.

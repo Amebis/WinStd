@@ -138,6 +138,69 @@ winstd::crypt_key::~crypt_key()
 }
 
 
+bool winstd::crypt_key::create_exp1(_In_ HCRYPTPROV hProv, _In_ DWORD dwKeySpec)
+{
+    if (dwKeySpec != AT_KEYEXCHANGE && dwKeySpec != AT_SIGNATURE) {
+        SetLastError(ERROR_INVALID_PARAMETER);
+        return false;
+    }
+
+    // Generate the private key.
+    handle_type h;
+    if (CryptGenKey(hProv, dwKeySpec, CRYPT_EXPORTABLE, &h)) {
+        // Export the private key, we'll convert it to a private exponent of one key.
+        std::vector<BYTE> key_blob;
+        if (CryptExportKey(h, 0, PRIVATEKEYBLOB, 0, key_blob)) {
+            CryptDestroyKey(h);
+
+            // Get the byte length of the key.
+            size_t
+                size_key   = *(DWORD*)&key_blob[12]/8,
+                size_prime = size_key/2;
+
+            // Modify the Exponent in Key BLOB format
+            // Key BLOB format is documented in SDK
+
+            // Convert pubexp in rsapubkey to 1
+            LPBYTE ptr = &key_blob[16];
+            *(DWORD*)ptr = 1;
+            ptr += sizeof(DWORD);
+
+            // Skip modulus, prime1, prime2
+            ptr += size_key;
+            ptr += size_prime;
+            ptr += size_prime;
+
+            // Convert exponent1 to 1
+            ptr[0] = 1;
+            memset(ptr + 1, 0, size_prime - 1);
+            ptr += size_prime;
+
+            // Convert exponent2 to 1
+            ptr[0] = 1;
+            memset(ptr + 1, 0, size_prime - 1);
+            ptr += size_prime;
+
+            // Skip coefficient
+            ptr += size_prime;
+
+            // Convert privateExponent to 1
+            ptr[0] = 1;
+            memset(ptr + 1, 0, size_key - 1);
+
+            // Import the exponent-of-one private key.
+            if (CryptImportKey(hProv, key_blob.data(), (DWORD)key_blob.size(), 0, 0, &h)) {
+                attach(h);
+                return true;
+            }
+        } else
+            CryptDestroyKey(h);
+    }
+
+    return false;
+}
+
+
 void winstd::crypt_key::free_internal()
 {
     CryptDestroyKey(m_h);
