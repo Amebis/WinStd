@@ -67,6 +67,7 @@ namespace winstd
     class WINSTD_API library;
     class WINSTD_API heap;
     class WINSTD_API actctx_activator;
+    class WINSTD_API user_impersonator;
 }
 
 #pragma once
@@ -1000,6 +1001,33 @@ namespace winstd
 
     protected:
         ULONG_PTR m_cookie; ///< Cookie for context deactivation
+    };
+
+
+    ///
+    /// Lets the calling thread impersonate the security context of a logged-on user
+    ///
+    class WINSTD_API user_impersonator
+    {
+    public:
+        ///
+        /// Construct the impersonator and impersonates the given user
+        ///
+        /// \param[in] hToken  A handle to a primary or impersonation access token that represents a logged-on user
+        ///
+        /// \sa [ImpersonateLoggedOnUser function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa378612.aspx)
+        ///
+        user_impersonator(_In_ HANDLE hToken);
+
+        ///
+        /// Reverts to current user and destructs the impersonator
+        ///
+        /// \sa [RevertToSelf function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379317.aspx)
+        ///
+        virtual ~user_impersonator();
+
+    protected:
+        BOOL m_cookie; ///< Did impersonation succeed?
     };
 
     /// @}

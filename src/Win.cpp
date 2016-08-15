@@ -111,3 +111,20 @@ winstd::actctx_activator::~actctx_activator()
     if (m_cookie)
         DeactivateActCtx(0, m_cookie);
 }
+
+
+//////////////////////////////////////////////////////////////////////
+// winstd::user_impersonator
+//////////////////////////////////////////////////////////////////////
+
+winstd::user_impersonator::user_impersonator(_In_ HANDLE hToken)
+{
+    m_cookie = ImpersonateLoggedOnUser(hToken);
+}
+
+
+winstd::user_impersonator::~user_impersonator()
+{
+    if (m_cookie)
+        RevertToSelf();
+}
