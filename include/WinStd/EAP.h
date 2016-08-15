@@ -50,7 +50,8 @@ namespace winstd
     ///
     /// \sa [Extensible Authentication Protocol (EAP) Registry (Chapter: Method Types)](https://www.iana.org/assignments/eap-numbers/eap-numbers.xhtml#eap-numbers-4)
     ///
-    enum eap_type_t {
+    #pragma warning(suppress: 4480)
+    enum eap_type_t : unsigned char {
         eap_type_undefined = 0,     ///< Undefined EAP type
         eap_type_tls       = 13,    ///< EAP-TLS
         eap_type_ttls      = 21,    ///< EAP-TTLS
