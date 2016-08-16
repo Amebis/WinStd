@@ -396,7 +396,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        handle<handle_type>(_Inout_ handle<handle_type> &&h)
+        inline handle<handle_type>(_Inout_ handle<handle_type> &&h)
         {
             // Transfer handle.
             m_h   = h.m_h;

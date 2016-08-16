@@ -610,11 +610,42 @@ namespace winstd
     {
     public:
         ///
-        /// Releases the cryptographi context.
+        /// Initializes a new class instance with the object handle set to NULL.
+        ///
+        inline crypt_prov() : handle<HCRYPTPROV>() {}
+
+        ///
+        /// Initializes a new class instance with an already available object handle.
+        ///
+        /// \param[in] h  Initial object handle value
+        ///
+        inline crypt_prov(_In_opt_ handle_type h) : handle<HCRYPTPROV>(h) {}
+
+        ///
+        /// Move constructor
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        inline crypt_prov(_Inout_ crypt_prov &&h) : handle<HCRYPTPROV>(std::move(h)) {}
+
+        ///
+        /// Releases the cryptographic context.
         ///
         /// \sa [CryptReleaseContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380268.aspx)
         ///
         virtual ~crypt_prov();
+
+        ///
+        /// Move assignment
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        crypt_prov& operator=(_Inout_ crypt_prov &&h)
+        {
+            if (this != std::addressof(h))
+                *(handle<handle_type>*)this = std::move(h);
+            return *this;
+        }
 
         ///
         /// Acquires the cryptographic context.
@@ -634,6 +665,11 @@ namespace winstd
             } else
                 return false;
         }
+
+    private:
+        // This class is noncopyable.
+        crypt_prov(_In_ const crypt_prov &h);
+        crypt_prov& operator=(_In_ const crypt_prov &h);
 
     protected:
         ///
