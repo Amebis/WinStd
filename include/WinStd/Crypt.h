@@ -549,11 +549,42 @@ namespace winstd
     {
     public:
         ///
+        /// Initializes a new class instance with the object handle set to NULL.
+        ///
+        inline cert_store() : handle<HCERTSTORE>() {}
+
+        ///
+        /// Initializes a new class instance with an already available object handle.
+        ///
+        /// \param[in] h  Initial object handle value
+        ///
+        inline cert_store(_In_opt_ handle_type h) : handle<HCERTSTORE>(h) {}
+
+        ///
+        /// Move constructor
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        inline cert_store(_Inout_ cert_store &&h) : handle<HCERTSTORE>(std::move(h)) {}
+
+        ///
         /// Closes the certificate store.
         ///
         /// \sa [CertCloseStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376026.aspx)
         ///
         virtual ~cert_store();
+
+        ///
+        /// Move assignment
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        cert_store& operator=(_Inout_ cert_store &&h)
+        {
+            if (this != std::addressof(h))
+                *(handle<handle_type>*)this = std::move(h);
+            return *this;
+        }
 
         ///
         /// Opens the certificate store.
@@ -592,6 +623,11 @@ namespace winstd
             } else
                 return false;
         }
+
+    private:
+        // This class is noncopyable.
+        cert_store(_In_ const cert_store &h);
+        cert_store& operator=(_In_ const cert_store &h);
 
     protected:
         ///
