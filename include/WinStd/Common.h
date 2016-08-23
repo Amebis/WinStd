@@ -702,7 +702,7 @@ namespace winstd
     /// @{
 
     ///
-    /// Windows runtime error
+    /// Numerical runtime error
     ///
     template <typename _Tn>
     class num_runtime_error : public std::runtime_error
@@ -798,7 +798,7 @@ namespace winstd
         ///
         /// Constructs an exception
         ///
-        /// \param[in] num  Numeric error code
+        /// \param[in] num  Windows error code
         /// \param[in] msg  Error message
         ///
         inline win_runtime_error(_In_ error_type num, _In_z_ const char *msg) : num_runtime_error<DWORD>(num, msg)

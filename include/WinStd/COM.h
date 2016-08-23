@@ -29,19 +29,7 @@ namespace winstd
     class WINSTD_API bstr;
     class WINSTD_API variant;
     class WINSTD_API com_initializer;
-
-    ///
-    /// \defgroup WinStdExceptions Exceptions
-    /// Additional exceptions
-    ///
-    /// @{
-
-    ///
-    /// COM runtime error
-    ///
-    typedef num_runtime_error<HRESULT> com_runtime_error;
-
-    /// @}
+    class WINSTD_API com_runtime_error;
 }
 
 #pragma once
@@ -975,4 +963,53 @@ namespace winstd
     protected:
         HRESULT m_result;   ///< Result of CoInitialize call
     };
+
+
+    ///
+    /// \defgroup WinStdExceptions Exceptions
+    /// Additional exceptions
+    ///
+    /// @{
+
+    ///
+    /// COM runtime error
+    ///
+    /// \note Must be defined as derived class from num_runtime_error<> to allow correct type info for dynamic typecasting and prevent folding with other derivates of num_runtime_error<>.
+    ///
+    class WINSTD_API com_runtime_error : public num_runtime_error<HRESULT>
+    {
+    public:
+        ///
+        /// Constructs an exception
+        ///
+        /// \param[in] error  COM error code
+        /// \param[in] msg    Error message
+        ///
+        inline com_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<HRESULT>(num, msg.c_str())
+        {
+        }
+
+
+        ///
+        /// Constructs an exception
+        ///
+        /// \param[in] num  COM error code
+        /// \param[in] msg  Error message
+        ///
+        inline com_runtime_error(_In_ error_type num, _In_z_ const char *msg) : num_runtime_error<HRESULT>(num, msg)
+        {
+        }
+
+
+        ///
+        /// Copies an exception
+        ///
+        /// \param[in] other  Exception to copy from
+        ///
+        inline com_runtime_error(const com_runtime_error &other) : num_runtime_error<HRESULT>(other)
+        {
+        }
+    };
+
+    /// @}
 }

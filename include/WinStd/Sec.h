@@ -31,19 +31,7 @@ namespace winstd
     class WINSTD_API sec_credentials;
     class WINSTD_API sec_context;
     class WINSTD_API sec_buffer_desc;
-
-    ///
-    /// \defgroup WinStdExceptions Exceptions
-    /// Additional exceptions
-    ///
-    /// @{
-
-    ///
-    /// COM runtime error
-    ///
-    typedef num_runtime_error<SECURITY_STATUS> sec_runtime_error;
-
-    /// @}
+    class WINSTD_API sec_runtime_error;
 }
 
 #pragma once
@@ -355,6 +343,55 @@ namespace winstd
         /// \sa [FreeContextBuffer function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375416.aspx)
         ///
         virtual ~sec_buffer_desc();
+    };
+
+    /// @}
+
+
+    ///
+    /// \defgroup WinStdExceptions Exceptions
+    /// Additional exceptions
+    ///
+    /// @{
+
+    ///
+    /// COM runtime error
+    ///
+    /// \note Must be defined as derived class from num_runtime_error<> to allow correct type info for dynamic typecasting and prevent folding with other derivates of num_runtime_error<>.
+    ///
+    class WINSTD_API sec_runtime_error : public num_runtime_error<SECURITY_STATUS>
+    {
+    public:
+        ///
+        /// Constructs an exception
+        ///
+        /// \param[in] error  Security provider error code
+        /// \param[in] msg    Error message
+        ///
+        inline sec_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<SECURITY_STATUS>(num, msg.c_str())
+        {
+        }
+
+
+        ///
+        /// Constructs an exception
+        ///
+        /// \param[in] num  Security provider error code
+        /// \param[in] msg  Error message
+        ///
+        inline sec_runtime_error(_In_ error_type num, _In_z_ const char *msg) : num_runtime_error<SECURITY_STATUS>(num, msg)
+        {
+        }
+
+
+        ///
+        /// Copies an exception
+        ///
+        /// \param[in] other  Exception to copy from
+        ///
+        inline sec_runtime_error(const sec_runtime_error &other) : num_runtime_error<SECURITY_STATUS>(other)
+        {
+        }
     };
 
     /// @}
