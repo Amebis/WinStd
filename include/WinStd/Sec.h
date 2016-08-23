@@ -26,6 +26,25 @@
 
 template<class _Elem, class _Traits, class _Ax> BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sName);
 template<class _Elem, class _Traits, class _Ax> BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sName);
+namespace winstd
+{
+    class WINSTD_API sec_credentials;
+    class WINSTD_API sec_context;
+    class WINSTD_API sec_buffer_desc;
+
+    ///
+    /// \defgroup WinStdExceptions Exceptions
+    /// Additional exceptions
+    ///
+    /// @{
+
+    ///
+    /// COM runtime error
+    ///
+    typedef num_runtime_error<SECURITY_STATUS> sec_runtime_error;
+
+    /// @}
+}
 
 #pragma once
 
@@ -104,3 +123,239 @@ BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_st
 }
 
 /// @}
+
+
+namespace winstd
+{
+    /// \addtogroup WinStdSecurityAPI
+    /// @{
+
+    class WINSTD_API sec_credentials : public handle<PCredHandle>
+    {
+    public:
+        ///
+        /// Initializes a new class instance with the object handle set to NULL.
+        ///
+        inline sec_credentials() : handle<PCredHandle>()
+        {
+            m_expires.QuadPart = -1;
+        }
+
+        ///
+        /// Move constructor
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        inline sec_credentials(_Inout_ sec_credentials &&h) :
+            m_expires(std::move(h.m_expires)),
+            handle<PCredHandle>(std::move(h))
+        {
+        }
+
+        ///
+        /// Frees the security credentials.
+        ///
+        /// \sa [FreeCredentialsHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375417.aspx)
+        ///
+        virtual ~sec_credentials();
+
+        ///
+        /// Move assignment
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        sec_credentials& operator=(_Inout_ sec_credentials &&h)
+        {
+            if (this != std::addressof(h)) {
+                *(handle<handle_type>*)this = std::move(h);
+                m_expires = std::move(h.m_expires);
+            }
+            return *this;
+        }
+
+        ///
+        /// Acquires the security credentials.
+        ///
+        /// \return
+        /// - \c SEC_E_OK when succeeds;
+        /// - Error code when fails.
+        ///
+        /// \sa [AcquireCredentialsHandle (General) function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374712.aspx)
+        ///
+        inline SECURITY_STATUS acquire(
+            _In_opt_ LPTSTR         pszPrincipal,
+            _In_     LPTSTR         pszPackage,
+            _In_     unsigned long  fCredentialUse,
+            _In_opt_ void           *pvLogonId,
+            _In_opt_ void           *pAuthData,
+            _In_opt_ SEC_GET_KEY_FN pGetKeyFn = NULL,
+            _In_opt_ void           *pvGetKeyArgument = NULL)
+        {
+            handle_type h = new CredHandle;
+            TimeStamp exp;
+            SECURITY_STATUS res = AcquireCredentialsHandle(pszPrincipal, pszPackage, fCredentialUse, pvLogonId, pAuthData, pGetKeyFn, pvGetKeyArgument, h, &exp);
+            if (SUCCEEDED(res)) {
+                attach(h);
+                m_expires = exp;
+            } else
+                delete h;
+            return res;
+        }
+
+    protected:
+        ///
+        /// Frees the security credentials.
+        ///
+        /// \sa [FreeCredentialsHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375417.aspx)
+        ///
+        virtual void free_internal();
+
+    private:
+        // This class is noncopyable.
+        sec_credentials(_In_ const sec_credentials &h);
+        sec_credentials& operator=(_In_ const sec_credentials &h);
+
+    public:
+        TimeStamp m_expires;    ///< Credentials expiration time
+    };
+
+
+    class WINSTD_API sec_context : public handle<PCtxtHandle>
+    {
+    public:
+        ///
+        /// Initializes a new class instance with the object handle set to NULL.
+        ///
+        inline sec_context() :
+            m_attrib(0),
+            handle<PCtxtHandle>()
+        {
+            m_expires.QuadPart = -1;
+        }
+
+        ///
+        /// Move constructor
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        inline sec_context(_Inout_ sec_context &&h) :
+            m_attrib (std::move(h.m_attrib )),
+            m_expires(std::move(h.m_expires)),
+            handle<PCtxtHandle>(std::move(h))
+        {
+        }
+
+        ///
+        /// Frees the security context.
+        ///
+        /// \sa [DeleteSecurityContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375354.aspx)
+        ///
+        virtual ~sec_context();
+
+        ///
+        /// Move assignment
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        sec_context& operator=(_Inout_ sec_context &&h)
+        {
+            if (this != std::addressof(h)) {
+                *(handle<handle_type>*)this = std::move(h);
+                m_attrib  = std::move(h.m_attrib);
+                m_expires = std::move(h.m_expires);
+            }
+            return *this;
+        }
+
+        ///
+        /// Initializes security context.
+        ///
+        /// \return
+        /// - \c SEC_E_OK when succeeds;
+        /// - Error code when fails.
+        ///
+        /// \sa [InitializeSecurityContext (General) function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375506.aspx)
+        ///
+        inline SECURITY_STATUS initialize(
+            _In_opt_    PCredHandle    phCredential,
+            _In_opt_    LPCTSTR        pszTargetName,
+            _In_        ULONG          fContextReq,
+            _In_        ULONG          TargetDataRep,
+            _In_opt_    PSecBufferDesc pInput,
+            _Inout_opt_ PSecBufferDesc pOutput)
+        {
+            handle_type h = new CtxtHandle;
+            ULONG attr;
+            TimeStamp exp;
+            SECURITY_STATUS res = InitializeSecurityContext(phCredential, NULL, (LPTSTR)pszTargetName, fContextReq, 0, TargetDataRep, pInput, 0, h, pOutput, &attr, &exp);
+            if (SUCCEEDED(res)) {
+                attach(h);
+                m_attrib  = attr;
+                m_expires = exp;
+            } else
+                delete h;
+            return res;
+        }
+
+        ///
+        /// Continue security context.
+        ///
+        /// \return
+        /// - \c SEC_E_OK when succeeds;
+        /// - Error code when fails.
+        ///
+        /// \sa [InitializeSecurityContext (General) function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375506.aspx)
+        ///
+        inline SECURITY_STATUS process(
+            _In_opt_    PCredHandle    phCredential,
+            _In_opt_    LPCTSTR        pszTargetName,
+            _In_        ULONG          fContextReq,
+            _In_        ULONG          TargetDataRep,
+            _In_opt_    PSecBufferDesc pInput,
+            _Inout_opt_ PSecBufferDesc pOutput)
+        {
+            return InitializeSecurityContext(phCredential, m_h, (LPTSTR)pszTargetName, fContextReq, 0, TargetDataRep, pInput, 0, NULL, pOutput, &m_attrib, &m_expires);
+        }
+
+    protected:
+        ///
+        /// Frees the security context.
+        ///
+        /// \sa [DeleteSecurityContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375354.aspx)
+        ///
+        virtual void free_internal();
+
+    private:
+        // This class is noncopyable.
+        sec_context(_In_ const sec_context &h);
+        sec_context& operator=(_In_ const sec_context &h);
+
+    public:
+        ULONG     m_attrib;     ///< Context attributes
+        TimeStamp m_expires;    ///< Context expiration time
+    };
+
+
+    class WINSTD_API sec_buffer_desc : public SecBufferDesc
+    {
+    public:
+        ///
+        /// Initializes security buffer descriptor.
+        ///
+        inline sec_buffer_desc(_Inout_count_(count) PSecBuffer buf, ULONG count, _In_ ULONG version = SECBUFFER_VERSION)
+        {
+            ulVersion = version;
+            cBuffers  = count;
+            pBuffers  = buf;
+        }
+
+        ///
+        /// Frees the security buffer descriptor.
+        ///
+        /// \sa [FreeContextBuffer function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375416.aspx)
+        ///
+        virtual ~sec_buffer_desc();
+    };
+
+    /// @}
+}
