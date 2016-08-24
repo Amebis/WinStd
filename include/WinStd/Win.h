@@ -64,10 +64,13 @@ template<class _Elem, class _Traits, class _Ax> inline BOOL LookupAccountSidW(_I
 
 namespace winstd
 {
+    class WINSTD_API win_handle;
     class WINSTD_API library;
+    class WINSTD_API process;
     class WINSTD_API heap;
     class WINSTD_API actctx_activator;
     class WINSTD_API user_impersonator;
+    class WINSTD_API vmemory;
 }
 
 #pragma once
@@ -885,6 +888,65 @@ namespace winstd
     /// @{
 
     ///
+    /// Windows HANDLE wrapper class
+    ///
+    class WINSTD_API win_handle : public handle<HANDLE>
+    {
+    public:
+        ///
+        /// Initializes a new class instance with the object handle set to NULL.
+        ///
+        inline win_handle() : handle<HCERTSTORE>() {}
+
+        ///
+        /// Initializes a new class instance with an already available object handle.
+        ///
+        /// \param[in] h  Initial object handle value
+        ///
+        inline win_handle(_In_opt_ handle_type h) : handle<HANDLE>(h) {}
+
+        ///
+        /// Move constructor
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        inline win_handle(_Inout_ win_handle &&h) : handle<HCERTSTORE>(std::move(h)) {}
+
+        ///
+        /// Closes an open object handle.
+        ///
+        /// \sa [CloseHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724211.aspx)
+        ///
+        virtual ~win_handle();
+
+        ///
+        /// Move assignment
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        win_handle& operator=(_Inout_ win_handle &&h)
+        {
+            if (this != std::addressof(h))
+                *(handle<handle_type>*)this = std::move(h);
+            return *this;
+        }
+
+    private:
+        // This class is noncopyable.
+        win_handle(_In_ const win_handle &h);
+        win_handle& operator=(_In_ const win_handle &h);
+
+    protected:
+        ///
+        /// Closes an open object handle.
+        ///
+        /// \sa [CloseHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724211.aspx)
+        ///
+        virtual void free_internal();
+    };
+
+
+    ///
     /// Module handle wrapper
     ///
     class WINSTD_API library : public handle<HMODULE>
@@ -923,6 +985,33 @@ namespace winstd
         /// \sa [FreeLibrary function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms683152.aspx)
         ///
         virtual void free_internal();
+    };
+
+
+    ///
+    /// Process handle wrapper
+    ///
+    class WINSTD_API process : public win_handle
+    {
+    public:
+        ///
+        /// Opens process handle.
+        ///
+        /// \sa [OpenProcess function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms684320.aspx)
+        ///
+        /// \return
+        /// - \c true when succeeds;
+        /// - \c false when fails. Use `GetLastError()` for failure reason.
+        ///
+        inline bool open(_In_ DWORD dwDesiredAccess, _In_ BOOL bInheritHandle, _In_ DWORD dwProcessId)
+        {
+            handle_type h = OpenProcess(dwDesiredAccess, bInheritHandle, dwProcessId);
+            if (h) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
     };
 
 
@@ -1028,6 +1117,113 @@ namespace winstd
 
     protected:
         BOOL m_cookie; ///< Did impersonation succeed?
+    };
+
+
+    ///
+    /// Memory in virtual address space of a process handle wrapper
+    ///
+    class WINSTD_API vmemory : public handle<LPVOID>
+    {
+    public:
+        ///
+        /// Initializes a new class instance with the memory handle set to NULL.
+        ///
+        inline vmemory() :
+            m_proc(NULL),
+            handle<LPVOID>()
+        {
+        }
+
+        ///
+        /// Initializes a new class instance with an already available object handle.
+        ///
+        /// \param[in] proc  Handle of process the memory belongs to
+        /// \param[in] h     Initial object handle value
+        ///
+        inline vmemory(_In_ HANDLE proc, _In_opt_ handle_type h) :
+            m_proc(proc),
+            handle<LPVOID>(h)
+        {
+        }
+
+        ///
+        /// Move constructor
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        inline vmemory(_Inout_ vmemory &&h)
+        {
+            // Transfer process.
+            m_proc = h.m_proc;
+
+            // Transfer handle.
+            m_h   = h.m_h;
+            h.m_h = NULL;
+        }
+
+        ///
+        /// Frees the memory.
+        ///
+        /// \sa [VirtualFreeEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366894.aspx)
+        ///
+        virtual ~vmemory();
+
+        ///
+        /// Sets a new memory handle for the class
+        ///
+        /// When the current object handle of the class is non-NULL, the object is destroyed first.
+        ///
+        /// \param[in] proc  Handle of process the memory belongs to
+        /// \param[in] h     Initial object handle value
+        ///
+        inline void attach(_In_ HANDLE proc, _In_opt_ handle_type h)
+        {
+            m_proc = proc;
+            if (m_h)
+                free_internal();
+            m_h    = h;
+        }
+
+        ///
+        /// Reserves, commits, or changes the state of a region of memory within the virtual address space of a specified process. The function initializes the memory it allocates to zero.
+        ///
+        /// \sa [VirtualAllocEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366890.aspx)
+        ///
+        /// \return
+        /// - \c true when succeeds;
+        /// - \c false when fails. Use `GetLastError()` for failure reason.
+        ///
+        inline bool alloc(
+            _In_     HANDLE hProcess,
+            _In_opt_ LPVOID lpAddress,
+            _In_     SIZE_T dwSize,
+            _In_     DWORD  flAllocationType, 
+            _In_     DWORD  flProtect)
+        {
+            handle_type h = VirtualAllocEx(hProcess, lpAddress, dwSize, flAllocationType, flProtect);
+            if (h) {
+                attach(hProcess, h);
+                return true;
+            } else
+                return false;
+        }
+
+    private:
+        // This class is noncopyable.
+        vmemory(_In_ const vmemory &h);
+        vmemory& operator=(_In_ const vmemory &h);
+
+    protected:
+        ///
+        /// Frees the memory.
+        ///
+        /// \sa [VirtualFreeEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366894.aspx)
+        ///
+        virtual void free_internal();
+
+    protected:
+        HANDLE m_proc;  ///< Handle of memory's process
     };
 
     /// @}
