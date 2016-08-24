@@ -94,7 +94,7 @@ namespace winstd
     ///
     /// Wide character implementation of a class to support string formatting using `printf()` style templates
     ///
-    typedef basic_string_printf<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>> wstring_printf;
+    typedef basic_string_printf<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > wstring_printf;
 
     ///
     /// Multi-byte / Wide-character formatted string (according to _UNICODE)
@@ -124,6 +124,19 @@ namespace winstd
     typedef wstring_msg tstring_msg;
 #else
     typedef string_msg tstring_msg;
+#endif
+
+    template<class _Elem, class _Traits = std::char_traits<_Elem>, class _Ax = std::allocator<_Elem> > class basic_string_guid;
+    class WINSTD_API string_guid;
+    class WINSTD_API wstring_guid;
+
+    ///
+    /// Multi-byte / Wide-character string GUID (according to _UNICODE)
+    ///
+#ifdef _UNICODE
+    typedef wstring_guid tstring_guid;
+#else
+    typedef string_guid tstring_guid;
 #endif
 
     /// @}
@@ -1027,6 +1040,80 @@ namespace winstd
         {
             FormatMessage(dwFlags | FORMAT_MESSAGE_ARGUMENT_ARRAY | FORMAT_MESSAGE_FROM_STRING, pszFormat, 0, 0, *this, (va_list*)Arguments);
         }
+    };
+
+    ///
+    /// Base template class to support converting GUID to string
+    ///
+    template<class _Elem, class _Traits, class _Ax>
+    class basic_string_guid : public std::basic_string<_Elem, _Traits, _Ax>
+    {
+    public:
+        /// \name Initializing string using template in memory
+        /// @{
+
+        ///
+        /// Initializes a new string and formats its contents to string representation of given GUID.
+        ///
+        /// \param[in] guid  GUID to convert
+        ///
+        inline basic_string_guid(_In_ const GUID &guid, _In_opt_z_ _Printf_format_string_ const _Elem *format)
+        {
+            sprintf<_Elem, _Traits, _Ax>(*this, format,
+                guid.Data1,
+                guid.Data2,
+                guid.Data3,
+                guid.Data4[0], guid.Data4[1],
+                guid.Data4[2], guid.Data4[3], guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7]);
+        }
+
+        /// @}
+    };
+
+
+    ///
+    /// Single-byte character implementation of a class to support converting GUID to string
+    ///
+    class WINSTD_API string_guid : public basic_string_guid<char, std::char_traits<char>, std::allocator<char> >
+    {
+    public:
+        /// \name Initializing string using template in memory
+        /// @{
+
+        ///
+        /// Initializes a new string and formats its contents to string representation of given GUID.
+        ///
+        /// \param[in] guid  GUID to convert
+        ///
+        inline string_guid(_In_ const GUID &guid) :
+            basic_string_guid<char, std::char_traits<char>, std::allocator<char> >(guid, "{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}")
+        {
+        }
+
+        /// @}
+    };
+
+
+    ///
+    /// Wide character implementation of a class to support converting GUID to string
+    ///
+    class WINSTD_API wstring_guid : public basic_string_guid<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> >
+    {
+    public:
+        /// \name Initializing string using template in memory
+        /// @{
+
+        ///
+        /// Initializes a new string and formats its contents to string representation of given GUID.
+        ///
+        /// \param[in] guid  GUID to convert
+        ///
+        inline wstring_guid(_In_ const GUID &guid) :
+            basic_string_guid<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> >(guid, L"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}")
+        {
+        }
+
+        /// @}
     };
 
     /// @}
