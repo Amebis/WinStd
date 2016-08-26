@@ -40,6 +40,31 @@ winstd::bstr{
 		preview			([$e.m_h,su])
 		stringview		([$e.m_h,sub])
 }
+winstd::vector_queue<*>{
+	preview (
+		#(
+			"[",
+			$e.m_count,
+			"](",
+			#array(
+				expr: $e.m_data._Myptr[($e.m_head + $i)%$e.m_size_max],
+				size: $e.m_count
+			),
+			")"
+		)
+	)
+
+	children (
+		#(
+			#([size] : $e.m_count),
+			#([capacity] : $e.m_size_max),
+			#array(
+				expr: $e.m_data._Myptr[($e.m_head + $i)%$e.m_size_max],
+				size: $e.m_count
+			)
+		)
+	)
+}
 winstd::sanitizing_vector<*>{
 	preview (
 		#(
