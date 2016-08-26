@@ -627,14 +627,14 @@ inline int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_cou
     // Try to convert to stack buffer first.
     int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
     if (cch) {
-        // Copy from stack.
-        sMultiByteStr.assign(szStackBuffer, cch);
+        // Copy from stack. Be careful not to include zero terminator.
+        sMultiByteStr.assign(szStackBuffer, cchWideChar != -1 ? strnlen(szStackBuffer, cch) : cch - 1);
     } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Query the required output size. Allocate buffer. Then convert again.
         cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
         auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[cch]);
         cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
-        sMultiByteStr.assign(szBuffer.get(), cch);
+        sMultiByteStr.assign(szBuffer.get(), cchWideChar != -1 ? strnlen(szBuffer.get(), cch) : cch - 1);
     }
 
     return cch;
@@ -644,7 +644,7 @@ inline int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_cou
 ///
 /// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
 ///
-/// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
+/// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
 template<class _Elem, class _Traits, class _Ax>
 inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sWideCharStr)
