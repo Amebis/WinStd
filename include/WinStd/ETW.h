@@ -37,6 +37,7 @@ template<class _Ty, class _Ax> inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pE
 namespace winstd
 {
     class WINSTD_API event_data;
+    class WINSTD_API event_rec;
     class WINSTD_API event_provider;
     class WINSTD_API event_session;
     class WINSTD_API event_trace;
@@ -246,6 +247,148 @@ namespace winstd
         /// Blank event data used as terminator.
         ///
         static const event_data blank;
+    };
+
+
+    ///
+    /// EVENT_RECORD wrapper
+    ///
+    class WINSTD_API event_rec : public EVENT_RECORD
+    {
+    public:
+        ///
+        /// Constructs a blank event record.
+        ///
+        inline event_rec()
+        {
+            memset((EVENT_RECORD*)this, 0, sizeof(EVENT_RECORD));
+        }
+
+
+        ///
+        /// Copies an existing event record.
+        ///
+        /// \param[in] other  Event record to copy from
+        ///
+        inline event_rec(_In_ const event_rec &other) : EVENT_RECORD(other)
+        {
+            set_extended_data_internal(other.ExtendedDataCount, other.ExtendedData);
+            set_user_data_internal(other.UserDataLength, other.UserData);
+        }
+
+
+        ///
+        /// Copies an existing event record.
+        ///
+        /// \param[in] other  Event record to copy from
+        ///
+        inline event_rec(_In_ const EVENT_RECORD &other) : EVENT_RECORD(other)
+        {
+            set_extended_data_internal(other.ExtendedDataCount, other.ExtendedData);
+            set_user_data_internal(other.UserDataLength, other.UserData);
+        }
+
+
+        ///
+        /// Moves the event record.
+        ///
+        /// \param[in] other  Event record to move
+        ///
+        inline event_rec(_Inout_ event_rec&& other) : EVENT_RECORD(other)
+        {
+            memset((EVENT_RECORD*)&other, 0, sizeof(EVENT_RECORD));
+        }
+
+
+        ///
+        /// Destroys event record data and frees the allocated memory.
+        ///
+        virtual ~event_rec();
+
+
+        ///
+        /// Copies an existing event record.
+        ///
+        /// \param[in] other  Event record to copy from
+        ///
+        inline event_rec& operator=(_In_ const event_rec &other)
+        {
+            if (this != std::addressof(other)) {
+                (EVENT_RECORD&)*this = other;
+                set_extended_data_internal(other.ExtendedDataCount, other.ExtendedData);
+                set_user_data_internal(other.UserDataLength, other.UserData);
+            }
+
+            return *this;
+        }
+
+
+        ///
+        /// Copies an existing event record.
+        ///
+        /// \param[in] other  Event record to copy from
+        ///
+        inline event_rec& operator=(_In_ const EVENT_RECORD &other)
+        {
+            if (this != std::addressof(other)) {
+                (EVENT_RECORD&)*this = other;
+                set_extended_data_internal(other.ExtendedDataCount, other.ExtendedData);
+                set_user_data_internal(other.UserDataLength, other.UserData);
+            }
+
+            return *this;
+        }
+
+
+        ///
+        /// Moves the event record.
+        ///
+        /// \param[in] other  Event record to move
+        ///
+        inline event_rec& operator=(_Inout_ event_rec&& other)
+        {
+            if (this != std::addressof(other)) {
+                (EVENT_RECORD&)*this = other;
+                memset((EVENT_RECORD*)&other, 0, sizeof(EVENT_RECORD));
+            }
+
+            return *this;
+        }
+
+
+        ///
+        /// Sets event record extended data.
+        ///
+        /// \param[in] count  \p data size (in number of elements)
+        /// \param[in] data   Record extended data
+        ///
+        void set_extended_data(_In_ USHORT count, _In_count_(count) const EVENT_HEADER_EXTENDED_DATA_ITEM *data);
+
+
+        ///
+        /// Sets event record user data.
+        ///
+        /// \param[in] size  \p data size (in bytes)
+        /// \param[in] data  Record user data
+        ///
+        void set_user_data(_In_ USHORT size, _In_bytecount_(size) LPCVOID data);
+
+    protected:
+        ///
+        /// Sets event record extended data.
+        ///
+        /// \param[in] count  \p data size (in number of elements)
+        /// \param[in] data   Record extended data
+        ///
+        void set_extended_data_internal(_In_ USHORT count, _In_count_(count) const EVENT_HEADER_EXTENDED_DATA_ITEM *data);
+
+        ///
+        /// Sets event record user data.
+        ///
+        /// \param[in] size  \p data size (in bytes)
+        /// \param[in] data  Record user data
+        ///
+        void set_user_data_internal(_In_ USHORT size, _In_bytecount_(size) LPCVOID data);
     };
 
 
