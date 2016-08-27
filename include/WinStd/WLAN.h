@@ -28,11 +28,6 @@
 // without a WLAN interface.
 extern DWORD (WINAPI *pfnWlanReasonCodeToString)(__in DWORD dwReasonCode, __in DWORD dwBufferSize, __in_ecount(dwBufferSize) PWCHAR pStringBuffer, __reserved PVOID pReserved);
 
-template<class _Elem, class _Traits, class _Ax> inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved);
-
-#pragma once
-
-
 ///
 /// \defgroup WinStdWLANAPI WLAN API
 /// Integrates WinStd classes with Microsoft WLAN API
@@ -48,6 +43,13 @@ template<class _Elem, class _Traits, class _Ax> inline DWORD WlanReasonCodeToStr
 /// Since Wlanapi.dll is not always present, the \c pfnWlanReasonCodeToString pointer to \c WlanReasonCodeToString
 /// function must be loaded dynamically.
 ///
+template<class _Elem, class _Traits, class _Ax> inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved);
+
+/// @}
+
+#pragma once
+
+
 template<class _Elem, class _Traits, class _Ax>
 inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved)
 {
@@ -77,5 +79,3 @@ inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::basic_st
         }
     }
 }
-
-/// @}

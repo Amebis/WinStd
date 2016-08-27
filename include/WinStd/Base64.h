@@ -25,15 +25,6 @@
 
 namespace winstd
 {
-    class WINSTD_API base64_enc;
-    class WINSTD_API base64_dec;
-}
-
-#pragma once
-
-
-namespace winstd
-{
     ///
     /// \defgroup WinStdBase64 Base64 conversion
     /// Provides Base64 conversion for WinStd classes
@@ -43,6 +34,21 @@ namespace winstd
     ///
     /// Base64 encoding session
     ///
+    class WINSTD_API base64_enc;
+
+    ///
+    /// Base64 decoding session
+    ///
+    class WINSTD_API base64_dec;
+
+    /// @}
+}
+
+#pragma once
+
+
+namespace winstd
+{
     class WINSTD_API base64_enc
     {
     public:
@@ -165,9 +171,6 @@ namespace winstd
     };
 
 
-    ///
-    /// Base64 decoding session
-    ///
     class WINSTD_API base64_dec
     {
     public:
@@ -267,6 +270,4 @@ namespace winstd
         size_t num;                             ///< Number of bytes used in `buf`
         static const unsigned char lookup[256]; ///< Look-up table
     };
-
-    /// @}
 }

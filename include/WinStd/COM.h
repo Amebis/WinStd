@@ -24,12 +24,45 @@
 
 namespace winstd
 {
+    ///
+    /// \defgroup WinStdCOM COM object management
+    /// Provides helper templates for Windows COM object manipulation
+    ///
+    /// @{
+
+    ///
+    /// COM object wrapper template
+    ///
     template <class T> class com_obj;
 
+    ///
+    /// BSTR string wrapper
+    ///
     class WINSTD_API bstr;
+
+    ///
+    /// VARIANT struct wrapper
+    ///
     class WINSTD_API variant;
+
+    /// @}
+
     class WINSTD_API com_initializer;
+
+    ///
+    /// \defgroup WinStdExceptions Exceptions
+    /// Additional exceptions
+    ///
+    /// @{
+
+    ///
+    /// COM runtime error
+    ///
+    /// \note Must be defined as derived class from num_runtime_error<> to allow correct type info for dynamic typecasting and prevent folding with other derivates of num_runtime_error<>.
+    ///
     class WINSTD_API com_runtime_error;
+
+    /// @}
 }
 
 #pragma once
@@ -37,16 +70,6 @@ namespace winstd
 
 namespace winstd
 {
-    ///
-    /// \defgroup WinStdCOM COM object management
-    /// Provides helper templates for Windows COM object manipulation
-    ///
-    /// @{
-
-
-    ///
-    /// COM object wrapper template
-    ///
     template <class T>
     class com_obj : public handle<T*>
     {
@@ -129,9 +152,6 @@ namespace winstd
     };
 
 
-    ///
-    /// BSTR string wrapper
-    ///
     class WINSTD_API bstr : public handle<BSTR>
     {
     public:
@@ -209,9 +229,6 @@ namespace winstd
     };
 
 
-    ///
-    /// VARIANT struct wrapper
-    ///
     class WINSTD_API variant : public VARIANT
     {
     public:
@@ -914,8 +931,6 @@ namespace winstd
         }
     };
 
-    /// @}
-
 
     class WINSTD_API com_initializer
     {
@@ -965,17 +980,6 @@ namespace winstd
     };
 
 
-    ///
-    /// \defgroup WinStdExceptions Exceptions
-    /// Additional exceptions
-    ///
-    /// @{
-
-    ///
-    /// COM runtime error
-    ///
-    /// \note Must be defined as derived class from num_runtime_error<> to allow correct type info for dynamic typecasting and prevent folding with other derivates of num_runtime_error<>.
-    ///
     class WINSTD_API com_runtime_error : public num_runtime_error<HRESULT>
     {
     public:
@@ -1010,6 +1014,4 @@ namespace winstd
         {
         }
     };
-
-    /// @}
 }

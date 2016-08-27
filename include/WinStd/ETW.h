@@ -30,102 +30,6 @@
 #include <string>
 #include <vector>
 
-inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info);
-inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Out_ std::unique_ptr<EVENT_MAP_INFO> &info);
-template<class _Ty, class _Ax> inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_ PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Out_ std::vector<_Ty, _Ax> &aData);
-
-namespace winstd
-{
-    class WINSTD_API event_data;
-    class WINSTD_API event_rec;
-    class WINSTD_API event_provider;
-    class WINSTD_API event_session;
-    class WINSTD_API event_trace;
-    class WINSTD_API event_trace_enabler;
-
-    class event_fn_auto;
-    template<class T> class event_fn_auto_ret;
-}
-
-#pragma once
-
-
-///
-/// Retrieves metadata about an event.
-///
-/// \sa [TdhGetEventInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964840.aspx)
-///
-inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info)
-{
-    BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
-    ULONG ulSize = sizeof(szBuffer), ulResult;
-
-    // Try with stack buffer first.
-    ulResult = TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, (PTRACE_EVENT_INFO)szBuffer, &ulSize);
-    if (ulResult == ERROR_SUCCESS) {
-        // Copy from stack.
-        info.reset((PTRACE_EVENT_INFO)new char[ulSize]);
-        memcpy(info.get(), szBuffer, ulSize);
-        return ERROR_SUCCESS;
-    } else if (ulResult == ERROR_INSUFFICIENT_BUFFER) {
-        // Create buffer on heap and retry.
-        info.reset((PTRACE_EVENT_INFO)new char[ulSize]);
-        return TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, info.get(), &ulSize);
-    }
-
-    return ulResult;
-}
-
-
-///
-/// Retrieves information about the event map contained in the event.
-///
-/// \sa [TdhGetEventMapInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964841.aspx)
-///
-inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Out_ std::unique_ptr<EVENT_MAP_INFO> &info)
-{
-    BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
-    ULONG ulSize = sizeof(szBuffer), ulResult;
-
-    // Try with stack buffer first.
-    ulResult = TdhGetEventMapInformation(pEvent, pMapName, (PEVENT_MAP_INFO)szBuffer, &ulSize);
-    if (ulResult == ERROR_SUCCESS) {
-        // Copy from stack.
-        info.reset((PEVENT_MAP_INFO)new char[ulSize]);
-        memcpy(info.get(), szBuffer, ulSize);
-        return ERROR_SUCCESS;
-    } else if (ulResult == ERROR_INSUFFICIENT_BUFFER) {
-        // Create buffer on heap and retry.
-        info.reset((PEVENT_MAP_INFO)new char[ulSize]);
-        return TdhGetEventMapInformation(pEvent, pMapName, info.get(), &ulSize);
-    }
-
-    return ulResult;
-}
-
-
-///
-/// Retrieves a property value from the event data.
-///
-/// \sa [TdhGetProperty function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964843.aspx)
-///
-template<class _Ty, class _Ax>
-inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_ PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Out_ std::vector<_Ty, _Ax> &aData)
-{
-    ULONG ulSize, ulResult;
-
-    // Query property size.
-    ulResult = TdhGetPropertySize(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, &ulSize);
-    if (ulResult == ERROR_SUCCESS) {
-        // Query property value.
-        aData.resize((ulSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        ulResult = TdhGetProperty(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, ulSize, (LPBYTE)aData.data());
-    }
-
-    return ulResult;
-}
-
-
 namespace winstd
 {
     ///
@@ -134,10 +38,84 @@ namespace winstd
     ///
     /// @{
 
-
     ///
     /// EVENT_DATA_DESCRIPTOR wrapper
     ///
+    class WINSTD_API event_data;
+
+    ///
+    /// EVENT_RECORD wrapper
+    ///
+    class WINSTD_API event_rec;
+
+    ///
+    /// ETW event provider
+    ///
+    class WINSTD_API event_provider;
+
+    ///
+    /// ETW session
+    ///
+    class WINSTD_API event_session;
+
+    ///
+    /// ETW trace
+    ///
+    class WINSTD_API event_trace;
+
+    ///
+    /// Helper class to enable event provider in constructor and disables it in destructor
+    ///
+    class WINSTD_API event_trace_enabler;
+
+    ///
+    /// Helper class to write an event on entry/exit of scope.
+    ///
+    /// It writes one string event at creation and another at destruction.
+    ///
+    class event_fn_auto;
+
+    ///
+    /// Helper template to write an event on entry/exit of scope with one parameter (typically result).
+    ///
+    /// It writes one string event at creation and another at destruction, with allowing one sprintf type parameter for string event at destruction.
+    ///
+    template<class T> class event_fn_auto_ret;
+
+    /// @}
+}
+
+/// \addtogroup WinStdCryptoAPI
+/// @{
+
+///
+/// Retrieves metadata about an event.
+///
+/// \sa [TdhGetEventInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964840.aspx)
+///
+inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info);
+
+///
+/// Retrieves information about the event map contained in the event.
+///
+/// \sa [TdhGetEventMapInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964841.aspx)
+///
+inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Out_ std::unique_ptr<EVENT_MAP_INFO> &info);
+
+///
+/// Retrieves a property value from the event data.
+///
+/// \sa [TdhGetProperty function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964843.aspx)
+///
+template<class _Ty, class _Ax> inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_ PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Out_ std::vector<_Ty, _Ax> &aData);
+
+/// @}
+
+#pragma once
+
+
+namespace winstd
+{
     class WINSTD_API event_data : public EVENT_DATA_DESCRIPTOR
     {
     public:
@@ -250,9 +228,6 @@ namespace winstd
     };
 
 
-    ///
-    /// EVENT_RECORD wrapper
-    ///
     class WINSTD_API event_rec : public EVENT_RECORD
     {
     public:
@@ -392,9 +367,6 @@ namespace winstd
     };
 
 
-    ///
-    /// ETW event provider
-    ///
     class WINSTD_API event_provider : public handle<REGHANDLE>
     {
     public:
@@ -571,9 +543,6 @@ namespace winstd
     };
 
 
-    ///
-    /// ETW session
-    ///
     class WINSTD_API event_session : public handle<TRACEHANDLE>
     {
     public:
@@ -754,9 +723,46 @@ namespace winstd
     };
 
 
-    ///
-    /// Helper class to enable event provider in constructor and disables it in destructor
-    ///
+    class WINSTD_API event_trace : public handle<TRACEHANDLE>
+    {
+    public:
+        ///
+        /// Closes the trace.
+        ///
+        /// \sa [CloseTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363686.aspx)
+        ///
+        virtual ~event_trace();
+
+
+        ///
+        /// Opens a real-time trace session or log file for consuming.
+        ///
+        /// \return
+        /// - `ERROR_SUCCESS` when creation succeeds;
+        /// - error code otherwise.
+        ///
+        /// \sa [OpenTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa364089.aspx)
+        ///
+        inline bool create(_Inout_ PEVENT_TRACE_LOGFILE Logfile)
+        {
+            handle_type h = OpenTrace(Logfile);
+            if (h != (TRACEHANDLE)INVALID_HANDLE_VALUE) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+    protected:
+        ///
+        /// Closes the trace.
+        ///
+        /// \sa [CloseTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363686.aspx)
+        ///
+        virtual void free_internal();
+    };
+
+
     class WINSTD_API event_trace_enabler
     {
     public:
@@ -862,54 +868,6 @@ namespace winstd
     };
 
 
-    ///
-    /// ETW trace
-    ///
-    class WINSTD_API event_trace : public handle<TRACEHANDLE>
-    {
-    public:
-        ///
-        /// Closes the trace.
-        ///
-        /// \sa [CloseTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363686.aspx)
-        ///
-        virtual ~event_trace();
-
-
-        ///
-        /// Opens a real-time trace session or log file for consuming.
-        ///
-        /// \return
-        /// - `ERROR_SUCCESS` when creation succeeds;
-        /// - error code otherwise.
-        ///
-        /// \sa [OpenTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa364089.aspx)
-        ///
-        inline bool create(_Inout_ PEVENT_TRACE_LOGFILE Logfile)
-        {
-            handle_type h = OpenTrace(Logfile);
-            if (h != (TRACEHANDLE)INVALID_HANDLE_VALUE) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-    protected:
-        ///
-        /// Closes the trace.
-        ///
-        /// \sa [CloseTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363686.aspx)
-        ///
-        virtual void free_internal();
-    };
-
-
-    ///
-    /// Helper class to write an event on entry/exit of scope.
-    ///
-    /// It writes one string event at creation and another at destruction.
-    ///
     class event_fn_auto
     {
     public:
@@ -996,11 +954,6 @@ namespace winstd
     };
 
 
-    ///
-    /// Helper template to write an event on entry/exit of scope with one parameter (typically result).
-    ///
-    /// It writes one string event at creation and another at destruction, with allowing one sprintf type parameter for string event at destruction.
-    ///
     template<class T>
     class event_fn_auto_ret
     {
@@ -1094,6 +1047,65 @@ namespace winstd
         EVENT_DATA_DESCRIPTOR m_desc[2];        ///< Function name and return value
         T &m_result;                            ///< Function result
     };
+}
 
-    /// @}
+
+inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info)
+{
+    BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
+    ULONG ulSize = sizeof(szBuffer), ulResult;
+
+    // Try with stack buffer first.
+    ulResult = TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, (PTRACE_EVENT_INFO)szBuffer, &ulSize);
+    if (ulResult == ERROR_SUCCESS) {
+        // Copy from stack.
+        info.reset((PTRACE_EVENT_INFO)new char[ulSize]);
+        memcpy(info.get(), szBuffer, ulSize);
+        return ERROR_SUCCESS;
+    } else if (ulResult == ERROR_INSUFFICIENT_BUFFER) {
+        // Create buffer on heap and retry.
+        info.reset((PTRACE_EVENT_INFO)new char[ulSize]);
+        return TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, info.get(), &ulSize);
+    }
+
+    return ulResult;
+}
+
+
+inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Out_ std::unique_ptr<EVENT_MAP_INFO> &info)
+{
+    BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
+    ULONG ulSize = sizeof(szBuffer), ulResult;
+
+    // Try with stack buffer first.
+    ulResult = TdhGetEventMapInformation(pEvent, pMapName, (PEVENT_MAP_INFO)szBuffer, &ulSize);
+    if (ulResult == ERROR_SUCCESS) {
+        // Copy from stack.
+        info.reset((PEVENT_MAP_INFO)new char[ulSize]);
+        memcpy(info.get(), szBuffer, ulSize);
+        return ERROR_SUCCESS;
+    } else if (ulResult == ERROR_INSUFFICIENT_BUFFER) {
+        // Create buffer on heap and retry.
+        info.reset((PEVENT_MAP_INFO)new char[ulSize]);
+        return TdhGetEventMapInformation(pEvent, pMapName, info.get(), &ulSize);
+    }
+
+    return ulResult;
+}
+
+
+template<class _Ty, class _Ax>
+inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_ PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Out_ std::vector<_Ty, _Ax> &aData)
+{
+    ULONG ulSize, ulResult;
+
+    // Query property size.
+    ulResult = TdhGetPropertySize(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, &ulSize);
+    if (ulResult == ERROR_SUCCESS) {
+        // Query property value.
+        aData.resize((ulSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        ulResult = TdhGetProperty(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, ulSize, (LPBYTE)aData.data());
+    }
+
+    return ulResult;
 }

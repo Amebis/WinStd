@@ -48,10 +48,40 @@
 
 inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg);
 inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg);
+
+///
+/// Formats string using `printf()`.
+///
+/// \param[out] str     Formatted string
+/// \param[in ] format  String template using `printf()` style
+/// \param[in ] arg     Arguments to `format`
+///
+/// \returns Number of characters in result.
+///
 template<class _Elem, class _Traits, class _Ax> inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg);
+
+///
+/// Formats string using `printf()`.
+///
+/// \param[out] str     Formatted string
+/// \param[in ] format  String template using `printf()` style
+///
+/// \returns Number of characters in result.
+///
 template<class _Elem, class _Traits, class _Ax> inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...);
 
+///
+/// Formats a message string.
+///
+/// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
+///
 template<class _Traits, class _Ax> inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments);
+
+///
+/// Formats a message string.
+///
+/// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
+///
 template<class _Traits, class _Ax> inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments);
 
 namespace winstd
@@ -65,10 +95,37 @@ namespace winstd
     typedef std::string tstring;
 #endif
 
+    ///
+    /// Deleter for unique_ptr using LocalFree
+    ///
     template <class _Ty> struct LocalFree_delete;
+
+    ///
+    /// Deleter for unique_ptr to array of unknown size using LocalFree
+    ///
     template <class _Ty> struct LocalFree_delete<_Ty[]>;
+
+    ///
+    /// \defgroup WinStdSysHandles System Handles
+    /// Simplifies work with object handles of various type
+    ///
+    /// @{
+
+    ///
+    /// Base abstract template class to support generic object handle keeping
+    ///
+    /// It provides basic operators and methods common to all descendands of this class establishing a base to ease the replacement of native object handle type with classes in object-oriented approach.
+    ///
     template <class T> class handle;
+
+    ///
+    /// Base abstract template class to support object handle keeping for objects that support handle duplication
+    ///
     template <class T> class dplhandle;
+
+    ///
+    /// Helper class to allow limited size FIFO queues implemented as vector of elements
+    ///
     template <class T> class vector_queue;
 
     ///
@@ -77,14 +134,34 @@ namespace winstd
     ///
     /// @{
 
+    ///
+    /// Numerical runtime error
+    ///
     template <typename _Tn> class num_runtime_error;
+
+    ///
+    /// Windows runtime error
+    ///
     class WINSTD_API win_runtime_error;
 
     /// @}
 
-    /// \addtogroup WinStdStrFormat
+    ///
+    /// \defgroup WinStdStrFormat String Formatting
+    /// Formatted string generation
+    ///
+    /// \par Example
+    /// \code
+    /// // Please note the PCSTR typecasting invokes an operator to return
+    /// // pointer to formatted buffer rather than class reference itself.
+    /// cout << (PCSTR)(winstd::string_printf("%i is less than %i.\n", 1, 5));
+    /// \endcode
+    ///
     /// @{
 
+    ///
+    /// Base template class to support string formatting using `printf()` style templates
+    ///
     template<class _Elem, class _Traits = std::char_traits<_Elem>, class _Ax = std::allocator<_Elem> > class basic_string_printf;
 
     ///
@@ -106,6 +183,9 @@ namespace winstd
     typedef string_printf tstring_printf;
 #endif
 
+    ///
+    /// Base template class to support string formatting using `FormatMessage()` style templates
+    ///
     template<class _Elem, class _Traits = std::char_traits<_Elem>, class _Ax = std::allocator<_Elem> > class basic_string_msg;
 
     ///
@@ -127,8 +207,19 @@ namespace winstd
     typedef string_msg tstring_msg;
 #endif
 
+    ///
+    /// Base template class to support converting GUID to string
+    ///
     template<class _Elem, class _Traits = std::char_traits<_Elem>, class _Ax = std::allocator<_Elem> > class basic_string_guid;
+
+    ///
+    /// Single-byte character implementation of a class to support converting GUID to string
+    ///
     class WINSTD_API string_guid;
+
+    ///
+    /// Wide character implementation of a class to support converting GUID to string
+    ///
     class WINSTD_API wstring_guid;
 
     ///
@@ -142,9 +233,18 @@ namespace winstd
 
     /// @}
 
-    /// \addtogroup WinStdMemSanitize
+    /// \defgroup WinStdMemSanitize Auto-sanitize Memory Management
+    /// Sanitizes memory before dismissed
+    ///
     /// @{
 
+    ///
+    /// An allocator template that sanitizes each memory block before it is destroyed or reallocated
+    ///
+    /// \note
+    /// `sanitizing_allocator` introduces a performance penalty. However, it provides an additional level of security.
+    /// Use for security sensitive data memory storage only.
+    ///
     template<class _Ty> class sanitizing_allocator;
 
     ///
@@ -221,15 +321,6 @@ inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _
 }
 
 
-///
-/// Formats string using `printf()`.
-///
-/// \param[out] str     Formatted string
-/// \param[in ] format  String template using `printf()` style
-/// \param[in ] arg     Arguments to `format`
-///
-/// \returns Number of characters in result.
-///
 template<class _Elem, class _Traits, class _Ax>
 inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg)
 {
@@ -258,14 +349,6 @@ inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _P
 #pragma warning(pop)
 
 
-///
-/// Formats string using `printf()`.
-///
-/// \param[out] str     Formatted string
-/// \param[in ] format  String template using `printf()` style
-///
-/// \returns Number of characters in result.
-///
 template<class _Elem, class _Traits, class _Ax>
 inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...)
 {
@@ -277,11 +360,6 @@ inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Pr
 }
 
 
-///
-/// Formats a message string.
-///
-/// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
-///
 template<class _Traits, class _Ax>
 inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
 {
@@ -293,11 +371,6 @@ inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ D
 }
 
 
-///
-/// Formats a message string.
-///
-/// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
-///
 template<class _Traits, class _Ax>
 inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
 {
@@ -311,9 +384,6 @@ inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ D
 
 namespace winstd
 {
-    ///
-    /// Deleter for unique_ptr using LocalFree
-    ///
     template <class _Ty> struct LocalFree_delete
     {
         typedef LocalFree_delete<_Ty> _Myt; ///< This type
@@ -338,9 +408,6 @@ namespace winstd
     };
 
 
-    ///
-    /// Deleter for unique_ptr to array of unknown size using LocalFree
-    ///
     template <class _Ty> struct LocalFree_delete<_Ty[]>
     {
         typedef LocalFree_delete<_Ty> _Myt; ///< This type
@@ -369,17 +436,6 @@ namespace winstd
     };
 
 
-    ///
-    /// \defgroup WinStdSysHandles System Handles
-    /// Simplifies work with object handles of various type
-    ///
-    /// @{
-
-    ///
-    /// Base abstract template class to support generic object handle keeping
-    ///
-    /// It provides basic operators and methods common to all descendands of this class establishing a base to ease the replacement of native object handle type with classes in object-oriented approach.
-    ///
     template <class T>
     class handle
     {
@@ -622,9 +678,6 @@ namespace winstd
     };
 
 
-    ///
-    /// Base abstract template class to support object handle keeping for objects that support handle duplication
-    ///
     template <class T>
     class dplhandle : public handle<T>
     {
@@ -710,9 +763,6 @@ namespace winstd
     /// @}
 
 
-    ///
-    /// Helper class to allow limited size FIFO queues implemented as vector of elements
-    ///
     template <class T>
     class vector_queue
     {
@@ -1104,15 +1154,6 @@ namespace winstd
     };
 
 
-    ///
-    /// \defgroup WinStdExceptions Exceptions
-    /// Additional exceptions
-    ///
-    /// @{
-
-    ///
-    /// Numerical runtime error
-    ///
     template <typename _Tn>
     class num_runtime_error : public std::runtime_error
     {
@@ -1187,9 +1228,6 @@ namespace winstd
     };
 
 
-    ///
-    /// Windows runtime error
-    ///
     class WINSTD_API win_runtime_error : public num_runtime_error<DWORD>
     {
     public:
@@ -1246,24 +1284,6 @@ namespace winstd
     };
 
 
-    /// @}
-
-    ///
-    /// \defgroup WinStdStrFormat String Formatting
-    /// Formatted string generation
-    ///
-    /// \par Example
-    /// \code
-    /// // Please note the PCSTR typecasting invokes an operator to return
-    /// // pointer to formatted buffer rather than class reference itself.
-    /// cout << (PCSTR)(winstd::string_printf("%i is less than %i.\n", 1, 5));
-    /// \endcode
-    ///
-    /// @{
-
-    ///
-    /// Base template class to support string formatting using `printf()` style templates
-    ///
     template<class _Elem, class _Traits, class _Ax>
     class basic_string_printf : public std::basic_string<_Elem, _Traits, _Ax>
     {
@@ -1328,9 +1348,6 @@ namespace winstd
     };
 
 
-    ///
-    /// Base template class to support string formatting using `FormatMessage()` style templates
-    ///
     template<class _Elem, class _Traits, class _Ax>
     class basic_string_msg : public std::basic_string<_Elem, _Traits, _Ax>
     {
@@ -1438,9 +1455,7 @@ namespace winstd
         }
     };
 
-    ///
-    /// Base template class to support converting GUID to string
-    ///
+
     template<class _Elem, class _Traits, class _Ax>
     class basic_string_guid : public std::basic_string<_Elem, _Traits, _Ax>
     {
@@ -1467,9 +1482,6 @@ namespace winstd
     };
 
 
-    ///
-    /// Single-byte character implementation of a class to support converting GUID to string
-    ///
     class WINSTD_API string_guid : public basic_string_guid<char, std::char_traits<char>, std::allocator<char> >
     {
     public:
@@ -1490,9 +1502,6 @@ namespace winstd
     };
 
 
-    ///
-    /// Wide character implementation of a class to support converting GUID to string
-    ///
     class WINSTD_API wstring_guid : public basic_string_guid<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> >
     {
     public:
@@ -1512,24 +1521,11 @@ namespace winstd
         /// @}
     };
 
-    /// @}
-
-    /// \defgroup WinStdMemSanitize Auto-sanitize Memory Management
-    /// Sanitizes memory before dismissed
-    ///
-    /// @{
 
     // winstd::sanitizing_allocator::destroy() member generates _Ptr parameter not used warning for primitive datatypes _Ty.
     #pragma warning(push)
     #pragma warning(disable: 4100)
 
-    ///
-    /// An allocator template that sanitizes each memory block before it is destroyed or reallocated
-    ///
-    /// \note
-    /// `sanitizing_allocator` introduces a performance penalty. However, it provides an additional level of security.
-    /// Use for security sensitive data memory storage only.
-    ///
     template<class _Ty>
     class sanitizing_allocator : public std::allocator<_Ty>
     {
@@ -1583,6 +1579,4 @@ namespace winstd
     };
 
     #pragma warning(pop)
-
-    /// @}
 }

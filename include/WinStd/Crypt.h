@@ -25,31 +25,6 @@
 #include <string>
 #include <vector>
 
-template<class _Elem, class _Traits, class _Ax> inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
-template<class _Elem, class _Traits, class _Ax> inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
-template<class _Ty, class _Ax> inline BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Out_ std::vector<_Ty, _Ax> &aData);
-template<class _Ty, class _Ax> inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
-template<class _Ty, class _Ax> inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
-template<class T> inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags);
-template<class _Ty, class _Ax> inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData);
-template<class _Ty, class _Ax> inline BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData);
-template<class _Ty, class _Ax> inline BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData);
-namespace winstd
-{
-    class WINSTD_API cert_context;
-    class WINSTD_API cert_chain_context;
-    class WINSTD_API cert_store;
-    class WINSTD_API crypt_prov;
-    class WINSTD_API crypt_hash;
-    class WINSTD_API crypt_key;
-    class WINSTD_API data_blob;
-}
-
-#pragma once
-
-#include <assert.h>
-
-
 ///
 /// \defgroup WinStdCryptoAPI Cryptography API
 /// Integrates WinStd classes with Microsoft Cryptography API
@@ -61,6 +36,114 @@ namespace winstd
 ///
 /// \sa [CertGetNameString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376086.aspx)
 ///
+template<class _Elem, class _Traits, class _Ax> inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
+
+///
+/// Obtains the subject or issuer name from a certificate [CERT_CONTEXT](https://msdn.microsoft.com/en-us/library/windows/desktop/aa377189.aspx) structure and stores it in a std::wstring string.
+///
+/// \sa [CertGetNameString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376086.aspx)
+///
+template<class _Elem, class _Traits, class _Ax> inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
+
+///
+/// Retrieves the information contained in an extended property of a certificate context.
+///
+/// \sa [CertGetCertificateContextProperty function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376079.aspx)
+///
+template<class _Ty, class _Ax> inline BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Out_ std::vector<_Ty, _Ax> &aData);
+
+///
+/// Retrieves data that governs the operations of a hash object. The actual hash value can be retrieved by using this function.
+///
+/// \sa [CryptGetHashParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379947.aspx)
+///
+template<class _Ty, class _Ax> inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
+
+///
+/// Retrieves data that governs the operations of a key.
+///
+/// \sa [CryptGetKeyParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379949.aspx)
+///
+template<class _Ty, class _Ax> inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
+
+///
+/// Retrieves data that governs the operations of a key.
+///
+/// \sa [CryptGetKeyParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379949.aspx)
+///
+template<class T> inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags);
+
+///
+/// Exports a cryptographic key or a key pair from a cryptographic service provider (CSP) in a secure manner.
+///
+/// \sa [CryptExportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379931.aspx)
+///
+template<class _Ty, class _Ax> inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData);
+
+///
+/// Encrypts data.
+///
+/// \sa [CryptEncrypt function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379924.aspx)
+///
+template<class _Ty, class _Ax> inline BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData);
+
+///
+/// Decrypts data previously encrypted by using the CryptEncrypt function.
+///
+/// \sa [CryptDecrypt function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379913.aspx)
+///
+template<class _Ty, class _Ax> inline BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData);
+
+/// @}
+
+namespace winstd
+{
+    /// \addtogroup WinStdCryptoAPI
+    /// @{
+
+    ///
+    /// PCCERT_CONTEXT wrapper class
+    ///
+    class WINSTD_API cert_context;
+
+    ///
+    /// PCCERT_CHAIN_CONTEXT wrapper class
+    ///
+    class WINSTD_API cert_chain_context;
+
+    ///
+    /// HCERTSTORE wrapper class
+    ///
+    class WINSTD_API cert_store;
+
+    ///
+    /// HCRYPTPROV wrapper class
+    ///
+    class WINSTD_API crypt_prov;
+
+    ///
+    /// HCRYPTHASH wrapper class
+    ///
+    class WINSTD_API crypt_hash;
+
+    ///
+    /// HCRYPTKEY wrapper class
+    ///
+    class WINSTD_API crypt_key;
+
+    ///
+    /// DATA_BLOB wrapper class
+    ///
+    class WINSTD_API data_blob;
+
+    /// @}
+}
+
+#pragma once
+
+#include <assert.h>
+
+
 template<class _Elem, class _Traits, class _Ax>
 inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
 {
@@ -75,11 +158,6 @@ inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
 }
 
 
-///
-/// Obtains the subject or issuer name from a certificate [CERT_CONTEXT](https://msdn.microsoft.com/en-us/library/windows/desktop/aa377189.aspx) structure and stores it in a std::wstring string.
-///
-/// \sa [CertGetNameString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376086.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
 {
@@ -94,11 +172,6 @@ inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
 }
 
 
-///
-/// Retrieves the information contained in an extended property of a certificate context.
-///
-/// \sa [CertGetCertificateContextProperty function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376079.aspx)
-///
 template<class _Ty, class _Ax>
 inline BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Out_ std::vector<_Ty, _Ax> &aData)
 {
@@ -121,11 +194,6 @@ inline BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertCo
 }
 
 
-///
-/// Retrieves data that governs the operations of a hash object. The actual hash value can be retrieved by using this function.
-///
-/// \sa [CryptGetHashParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379947.aspx)
-///
 template<class _Ty, class _Ax>
 inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
 {
@@ -148,11 +216,6 @@ inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ s
 }
 
 
-///
-/// Retrieves data that governs the operations of a hash object. The actual hash value can be retrieved by using this function.
-///
-/// \sa [CryptGetHashParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379947.aspx)
-///
 template<class T>
 inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags)
 {
@@ -161,11 +224,6 @@ inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ T
 }
 
 
-///
-/// Retrieves data that governs the operations of a key.
-///
-/// \sa [CryptGetKeyParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379949.aspx)
-///
 template<class _Ty, class _Ax>
 inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
 {
@@ -188,11 +246,6 @@ inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std:
 }
 
 
-///
-/// Retrieves data that governs the operations of a key.
-///
-/// \sa [CryptGetKeyParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379949.aspx)
-///
 template<class T>
 inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags)
 {
@@ -201,11 +254,6 @@ inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &d
 }
 
 
-///
-/// Exports a cryptographic key or a key pair from a cryptographic service provider (CSP) in a secure manner.
-///
-/// \sa [CryptExportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379931.aspx)
-///
 template<class _Ty, class _Ax>
 inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData)
 {
@@ -222,11 +270,6 @@ inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWO
 }
 
 
-///
-/// Encrypts data.
-///
-/// \sa [CryptEncrypt function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379924.aspx)
-///
 template<class _Ty, class _Ax>
 inline BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
 {
@@ -273,11 +316,6 @@ inline BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BO
 }
 
 
-///
-/// Decrypts data previously encrypted by using the CryptEncrypt function.
-///
-/// \sa [CryptDecrypt function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379913.aspx)
-///
 template<class _Ty, class _Ax>
 inline BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
 {
@@ -292,17 +330,9 @@ inline BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BO
     return FALSE;
 }
 
-/// @}
-
 
 namespace winstd
 {
-    /// \addtogroup WinStdCryptoAPI
-    /// @{
-
-    ///
-    /// PCCERT_CONTEXT wrapper class
-    ///
     class WINSTD_API cert_context : public dplhandle<PCCERT_CONTEXT>
     {
     public:
@@ -462,9 +492,6 @@ namespace winstd
     };
 
 
-    ///
-    /// PCCERT_CHAIN_CONTEXT wrapper class
-    ///
     class WINSTD_API cert_chain_context : public dplhandle<PCCERT_CHAIN_CONTEXT>
     {
     public:
@@ -542,9 +569,6 @@ namespace winstd
     };
 
 
-    ///
-    /// HCERTSTORE wrapper class
-    ///
     class WINSTD_API cert_store : public handle<HCERTSTORE>
     {
     public:
@@ -639,9 +663,6 @@ namespace winstd
     };
 
 
-    ///
-    /// HCRYPTPROV wrapper class
-    ///
     class WINSTD_API crypt_prov : public handle<HCRYPTPROV>
     {
     public:
@@ -717,9 +738,6 @@ namespace winstd
     };
 
 
-    ///
-    /// HCRYPTHASH wrapper class
-    ///
     class WINSTD_API crypt_hash : public dplhandle<HCRYPTHASH>
     {
     public:
@@ -797,9 +815,6 @@ namespace winstd
     };
 
 
-    ///
-    /// HCRYPTKEY wrapper class
-    ///
     class WINSTD_API crypt_key : public dplhandle<HCRYPTKEY>
     {
     public:
@@ -928,9 +943,6 @@ namespace winstd
     };
 
 
-    ///
-    /// DATA_BLOB wrapper class
-    ///
     class WINSTD_API data_blob : public DATA_BLOB
     {
     public:
@@ -1043,6 +1055,4 @@ namespace winstd
             return pbData;
         }
     };
-
-    /// @}
 }

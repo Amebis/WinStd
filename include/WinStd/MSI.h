@@ -25,21 +25,6 @@
 #include <string>
 #include <vector>
 
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue);
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue);
-template<class _Ty, class _Ax> inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::vector<_Ty, _Ax> &binData);
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
-template<class _Elem, class _Traits, class _Ax> inline INSTALLSTATE MsiGetComponentPathA(_In_ LPCSTR szProduct, _In_ LPCSTR szComponent, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
-template<class _Elem, class _Traits, class _Ax> inline INSTALLSTATE MsiGetComponentPathW(_In_ LPCWSTR szProduct, _In_ LPCWSTR szComponent, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
-
-#pragma once
-
-
 ///
 /// \defgroup WinStdMSIAPI Microsoft Installer API
 /// Integrates WinStd classes with Microsoft Installer API
@@ -51,6 +36,83 @@ template<class _Elem, class _Traits, class _Ax> inline INSTALLSTATE MsiGetCompon
 ///
 /// \sa [MsiGetProperty function](https://msdn.microsoft.com/en-us/library/aa370134.aspx)
 ///
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+
+///
+/// Gets the value for an installer property and stores it in a std::wstring string.
+///
+/// \sa [MsiGetProperty function](https://msdn.microsoft.com/en-us/library/aa370134.aspx)
+///
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+
+///
+/// Returns the string value of a record field and stores it in a std::string string.
+///
+/// \sa [MsiRecordGetString function](https://msdn.microsoft.com/en-us/library/aa370368.aspx)
+///
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+
+///
+/// Returns the string value of a record field and stores it in a std::wstring string.
+///
+/// \sa [MsiRecordGetString function](https://msdn.microsoft.com/en-us/library/aa370368.aspx)
+///
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+
+///
+/// Formats record field data and properties using a format string and stores it in a std::string string.
+///
+/// \sa [MsiFormatRecord function](https://msdn.microsoft.com/en-us/library/aa370109.aspx)
+///
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue);
+
+///
+/// Formats record field data and properties using a format string and stores it in a std::wstring string.
+///
+/// \sa [MsiFormatRecord function](https://msdn.microsoft.com/en-us/library/aa370109.aspx)
+///
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue);
+
+///
+/// Reads bytes from a record stream field into a std::vector buffer.
+///
+/// \sa [MsiRecordReadStream function](https://msdn.microsoft.com/en-us/library/aa370370.aspx)
+///
+template<class _Ty, class _Ax> inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::vector<_Ty, _Ax> &binData);
+
+///
+/// Returns the full target path for a folder in the Directory table and stores it in a std::string string.
+///
+/// \sa [MsiGetTargetPath function](https://msdn.microsoft.com/en-us/library/aa370303.aspx)
+///
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+
+///
+/// Returns the full target path for a folder in the Directory table and stores it in a std::wstring string.
+///
+/// \sa [MsiGetTargetPath function](https://msdn.microsoft.com/en-us/library/aa370303.aspx)
+///
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+
+///
+/// Returns the full path to an installed component. If the key path for the component is a registry key then the registry key is returned.
+///
+/// \sa [MsiGetComponentPath function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa370112.aspx)
+///
+template<class _Elem, class _Traits, class _Ax> inline INSTALLSTATE MsiGetComponentPathA(_In_ LPCSTR szProduct, _In_ LPCSTR szComponent, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+
+///
+/// Returns the full path to an installed component. If the key path for the component is a registry key then the registry key is returned.
+///
+/// \sa [MsiGetComponentPath function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa370112.aspx)
+///
+template<class _Elem, class _Traits, class _Ax> inline INSTALLSTATE MsiGetComponentPathW(_In_ LPCWSTR szProduct, _In_ LPCWSTR szComponent, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+
+/// @}
+
+#pragma once
+
+
 template<class _Elem, class _Traits, class _Ax>
 inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
@@ -79,11 +141,6 @@ inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ s
 }
 
 
-///
-/// Gets the value for an installer property and stores it in a std::wstring string.
-///
-/// \sa [MsiGetProperty function](https://msdn.microsoft.com/en-us/library/aa370134.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
@@ -112,11 +169,6 @@ inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ 
 }
 
 
-///
-/// Returns the string value of a record field and stores it in a std::string string.
-///
-/// \sa [MsiRecordGetString function](https://msdn.microsoft.com/en-us/library/aa370368.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
@@ -145,11 +197,6 @@ inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 }
 
 
-///
-/// Returns the string value of a record field and stores it in a std::wstring string.
-///
-/// \sa [MsiRecordGetString function](https://msdn.microsoft.com/en-us/library/aa370368.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
@@ -178,11 +225,6 @@ inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 }
 
 
-///
-/// Formats record field data and properties using a format string and stores it in a std::string string.
-///
-/// \sa [MsiFormatRecord function](https://msdn.microsoft.com/en-us/library/aa370109.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
@@ -211,11 +253,6 @@ inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_s
 }
 
 
-///
-/// Formats record field data and properties using a format string and stores it in a std::wstring string.
-///
-/// \sa [MsiFormatRecord function](https://msdn.microsoft.com/en-us/library/aa370109.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
@@ -244,11 +281,6 @@ inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_s
 }
 
 
-///
-/// Reads bytes from a record stream field into a std::vector buffer.
-///
-/// \sa [MsiRecordReadStream function](https://msdn.microsoft.com/en-us/library/aa370370.aspx)
-///
 template<class _Ty, class _Ax>
 inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::vector<_Ty, _Ax> &binData)
 {
@@ -269,11 +301,6 @@ inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 }
 
 
-///
-/// Returns the full target path for a folder in the Directory table and stores it in a std::string string.
-///
-/// \sa [MsiGetTargetPath function](https://msdn.microsoft.com/en-us/library/aa370303.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
@@ -302,11 +329,6 @@ inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Ou
 }
 
 
-///
-/// Returns the full target path for a folder in the Directory table and stores it in a std::wstring string.
-///
-/// \sa [MsiGetTargetPath function](https://msdn.microsoft.com/en-us/library/aa370303.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
@@ -335,11 +357,6 @@ inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _O
 }
 
 
-///
-/// Returns the full path to an installed component. If the key path for the component is a registry key then the registry key is returned.
-///
-/// \sa [MsiGetComponentPath function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa370112.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline INSTALLSTATE MsiGetComponentPathA(_In_ LPCSTR szProduct, _In_ LPCSTR szComponent, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
@@ -366,11 +383,6 @@ inline INSTALLSTATE MsiGetComponentPathA(_In_ LPCSTR szProduct, _In_ LPCSTR szCo
 }
 
 
-///
-/// Returns the full path to an installed component. If the key path for the component is a registry key then the registry key is returned.
-///
-/// \sa [MsiGetComponentPath function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa370112.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline INSTALLSTATE MsiGetComponentPathW(_In_ LPCWSTR szProduct, _In_ LPCWSTR szComponent, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
@@ -395,5 +407,3 @@ inline INSTALLSTATE MsiGetComponentPathW(_In_ LPCWSTR szProduct, _In_ LPCWSTR sz
         return state;
     }
 }
-
-/// @}

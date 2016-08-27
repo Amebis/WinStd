@@ -24,12 +24,6 @@
 
 #include <string>
 
-template<class _Elem, class _Traits, class _Ax> inline BOOL PathCanonicalizeA(__out std::basic_string<_Elem, _Traits, _Ax> &sValue, __in LPCSTR pszPath);
-template<class _Elem, class _Traits, class _Ax> inline BOOL PathCanonicalizeW(__out std::basic_string<_Elem, _Traits, _Ax> &sValue, __in LPCWSTR pszPath);
-
-#pragma once
-
-
 ///
 /// \defgroup WinStdShellWAPI Shell API
 /// Integrates WinStd classes with Microsoft Shell API
@@ -41,6 +35,20 @@ template<class _Elem, class _Traits, class _Ax> inline BOOL PathCanonicalizeW(__
 ///
 /// \sa [PathCanonicalize function](https://msdn.microsoft.com/en-us/library/windows/desktop/bb773569.aspx)
 ///
+template<class _Elem, class _Traits, class _Ax> inline BOOL PathCanonicalizeA(__out std::basic_string<_Elem, _Traits, _Ax> &sValue, __in LPCSTR pszPath);
+
+///
+/// Simplifies a path by removing navigation elements such as "." and ".." to produce a direct, well-formed path, and stores it in a std::wstring string.
+///
+/// \sa [PathCanonicalize function](https://msdn.microsoft.com/en-us/library/windows/desktop/bb773569.aspx)
+///
+template<class _Elem, class _Traits, class _Ax> inline BOOL PathCanonicalizeW(__out std::basic_string<_Elem, _Traits, _Ax> &sValue, __in LPCWSTR pszPath);
+
+/// @}
+
+#pragma once
+
+
 template<class _Elem, class _Traits, class _Ax>
 inline BOOL PathCanonicalizeA(__out std::basic_string<_Elem, _Traits, _Ax> &sValue, __in LPCSTR pszPath)
 {
@@ -54,11 +62,6 @@ inline BOOL PathCanonicalizeA(__out std::basic_string<_Elem, _Traits, _Ax> &sVal
 }
 
 
-///
-/// Simplifies a path by removing navigation elements such as "." and ".." to produce a direct, well-formed path, and stores it in a std::wstring string.
-///
-/// \sa [PathCanonicalize function](https://msdn.microsoft.com/en-us/library/windows/desktop/bb773569.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline BOOL PathCanonicalizeW(__out std::basic_string<_Elem, _Traits, _Ax> &sValue, __in LPCWSTR pszPath)
 {
@@ -69,5 +72,3 @@ inline BOOL PathCanonicalizeW(__out std::basic_string<_Elem, _Traits, _Ax> &sVal
     sValue.assign(szBuffer, bResult ? MAX_PATH : 0);
     return bResult;
 }
-
-/// @}

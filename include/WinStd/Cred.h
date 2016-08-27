@@ -26,27 +26,71 @@
 
 namespace winstd
 {
+    ///
+    /// \defgroup WinStdCryptoAPI Cryptography API
+    /// Integrates WinStd classes with Microsoft Cryptography API
+    ///
+    /// @{
+
+    ///
+    /// Deleter for unique_ptr using CredFree
+    ///
     template <class _Ty> struct CredFree_delete;
+
+    ///
+    /// Deleter for unique_ptr to array of unknown size using CredFree
+    ///
     template <class _Ty> struct CredFree_delete<_Ty[]>;
+
+    /// @}
 }
 
+
+/// \addtogroup WinStdCryptoAPI
+/// @{
+
+///
+/// Enumerates the credentials from the user's credential set. The credential set used is the one associated with the logon session of the current token. The token must not have the user's SID disabled.
+///
+/// \sa [CredEnumerate function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374794.aspx)
+///
 inline BOOL CredEnumerate(_In_ LPCTSTR Filter, _In_ DWORD Flags, _Out_ DWORD *Count, _Out_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials);
+
+///
+/// Encrypts the specified credentials so that only the current security context can decrypt them.
+///
+/// \sa [CredProtect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374803.aspx)
+///
 template<class _Elem, class _Traits, class _Ax> inline BOOL CredProtectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
+
+///
+/// Encrypts the specified credentials so that only the current security context can decrypt them.
+///
+/// \sa [CredProtect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374803.aspx)
+///
 template<class _Elem, class _Traits, class _Ax> inline BOOL CredProtectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
+
+///
+/// Decrypts credentials that were previously encrypted by using the CredProtect function.
+///
+/// \sa [CredUnprotect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375186.aspx)
+///
 template<class _Elem, class _Traits, class _Ax> inline BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials);
+
+///
+/// Decrypts credentials that were previously encrypted by using the CredProtect function.
+///
+/// \sa [CredUnprotect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375186.aspx)
+///
 template<class _Elem, class _Traits, class _Ax> inline BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials);
+
+/// @}
 
 #pragma once
 
 
 namespace winstd
 {
-    /// \addtogroup WinStdCryptoAPI
-    /// @{
-
-    ///
-    /// Deleter for unique_ptr using CredFree
-    ///
     template <class _Ty> struct CredFree_delete
     {
         typedef CredFree_delete<_Ty> _Myt; ///< This type
@@ -71,9 +115,6 @@ namespace winstd
     };
 
 
-    ///
-    /// Deleter for unique_ptr to array of unknown size using CredFree
-    ///
     template <class _Ty> struct CredFree_delete<_Ty[]>
     {
         typedef CredFree_delete<_Ty> _Myt; ///< This type
@@ -100,22 +141,9 @@ namespace winstd
             CredFree(_Ptr);
         }
     };
-
-    /// @}
 }
 
 
-///
-/// \defgroup WinStdCryptoAPI Cryptography API
-/// Integrates WinStd classes with Microsoft Cryptography API
-///
-/// @{
-
-///
-/// Enumerates the credentials from the user's credential set. The credential set used is the one associated with the logon session of the current token. The token must not have the user's SID disabled.
-///
-/// \sa [CredEnumerate function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374794.aspx)
-///
 inline BOOL CredEnumerate(_In_ LPCTSTR Filter, _In_ DWORD Flags, _Out_ DWORD *Count, _Out_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials)
 {
     PCREDENTIAL *pCredentials;
@@ -127,11 +155,6 @@ inline BOOL CredEnumerate(_In_ LPCTSTR Filter, _In_ DWORD Flags, _Out_ DWORD *Co
 }
 
 
-///
-/// Encrypts the specified credentials so that only the current security context can decrypt them.
-///
-/// \sa [CredProtect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374803.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline BOOL CredProtectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType)
 {
@@ -156,11 +179,6 @@ inline BOOL CredProtectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszCredentials, _In_ DWO
 }
 
 
-///
-/// Encrypts the specified credentials so that only the current security context can decrypt them.
-///
-/// \sa [CredProtect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374803.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline BOOL CredProtectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType)
 {
@@ -185,11 +203,6 @@ inline BOOL CredProtectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszCredentials, _In_ DW
 }
 
 
-///
-/// Decrypts credentials that were previously encrypted by using the CredProtect function.
-///
-/// \sa [CredUnprotect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375186.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials)
 {
@@ -214,11 +227,6 @@ inline BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszProtectedCredential
 }
 
 
-///
-/// Decrypts credentials that were previously encrypted by using the CredProtect function.
-///
-/// \sa [CredUnprotect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375186.aspx)
-///
 template<class _Elem, class _Traits, class _Ax>
 inline BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials)
 {
@@ -241,5 +249,3 @@ inline BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszProtectedCredentia
 
     return FALSE;
 }
-
-/// @}

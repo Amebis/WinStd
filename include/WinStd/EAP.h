@@ -25,20 +25,6 @@
 
 namespace winstd
 {
-    enum eap_type_t;
-
-    class WINSTD_API eap_attr;
-    class WINSTD_API eap_method_prop;
-    class WINSTD_API eap_packet;
-}
-
-#pragma once
-
-#include <eapmethodtypes.h>
-
-
-namespace winstd
-{
     ///
     /// \defgroup WinStdEAPAPI Extensible Authentication Protocol API
     /// Integrates WinStd classes with Microsoft EAP API
@@ -50,6 +36,33 @@ namespace winstd
     ///
     /// \sa [Extensible Authentication Protocol (EAP) Registry (Chapter: Method Types)](https://www.iana.org/assignments/eap-numbers/eap-numbers.xhtml#eap-numbers-4)
     ///
+    enum eap_type_t;
+
+    ///
+    /// EAP_ATTRIBUTE wrapper class
+    ///
+    class WINSTD_API eap_attr;
+
+    ///
+    /// EAP_METHOD_PROPERTY wrapper class
+    ///
+    class WINSTD_API eap_method_prop;
+
+    ///
+    /// EapPacket wrapper class
+    ///
+    class WINSTD_API eap_packet;
+
+    /// @}
+}
+
+#pragma once
+
+#include <eapmethodtypes.h>
+
+
+namespace winstd
+{
     #pragma warning(suppress: 4480)
     enum eap_type_t : unsigned char {
         eap_type_undefined = 0,     ///< Undefined EAP type
@@ -61,9 +74,6 @@ namespace winstd
     };
 
 
-    ///
-    /// EAP_ATTRIBUTE wrapper class
-    ///
     class WINSTD_API __declspec(novtable) eap_attr : public EAP_ATTRIBUTE
     {
     public:
@@ -169,9 +179,6 @@ namespace winstd
     };
 
 
-    ///
-    /// EAP_METHOD_PROPERTY wrapper class
-    ///
     class WINSTD_API __declspec(novtable) eap_method_prop : public EAP_METHOD_PROPERTY
     {
     public:
@@ -221,9 +228,6 @@ namespace winstd
     };
 
 
-    ///
-    /// EapPacket wrapper class
-    ///
     class WINSTD_API eap_packet : public dplhandle<EapPacket*>
     {
     public:
@@ -304,6 +308,4 @@ namespace winstd
         ///
         virtual handle_type duplicate_internal(_In_ handle_type h) const;
     };
-
-    /// @}
 }
