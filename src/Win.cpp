@@ -22,6 +22,134 @@
 
 
 //////////////////////////////////////////////////////////////////////
+// StringToGuidA
+//////////////////////////////////////////////////////////////////////
+
+BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid)
+{
+    GUID g;
+    LPSTR lpszEnd;
+    unsigned long ulTmp;
+    unsigned long long ullTmp;
+
+    if (!lpszGuid || !lpGuid || *lpszGuid != '{') return FALSE;
+    lpszGuid++;
+
+    g.Data1 = strtoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE) return FALSE;
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data2 = (unsigned short)ulTmp;
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data3 = (unsigned short)ulTmp;
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data4[0] = (unsigned char)((ulTmp >> 8) & 0xff);
+    g.Data4[1] = (unsigned char)( ulTmp       & 0xff);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ullTmp = _strtoui64(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ullTmp > 0xFFFFFFFFFFFF) return FALSE;
+    g.Data4[2] = (unsigned char)((ullTmp >> 40) & 0xff);
+    g.Data4[3] = (unsigned char)((ullTmp >> 32) & 0xff);
+    g.Data4[4] = (unsigned char)((ullTmp >> 24) & 0xff);
+    g.Data4[5] = (unsigned char)((ullTmp >> 16) & 0xff);
+    g.Data4[6] = (unsigned char)((ullTmp >>  8) & 0xff);
+    g.Data4[7] = (unsigned char)( ullTmp        & 0xff);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '}') return FALSE;
+    lpszGuid++;
+
+    if (*lpszGuid != 0) return FALSE;
+
+    *lpGuid = g;
+    return TRUE;
+}
+
+
+BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid)
+{
+    GUID g;
+    LPWSTR lpszEnd;
+    unsigned long ulTmp;
+    unsigned long long ullTmp;
+
+    if (!lpszGuid || !lpGuid || *lpszGuid != '{') return FALSE;
+    lpszGuid++;
+
+    g.Data1 = wcstoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE) return FALSE;
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data2 = (unsigned short)ulTmp;
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data3 = (unsigned short)ulTmp;
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data4[0] = (unsigned char)((ulTmp >> 8) & 0xff);
+    g.Data4[1] = (unsigned char)( ulTmp       & 0xff);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ullTmp = _wcstoui64(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ullTmp > 0xFFFFFFFFFFFF) return FALSE;
+    g.Data4[2] = (unsigned char)((ullTmp >> 40) & 0xff);
+    g.Data4[3] = (unsigned char)((ullTmp >> 32) & 0xff);
+    g.Data4[4] = (unsigned char)((ullTmp >> 24) & 0xff);
+    g.Data4[5] = (unsigned char)((ullTmp >> 16) & 0xff);
+    g.Data4[6] = (unsigned char)((ullTmp >>  8) & 0xff);
+    g.Data4[7] = (unsigned char)( ullTmp        & 0xff);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '}') return FALSE;
+    lpszGuid++;
+
+    if (*lpszGuid != 0) return FALSE;
+
+    *lpGuid = g;
+    return TRUE;
+}
+
+
+//////////////////////////////////////////////////////////////////////
 // winstd::win_handle
 //////////////////////////////////////////////////////////////////////
 

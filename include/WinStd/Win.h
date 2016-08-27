@@ -40,6 +40,29 @@ template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringW(_In_ L
 #else
 #define GuidToString GuidToStringA
 #endif
+
+///
+/// Parses string with GUID and stores it to GUID
+///
+/// \param[in ] lpszGuid  String with GUID
+/// \param[out] lpGuid    GUID to store the result to
+///
+BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid);
+
+///
+/// Parses string with GUID and stores it to GUID
+///
+/// \param[in ] lpszGuid  String with GUID
+/// \param[out] lpGuid    GUID to store the result to
+///
+BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid);
+
+#ifdef _UNICODE
+#define StringToGuid StringToGuidW
+#else
+#define StringToGuid StringToGuidA
+#endif
+
 template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 template<class _Ty, class _Ax> inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData);
