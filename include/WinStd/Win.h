@@ -158,7 +158,7 @@ template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringW(_In_ L
 /// \param[in ] lpszGuid  String with GUID
 /// \param[out] lpGuid    GUID to store the result to
 ///
-BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid);
+BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_ LPCSTR *lpszGuidEnd = NULL);
 
 ///
 /// Parses string with GUID and stores it to GUID
@@ -166,7 +166,7 @@ BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid);
 /// \param[in ] lpszGuid  String with GUID
 /// \param[out] lpGuid    GUID to store the result to
 ///
-BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid);
+BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_ LPCWSTR *lpszGuidEnd = NULL);
 
 #ifdef _UNICODE
 #define StringToGuid StringToGuidW
