@@ -343,7 +343,7 @@ namespace winstd
         ///
         /// Initializes a new class instance with the object handle set to NULL.
         ///
-        inline win_handle() : handle<HCERTSTORE>() {}
+        inline win_handle() : handle<HANDLE>() {}
 
         ///
         /// Initializes a new class instance with an already available object handle.
@@ -357,7 +357,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline win_handle(_Inout_ win_handle &&h) : handle<HCERTSTORE>(std::move(h)) {}
+        inline win_handle(_Inout_ win_handle &&h) : handle<HANDLE>(std::move(h)) {}
 
         ///
         /// Closes an open object handle.
