@@ -20,6 +20,7 @@
 
 #include "StdAfx.h"
 
+
 #if defined(SECURITY_WIN32) || defined(SECURITY_KERNEL) || defined(SECURITY_MAC)
 
 //////////////////////////////////////////////////////////////////////
