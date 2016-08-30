@@ -41,12 +41,12 @@ namespace winstd
     ///
     /// EVENT_DATA_DESCRIPTOR wrapper
     ///
-    class WINSTD_API event_data;
+    class WINSTD_API __declspec(novtable) event_data;
 
     ///
     /// EVENT_RECORD wrapper
     ///
-    class WINSTD_API event_rec;
+    class WINSTD_API __declspec(novtable) event_rec;
 
     ///
     /// ETW event provider
@@ -116,7 +116,7 @@ template<class _Ty, class _Ax> inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pE
 
 namespace winstd
 {
-    class WINSTD_API event_data : public EVENT_DATA_DESCRIPTOR
+    class WINSTD_API __declspec(novtable) event_data : public EVENT_DATA_DESCRIPTOR
     {
     public:
         ///
@@ -228,7 +228,7 @@ namespace winstd
     };
 
 
-    class WINSTD_API event_rec : public EVENT_RECORD
+    class WINSTD_API __declspec(novtable) event_rec : public EVENT_RECORD
     {
     public:
         ///
@@ -278,7 +278,7 @@ namespace winstd
         ///
         /// Destroys event record data and frees the allocated memory.
         ///
-        virtual ~event_rec();
+        ~event_rec();
 
 
         ///
@@ -440,7 +440,7 @@ namespace winstd
         ///
         /// \sa [EventWrite function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363752.aspx)
         ///
-        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ const EVENT_DATA_DESCRIPTOR &param1, ...)
+        inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ const EVENT_DATA_DESCRIPTOR param1, ...)
         {
             assert(m_h);
             UNREFERENCED_PARAMETER(param1);
@@ -475,7 +475,7 @@ namespace winstd
 
             // Preallocate array.
             for (param_count = 0;; param_count++) {
-                EVENT_DATA_DESCRIPTOR &p = va_arg(arg, EVENT_DATA_DESCRIPTOR);
+                const EVENT_DATA_DESCRIPTOR &p = va_arg(arg, const EVENT_DATA_DESCRIPTOR);
                 if (!p.Ptr) break;
             }
             params.reserve(param_count);
@@ -483,7 +483,7 @@ namespace winstd
             // Copy parameters to array.
             arg = arg_start;
             for (;;) {
-                EVENT_DATA_DESCRIPTOR &p = va_arg(arg, EVENT_DATA_DESCRIPTOR);
+                const EVENT_DATA_DESCRIPTOR &p = va_arg(arg, const EVENT_DATA_DESCRIPTOR);
                 if (!p.Ptr) break;
                 params.push_back(p);
             }
