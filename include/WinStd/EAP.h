@@ -65,17 +65,19 @@ namespace winstd
 {
     #pragma warning(suppress: 4480)
     enum eap_type_t : unsigned char {
-        eap_type_undefined    =   0,    ///< Undefined EAP type
-        eap_type_tls          =  13,    ///< EAP-TLS
-        eap_type_ttls         =  21,    ///< EAP-TTLS
-        eap_type_peap         =  25,    ///< EAP-PEAP
-        eap_type_mschapv2     =  26,    ///< EAP-MSCHAPv2
-        eap_type_pap          = 192,    ///< PAP (Not actually an EAP method; Moved to the Unassigned area)
+        eap_type_undefined       =   0,    ///< Undefined EAP type
+        eap_type_tls             =  13,    ///< EAP-TLS
+        eap_type_ttls            =  21,    ///< EAP-TTLS
+        eap_type_peap            =  25,    ///< EAP-PEAP
+        eap_type_mschapv2        =  26,    ///< EAP-MSCHAPv2
 
-        eap_type_start        =   1,    ///< Start of EAP methods
-        eap_type_end          = 192,    ///< End of EAP methods (non-inclusive)
-        eap_type_noneap_start = 192,    ///< Start of non-EAP methods
-        eap_type_noneap_end   = 254,    ///< End of non-EAP methods (non-inclusive)
+        eap_type_legacy_pap      = 192,    ///< PAP (Not actually an EAP method; Moved to the Unassigned area)
+        eap_type_legacy_mschapv2 = 193,    ///< MSCHAPv2 (Not actually an EAP method; Moved to the Unassigned area)
+
+        eap_type_start           =   1,    ///< Start of EAP methods
+        eap_type_end             = 192,    ///< End of EAP methods (non-inclusive)
+        eap_type_noneap_start    = 192,    ///< Start of non-EAP methods
+        eap_type_noneap_end      = 254,    ///< End of non-EAP methods (non-inclusive)
     };
 
 
