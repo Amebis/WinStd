@@ -117,9 +117,9 @@ namespace winstd
         /// Decodes one block of information, and _appends_ it to the output
         ///
         /// \param[out] out      Output
+        /// \param[out] is_last  Was this the last block of data? Actually, is this block of data complete?
         /// \param[in ] data     Data to decode
         /// \param[in ] size     Length of `data` in bytes
-        /// \param[in ] is_last  Was this the last block of data? Actually, is this block of data complete?
         ///
         template<class _Ty, class _Ax, class _Tchr>
         inline void decode(_Out_ std::vector<_Ty, _Ax> &out, _Out_ bool &is_last, _In_z_count_(size) const _Tchr *data, _In_ size_t size)
