@@ -292,3 +292,20 @@ void winstd::vmemory::free_internal()
 {
     VirtualFreeEx(m_proc, m_h, 0, MEM_RELEASE);
 }
+
+
+//////////////////////////////////////////////////////////////////////
+// winstd::reg_key
+//////////////////////////////////////////////////////////////////////
+
+winstd::reg_key::~reg_key()
+{
+    if (m_h)
+        RegCloseKey(m_h);
+}
+
+
+void winstd::reg_key::free_internal()
+{
+    RegCloseKey(m_h);
+}

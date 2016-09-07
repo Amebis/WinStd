@@ -68,6 +68,11 @@ namespace winstd
     ///
     class WINSTD_API vmemory;
 
+    ///
+    /// Registry wrapper class
+    ///
+    class WINSTD_API reg_key;
+
     /// @}
 }
 
@@ -654,6 +659,117 @@ namespace winstd
     protected:
         HANDLE m_proc;  ///< Handle of memory's process
     };
+
+
+    class WINSTD_API reg_key : public handle<HKEY>
+    {
+    public:
+        ///
+        /// Initializes a new class instance with the object handle set to NULL.
+        ///
+        inline reg_key() : handle<HKEY>() {}
+
+        ///
+        /// Initializes a new class instance with an already available object handle.
+        ///
+        /// \param[in] h  Initial object handle value
+        ///
+        inline reg_key(_In_opt_ handle_type h) : handle<HKEY>(h) {}
+
+        ///
+        /// Move constructor
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        inline reg_key(_Inout_ reg_key &&h) : handle<HKEY>(std::move(h)) {}
+
+        ///
+        /// Closes a handle to the registry key.
+        ///
+        /// \sa [RegCloseKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724837.aspx)
+        ///
+        virtual ~reg_key();
+
+        ///
+        /// Move assignment
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        reg_key& operator=(_Inout_ reg_key &&h)
+        {
+            if (this != std::addressof(h))
+                *(handle<handle_type>*)this = std::move(h);
+            return *this;
+        }
+
+        ///
+        /// Creates the specified registry key. If the key already exists, the function opens it.
+        ///
+        /// \return
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
+        /// \sa [RegCreateKeyEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724844.aspx)
+        ///
+        inline bool create(
+            _In_      HKEY                  hKey,
+            _In_      LPCTSTR               lpSubKey,
+            _In_opt_  LPTSTR                lpClass,
+            _In_      DWORD                 dwOptions,
+            _In_      REGSAM                samDesired,
+            _In_opt_  LPSECURITY_ATTRIBUTES lpSecurityAttributes = NULL,
+            _Out_opt_ LPDWORD               lpdwDisposition = NULL)
+        {
+            handle_type h;
+            LSTATUS s = RegCreateKeyEx(hKey, lpSubKey, 0, lpClass, dwOptions, samDesired, lpSecurityAttributes, &h, lpdwDisposition);
+            if (s == ERROR_SUCCESS) {
+                attach(h);
+                return true;
+            } else {
+                SetLastError(s);
+                return false;
+            }
+        }
+
+        ///
+        /// Opens the specified registry key.
+        ///
+        /// \return
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
+        /// \sa [RegOpenKeyEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724897.aspx)
+        ///
+        inline bool open(
+            _In_     HKEY    hKey,
+            _In_opt_ LPCTSTR lpSubKey,
+            _In_     DWORD   ulOptions,
+            _In_     REGSAM  samDesired)
+        {
+            handle_type h;
+            LONG s = RegOpenKeyEx(hKey, lpSubKey, ulOptions, samDesired, &h);
+            if (s == ERROR_SUCCESS) {
+                attach(h);
+                return true;
+            } else {
+                SetLastError(s);
+                return false;
+            }
+        }
+
+    private:
+        // This class is noncopyable.
+        reg_key(_In_ const reg_key &h);
+        reg_key& operator=(_In_ const reg_key &h);
+
+    protected:
+        ///
+        /// Closes a handle to the registry key.
+        ///
+        /// \sa [RegCloseKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724837.aspx)
+        ///
+        virtual void free_internal();
+    };
 }
 
 
@@ -878,8 +994,6 @@ inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _T
 template<class _Elem, class _Traits, class _Ax>
 inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
-    assert(0); // TODO: Test this code.
-
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = sizeof(aStackBuffer), dwType;
@@ -889,10 +1003,11 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
     if (lResult == ERROR_SUCCESS) {
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ.
-            sValue.assign((_Elem*)aStackBuffer, dwSize / sizeof(_Elem));
+            dwSize /= sizeof(CHAR);
+            sValue.assign((LPCSTR)aStackBuffer, dwSize && ((LPCSTR)aStackBuffer)[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Expand it from stack buffer.
-            if (::ExpandEnvironmentStringsW((const _Elem*)aStackBuffer, sValue) == 0)
+            if (::ExpandEnvironmentStringsA((LPCSTR)aStackBuffer, sValue) == 0)
                 lResult = ::GetLastError();
         } else {
             // The value is not a string type.
@@ -901,16 +1016,17 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
     } else if (lResult == ERROR_MORE_DATA) {
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ. Read it now.
-            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize / sizeof(_Elem)]);
-            if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS)
-                sValue.assign(szBuffer.get(), dwSize / sizeof(_Elem));
-            else
+            auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[dwSize / sizeof(CHAR)]);
+            if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS) {
+                dwSize /= sizeof(CHAR);
+                sValue.assign(szBuffer.get(), dwSize && szBuffer[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
+            } else
                 sValue.clear();
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Read it and expand environment variables.
-            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize / sizeof(_Elem)]);
+            auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[dwSize / sizeof(CHAR)]);
             if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS) {
-                if (::ExpandEnvironmentStringsW(szBuffer.get(), sValue) == 0)
+                if (::ExpandEnvironmentStringsA(szBuffer.get(), sValue) == 0)
                     lResult = ::GetLastError();
             } else
                 sValue.clear();
@@ -927,8 +1043,6 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
 template<class _Elem, class _Traits, class _Ax>
 inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
-    assert(0); // TODO: Test this code.
-
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = sizeof(aStackBuffer), dwType;
@@ -938,10 +1052,11 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
     if (lResult == ERROR_SUCCESS) {
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ.
-            sValue.assign((_Elem*)aStackBuffer, dwSize / sizeof(_Elem));
+            dwSize /= sizeof(WCHAR);
+            sValue.assign((LPCWSTR)aStackBuffer, dwSize && ((LPCWSTR)aStackBuffer)[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Expand it from stack buffer.
-            if (::ExpandEnvironmentStringsW((const _Elem*)aStackBuffer, sValue) == 0)
+            if (::ExpandEnvironmentStringsW((LPCWSTR)aStackBuffer, sValue) == 0)
                 lResult = ::GetLastError();
         } else {
             // The value is not a string type.
@@ -950,14 +1065,15 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
     } else if (lResult == ERROR_MORE_DATA) {
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ. Read it now.
-            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize / sizeof(_Elem)]);
-            if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS)
-                sValue.assign(szBuffer.get(), dwSize / sizeof(_Elem));
-            else
+            auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[dwSize / sizeof(WCHAR)]);
+            if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS) {
+                dwSize /= sizeof(WCHAR);
+                sValue.assign(szBuffer.get(), dwSize && szBuffer[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
+            } else
                 sValue.clear();
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Read it and expand environment variables.
-            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize / sizeof(_Elem)]);
+            auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[dwSize / sizeof(WCHAR)]);
             if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS) {
                 if (::ExpandEnvironmentStringsW(szBuffer.get(), sValue) == 0)
                     lResult = ::GetLastError();
