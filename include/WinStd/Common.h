@@ -830,19 +830,28 @@ namespace winstd
         }
 
         ///
+        /// Destroys the queue
+        ///
+        virtual ~vector_queue()
+        {
+            if (m_data) delete [] m_data;
+        }
+
+        ///
         /// Moves existing queue.
         ///
         /// \param[inout] other  Queue to move
         ///
         inline vector_queue(_Inout_ vector_queue<value_type> &&other) :
-            m_data(std::move(other.m_data)),
-            m_head(std::move(other.m_head)),
-            m_count(std::move(other.m_count)),
+            m_data    (std::move(other.m_data    )),
+            m_head    (std::move(other.m_head    )),
+            m_count   (std::move(other.m_count   )),
             m_size_max(std::move(other.m_size_max))
         {
             // Reset other to consistent state.
-            other.m_head = 0;
-            other.m_count = 0;
+            other.m_data     = NULL;
+            other.m_head     = 0;
+            other.m_count    = 0;
             other.m_size_max = 0;
         }
 
@@ -859,7 +868,8 @@ namespace winstd
                 m_size_max = other.m_size_max;
 
                 // Copy elements.
-                m_data.reset(new value_type[other.m_size_max]);
+                if (m_data) delete [] m_data;
+                m_data = new value_type[other.m_size_max];
                 for (size_type i = 0; i < m_count; i++) {
                     size_type i_l = abs(i);
                     m_data[i_l] =  other.m_data[i_l];
@@ -883,8 +893,9 @@ namespace winstd
                 m_size_max = std::move(other.m_size_max);
 
                 // Reset other to consistent state.
-                other.m_head = 0;
-                other.m_count = 0;
+                other.m_data     = NULL;
+                other.m_head     = 0;
+                other.m_count    = 0;
                 other.m_size_max = 0;
             }
 
@@ -1147,10 +1158,10 @@ namespace winstd
         }
 
     protected:
-        std::unique_ptr<value_type[]> m_data; ///< Underlying data container
-        size_type m_head;                     ///< Index of the first element
-        size_type m_count;                    ///< Number of elements
-        size_type m_size_max;                 ///< Maximum size
+        value_type *m_data;     ///< Underlying data container
+        size_type m_head;       ///< Index of the first element
+        size_type m_count;      ///< Number of elements
+        size_type m_size_max;   ///< Maximum size
     };
 
 
