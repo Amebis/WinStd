@@ -38,6 +38,32 @@
 #define _L(x)   __L(x)
 #endif
 
+// Macros for building default constructors and operators to prevent their auto-generation by compiler.
+#define WINSTD_NONCOPYABLE(C) \
+private: \
+    inline    C        (_In_ const C &h); \
+    inline C& operator=(_In_ const C &h);
+
+#define HANDLE_IMPL(C) \
+public: \
+    inline    C        (                       )                                     {                                                             } \
+    inline    C        (_In_    handle_type   h) : handle<handle_type>(          h ) {                                                             } \
+    inline    C        (_Inout_ C           &&h) : handle<handle_type>(std::move(h)) {                                                             } \
+    inline C& operator=(_In_    handle_type   h)                                     { handle<handle_type>::operator=(          h ); return *this; } \
+    inline C& operator=(_Inout_ C           &&h)                                     { handle<handle_type>::operator=(std::move(h)); return *this; } \
+WINSTD_NONCOPYABLE(C)
+
+#define DPLHANDLE_IMPL(C) \
+public: \
+    inline    C        (                             )                                                     {                                                                } \
+    inline    C        (_In_          handle_type   h) : dplhandle<handle_type>(                   h     ) {                                                                } \
+    inline    C        (_In_    const C            &h) : dplhandle<handle_type>(duplicate_internal(h.m_h)) {                                                                } \
+    inline    C        (_Inout_       C           &&h) : dplhandle<handle_type>(std::move         (h    )) {                                                                } \
+    inline C& operator=(_In_          handle_type   h)                                                     { dplhandle<handle_type>::operator=(          h ); return *this; } \
+    inline C& operator=(_In_    const C            &h)                                                     { dplhandle<handle_type>::operator=(          h ); return *this; } \
+    inline C& operator=(_Inout_       C           &&h)                                                     { dplhandle<handle_type>::operator=(std::move(h)); return *this; } \
+private:
+
 #include <Windows.h>
 
 #include <stdarg.h>
@@ -466,7 +492,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline handle<handle_type>(_Inout_ handle<handle_type> &&h)
+        inline handle(_Inout_ handle<handle_type> &&h)
         {
             // Transfer handle.
             m_h   = h.m_h;
@@ -479,6 +505,17 @@ namespace winstd
         handle<handle_type>& operator=(_In_ const handle<handle_type> &h);
 
     public:
+        ///
+        /// Attaches already available object handle.
+        ///
+        /// \param[in] h  Object handle value
+        ///
+        inline handle<handle_type>& operator=(_In_ handle_type h)
+        {
+            attach(h);
+            return *this;
+        }
+
         ///
         /// Move assignment
         ///
@@ -683,22 +720,47 @@ namespace winstd
     {
     public:
         ///
-        /// Duplicates the object handle.
+        /// Initializes a new class instance with the object handle set to NULL.
+        ///
+        inline dplhandle()
+        {
+        }
+
+        ///
+        /// Initializes a new class instance with an already available object handle.
+        ///
+        /// \param[in] h  Initial object handle value
+        ///
+        inline dplhandle(_In_ handle_type h) : handle<handle_type>(h)
+        {
+        }
+
+        ///
+        /// Copy constructor
+        ///
+        /// \param[inout] h  A reference of another object
+        ///
+        inline dplhandle<handle_type>(_In_ const dplhandle<handle_type> &h) : handle<handle_type>(internal_duplicate(h.m_h))
+        {
+        }
+
+        ///
+        /// Move constructor
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        inline dplhandle<handle_type>(_Inout_ dplhandle<handle_type> &&h) : handle<handle_type>(std::move(h))
+        {
+        }
+
+        ///
+        /// Attaches already available object handle.
         ///
         /// \param[in] h  Object handle value
         ///
         inline dplhandle<handle_type>& operator=(_In_ handle_type h)
         {
-            if (m_h != h) {
-                handle_type h_new = duplicate_internal(h);
-                if (h_new) {
-                    if (m_h)
-                        free_internal();
-
-                    m_h = h_new;
-                } else if (h)
-                    assert(0); // Could not duplicate the handle
-            }
+            handle<handle_type>::operator=(h);
             return *this;
         }
 
@@ -719,6 +781,17 @@ namespace winstd
                 } else if (h.m_h)
                     assert(0); // Could not duplicate the handle
             }
+            return *this;
+        }
+
+        ///
+        /// Moves the object.
+        ///
+        /// \param[inout] h  A rvalue reference of another object
+        ///
+        inline dplhandle<handle_type>& operator=(_Inout_ dplhandle<handle_type> &&h)
+        {
+            handle<handle_type>::operator=(std::move(h));
             return *this;
         }
 

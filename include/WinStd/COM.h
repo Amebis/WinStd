@@ -71,27 +71,11 @@ namespace winstd
 namespace winstd
 {
     template <class T>
-    class com_obj : public handle<T*>
+    class com_obj : public dplhandle<T*>
     {
+        DPLHANDLE_IMPL(com_obj)
+
     public:
-        ///
-        /// Constructs a new class instance with the object set to NULL
-        ///
-        inline com_obj() : handle()
-        {
-        }
-
-
-        ///
-        /// Constructs a new class instance and appends an available object
-        ///
-        /// \param[in] h  Initial object value
-        ///
-        inline com_obj(_In_opt_ handle_type h) : handle(h)
-        {
-        }
-
-
         ///
         /// Constructs a new object and creates a new class with it
         ///
@@ -131,7 +115,7 @@ namespace winstd
         ///
         /// Queries the object for another interface
         ///
-        /// \sa [CoCreateInstance function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms686615.aspx)
+        /// \sa [IUnknown::QueryInterface method](https://msdn.microsoft.com/en-us/library/windows/desktop/ms682521.aspx)
         ///
         template <class _Other>
         HRESULT query_interface(_Out_ _Other **h) const
@@ -139,6 +123,23 @@ namespace winstd
             assert(h);
             assert(m_h);
             return m_h->QueryInterface(__uuidof(_Other), (void**)h);
+        }
+
+
+        ///
+        /// Queries the object for another interface
+        ///
+        /// \sa [IUnknown::QueryInterface method](https://msdn.microsoft.com/en-us/library/windows/desktop/ms682521.aspx)
+        ///
+        template <class _Other>
+        HRESULT query_interface(_Out_ com_obj<_Other> &h) const
+        {
+            assert(m_h);
+            _Other *_h;
+            HRESULT hr = m_h->QueryInterface(__uuidof(_Other), (void**)&_h);
+            if (SUCCEEDED(hr))
+                h.attach(_h);
+            return hr;
         }
 
     protected:
@@ -149,46 +150,51 @@ namespace winstd
         {
             m_h->Release();
         }
+
+
+        ///
+        /// Duplicates the object.
+        ///
+        /// \param[in] h  Object handle of existing object
+        ///
+        /// \return Duplicated object handle
+        ///
+        virtual handle_type duplicate_internal(_In_ handle_type h) const
+        {
+            h->AddRef();
+            return h;
+        }
     };
 
 
-    class WINSTD_API bstr : public handle<BSTR>
+    class WINSTD_API bstr : public dplhandle<BSTR>
     {
+        DPLHANDLE_IMPL(bstr)
+
     public:
-        ///
-        /// Constructs null BSTR
-        ///
-        inline bstr() : handle<BSTR>()
-        {
-        }
-
-        ///
-        /// Constructs BSTR from another
-        ///
-        inline bstr(_In_ const BSTR src) : handle<BSTR>(SysAllocStringLen(src, SysStringLen(src)))
-        {
-        }
-
         ///
         /// Constructs BSTR from OLE string
         ///
-        inline bstr(_In_ LPCOLESTR src) : handle<BSTR>(SysAllocString(src))
+        inline bstr(_In_ LPCOLESTR src)
         {
+            m_h = SysAllocString(src);
         }
 
         ///
         /// Constructs BSTR from OLE string with length
         ///
-        inline bstr(_In_ LPCOLESTR src, _In_ UINT len) : handle<BSTR>(SysAllocStringLen(src, len))
+        inline bstr(_In_ LPCOLESTR src, _In_ UINT len)
         {
+            m_h = SysAllocStringLen(src, len);
         }
 
         ///
         /// Constructs BSTR from std::basic_string
         ///
         template<class _Traits, class _Ax>
-        inline bstr(_In_ const std::basic_string<wchar_t, _Traits, _Ax> &src) : handle<BSTR>(SysAllocStringLen(src.c_str(), (UINT)src.length()))
+        inline bstr(_In_ const std::basic_string<wchar_t, _Traits, _Ax> &src)
         {
+            m_h = SysAllocStringLen(src.c_str(), (UINT)src.length());
         }
 
         ///
@@ -217,13 +223,13 @@ namespace winstd
         virtual void free_internal();
 
         ///
-        /// Duplicates the certificate context
+        /// Duplicates the string
         ///
-        /// \param[in] h  Object handle of existing certificate context
+        /// \param[in] h  Existing string
         ///
-        /// \return Duplicated certificate context handle
+        /// \return Duplicated string
         ///
-        /// \sa [CertDuplicateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376045.aspx)
+        /// \sa [SysAllocString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms221458.aspx)
         ///
         virtual handle_type duplicate_internal(_In_ handle_type h) const;
     };

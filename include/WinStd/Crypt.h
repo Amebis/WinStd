@@ -335,34 +335,9 @@ namespace winstd
 {
     class WINSTD_API cert_context : public dplhandle<PCCERT_CONTEXT>
     {
+        DPLHANDLE_IMPL(cert_context)
+
     public:
-        ///
-        /// Initializes a new class instance with the object handle set to NULL.
-        ///
-        inline cert_context()
-        {
-        }
-
-        ///
-        /// Initializes a new class instance with the duplicated object handle.
-        ///
-        /// \param[in] h  Initial object handle value
-        ///
-        inline cert_context(_In_ handle_type h)
-        {
-            m_h = duplicate_internal(h);
-        }
-
-        ///
-        /// Initializes a new class instance as a duplicate of given class.
-        ///
-        /// \param[in] h  Initial object
-        ///
-        inline cert_context(_In_ const cert_context &h)
-        {
-            m_h = duplicate_internal(h.m_h);
-        }
-
         ///
         /// Destroys the certificate context.
         ///
@@ -494,34 +469,9 @@ namespace winstd
 
     class WINSTD_API cert_chain_context : public dplhandle<PCCERT_CHAIN_CONTEXT>
     {
+        DPLHANDLE_IMPL(cert_chain_context)
+
     public:
-        ///
-        /// Initializes a new class instance with the object handle set to NULL.
-        ///
-        inline cert_chain_context()
-        {
-        }
-
-        ///
-        /// Initializes a new class instance with the duplicated object handle.
-        ///
-        /// \param[in] h  Initial object handle value
-        ///
-        inline cert_chain_context(_In_ handle_type h)
-        {
-            m_h = duplicate_internal(h);
-        }
-
-        ///
-        /// Initializes a new class instance as a duplicate of given class.
-        ///
-        /// \param[in] h  Initial object
-        ///
-        inline cert_chain_context(_In_ const cert_chain_context &h)
-        {
-            m_h = duplicate_internal(h.m_h);
-        }
-
         ///
         /// Destroys the certificate chain context.
         ///
@@ -571,44 +521,15 @@ namespace winstd
 
     class WINSTD_API cert_store : public handle<HCERTSTORE>
     {
+        HANDLE_IMPL(cert_store)
+
     public:
-        ///
-        /// Initializes a new class instance with the object handle set to NULL.
-        ///
-        inline cert_store() : handle<HCERTSTORE>() {}
-
-        ///
-        /// Initializes a new class instance with an already available object handle.
-        ///
-        /// \param[in] h  Initial object handle value
-        ///
-        inline cert_store(_In_opt_ handle_type h) : handle<HCERTSTORE>(h) {}
-
-        ///
-        /// Move constructor
-        ///
-        /// \param[inout] h  A rvalue reference of another object
-        ///
-        inline cert_store(_Inout_ cert_store &&h) : handle<HCERTSTORE>(std::move(h)) {}
-
         ///
         /// Closes the certificate store.
         ///
         /// \sa [CertCloseStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376026.aspx)
         ///
         virtual ~cert_store();
-
-        ///
-        /// Move assignment
-        ///
-        /// \param[inout] h  A rvalue reference of another object
-        ///
-        cert_store& operator=(_Inout_ cert_store &&h)
-        {
-            if (this != std::addressof(h))
-                *(handle<handle_type>*)this = std::move(h);
-            return *this;
-        }
 
         ///
         /// Opens the certificate store.
@@ -648,11 +569,6 @@ namespace winstd
                 return false;
         }
 
-    private:
-        // This class is noncopyable.
-        cert_store(_In_ const cert_store &h);
-        cert_store& operator=(_In_ const cert_store &h);
-
     protected:
         ///
         /// Closes the certificate store.
@@ -665,44 +581,15 @@ namespace winstd
 
     class WINSTD_API crypt_prov : public handle<HCRYPTPROV>
     {
+        HANDLE_IMPL(crypt_prov)
+
     public:
-        ///
-        /// Initializes a new class instance with the object handle set to NULL.
-        ///
-        inline crypt_prov() : handle<HCRYPTPROV>() {}
-
-        ///
-        /// Initializes a new class instance with an already available object handle.
-        ///
-        /// \param[in] h  Initial object handle value
-        ///
-        inline crypt_prov(_In_opt_ handle_type h) : handle<HCRYPTPROV>(h) {}
-
-        ///
-        /// Move constructor
-        ///
-        /// \param[inout] h  A rvalue reference of another object
-        ///
-        inline crypt_prov(_Inout_ crypt_prov &&h) : handle<HCRYPTPROV>(std::move(h)) {}
-
         ///
         /// Releases the cryptographic context.
         ///
         /// \sa [CryptReleaseContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380268.aspx)
         ///
         virtual ~crypt_prov();
-
-        ///
-        /// Move assignment
-        ///
-        /// \param[inout] h  A rvalue reference of another object
-        ///
-        crypt_prov& operator=(_Inout_ crypt_prov &&h)
-        {
-            if (this != std::addressof(h))
-                *(handle<handle_type>*)this = std::move(h);
-            return *this;
-        }
 
         ///
         /// Acquires the cryptographic context.
@@ -723,11 +610,6 @@ namespace winstd
                 return false;
         }
 
-    private:
-        // This class is noncopyable.
-        crypt_prov(_In_ const crypt_prov &h);
-        crypt_prov& operator=(_In_ const crypt_prov &h);
-
     protected:
         ///
         /// Releases the cryptographic context.
@@ -740,34 +622,9 @@ namespace winstd
 
     class WINSTD_API crypt_hash : public dplhandle<HCRYPTHASH>
     {
+        DPLHANDLE_IMPL(crypt_hash)
+
     public:
-        ///
-        /// Initializes a new class instance with the object handle set to NULL.
-        ///
-        inline crypt_hash()
-        {
-        }
-
-        ///
-        /// Initializes a new class instance with the duplicated object handle.
-        ///
-        /// \param[in] h  Initial object handle value
-        ///
-        inline crypt_hash(_In_ handle_type h)
-        {
-            m_h = duplicate_internal(h);
-        }
-
-        ///
-        /// Initializes a new class instance as a duplicate of given class.
-        ///
-        /// \param[in] h  Initial object
-        ///
-        inline crypt_hash(_In_ const crypt_hash &h)
-        {
-            m_h = duplicate_internal(h.m_h);
-        }
-
         ///
         /// Destroys the hash context.
         ///
@@ -817,34 +674,9 @@ namespace winstd
 
     class WINSTD_API crypt_key : public dplhandle<HCRYPTKEY>
     {
+        DPLHANDLE_IMPL(crypt_key)
+
     public:
-        ///
-        /// Initializes a new class instance with the object handle set to NULL.
-        ///
-        inline crypt_key()
-        {
-        }
-
-        ///
-        /// Initializes a new class instance with the duplicated object handle.
-        ///
-        /// \param[in] h  Initial object handle value
-        ///
-        inline crypt_key(_In_ handle_type h)
-        {
-            m_h = duplicate_internal(h);
-        }
-
-        ///
-        /// Initializes a new class instance as a duplicate of given class.
-        ///
-        /// \param[in] h  Initial object
-        ///
-        inline crypt_key(_In_ const crypt_key &h)
-        {
-            m_h = duplicate_internal(h.m_h);
-        }
-
         ///
         /// Destroys the key.
         ///

@@ -91,13 +91,27 @@ namespace winstd
 {
     class WINSTD_API sec_credentials : public handle<PCredHandle>
     {
+        WINSTD_NONCOPYABLE(sec_credentials)
+
     public:
         ///
         /// Initializes a new class instance with the object handle set to NULL.
         ///
-        inline sec_credentials() : handle<PCredHandle>()
+        inline sec_credentials()
         {
             m_expires.QuadPart = -1;
+        }
+
+        ///
+        /// Initializes a new class with an already available object handle.
+        ///
+        /// \param[in] h     Initial class handle value
+        /// \param[in] prop  Credentials expiration
+        ///
+        inline sec_credentials(_In_opt_ handle_type h, _In_ const TimeStamp expires) :
+            m_expires(expires),
+            handle(h)
+        {
         }
 
         ///
@@ -127,7 +141,7 @@ namespace winstd
         {
             if (this != std::addressof(h)) {
                 *(handle<handle_type>*)this = std::move(h);
-                m_expires = std::move(h.m_expires);
+                m_expires                   = std::move(h.m_expires);
             }
             return *this;
         }
@@ -168,11 +182,6 @@ namespace winstd
         /// \sa [FreeCredentialsHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375417.aspx)
         ///
         virtual void free_internal();
-
-    private:
-        // This class is noncopyable.
-        sec_credentials(_In_ const sec_credentials &h);
-        sec_credentials& operator=(_In_ const sec_credentials &h);
 
     public:
         TimeStamp m_expires;    ///< Credentials expiration time
@@ -283,11 +292,6 @@ namespace winstd
         /// \sa [DeleteSecurityContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375354.aspx)
         ///
         virtual void free_internal();
-
-    private:
-        // This class is noncopyable.
-        sec_context(_In_ const sec_context &h);
-        sec_context& operator=(_In_ const sec_context &h);
 
     public:
         ULONG     m_attrib;     ///< Context attributes

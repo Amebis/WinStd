@@ -369,6 +369,8 @@ namespace winstd
 
     class WINSTD_API event_provider : public handle<REGHANDLE>
     {
+        HANDLE_IMPL(event_provider)
+
     public:
         ///
         /// Closes the event provider.
@@ -545,6 +547,8 @@ namespace winstd
 
     class WINSTD_API event_session : public handle<TRACEHANDLE>
     {
+        WINSTD_NONCOPYABLE(event_session)
+
     public:
         ///
         /// Initializes a new empty session.
@@ -552,6 +556,7 @@ namespace winstd
         inline event_session()
         {
         }
+
 
         ///
         /// Initializes a new session with an already available object handle.
@@ -565,6 +570,7 @@ namespace winstd
         {
             memcpy(m_prop.get(), prop, prop->Wnode.BufferSize);
         }
+
 
         ///
         /// Move constructor
@@ -589,7 +595,7 @@ namespace winstd
         ///
         /// Move assignment
         ///
-        /// \param[inout] other  A rvalue reference of another session
+        /// \param[inout] other  A rvalue reference of another object
         ///
         inline event_session& operator=(_Inout_ event_session &&other)
         {
@@ -725,6 +731,8 @@ namespace winstd
 
     class WINSTD_API event_trace : public handle<TRACEHANDLE>
     {
+        HANDLE_IMPL(event_trace)
+
     public:
         ///
         /// Closes the trace.

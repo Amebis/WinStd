@@ -243,26 +243,9 @@ namespace winstd
 
     class WINSTD_API eap_packet : public dplhandle<EapPacket*>
     {
+        DPLHANDLE_IMPL(eap_packet)
+
     public:
-        ///
-        /// Initializes a new class instance with the EAP packet set to NULL.
-        ///
-        inline eap_packet()
-        {
-        }
-
-
-        ///
-        /// Initializes a new class instance with the duplicated EAP packet.
-        ///
-        /// \param[in] h  Initial EAP packet value
-        ///
-        inline eap_packet(_In_ handle_type h)
-        {
-            m_h = duplicate_internal(h);
-        }
-
-
         ///
         /// Destroys the EAP packet.
         ///

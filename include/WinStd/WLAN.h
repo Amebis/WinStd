@@ -123,44 +123,15 @@ namespace winstd
 
     class WINSTD_API wlan_handle : public handle<HANDLE>
     {
+        HANDLE_IMPL(wlan_handle)
+
     public:
-        ///
-        /// Initializes a new class instance with the object handle set to NULL.
-        ///
-        inline wlan_handle() : handle<HANDLE>() {}
-
-        ///
-        /// Initializes a new class instance with an already available object handle.
-        ///
-        /// \param[in] h  Initial object handle value
-        ///
-        inline wlan_handle(_In_opt_ handle_type h) : handle<HANDLE>(h) {}
-
-        ///
-        /// Move constructor
-        ///
-        /// \param[inout] h  A rvalue reference of another object
-        ///
-        inline wlan_handle(_Inout_ wlan_handle &&h) : handle<HANDLE>(std::move(h)) {}
-
         ///
         /// Closes a connection to the server.
         ///
         /// \sa [WlanCloseHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms706610(v=vs.85).aspx)
         ///
         virtual ~wlan_handle();
-
-        ///
-        /// Move assignment
-        ///
-        /// \param[inout] h  A rvalue reference of another object
-        ///
-        wlan_handle& operator=(_Inout_ wlan_handle &&h)
-        {
-            if (this != std::addressof(h))
-                *(handle<handle_type>*)this = std::move(h);
-            return *this;
-        }
 
         ///
         /// Opens a connection to the server.
@@ -183,12 +154,6 @@ namespace winstd
                 return false;
             }
         }
-
-
-    private:
-        // This class is noncopyable.
-        wlan_handle(_In_ const wlan_handle &h);
-        wlan_handle& operator=(_In_ const wlan_handle &h);
 
     protected:
         ///

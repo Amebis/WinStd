@@ -344,49 +344,15 @@ namespace winstd
 {
     class WINSTD_API win_handle : public handle<HANDLE>
     {
+        HANDLE_IMPL(win_handle)
+
     public:
-        ///
-        /// Initializes a new class instance with the object handle set to NULL.
-        ///
-        inline win_handle() : handle<HANDLE>() {}
-
-        ///
-        /// Initializes a new class instance with an already available object handle.
-        ///
-        /// \param[in] h  Initial object handle value
-        ///
-        inline win_handle(_In_opt_ handle_type h) : handle<HANDLE>(h) {}
-
-        ///
-        /// Move constructor
-        ///
-        /// \param[inout] h  A rvalue reference of another object
-        ///
-        inline win_handle(_Inout_ win_handle &&h) : handle<HANDLE>(std::move(h)) {}
-
         ///
         /// Closes an open object handle.
         ///
         /// \sa [CloseHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724211.aspx)
         ///
         virtual ~win_handle();
-
-        ///
-        /// Move assignment
-        ///
-        /// \param[inout] h  A rvalue reference of another object
-        ///
-        win_handle& operator=(_Inout_ win_handle &&h)
-        {
-            if (this != std::addressof(h))
-                *(handle<handle_type>*)this = std::move(h);
-            return *this;
-        }
-
-    private:
-        // This class is noncopyable.
-        win_handle(_In_ const win_handle &h);
-        win_handle& operator=(_In_ const win_handle &h);
 
     protected:
         ///
@@ -400,6 +366,8 @@ namespace winstd
 
     class WINSTD_API library : public handle<HMODULE>
     {
+        HANDLE_IMPL(library)
+
     public:
         ///
         /// Frees the module.
@@ -463,6 +431,8 @@ namespace winstd
 
     class WINSTD_API heap : public handle<HANDLE>
     {
+        HANDLE_IMPL(heap)
+
     public:
         ///
         /// Destroys the heap.
@@ -559,13 +529,13 @@ namespace winstd
 
     class WINSTD_API vmemory : public handle<LPVOID>
     {
+        WINSTD_NONCOPYABLE(vmemory)
+
     public:
         ///
         /// Initializes a new class instance with the memory handle set to NULL.
         ///
-        inline vmemory() :
-            m_proc(NULL),
-            handle<LPVOID>()
+        inline vmemory() : m_proc(NULL)
         {
         }
 
@@ -575,7 +545,7 @@ namespace winstd
         /// \param[in] proc  Handle of process the memory belongs to
         /// \param[in] h     Initial object handle value
         ///
-        inline vmemory(_In_ HANDLE proc, _In_opt_ handle_type h) :
+        inline vmemory(_In_opt_ handle_type h, _In_ HANDLE proc) :
             m_proc(proc),
             handle<LPVOID>(h)
         {
@@ -586,14 +556,10 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline vmemory(_Inout_ vmemory &&h)
+        inline vmemory(_Inout_ vmemory &&h) :
+            m_proc(std::move(h.m_proc)),
+            handle<LPVOID>(std::move(h))
         {
-            // Transfer process.
-            m_proc = h.m_proc;
-
-            // Transfer handle.
-            m_h   = h.m_h;
-            h.m_h = NULL;
         }
 
         ///
@@ -602,6 +568,20 @@ namespace winstd
         /// \sa [VirtualFreeEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366894.aspx)
         ///
         virtual ~vmemory();
+
+        ///
+        /// Move assignment
+        ///
+        /// \param[inout] other  A rvalue reference of another object
+        ///
+        inline vmemory& operator=(_Inout_ vmemory &&other)
+        {
+            if (this != std::addressof(other)) {
+                (handle<handle_type>&&)*this = std::move(other);
+                m_proc                       = std::move(other.m_proc);
+            }
+            return *this;
+        }
 
         ///
         /// Sets a new memory handle for the class
@@ -643,11 +623,6 @@ namespace winstd
                 return false;
         }
 
-    private:
-        // This class is noncopyable.
-        vmemory(_In_ const vmemory &h);
-        vmemory& operator=(_In_ const vmemory &h);
-
     protected:
         ///
         /// Frees the memory.
@@ -663,44 +638,15 @@ namespace winstd
 
     class WINSTD_API reg_key : public handle<HKEY>
     {
+        HANDLE_IMPL(reg_key)
+
     public:
-        ///
-        /// Initializes a new class instance with the object handle set to NULL.
-        ///
-        inline reg_key() : handle<HKEY>() {}
-
-        ///
-        /// Initializes a new class instance with an already available object handle.
-        ///
-        /// \param[in] h  Initial object handle value
-        ///
-        inline reg_key(_In_opt_ handle_type h) : handle<HKEY>(h) {}
-
-        ///
-        /// Move constructor
-        ///
-        /// \param[inout] h  A rvalue reference of another object
-        ///
-        inline reg_key(_Inout_ reg_key &&h) : handle<HKEY>(std::move(h)) {}
-
         ///
         /// Closes a handle to the registry key.
         ///
         /// \sa [RegCloseKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724837.aspx)
         ///
         virtual ~reg_key();
-
-        ///
-        /// Move assignment
-        ///
-        /// \param[inout] h  A rvalue reference of another object
-        ///
-        reg_key& operator=(_Inout_ reg_key &&h)
-        {
-            if (this != std::addressof(h))
-                *(handle<handle_type>*)this = std::move(h);
-            return *this;
-        }
 
         ///
         /// Creates the specified registry key. If the key already exists, the function opens it.
@@ -756,11 +702,6 @@ namespace winstd
                 return false;
             }
         }
-
-    private:
-        // This class is noncopyable.
-        reg_key(_In_ const reg_key &h);
-        reg_key& operator=(_In_ const reg_key &h);
 
     protected:
         ///
