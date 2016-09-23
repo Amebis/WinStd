@@ -457,7 +457,7 @@ namespace winstd
         ///
         /// \param[in] h  Initial object handle value
         ///
-        inline handle(_In_opt_ handle_type h) : m_h(h)
+        inline handle(_In_ handle_type h) : m_h(h)
         {
         }
 
@@ -484,7 +484,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        handle<handle_type>& operator=(_Inout_ handle<handle_type> &&h)
+        inline handle<handle_type>& operator=(_Inout_ handle<handle_type> &&h)
         {
             if (this != std::addressof(h)) {
                 // Transfer handle.
@@ -558,7 +558,7 @@ namespace winstd
         /// - Non zero when object handle is less than h;
         /// - Zero otherwise.
         ///
-        inline bool operator<(_In_opt_ handle_type h) const
+        inline bool operator<(_In_ handle_type h) const
         {
             return m_h < h;
         }
@@ -571,7 +571,7 @@ namespace winstd
         /// - Non zero when object handle is less than or equal to h;
         /// - Zero otherwise.
         ///
-        inline bool operator<=(_In_opt_ handle_type h) const
+        inline bool operator<=(_In_ handle_type h) const
         {
             return !operator>(h);
         }
@@ -584,7 +584,7 @@ namespace winstd
         /// - Non zero when object handle is greater than or equal to h;
         /// - Zero otherwise.
         ///
-        inline bool operator>=(_In_opt_ handle_type h) const
+        inline bool operator>=(_In_ handle_type h) const
         {
             return !operator<(h);
         }
@@ -597,7 +597,7 @@ namespace winstd
         /// - Non zero when object handle is greater than h;
         /// - Zero otherwise.
         ///
-        inline bool operator>(_In_opt_ handle_type h) const
+        inline bool operator>(_In_ handle_type h) const
         {
             return h < m_h;
         }
@@ -610,7 +610,7 @@ namespace winstd
         /// - Non zero when object handle is not equal to h;
         /// - Zero otherwise.
         ///
-        inline bool operator!=(_In_opt_ handle_type h) const
+        inline bool operator!=(_In_ handle_type h) const
         {
             return !operator==(h);
         }
@@ -623,7 +623,7 @@ namespace winstd
         /// - Non zero when object handle is equal to h;
         /// - Zero otherwise.
         ///
-        inline bool operator==(_In_opt_ handle_type h) const
+        inline bool operator==(_In_ handle_type h) const
         {
             return m_h == h;
         }
@@ -635,7 +635,7 @@ namespace winstd
         ///
         /// \param[in] h  New object handle
         ///
-        inline void attach(_In_opt_ handle_type h)
+        inline void attach(_In_ handle_type h)
         {
             if (m_h)
                 free_internal();
@@ -709,7 +709,7 @@ namespace winstd
         ///
         inline dplhandle<handle_type>& operator=(_In_ const dplhandle<handle_type> &h)
         {
-            if (this != &h) {
+            if (this != std::addressof(h)) {
                 handle_type h_new = duplicate_internal(h.m_h);
                 if (h_new) {
                     if (m_h)
@@ -741,7 +741,7 @@ namespace winstd
         /// - true when duplication succeeds;
         /// - false when duplication fails. In case of failure obtaining the extended error information is object type specific (for example: `GetLastError()`).
         ///
-        inline bool attach_duplicated(_In_opt_ handle_type h)
+        inline bool attach_duplicated(_In_ handle_type h)
         {
             if (m_h)
                 free_internal();
