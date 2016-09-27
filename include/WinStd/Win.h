@@ -1169,13 +1169,13 @@ inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_cou
     int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
     if (cch) {
         // Copy from stack.
-        sWideCharStr.assign(szStackBuffer, cch);
+        sWideCharStr.assign(szStackBuffer, cbMultiByte != -1 ? wcsnlen(szStackBuffer, cch) : cch - 1);
     } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Query the required output size. Allocate buffer. Then convert again.
         cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
         auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[cch]);
         cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szBuffer.get(), cch);
-        sWideCharStr.assign(szBuffer.get(), cch);
+        sWideCharStr.assign(szBuffer.get(), cbMultiByte != -1 ? wcsnlen(szBuffer.get(), cch) : cch - 1);
     }
 
     return cch;
