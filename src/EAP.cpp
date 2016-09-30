@@ -20,6 +20,8 @@
 
 #include "StdAfx.h"
 
+#pragma comment(lib, "Eappcfg.lib")
+
 
 //////////////////////////////////////////////////////////////////////
 // winstd::eap_attr
@@ -98,4 +100,34 @@ winstd::eap_packet::handle_type winstd::eap_packet::duplicate_internal(_In_ hand
     memcpy(h2, h, n);
 
     return h2;
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// winstd::eap_method_info_array
+//////////////////////////////////////////////////////////////////////
+
+winstd::eap_method_info_array::~eap_method_info_array()
+{
+    if (pEapMethods)
+        free_internal();
+}
+
+
+void winstd::eap_method_info_array::free_internal()
+{
+    for (DWORD i = 0; i < dwNumberOfMethods; i++)
+        free_internal(pEapMethods + i);
+
+    EapHostPeerFreeMemory((BYTE*)pEapMethods);
+}
+
+
+void winstd::eap_method_info_array::free_internal(_In_ EAP_METHOD_INFO *pMethodInfo)
+{
+    if (pMethodInfo->pInnerMethodInfo)
+        free_internal(pMethodInfo->pInnerMethodInfo);
+
+    EapHostPeerFreeMemory((BYTE*)pMethodInfo->pwszAuthorName);
+    EapHostPeerFreeMemory((BYTE*)pMethodInfo->pwszFriendlyName);
 }

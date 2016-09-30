@@ -21,6 +21,7 @@
 #include "Common.h"
 
 #include <Windows.h>
+#include <eaphostpeerconfigapis.h>
 #include <eaptypes.h> // Must include after <Windows.h>
 
 namespace winstd
@@ -39,6 +40,16 @@ namespace winstd
     enum eap_type_t;
 
     ///
+    /// Deleter for unique_ptr using EapHostPeerFreeMemory
+    ///
+    struct WINSTD_API EapHostPeerFreeMemory_delete;
+
+    ///
+    /// Deleter for unique_ptr to EAP_ERROR using EapHostPeerFreeEapError
+    ///
+    struct WINSTD_API EapHostPeerFreeErrorMemory_delete;
+
+    ///
     /// EAP_ATTRIBUTE wrapper class
     ///
     class WINSTD_API eap_attr;
@@ -52,6 +63,11 @@ namespace winstd
     /// EapPacket wrapper class
     ///
     class WINSTD_API eap_packet;
+
+    ///
+    /// EAP_METHOD_INFO_ARRAY wrapper class
+    ///
+    class WINSTD_API eap_method_info_array;
 
     /// @}
 }
@@ -84,6 +100,40 @@ namespace winstd
         eap_type_end             = 192,    ///< End of EAP methods (non-inclusive)
         eap_type_noneap_start    = 192,    ///< Start of non-EAP methods
         eap_type_noneap_end      = 254,    ///< End of non-EAP methods (non-inclusive)
+    };
+
+
+    struct WINSTD_API EapHostPeerFreeMemory_delete
+    {
+        ///
+        /// Default constructor
+        ///
+        EapHostPeerFreeMemory_delete() {}
+
+        ///
+        /// Delete a pointer
+        ///
+        void operator()(BYTE *_Ptr) const
+        {
+            EapHostPeerFreeMemory(_Ptr);
+        }
+    };
+
+
+    struct WINSTD_API EapHostPeerFreeErrorMemory_delete
+    {
+        ///
+        /// Default constructor
+        ///
+        EapHostPeerFreeErrorMemory_delete() {}
+
+        ///
+        /// Delete a pointer
+        ///
+        void operator()(EAP_ERROR *_Ptr) const
+        {
+            EapHostPeerFreeErrorMemory(_Ptr);
+        }
     };
 
 
@@ -303,5 +353,61 @@ namespace winstd
         /// Duplicates the EAP packet.
         ///
         virtual handle_type duplicate_internal(_In_ handle_type h) const;
+    };
+
+
+    class WINSTD_API __declspec(novtable) eap_method_info_array : public EAP_METHOD_INFO_ARRAY
+    {
+        WINSTD_NONCOPYABLE(eap_method_info_array)
+
+    public:
+        ///
+        /// Constructs an empty array
+        ///
+        inline eap_method_info_array()
+        {
+            dwNumberOfMethods = 0;
+            pEapMethods       = NULL;
+        }
+
+        ///
+        /// Move constructor
+        ///
+        /// \param[inout] other  A rvalue reference of another object
+        ///
+        inline eap_method_info_array(_Inout_ eap_method_info_array &&other)
+        {
+            dwNumberOfMethods       = other.dwNumberOfMethods;
+            pEapMethods             = other.pEapMethods;
+            other.dwNumberOfMethods = 0;
+            other.pEapMethods       = NULL;
+        }
+
+        ///
+        /// Destructor
+        ///
+        ~eap_method_info_array();
+
+        ///
+        /// Move assignment
+        ///
+        /// \param[inout] other  A rvalue reference of another object
+        ///
+        inline eap_method_info_array& operator=(_Inout_ eap_method_info_array &&other)
+        {
+            if (this != std::addressof(other)) {
+                if (pEapMethods)
+                    free_internal();
+                dwNumberOfMethods       = other.dwNumberOfMethods;
+                pEapMethods             = other.pEapMethods;
+                other.dwNumberOfMethods = 0;
+                other.pEapMethods       = NULL;
+            }
+            return *this;
+        }
+
+    protected:
+        void free_internal();
+        static void free_internal(_In_ EAP_METHOD_INFO *pMethodInfo);
     };
 }
