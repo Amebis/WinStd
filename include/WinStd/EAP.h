@@ -84,6 +84,36 @@ namespace winstd
     /// @}
 }
 
+
+/// \addtogroup WinStdEAPAPI
+/// @{
+
+///
+/// Are EAP method types equal?
+///
+/// \param[in] a  First EAP method type
+/// \param[in] b  Second EAP method type
+///
+/// \returns
+/// - Non zero when \p a is equal to \p b;
+/// - Zero otherwise.
+///
+inline bool operator==(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b);
+
+///
+/// Are EAP method types non-equal?
+///
+/// \param[in] a  First EAP method type
+/// \param[in] b  Second EAP method type
+///
+/// \returns
+/// - Non zero when \p a is not equal to \p b;
+/// - Zero otherwise.
+///
+inline bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b);
+
+/// @}
+
 #pragma once
 
 #include <eapmethodtypes.h>
@@ -422,4 +452,20 @@ namespace winstd
         void free_internal();
         static void free_internal(_In_ EAP_METHOD_INFO *pMethodInfo);
     };
+}
+
+
+inline bool operator==(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b)
+{
+    return
+        a.eapType.type         == b.eapType.type         &&
+        a.eapType.dwVendorId   == b.eapType.dwVendorId   &&
+        a.eapType.dwVendorType == b.eapType.dwVendorType &&
+        a.dwAuthorId           == a.dwAuthorId;
+}
+
+
+inline bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b)
+{
+    return !operator==(a, b);
 }
