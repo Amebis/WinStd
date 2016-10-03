@@ -360,7 +360,7 @@ inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _P
     } else {
         for (size_t capacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem);; capacity *= 2) {
             // Allocate on heap and retry.
-            auto buf = std::unique_ptr<_Elem[]>(new _Elem[capacity]);
+            std::unique_ptr<_Elem[]> buf(new _Elem[capacity]);
             count = vsnprintf(buf.get(), capacity - 1, format, arg);
             if (count >= 0) {
                 str.assign(buf.get(), count);

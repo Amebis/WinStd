@@ -374,7 +374,7 @@ BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_st
     } else {
         if (::GetLastError() == ERROR_MORE_DATA) {
             // Allocate buffer on heap and retry.
-            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[ulSize]);
+            std::unique_ptr<_Elem[]> szBuffer(new _Elem[ulSize]);
             if (::GetUserNameExA(NameFormat, szBuffer.get(), &ulSize)) {
                 sName.assign(szBuffer.get(), ulSize);
                 return TRUE;
@@ -403,7 +403,7 @@ BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_st
     } else {
         if (::GetLastError() == ERROR_MORE_DATA) {
             // Allocate buffer on heap and retry.
-            auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[ulSize]);
+            std::unique_ptr<_Elem[]> szBuffer(new _Elem[ulSize]);
             if (::GetUserNameExW(NameFormat, szBuffer.get(), &ulSize)) {
                 sName.assign(szBuffer.get(), ulSize);
                 return TRUE;

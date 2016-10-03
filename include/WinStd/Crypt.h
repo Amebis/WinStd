@@ -151,7 +151,7 @@ inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
     DWORD dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
 
     // Allocate buffer on heap to format the string data into and read it.
-    auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize]);
+    std::unique_ptr<_Elem[]> szBuffer(new _Elem[dwSize]);
     dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, szBuffer.get(), dwSize);
     sNameString.assign(szBuffer.get(), dwSize - 1);
     return dwSize;
@@ -165,7 +165,7 @@ inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
     DWORD dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
 
     // Allocate buffer on heap to format the string data into and read it.
-    auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[dwSize]);
+    std::unique_ptr<_Elem[]> szBuffer(new _Elem[dwSize]);
     dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, szBuffer.get(), dwSize);
     sNameString.assign(szBuffer.get(), dwSize - 1);
     return dwSize;

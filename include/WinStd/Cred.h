@@ -168,7 +168,7 @@ inline BOOL CredProtectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszCredentials, _In_ DWO
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
-        auto buf = std::unique_ptr<_Elem[]>(new _Elem[dwSize]);
+        std::unique_ptr<_Elem[]> buf(new _Elem[dwSize]);
         if (CredProtectA(fAsSelf, const_cast<LPSTR>(pszCredentials), cchCredentials, buf.get(), &dwSize, ProtectionType)) {
             sProtectedCredentials.assign(buf.get(), dwSize - 1);
             return TRUE;
@@ -192,7 +192,7 @@ inline BOOL CredProtectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszCredentials, _In_ DW
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
-        auto buf = std::unique_ptr<_Elem[]>(new _Elem[dwSize]);
+        std::unique_ptr<_Elem[]> buf(new _Elem[dwSize]);
         if (CredProtectW(fAsSelf, const_cast<LPWSTR>(pszCredentials), cchCredentials, buf.get(), &dwSize, ProtectionType)) {
             sProtectedCredentials.assign(buf.get(), dwSize - 1);
             return TRUE;
@@ -216,7 +216,7 @@ inline BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszProtectedCredential
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
-        auto buf = std::unique_ptr<_Elem[]>(new _Elem[dwSize]);
+        std::unique_ptr<_Elem[]> buf(new _Elem[dwSize]);
         if (CredUnprotectA(fAsSelf, const_cast<LPSTR>(pszProtectedCredentials), cchCredentials, buf.get(), &dwSize)) {
             sCredentials.assign(buf.get(), dwSize);
             return TRUE;
@@ -240,7 +240,7 @@ inline BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszProtectedCredentia
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
-        auto buf = std::unique_ptr<_Elem[]>(new _Elem[dwSize]);
+        std::unique_ptr<_Elem[]> buf(new _Elem[dwSize]);
         if (CredUnprotectW(fAsSelf, const_cast<LPWSTR>(pszProtectedCredentials), cchCredentials, buf.get(), &dwSize)) {
             sCredentials.assign(buf.get(), dwSize);
             return TRUE;

@@ -130,7 +130,7 @@ inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ s
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to read the string data into and read it.
-        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[++dwSize]);
         uiResult = ::MsiGetPropertyA(hInstall, szName, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
         return uiResult;
@@ -158,7 +158,7 @@ inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ 
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to read the string data into and read it.
-        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[++dwSize]);
         uiResult = ::MsiGetPropertyW(hInstall, szName, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
         return uiResult;
@@ -186,7 +186,7 @@ inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to read the string data into and read it.
-        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[++dwSize]);
         uiResult = ::MsiRecordGetStringA(hRecord, iField, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
         return uiResult;
@@ -214,7 +214,7 @@ inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to read the string data into and read it.
-        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[++dwSize]);
         uiResult = ::MsiRecordGetStringW(hRecord, iField, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
         return uiResult;
@@ -242,7 +242,7 @@ inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_s
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[++dwSize]);
         uiResult = ::MsiFormatRecordA(hInstall, hRecord, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
         return uiResult;
@@ -270,7 +270,7 @@ inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_s
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[++dwSize]);
         uiResult = ::MsiFormatRecordW(hInstall, hRecord, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
         return uiResult;
@@ -318,7 +318,7 @@ inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Ou
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[++dwSize]);
         uiResult = ::MsiGetTargetPathA(hInstall, szFolder, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
         return uiResult;
@@ -346,7 +346,7 @@ inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _O
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[++dwSize]);
         uiResult = ::MsiGetTargetPathW(hInstall, szFolder, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
         return uiResult;
@@ -372,7 +372,7 @@ inline INSTALLSTATE MsiGetComponentPathA(_In_ LPCSTR szProduct, _In_ LPCSTR szCo
         return state;
     } else if (state == INSTALLSTATE_MOREDATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[++dwSize]);
         state = ::MsiGetComponentPathA(szProduct, szComponent, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), state >= INSTALLSTATE_BROKEN ? dwSize : 0);
         return state;
@@ -398,7 +398,7 @@ inline INSTALLSTATE MsiGetComponentPathW(_In_ LPCWSTR szProduct, _In_ LPCWSTR sz
         return state;
     } else if (state == INSTALLSTATE_MOREDATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        auto szBuffer = std::unique_ptr<_Elem[]>(new _Elem[++dwSize]);
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[++dwSize]);
         state = ::MsiGetComponentPathW(szProduct, szComponent, szBuffer.get(), &dwSize);
         sValue.assign(szBuffer.get(), state >= INSTALLSTATE_BROKEN ? dwSize : 0);
         return state;
