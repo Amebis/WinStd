@@ -24,6 +24,8 @@
 #include <eaphostpeerconfigapis.h>
 #include <eaptypes.h> // Must include after <Windows.h>
 
+#include <memory>
+
 namespace winstd
 {
     ///
@@ -45,9 +47,19 @@ namespace winstd
     struct WINSTD_API EapHostPeerFreeMemory_delete;
 
     ///
+    /// EapHost BLOB wrapper class
+    ///
+    typedef std::unique_ptr<BYTE[], EapHostPeerFreeMemory_delete> WINSTD_API eap_blob;
+
+    ///
     /// Deleter for unique_ptr to EAP_ERROR using EapHostPeerFreeEapError
     ///
     struct WINSTD_API EapHostPeerFreeErrorMemory_delete;
+
+    ///
+    /// EAP_ERROR wrapper class
+    ///
+    typedef std::unique_ptr<EAP_ERROR, EapHostPeerFreeErrorMemory_delete> WINSTD_API eap_error;
 
     ///
     /// EAP_ATTRIBUTE wrapper class
