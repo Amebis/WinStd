@@ -945,10 +945,10 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ.
             dwSize /= sizeof(CHAR);
-            sValue.assign((LPCSTR)aStackBuffer, dwSize && ((LPCSTR)aStackBuffer)[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
+            sValue.assign(reinterpret_cast<LPCSTR>(aStackBuffer), dwSize && reinterpret_cast<LPCSTR>(aStackBuffer)[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Expand it from stack buffer.
-            if (::ExpandEnvironmentStringsA((LPCSTR)aStackBuffer, sValue) == 0)
+            if (::ExpandEnvironmentStringsA(reinterpret_cast<LPCSTR>(aStackBuffer), sValue) == 0)
                 lResult = ::GetLastError();
         } else {
             // The value is not a string type.
@@ -958,7 +958,7 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ. Read it now.
             auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[dwSize / sizeof(CHAR)]);
-            if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS) {
+            if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
                 dwSize /= sizeof(CHAR);
                 sValue.assign(szBuffer.get(), dwSize && szBuffer[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
             } else
@@ -966,7 +966,7 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Read it and expand environment variables.
             auto szBuffer = std::unique_ptr<CHAR[]>(new CHAR[dwSize / sizeof(CHAR)]);
-            if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS) {
+            if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
                 if (::ExpandEnvironmentStringsA(szBuffer.get(), sValue) == 0)
                     lResult = ::GetLastError();
             } else
@@ -994,10 +994,10 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ.
             dwSize /= sizeof(WCHAR);
-            sValue.assign((LPCWSTR)aStackBuffer, dwSize && ((LPCWSTR)aStackBuffer)[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
+            sValue.assign(reinterpret_cast<LPCWSTR>(aStackBuffer), dwSize && reinterpret_cast<LPCWSTR>(aStackBuffer)[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Expand it from stack buffer.
-            if (::ExpandEnvironmentStringsW((LPCWSTR)aStackBuffer, sValue) == 0)
+            if (::ExpandEnvironmentStringsW(reinterpret_cast<LPCWSTR>(aStackBuffer), sValue) == 0)
                 lResult = ::GetLastError();
         } else {
             // The value is not a string type.
@@ -1007,7 +1007,7 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ. Read it now.
             auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[dwSize / sizeof(WCHAR)]);
-            if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS) {
+            if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
                 dwSize /= sizeof(WCHAR);
                 sValue.assign(szBuffer.get(), dwSize && szBuffer[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
             } else
@@ -1015,7 +1015,7 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Read it and expand environment variables.
             auto szBuffer = std::unique_ptr<WCHAR[]>(new WCHAR[dwSize / sizeof(WCHAR)]);
-            if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, (LPBYTE)szBuffer.get(), &dwSize)) == ERROR_SUCCESS) {
+            if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
                 if (::ExpandEnvironmentStringsW(szBuffer.get(), sValue) == 0)
                     lResult = ::GetLastError();
             } else
@@ -1187,7 +1187,7 @@ inline int WINAPI LoadString(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ 
 {
     // Get read-only pointer to string resource.
     LPCSTR pszStr;
-    int i = LoadStringA(hInstance, uID, (LPSTR)&pszStr, 0);
+    int i = LoadStringA(hInstance, uID, reinterpret_cast<LPSTR>(&pszStr), 0);
     if (i) {
         sBuffer.assign(pszStr, i);
         return i;
@@ -1201,7 +1201,7 @@ inline int WINAPI LoadString(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ 
 {
     // Get read-only pointer to string resource.
     LPCWSTR pszStr;
-    int i = LoadStringW(hInstance, uID, (LPWSTR)&pszStr, 0);
+    int i = LoadStringW(hInstance, uID, reinterpret_cast<LPWSTR>(&pszStr), 0);
     if (i) {
         sBuffer.assign(pszStr, i);
         return i;

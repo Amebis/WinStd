@@ -78,7 +78,7 @@ namespace winstd
             // Convert data character by character.
             for (size_t i = 0; i < size; i++) {
                 unsigned char
-                    x   = ((unsigned char*)data)[i],
+                    x   = reinterpret_cast<const unsigned char*>(data)[i],
                     x_h = ((x & 0xf0) >> 4),
                     x_l = ((x & 0x0f)     );
 

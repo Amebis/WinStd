@@ -565,7 +565,7 @@ namespace winstd
         /// \param[in] prop  Session properties
         ///
         inline event_session(_In_opt_ handle_type h, _In_ const EVENT_TRACE_PROPERTIES *prop) :
-            m_prop((EVENT_TRACE_PROPERTIES*)new char[prop->Wnode.BufferSize]),
+            m_prop(reinterpret_cast<EVENT_TRACE_PROPERTIES*>(new char[prop->Wnode.BufferSize])),
             handle(h)
         {
             memcpy(m_prop.get(), prop, prop->Wnode.BufferSize);
@@ -626,7 +626,7 @@ namespace winstd
         inline LPCTSTR name() const
         {
             const EVENT_TRACE_PROPERTIES *prop = m_prop.get();
-            return (LPCTSTR)((const char*)prop + prop->LoggerNameOffset);
+            return reinterpret_cast<LPCTSTR>(reinterpret_cast<const char*>(prop) + prop->LoggerNameOffset);
         }
 
 
@@ -657,7 +657,7 @@ namespace winstd
         inline ULONG create(_In_ LPCTSTR SessionName, _In_ const EVENT_TRACE_PROPERTIES *Properties)
         {
             handle_type h;
-            std::unique_ptr<EVENT_TRACE_PROPERTIES> prop((EVENT_TRACE_PROPERTIES*)new char[Properties->Wnode.BufferSize]);
+            std::unique_ptr<EVENT_TRACE_PROPERTIES> prop(reinterpret_cast<EVENT_TRACE_PROPERTIES*>(new char[Properties->Wnode.BufferSize]));
             memcpy(prop.get(), Properties, Properties->Wnode.BufferSize);
             ULONG ulRes = StartTrace(&h, SessionName, prop.get());
             if (ulRes == ERROR_SUCCESS)
@@ -1067,12 +1067,12 @@ inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhCon
     ulResult = TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, (PTRACE_EVENT_INFO)szBuffer, &ulSize);
     if (ulResult == ERROR_SUCCESS) {
         // Copy from stack.
-        info.reset((PTRACE_EVENT_INFO)new char[ulSize]);
+        info.reset(reinterpret_cast<PTRACE_EVENT_INFO>(new char[ulSize]));
         memcpy(info.get(), szBuffer, ulSize);
         return ERROR_SUCCESS;
     } else if (ulResult == ERROR_INSUFFICIENT_BUFFER) {
         // Create buffer on heap and retry.
-        info.reset((PTRACE_EVENT_INFO)new char[ulSize]);
+        info.reset(reinterpret_cast<PTRACE_EVENT_INFO>(new char[ulSize]));
         return TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, info.get(), &ulSize);
     }
 
@@ -1089,12 +1089,12 @@ inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pM
     ulResult = TdhGetEventMapInformation(pEvent, pMapName, (PEVENT_MAP_INFO)szBuffer, &ulSize);
     if (ulResult == ERROR_SUCCESS) {
         // Copy from stack.
-        info.reset((PEVENT_MAP_INFO)new char[ulSize]);
+        info.reset(reinterpret_cast<PEVENT_MAP_INFO>(new char[ulSize]));
         memcpy(info.get(), szBuffer, ulSize);
         return ERROR_SUCCESS;
     } else if (ulResult == ERROR_INSUFFICIENT_BUFFER) {
         // Create buffer on heap and retry.
-        info.reset((PEVENT_MAP_INFO)new char[ulSize]);
+        info.reset(reinterpret_cast<PEVENT_MAP_INFO>(new char[ulSize]));
         return TdhGetEventMapInformation(pEvent, pMapName, info.get(), &ulSize);
     }
 
@@ -1112,7 +1112,7 @@ inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCoun
     if (ulResult == ERROR_SUCCESS) {
         // Query property value.
         aData.resize((ulSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        ulResult = TdhGetProperty(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, ulSize, (LPBYTE)aData.data());
+        ulResult = TdhGetProperty(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, ulSize, reinterpret_cast<LPBYTE>(aData.data()));
     }
 
     return ulResult;

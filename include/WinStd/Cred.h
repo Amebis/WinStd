@@ -162,14 +162,14 @@ inline BOOL CredProtectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszCredentials, _In_ DWO
     DWORD dwSize = _countof(buf);
 
     // Try with the stack buffer first.
-    if (CredProtectA(fAsSelf, (LPSTR)pszCredentials, cchCredentials, buf, &dwSize, ProtectionType)) {
+    if (CredProtectA(fAsSelf, const_cast<LPSTR>(pszCredentials), cchCredentials, buf, &dwSize, ProtectionType)) {
         // Copy from stack.
         sProtectedCredentials.assign(buf, dwSize - 1);
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
         auto buf = std::unique_ptr<_Elem[]>(new _Elem[dwSize]);
-        if (CredProtectA(fAsSelf, (LPSTR)pszCredentials, cchCredentials, buf.get(), &dwSize, ProtectionType)) {
+        if (CredProtectA(fAsSelf, const_cast<LPSTR>(pszCredentials), cchCredentials, buf.get(), &dwSize, ProtectionType)) {
             sProtectedCredentials.assign(buf.get(), dwSize - 1);
             return TRUE;
         }
@@ -186,14 +186,14 @@ inline BOOL CredProtectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszCredentials, _In_ DW
     DWORD dwSize = _countof(buf);
 
     // Try with the stack buffer first.
-    if (CredProtectW(fAsSelf, (LPWSTR)pszCredentials, cchCredentials, buf, &dwSize, ProtectionType)) {
+    if (CredProtectW(fAsSelf, const_cast<LPWSTR>(pszCredentials), cchCredentials, buf, &dwSize, ProtectionType)) {
         // Copy from stack.
         sProtectedCredentials.assign(buf, dwSize - 1);
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
         auto buf = std::unique_ptr<_Elem[]>(new _Elem[dwSize]);
-        if (CredProtectW(fAsSelf, (LPWSTR)pszCredentials, cchCredentials, buf.get(), &dwSize, ProtectionType)) {
+        if (CredProtectW(fAsSelf, const_cast<LPWSTR>(pszCredentials), cchCredentials, buf.get(), &dwSize, ProtectionType)) {
             sProtectedCredentials.assign(buf.get(), dwSize - 1);
             return TRUE;
         }
@@ -210,14 +210,14 @@ inline BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszProtectedCredential
     DWORD dwSize = _countof(buf);
 
     // Try with the stack buffer first.
-    if (CredUnprotectA(fAsSelf, (LPSTR)pszProtectedCredentials, cchCredentials, buf, &dwSize)) {
+    if (CredUnprotectA(fAsSelf, const_cast<LPSTR>(pszProtectedCredentials), cchCredentials, buf, &dwSize)) {
         // Copy from stack.
         sCredentials.assign(buf, dwSize);
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
         auto buf = std::unique_ptr<_Elem[]>(new _Elem[dwSize]);
-        if (CredUnprotectA(fAsSelf, (LPSTR)pszProtectedCredentials, cchCredentials, buf.get(), &dwSize)) {
+        if (CredUnprotectA(fAsSelf, const_cast<LPSTR>(pszProtectedCredentials), cchCredentials, buf.get(), &dwSize)) {
             sCredentials.assign(buf.get(), dwSize);
             return TRUE;
         }
@@ -234,14 +234,14 @@ inline BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszProtectedCredentia
     DWORD dwSize = _countof(buf);
 
     // Try with the stack buffer first.
-    if (CredUnprotectW(fAsSelf, (LPWSTR)pszProtectedCredentials, cchCredentials, buf, &dwSize)) {
+    if (CredUnprotectW(fAsSelf, const_cast<LPWSTR>(pszProtectedCredentials), cchCredentials, buf, &dwSize)) {
         // Copy from stack.
         sCredentials.assign(buf, dwSize);
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
         auto buf = std::unique_ptr<_Elem[]>(new _Elem[dwSize]);
-        if (CredUnprotectW(fAsSelf, (LPWSTR)pszProtectedCredentials, cchCredentials, buf.get(), &dwSize)) {
+        if (CredUnprotectW(fAsSelf, const_cast<LPWSTR>(pszProtectedCredentials), cchCredentials, buf.get(), &dwSize)) {
             sCredentials.assign(buf.get(), dwSize);
             return TRUE;
         }

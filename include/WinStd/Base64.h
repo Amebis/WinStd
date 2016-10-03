@@ -86,7 +86,7 @@ namespace winstd
                 if (i >= size)
                     break;
 
-                buf[num++] = ((unsigned char*)data)[i];
+                buf[num++] = reinterpret_cast<const unsigned char*>(data)[i];
             }
 
             // If this is the last block, flush the buffer.

@@ -293,7 +293,7 @@ inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
     uiResult = ::MsiRecordReadStream(hRecord, iField, NULL, &dwSize);
     if (uiResult == ERROR_SUCCESS) {
         binData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        return ::MsiRecordReadStream(hRecord, iField, (char*)binData.data(), &dwSize);
+        return ::MsiRecordReadStream(hRecord, iField, reinterpret_cast<char*>(binData.data()), &dwSize);
     } else {
         // Return error code.
         return uiResult;

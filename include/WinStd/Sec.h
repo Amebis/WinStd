@@ -255,7 +255,7 @@ namespace winstd
             handle_type h = new CtxtHandle;
             ULONG attr;
             TimeStamp exp;
-            SECURITY_STATUS res = InitializeSecurityContext(phCredential, NULL, (LPTSTR)pszTargetName, fContextReq, 0, TargetDataRep, pInput, 0, h, pOutput, &attr, &exp);
+            SECURITY_STATUS res = InitializeSecurityContext(phCredential, NULL, const_cast<LPTSTR>(pszTargetName), fContextReq, 0, TargetDataRep, pInput, 0, h, pOutput, &attr, &exp);
             if (SUCCEEDED(res)) {
                 attach(h);
                 m_attrib  = attr;
@@ -282,7 +282,7 @@ namespace winstd
             _In_opt_    PSecBufferDesc pInput,
             _Inout_opt_ PSecBufferDesc pOutput)
         {
-            return InitializeSecurityContext(phCredential, m_h, (LPTSTR)pszTargetName, fContextReq, 0, TargetDataRep, pInput, 0, NULL, pOutput, &m_attrib, &m_expires);
+            return InitializeSecurityContext(phCredential, m_h, const_cast<LPTSTR>(pszTargetName), fContextReq, 0, TargetDataRep, pInput, 0, NULL, pOutput, &m_attrib, &m_expires);
         }
 
     protected:

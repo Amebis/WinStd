@@ -37,17 +37,17 @@ const winstd::event_data winstd::event_data::blank;
 winstd::event_rec::~event_rec()
 {
     if (ExtendedData)
-        delete (unsigned char*)ExtendedData;
+        delete reinterpret_cast<unsigned char*>(ExtendedData);
 
     if (UserData)
-        delete (unsigned char*)UserData;
+        delete reinterpret_cast<unsigned char*>(UserData);
 }
 
 
 void winstd::event_rec::set_extended_data(_In_ USHORT count, _In_count_(count) const EVENT_HEADER_EXTENDED_DATA_ITEM *data)
 {
     if (ExtendedData)
-        delete (unsigned char*)ExtendedData;
+        delete reinterpret_cast<unsigned char*>(ExtendedData);
 
     set_extended_data_internal(count, data);
 }
@@ -56,7 +56,7 @@ void winstd::event_rec::set_extended_data(_In_ USHORT count, _In_count_(count) c
 void winstd::event_rec::set_user_data(_In_ USHORT size, _In_bytecount_(size) LPCVOID data)
 {
     if (UserData)
-        delete (unsigned char*)UserData;
+        delete reinterpret_cast<unsigned char*>(UserData);
 
     set_user_data_internal(size, data);
 }
@@ -73,13 +73,13 @@ void winstd::event_rec::set_extended_data_internal(_In_ USHORT count, _In_count_
             data_size += data[i].DataSize;
 
         // Allocate memory for extended data.
-        ExtendedData = (EVENT_HEADER_EXTENDED_DATA_ITEM*)(new unsigned char[sizeof(EVENT_HEADER_EXTENDED_DATA_ITEM)*count + data_size]);
+        ExtendedData = reinterpret_cast<EVENT_HEADER_EXTENDED_DATA_ITEM*>(new unsigned char[sizeof(EVENT_HEADER_EXTENDED_DATA_ITEM)*count + data_size]);
 
         // Bulk-copy extended data descriptors.
         memcpy(ExtendedData, data, sizeof(EVENT_HEADER_EXTENDED_DATA_ITEM) * count);
 
         // Copy the data.
-        unsigned char *ptr = (unsigned char*)(ExtendedData + count);
+        unsigned char *ptr = reinterpret_cast<unsigned char*>(ExtendedData + count);
         for (size_t i = 0; i < count; i++) {
             if (data[i].DataSize) {
                 memcpy(ptr, (void*)(data[i].DataPtr), data[i].DataSize);
