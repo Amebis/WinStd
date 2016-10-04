@@ -82,6 +82,21 @@ namespace winstd
     class WINSTD_API eap_method_info_array;
 
     /// @}
+
+    ///
+    /// \defgroup WinStdExceptions Exceptions
+    /// Additional exceptions
+    ///
+    /// @{
+
+    ///
+    /// EapHost runtime error
+    ///
+    /// \sa [EAP_ERROR structure](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363699.aspx)
+    ///
+    class WINSTD_API eap_runtime_error;
+
+    /// @}
 }
 
 
@@ -451,6 +466,124 @@ namespace winstd
     protected:
         void free_internal();
         static void free_internal(_In_ EAP_METHOD_INFO *pMethodInfo);
+    };
+
+
+    class WINSTD_API eap_runtime_error : public win_runtime_error
+    {
+    public:
+        ///
+        /// Constructs an exception
+        ///
+        /// \param[in] err  EapHost error descriptor
+        /// \param[in] msg  Error message
+        ///
+        inline eap_runtime_error(_In_ const EAP_ERROR &err, _In_ const std::string& msg) :
+            m_type           (err.type                   ),
+            m_reason         (err.dwReasonCode           ),
+            m_root_cause_id  (err.rootCauseGuid          ),
+            m_root_cause_desc(err.pRootCauseString       ),
+            m_repair_id      (err.repairGuid             ),
+            m_repair_desc    (err.pRepairString          ),
+            m_help_link_id   (err.helpLinkGuid           ),
+            win_runtime_error(err.dwWinError, msg.c_str())
+        {
+        }
+
+
+        ///
+        /// Constructs an exception
+        ///
+        /// \param[in] err  EapHost error descriptor
+        /// \param[in] msg  Error message
+        ///
+        inline eap_runtime_error(_In_ const EAP_ERROR &err, _In_z_ const char *msg) :
+            m_type           (err.type            ),
+            m_reason         (err.dwReasonCode    ),
+            m_root_cause_id  (err.rootCauseGuid   ),
+            m_root_cause_desc(err.pRootCauseString),
+            m_repair_id      (err.repairGuid      ),
+            m_repair_desc    (err.pRepairString   ),
+            m_help_link_id   (err.helpLinkGuid    ),
+            win_runtime_error(err.dwWinError, msg )
+        {
+        }
+
+
+        ///
+        /// Returns EAP method type
+        ///
+        inline const EAP_METHOD_TYPE& type() const
+        {
+            return m_type;
+        }
+
+
+        ///
+        /// Returns the reason code for error
+        ///
+        inline DWORD reason() const
+        {
+            return m_reason;
+        }
+
+
+        ///
+        /// Returns root cause ID
+        ///
+        inline const GUID& root_cause_id() const
+        {
+            return m_root_cause_id;
+        }
+
+
+        ///
+        /// Returns root cause ID
+        ///
+        inline const wchar_t* root_cause() const
+        {
+            return m_root_cause_desc.c_str();
+        }
+
+
+        ///
+        /// Returns repair ID
+        ///
+        inline const GUID& repair_id() const
+        {
+            return m_repair_id;
+        }
+
+
+        ///
+        /// Returns root cause ID
+        ///
+        inline const wchar_t* repair() const
+        {
+            return m_repair_desc.c_str();
+        }
+
+
+        ///
+        /// Returns help_link ID
+        ///
+        inline const GUID& help_link_id() const
+        {
+            return m_help_link_id;
+        }
+
+    protected:
+        EAP_METHOD_TYPE m_type;         ///< Structure that identifies the EAP method that raised the error
+
+        DWORD m_reason;                 ///< The reason code for the error
+
+        GUID m_root_cause_id;           ///< A unique ID that identifies cause of error in EAPHost
+        std::wstring m_root_cause_desc; ///< A localized and readable string that describes the root cause of the error
+
+        GUID m_repair_id;               ///< A unique ID that maps to a localizable string that identifies the repair action that can be taken to fix the reported error
+        std::wstring m_repair_desc;     ///< A localized and readable string that describes the possible repair action
+
+        GUID m_help_link_id;            ///< A unique ID that maps to a localizable string that specifies an URL for a page that contains additional information about an error or repair message
     };
 }
 
