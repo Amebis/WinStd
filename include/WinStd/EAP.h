@@ -148,7 +148,7 @@ namespace winstd
         eap_type_tls             =  13,    ///< EAP-TLS
         eap_type_ttls            =  21,    ///< EAP-TTLS
         eap_type_peap            =  25,    ///< EAP-PEAP
-        eap_type_mschapv2        =  29,    ///< EAP-MSCHAPv2
+        eap_type_mschapv2        =  26,    ///< EAP-MSCHAPv2
 
         eap_type_legacy_pap      = 192,    ///< PAP (Not actually an EAP method; Moved to the Unassigned area)
         eap_type_legacy_mschapv2 = 193,    ///< MSCHAPv2 (Not actually an EAP method; Moved to the Unassigned area)
