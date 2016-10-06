@@ -924,6 +924,16 @@ namespace winstd
             return compare((VARIANT*)this, (VARIANT*)&varSrc, LOCALE_USER_DEFAULT, 0)== static_cast<HRESULT>(VARCMP_GT);
         }
 
+        ///
+        /// Converts a variant from one type to another.
+        ///
+        /// \sa [VariantChangeType function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms221258.aspx)
+        ///
+        inline HRESULT change_type(_In_ VARTYPE vt, _In_opt_ USHORT wFlags = 0)
+        {
+            return VariantChangeType(this, this, wFlags, vt);
+        }
+
     private:
         inline HRESULT compare(_In_ LPVARIANT pvarLeft, _In_ LPVARIANT pvarRight, _In_ LCID lcid, _In_ ULONG dwFlags) const
         {
