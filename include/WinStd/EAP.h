@@ -170,9 +170,10 @@ namespace winstd
         ///
         /// Delete a pointer
         ///
-        void operator()(BYTE *_Ptr) const
+        template <class _T>
+        void operator()(_T *_Ptr) const
         {
-            EapHostPeerFreeMemory(_Ptr);
+            EapHostPeerFreeMemory((BYTE*)_Ptr);
         }
     };
 
