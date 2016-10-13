@@ -880,7 +880,7 @@ namespace winstd
         {
             if (vt == VT_NULL && varSrc.vt == VT_NULL) return true;
             if (vt != varSrc.vt) return false;
-            return compare((VARIANT*)this, (VARIANT*)&varSrc, LOCALE_USER_DEFAULT, 0) == static_cast<HRESULT>(VARCMP_EQ);
+            return compare(static_cast<const VARIANT&>(*this), varSrc, LOCALE_USER_DEFAULT, 0) == static_cast<HRESULT>(VARCMP_EQ);
         }
 
         ///
@@ -907,7 +907,7 @@ namespace winstd
         inline bool operator<(_In_ const VARIANT& varSrc) const
         {
             if (vt == VT_NULL && varSrc.vt == VT_NULL) return false;
-            return compare((VARIANT*)this, (VARIANT*)&varSrc, LOCALE_USER_DEFAULT, 0)== static_cast<HRESULT>(VARCMP_LT);
+            return compare(static_cast<const VARIANT&>(*this), varSrc, LOCALE_USER_DEFAULT, 0)== static_cast<HRESULT>(VARCMP_LT);
         }
 
         ///
@@ -921,7 +921,7 @@ namespace winstd
         inline bool operator>(_In_ const VARIANT& varSrc) const
         {
             if (vt == VT_NULL && varSrc.vt == VT_NULL) return false;
-            return compare((VARIANT*)this, (VARIANT*)&varSrc, LOCALE_USER_DEFAULT, 0)== static_cast<HRESULT>(VARCMP_GT);
+            return compare(static_cast<const VARIANT&>(*this), varSrc, LOCALE_USER_DEFAULT, 0)== static_cast<HRESULT>(VARCMP_GT);
         }
 
         ///
@@ -935,14 +935,14 @@ namespace winstd
         }
 
     private:
-        inline HRESULT compare(_In_ LPVARIANT pvarLeft, _In_ LPVARIANT pvarRight, _In_ LCID lcid, _In_ ULONG dwFlags) const
+        inline HRESULT compare(_In_ const VARIANT &varLeft, _In_ const VARIANT &varRight, _In_ LCID lcid, _In_ ULONG dwFlags) const
         {
             switch(vt) {
-                case VT_I1:  return pvarLeft->cVal    == pvarRight->cVal    ? VARCMP_EQ : pvarLeft->cVal    > pvarRight->cVal    ? VARCMP_GT : VARCMP_LT;
-                case VT_UI2: return pvarLeft->uiVal   == pvarRight->uiVal   ? VARCMP_EQ : pvarLeft->uiVal   > pvarRight->uiVal   ? VARCMP_GT : VARCMP_LT;
-                case VT_UI4: return pvarLeft->uintVal == pvarRight->uintVal ? VARCMP_EQ : pvarLeft->uintVal > pvarRight->uintVal ? VARCMP_GT : VARCMP_LT;
-                case VT_UI8: return pvarLeft->ullVal  == pvarRight->ullVal  ? VARCMP_EQ : pvarLeft->ullVal  > pvarRight->ullVal  ? VARCMP_GT : VARCMP_LT;
-                default:     return VarCmp(pvarLeft, pvarRight, lcid, dwFlags);
+                case VT_I1:  return varLeft.cVal    == varRight.cVal    ? VARCMP_EQ : varLeft.cVal    > varRight.cVal    ? VARCMP_GT : VARCMP_LT;
+                case VT_UI2: return varLeft.uiVal   == varRight.uiVal   ? VARCMP_EQ : varLeft.uiVal   > varRight.uiVal   ? VARCMP_GT : VARCMP_LT;
+                case VT_UI4: return varLeft.uintVal == varRight.uintVal ? VARCMP_EQ : varLeft.uintVal > varRight.uintVal ? VARCMP_GT : VARCMP_LT;
+                case VT_UI8: return varLeft.ullVal  == varRight.ullVal  ? VARCMP_EQ : varLeft.ullVal  > varRight.ullVal  ? VARCMP_GT : VARCMP_LT;
+                default:     return VarCmp(const_cast<LPVARIANT>(&varLeft), const_cast<LPVARIANT>(&varRight), lcid, dwFlags);
             }
         }
     };
