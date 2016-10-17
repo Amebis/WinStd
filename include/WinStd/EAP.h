@@ -141,7 +141,9 @@ inline bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE
 
 #pragma once
 
+#include <EapHostPeerTypes.h>
 #include <eapmethodtypes.h>
+#include <eappapis.h>
 
 
 namespace winstd
