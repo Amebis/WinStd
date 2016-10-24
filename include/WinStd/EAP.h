@@ -62,7 +62,7 @@ namespace winstd
     typedef std::unique_ptr<BYTE[], EapHostPeerFreeRuntimeMemory_delete> WINSTD_API eap_blob_runtime;
 
     ///
-    /// Deleter for unique_ptr to EAP_ERROR using EapHostPeerFreeEapError
+    /// Deleter for unique_ptr to EAP_ERROR using EapHostPeerFreeErrorMemory
     ///
     struct WINSTD_API EapHostPeerFreeErrorMemory_delete;
 
@@ -70,6 +70,16 @@ namespace winstd
     /// EAP_ERROR wrapper class
     ///
     typedef std::unique_ptr<EAP_ERROR, EapHostPeerFreeErrorMemory_delete> WINSTD_API eap_error;
+
+    ///
+    /// Deleter for unique_ptr to EAP_ERROR using EapHostPeerFreeEapError
+    ///
+    struct WINSTD_API  EapHostPeerFreeEapError_delete;
+
+    ///
+    /// EAP_ERROR wrapper class
+    ///
+    typedef std::unique_ptr<EAP_ERROR,  EapHostPeerFreeEapError_delete> WINSTD_API eap_error_runtime;
 
     ///
     /// EAP_ATTRIBUTE wrapper class
@@ -221,6 +231,23 @@ namespace winstd
         void operator()(EAP_ERROR *_Ptr) const
         {
             EapHostPeerFreeErrorMemory(_Ptr);
+        }
+    };
+
+
+    struct WINSTD_API  EapHostPeerFreeEapError_delete
+    {
+        ///
+        /// Default constructor
+        ///
+         EapHostPeerFreeEapError_delete() {}
+
+        ///
+        /// Delete a pointer
+        ///
+        void operator()(EAP_ERROR *_Ptr) const
+        {
+             EapHostPeerFreeEapError(_Ptr);
         }
     };
 
