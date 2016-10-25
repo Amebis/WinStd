@@ -1114,9 +1114,14 @@ inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCoun
     // Query property size.
     ulResult = TdhGetPropertySize(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, &ulSize);
     if (ulResult == ERROR_SUCCESS) {
-        // Query property value.
-        aData.resize((ulSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        ulResult = TdhGetProperty(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, ulSize, reinterpret_cast<LPBYTE>(aData.data()));
+        if (ulSize) {
+            // Query property value.
+            aData.resize((ulSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+            ulResult = TdhGetProperty(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, ulSize, reinterpret_cast<LPBYTE>(aData.data()));
+        } else {
+            // Property value size is zero.
+            aData.clear();
+        }
     }
 
     return ulResult;
