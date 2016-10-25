@@ -772,14 +772,21 @@ namespace winstd
         inline dplhandle<handle_type>& operator=(_In_ const dplhandle<handle_type> &h)
         {
             if (this != std::addressof(h)) {
-                handle_type h_new = duplicate_internal(h.m_h);
-                if (h_new) {
+                if (h.m_h) {
+                    handle_type h_new = duplicate_internal(h.m_h);
+                    if (h_new) {
+                        if (m_h)
+                            free_internal();
+
+                        m_h = h_new;
+                    } else
+                        assert(0); // Could not duplicate the handle
+                } else {
                     if (m_h)
                         free_internal();
 
-                    m_h = h_new;
-                } else if (h.m_h)
-                    assert(0); // Could not duplicate the handle
+                    m_h = NULL;
+                }
             }
             return *this;
         }
