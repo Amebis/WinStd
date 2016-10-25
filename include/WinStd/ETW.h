@@ -126,7 +126,7 @@ namespace winstd
         {
             Ptr      = 0;
             Size     = 0;
-            Reserved = 0;
+            Reserved = (ULONG)-1;   // Used for varadic argument terminator.
         }
 
 
@@ -215,7 +215,7 @@ namespace winstd
         ///
         /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
         ///
-        inline event_data(_In_bytecount_(size) const void *data, ULONG size)
+        inline event_data(_In_bytecount_(size) const void *data, _In_ ULONG size)
         {
             EventDataDescCreate(this, data, size);
         }
@@ -478,7 +478,9 @@ namespace winstd
             // Preallocate array.
             for (param_count = 0;; param_count++) {
                 const EVENT_DATA_DESCRIPTOR &p = va_arg(arg, const EVENT_DATA_DESCRIPTOR);
-                if (!p.Ptr) break;
+                if (p.Ptr      == winstd::event_data::blank.Ptr      &&
+                    p.Size     == winstd::event_data::blank.Size     &&
+                    p.Reserved == winstd::event_data::blank.Reserved) break;
             }
             params.reserve(param_count);
 
@@ -486,7 +488,9 @@ namespace winstd
             arg = arg_start;
             for (;;) {
                 const EVENT_DATA_DESCRIPTOR &p = va_arg(arg, const EVENT_DATA_DESCRIPTOR);
-                if (!p.Ptr) break;
+                if (p.Ptr      == winstd::event_data::blank.Ptr      &&
+                    p.Size     == winstd::event_data::blank.Size     &&
+                    p.Reserved == winstd::event_data::blank.Reserved) break;
                 params.push_back(p);
             }
 
