@@ -1203,34 +1203,16 @@ inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_ LPCWSTR lpValueName, __
 template<class _Elem, class _Traits, class _Ax>
 inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_ LPCSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_ LPCSTR pszDirectory)
 {
-    assert(0); // TODO: Test this code.
-
-    LSTATUS lResult;
-    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
-    DWORD dwSize;
-
-    Flags &= ~REG_MUI_STRING_TRUNCATE;
-
-    // Try with stack buffer first.
-    lResult = RegLoadMUIStringA(hKey, pszValue, szStackBuffer, _countof(szStackBuffer), &dwSize, Flags, pszDirectory);
-    if (lResult == ERROR_SUCCESS) {
-        // Copy from stack buffer.
-        sOut.assign(szStackBuffer, dwSize);
-    } else if (lResult == ERROR_MORE_DATA) {
-        // Allocate buffer on heap and retry.
-        std::unique_ptr<_Elem[]> szBuffer(new _Elem[dwSize + 1]);
-        sOut.assign(szBuffer.get(), (lResult = RegLoadMUIStringA(hKey, pszValue, szBuffer.get(), dwSize, &dwSize, Flags, pszDirectory)) == ERROR_SUCCESS ? dwSize : 0);
-    }
-
-    return lResult;
+    // According to "Remarks" section in MSDN documentation of RegLoadMUIString(),
+    // this function is defined but not implemented as ANSI variation.
+    assert(0);
+    return ERROR_CALL_NOT_IMPLEMENTED;
 }
 
 
 template<class _Elem, class _Traits, class _Ax>
 inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_ LPCWSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_ LPCWSTR pszDirectory)
 {
-    assert(0); // TODO: Test this code.
-
     LSTATUS lResult;
     _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize;
@@ -1238,14 +1220,14 @@ inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_ LPCWSTR pszValue, _Out
     Flags &= ~REG_MUI_STRING_TRUNCATE;
 
     // Try with stack buffer first.
-    lResult = RegLoadMUIStringW(hKey, pszValue, szStackBuffer, _countof(szStackBuffer), &dwSize, Flags, pszDirectory);
+    lResult = RegLoadMUIStringW(hKey, pszValue, szStackBuffer, sizeof(szStackBuffer), &dwSize, Flags, pszDirectory);
     if (lResult == ERROR_SUCCESS) {
         // Copy from stack buffer.
-        sOut.assign(szStackBuffer, dwSize);
+        sOut.assign(szStackBuffer, wcsnlen(szStackBuffer, dwSize/sizeof(_Elem)));
     } else if (lResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap and retry.
-        std::unique_ptr<_Elem[]> szBuffer(new _Elem[dwSize + 1]);
-        sOut.assign(szBuffer.get(), (lResult = RegLoadMUIStringW(hKey, pszValue, szBuffer.get(), dwSize, &dwSize, Flags, pszDirectory)) == ERROR_SUCCESS ? dwSize : 0);
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[(dwSize + sizeof(_Elem) - 1)/sizeof(_Elem)]);
+        sOut.assign(szBuffer.get(), (lResult = RegLoadMUIStringW(hKey, pszValue, szBuffer.get(), dwSize, &dwSize, Flags, pszDirectory)) == ERROR_SUCCESS ? wcsnlen(szBuffer.get(), dwSize/sizeof(_Elem)) : 0);
     }
 
     return lResult;
