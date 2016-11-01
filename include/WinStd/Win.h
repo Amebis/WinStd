@@ -18,6 +18,11 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
+///
+/// \defgroup WinStdWinAPI Windows API
+/// Integrates WinStd classes with Microsoft Windows API
+///
+
 #include "Common.h"
 
 #include <Windows.h>
@@ -27,69 +32,22 @@
 
 namespace winstd
 {
-    ///
-    /// \defgroup WinStdWinAPI Windows API
-    /// Integrates WinStd classes with Microsoft Windows API
-    ///
-    /// @{
-
-    ///
-    /// Windows HANDLE wrapper class
-    ///
     class WINSTD_API win_handle;
-
-    ///
-    /// Module handle wrapper
-    ///
     class WINSTD_API library;
-
-    ///
-    /// Process handle wrapper
-    ///
     class WINSTD_API process;
-
-    ///
-    /// Heap handle wrapper
-    ///
     class WINSTD_API heap;
-
-    ///
-    /// HeapAlloc allocator
-    ///
     template <class _Ty> class heap_allocator;
-
-    ///
-    /// Activates given activation context in constructor and deactivates it in destructor
-    ///
     class WINSTD_API actctx_activator;
-
-    ///
-    /// Lets the calling thread impersonate the security context of a logged-on user
-    ///
     class WINSTD_API user_impersonator;
-
-    ///
-    /// Memory in virtual address space of a process handle wrapper
-    ///
     class WINSTD_API vmemory;
-
-    ///
-    /// Registry wrapper class
-    ///
     class WINSTD_API reg_key;
-
-    /// @}
 }
 
 
 /// \addtogroup WinStdWinAPI
 /// @{
 
-///
-/// Retrieves the fully qualified path for the file that contains the specified module and stores it in a std::string string.
-///
-/// \sa [GetModuleFileName function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms683197.aspx)
-///
+/// @copydoc GetModuleFileNameW()
 template<class _Elem, class _Traits, class _Ax> inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
@@ -99,11 +57,7 @@ template<class _Elem, class _Traits, class _Ax> inline DWORD GetModuleFileNameA(
 ///
 template<class _Elem, class _Traits, class _Ax> inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
-///
-/// Copies the text of the specified window's title bar (if it has one) into a std::string string.
-///
-/// \sa [GetWindowText function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633520.aspx)
-///
+/// @copydoc GetWindowTextW()
 template<class _Elem, class _Traits, class _Ax> inline int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
@@ -113,11 +67,7 @@ template<class _Elem, class _Traits, class _Ax> inline int GetWindowTextA(_In_ H
 ///
 template<class _Elem, class _Traits, class _Ax> inline int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
-///
-/// Retrieves version information for the specified file and stores it in a std::vector buffer.
-///
-/// \sa [GetFileVersionInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms647003.aspx)
-///
+/// @copydoc GetFileVersionInfoW()
 template<class _Ty, class _Ax> inline BOOL GetFileVersionInfoA(_In_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue);
 
 ///
@@ -127,12 +77,8 @@ template<class _Ty, class _Ax> inline BOOL GetFileVersionInfoA(_In_ LPCSTR lptst
 ///
 template<class _Ty, class _Ax> inline BOOL GetFileVersionInfoW(_In_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue);
 
-///
-/// Expands environment-variable strings, replaces them with the values defined for the current user, and stores it in a std::string string.
-///
-/// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
-///
-template<class _Elem, class _Traits, class _Ax> inline DWORD ExpandEnvironmentStringsW(_In_ LPCSTR lpSrc, std::basic_string<_Elem, _Traits, _Ax> &sValue);
+/// @copydoc ExpandEnvironmentStringsW()
+template<class _Elem, class _Traits, class _Ax> inline DWORD ExpandEnvironmentStringsA(_In_ LPCSTR lpSrc, std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
 /// Expands environment-variable strings, replaces them with the values defined for the current user, and stores it in a std::wstring string.
@@ -141,12 +87,7 @@ template<class _Elem, class _Traits, class _Ax> inline DWORD ExpandEnvironmentSt
 ///
 template<class _Elem, class _Traits, class _Ax> inline DWORD ExpandEnvironmentStringsW(_In_ LPCWSTR lpSrc, std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
-///
-/// Formats GUID and stores it in a std::string string.
-///
-/// \param[in ] lpGuid  Pointer to GUID
-/// \param[out] str     String to store the result to
-///
+/// @copydoc GuidToStringW()
 template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str);
 
 ///
@@ -156,28 +97,29 @@ template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringA(_In_ L
 /// \param[out] str     String to store the result to
 ///
 template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str);
+/// @copydoc GuidToStringW()
 #ifdef _UNICODE
 #define GuidToString GuidToStringW
 #else
 #define GuidToString GuidToStringA
 #endif
 
-///
-/// Parses string with GUID and stores it to GUID
-///
-/// \param[in ] lpszGuid  String with GUID
-/// \param[out] lpGuid    GUID to store the result to
-///
-BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_ LPCSTR *lpszGuidEnd = NULL);
+/// @copydoc StringToGuidW()
+BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd = NULL);
 
 ///
 /// Parses string with GUID and stores it to GUID
 ///
-/// \param[in ] lpszGuid  String with GUID
-/// \param[out] lpGuid    GUID to store the result to
+/// \param[in ] lpszGuid     String with GUID
+/// \param[out] lpGuid       GUID to store the result to
+/// \param[out] lpszGuidEnd  If non-NULL the pointer to the end of parsed GUID within `lpszGuid` is returned
 ///
-BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_ LPCWSTR *lpszGuidEnd = NULL);
-
+/// \returns
+/// - `TRUE` if GUID successfuly parsed;
+/// - `FALSE` otherwise.
+///
+BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd = NULL);
+/// @copydoc StringToGuidW()
 #ifdef _UNICODE
 #define StringToGuid StringToGuidW
 #else
@@ -224,11 +166,7 @@ template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringVal
 ///
 template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
-///
-/// Retrieves the type and data for the specified value name associated with an open registry key and stores the data in a std::vector buffer.
-///
-/// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
-///
+/// @copydoc RegQueryValueExW()
 template<class _Ty, class _Ax> inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData);
 
 ///
@@ -240,11 +178,7 @@ template<class _Ty, class _Ax> inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _
 
 #if _WIN32_WINNT >= _WIN32_WINNT_VISTA
 
-///
-/// Loads the specified string from the specified key and subkey, and stores it in a std::string string.
-///
-/// \sa [RegLoadMUIString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724890.aspx)
-///
+/// @copydoc RegLoadMUIStringW()
 template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_ LPCSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_ LPCSTR pszDirectory);
 
 ///
@@ -270,19 +204,15 @@ template<class _Elem, class _Traits, class _Ax> inline int WideCharToMultiByte(_
 ///
 template<class _Elem, class _Traits, class _Ax> inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sWideCharStr);
 
-///
-/// Loads a string resource from the executable file associated with a specified module.
-///
-/// \sa [LoadString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms647486.aspx)
-///
-template<class _Traits, class _Ax> inline int WINAPI LoadString(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer);
+/// @copydoc LoadStringW
+template<class _Traits, class _Ax> inline int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer);
 
 ///
 /// Loads a string resource from the executable file associated with a specified module.
 ///
 /// \sa [LoadString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms647486.aspx)
 ///
-template<class _Traits, class _Ax> inline int WINAPI LoadString(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer);
+template<class _Traits, class _Ax> inline int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer);
 
 ///
 /// Formats and sends a string to the debugger for display.
@@ -312,11 +242,7 @@ inline VOID OutputDebugStr(_In_ LPCSTR lpOutputString, ...);
 ///
 inline VOID OutputDebugStr(_In_ LPCWSTR lpOutputString, ...);
 
-///
-/// Formats a date as a date string for a locale specified by the locale identifier. The function formats either a specified date or the local system date. 
-///
-/// \sa [GetDateFormat function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd318086.aspx)
-///
+/// @copydoc GetDateFormatW()
 template<class _Elem, class _Traits, class _Ax> inline int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_ LPCSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate);
 
 ///
@@ -326,11 +252,7 @@ template<class _Elem, class _Traits, class _Ax> inline int GetDateFormatA(_In_ L
 ///
 template<class _Elem, class _Traits, class _Ax> inline int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_ LPCWSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate);
 
-///
-/// Retrieves the name of the account for this SID and the name of the first domain on which this SID is found.
-///
-/// \sa [LookupAccountSid function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379166.aspx)
-///
+/// @copydoc LookupAccountSidW()
 template<class _Elem, class _Traits, class _Ax> inline BOOL LookupAccountSidA(_In_opt_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse);
 
 ///
@@ -347,6 +269,12 @@ template<class _Elem, class _Traits, class _Ax> inline BOOL LookupAccountSidW(_I
 
 namespace winstd
 {
+    /// \addtogroup WinStdWinAPI
+    /// @{
+
+    ///
+    /// Windows HANDLE wrapper class
+    ///
     class WINSTD_API win_handle : public handle<HANDLE>
     {
         HANDLE_IMPL(win_handle)
@@ -369,6 +297,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Module handle wrapper
+    ///
     class WINSTD_API library : public handle<HMODULE>
     {
         HANDLE_IMPL(library)
@@ -410,6 +341,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Process handle wrapper
+    ///
     class WINSTD_API process : public win_handle
     {
     public:
@@ -434,6 +368,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Heap handle wrapper
+    ///
     class WINSTD_API heap : public handle<HANDLE>
     {
         HANDLE_IMPL(heap)
@@ -484,24 +421,30 @@ namespace winstd
     };
 
 
+    ///
+    /// HeapAlloc allocator
+    ///
     template <class _Ty>
     class heap_allocator
     {
     public:
-        typedef typename _Ty value_type;
+        typedef typename _Ty value_type;    ///< A type that is managed by the allocator
 
-        typedef _Ty *pointer;
-        typedef _Ty& reference;
-        typedef const _Ty *const_pointer;
-        typedef const _Ty& const_reference;
+        typedef _Ty *pointer;               ///< A type that provides a pointer to the type of object managed by the allocator
+        typedef _Ty& reference;             ///< A type that provides a reference to the type of object managed by the allocator
+        typedef const _Ty *const_pointer;   ///< A type that provides a constant pointer to the type of object managed by the allocator
+        typedef const _Ty& const_reference; ///< A type that provides a constant reference to type of object managed by the allocator
 
-        typedef SIZE_T size_type;
-        typedef ptrdiff_t difference_type;
+        typedef SIZE_T size_type;           ///< An unsigned integral type that can represent the length of any sequence that an object of template class `heap_allocator` can allocate
+        typedef ptrdiff_t difference_type;  ///< A signed integral type that can represent the difference between values of pointers to the type of object managed by the allocator
 
+        ///
+        /// A structure that enables an allocator for objects of one type to allocate storage for objects of another type.
+        ///
         template <class _Other>
         struct rebind
         {
-            typedef heap_allocator<_Other> other;
+            typedef heap_allocator<_Other> other;   ///< Other allocator type
         };
 
     public:
@@ -591,10 +534,13 @@ namespace winstd
         }
 
     public:
-        HANDLE m_heap;
+        HANDLE m_heap;  ///< Heap handle
     };
 
 
+    ///
+    /// Activates given activation context in constructor and deactivates it in destructor
+    ///
     class WINSTD_API actctx_activator
     {
     public:
@@ -619,6 +565,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Lets the calling thread impersonate the security context of a logged-on user
+    ///
     class WINSTD_API user_impersonator
     {
     public:
@@ -643,6 +592,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Memory in virtual address space of a process handle wrapper
+    ///
     class WINSTD_API vmemory : public handle<LPVOID>
     {
         WINSTD_NONCOPYABLE(vmemory)
@@ -752,6 +704,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Registry wrapper class
+    ///
     class WINSTD_API reg_key : public handle<HKEY>
     {
         HANDLE_IMPL(reg_key)
@@ -827,6 +782,8 @@ namespace winstd
         ///
         virtual void free_internal();
     };
+
+    /// @}
 }
 
 
@@ -973,7 +930,7 @@ inline BOOL GetFileVersionInfoW(_In_ LPCWSTR lptstrFilename, __reserved DWORD dw
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline DWORD ExpandEnvironmentStringsW(_In_ LPCSTR lpSrc, std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline DWORD ExpandEnvironmentStringsA(_In_ LPCSTR lpSrc, std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -1281,7 +1238,7 @@ inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_cou
 
 
 template<class _Traits, class _Ax>
-inline int WINAPI LoadString(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer)
+inline int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer)
 {
     // Get read-only pointer to string resource.
     LPCSTR pszStr;
@@ -1295,7 +1252,7 @@ inline int WINAPI LoadString(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ 
 
 
 template<class _Traits, class _Ax>
-inline int WINAPI LoadString(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer)
+inline int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer)
 {
     // Get read-only pointer to string resource.
     LPCWSTR pszStr;

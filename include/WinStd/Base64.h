@@ -18,6 +18,11 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
+///
+/// \defgroup WinStdBase64 Base64 conversion
+/// Provides Base64 conversion for WinStd classes
+///
+
 #include "Common.h"
 
 #include <string>
@@ -25,23 +30,8 @@
 
 namespace winstd
 {
-    ///
-    /// \defgroup WinStdBase64 Base64 conversion
-    /// Provides Base64 conversion for WinStd classes
-    ///
-    /// @{
-
-    ///
-    /// Base64 encoding session
-    ///
     class WINSTD_API base64_enc;
-
-    ///
-    /// Base64 decoding session
-    ///
     class WINSTD_API base64_dec;
-
-    /// @}
 }
 
 #pragma once
@@ -49,6 +39,12 @@ namespace winstd
 
 namespace winstd
 {
+    /// \addtogroup WinStdBase64
+    /// @{
+
+    ///
+    /// Base64 encoding session
+    ///
     class WINSTD_API base64_enc
     {
     public:
@@ -167,10 +163,16 @@ namespace winstd
     protected:
         unsigned char buf[3];           ///< Internal buffer
         size_t num;                     ///< Number of bytes used in `buf`
-        static const char lookup[64];   ///< Look-up table
+
+        /// \cond internal
+        static const char lookup[64];
+        /// \endcond
     };
 
 
+    ///
+    /// Base64 decoding session
+    ///
     class WINSTD_API base64_dec
     {
     public:
@@ -268,6 +270,11 @@ namespace winstd
     protected:
         unsigned char buf[4];                   ///< Internal buffer
         size_t num;                             ///< Number of bytes used in `buf`
-        static const unsigned char lookup[256]; ///< Look-up table
+
+        /// \cond internal
+        static const unsigned char lookup[256];
+        /// \endcond
     };
+
+    /// @}
 }

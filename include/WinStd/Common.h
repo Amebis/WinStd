@@ -19,6 +19,41 @@
 */
 
 ///
+/// \defgroup WinStdGeneral General
+/// General API
+///
+/// \defgroup WinStdSysHandles System Handles
+/// Simplifies work with object handles of various type
+///
+/// \defgroup WinStdExceptions Exceptions
+/// Additional exceptions
+///
+/// \defgroup WinStdStrFormat String Formatting
+/// Formatted string generation
+///
+/// \par Example
+/// \code
+/// // Please note the PCSTR typecasting invokes an operator to return
+/// // pointer to formatted buffer rather than class reference itself.
+/// cout << (PCSTR)(winstd::string_printf("%i is less than %i.\n", 1, 5));
+/// \endcode
+///
+/// \defgroup WinStdMemSanitize Auto-sanitize Memory Management
+/// Sanitizes memory before dismissed
+///
+
+#include <Windows.h>
+
+#include <stdarg.h>
+
+#include <memory>
+#include <stdexcept>
+#include <string>
+
+/// \addtogroup WinStdGeneral
+/// @{
+
+///
 /// Public function calling convention
 ///
 #ifndef WINSTD_API
@@ -31,19 +66,45 @@
 #endif
 #endif
 
+///
+/// Class/struct with no virtual table declaration
+///
+/// Use for storing flat data.
+///
+/// This macro bypasses Doxygen limitation to parse class/struct declarations with parentheses.
+///
+#define WINSTD_NOVTABLE __declspec(novtable)
+
+///
+/// "L" stringizing macro
+///
 #ifndef __L
 #define __L(x)  L ## x
 #endif
+
+///
+/// Makes string Unicode
+///
 #ifndef _L
 #define _L(x)   __L(x)
 #endif
 
-// Macros for building default constructors and operators to prevent their auto-generation by compiler.
+///
+/// Declares a class as non-copyable
+///
 #define WINSTD_NONCOPYABLE(C) \
 private: \
     inline    C        (_In_ const C &h); \
     inline C& operator=(_In_ const C &h);
 
+/// @}
+
+/// \addtogroup WinStdSysHandles
+/// @{
+
+///
+/// Implements default constructors and operators to prevent their auto-generation by compiler.
+///
 #define HANDLE_IMPL(C) \
 public: \
     inline    C        (                       )                                     {                                                             } \
@@ -53,6 +114,9 @@ public: \
     inline C& operator=(_Inout_ C           &&h)                                     { handle<handle_type>::operator=(std::move(h)); return *this; } \
 WINSTD_NONCOPYABLE(C)
 
+///
+/// Implements default constructors and operators to prevent their auto-generation by compiler.
+///
 #define DPLHANDLE_IMPL(C) \
 public: \
     inline    C        (                             )                                                     {                                                                } \
@@ -64,15 +128,153 @@ public: \
     inline C& operator=(_Inout_       C           &&h)                                                     { dplhandle<handle_type>::operator=(std::move(h)); return *this; } \
 private:
 
-#include <Windows.h>
+/// @}
 
-#include <stdarg.h>
+namespace winstd
+{
+    /// \addtogroup WinStdStrFormat
+    /// @{
 
-#include <memory>
-#include <stdexcept>
-#include <string>
+    ///
+    /// Multi-byte / Wide-character string (according to _UNICODE)
+    ///
+#ifdef _UNICODE
+    typedef std::wstring tstring;
+#else
+    typedef std::string tstring;
+#endif
 
+    /// @}
+
+    template <class _Ty> struct LocalFree_delete;
+    template <class _Ty> struct LocalFree_delete<_Ty[]>;
+    template <class T> class handle;
+    template <class T> class dplhandle;
+    template <class T> class vector_queue;
+    template <typename _Tn> class num_runtime_error;
+    class WINSTD_API win_runtime_error;
+
+    /// \addtogroup WinStdStrFormat
+    /// @{
+
+    template<class _Elem, class _Traits = std::char_traits<_Elem>, class _Ax = std::allocator<_Elem> > class basic_string_printf;
+
+    ///
+    /// Single-byte character implementation of a class to support string formatting using `printf()` style templates
+    ///
+    typedef basic_string_printf<char, std::char_traits<char>, std::allocator<char> > string_printf;
+
+    ///
+    /// Wide character implementation of a class to support string formatting using `printf()` style templates
+    ///
+    typedef basic_string_printf<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > wstring_printf;
+
+    ///
+    /// Multi-byte / Wide-character formatted string (according to _UNICODE)
+    ///
+#ifdef _UNICODE
+    typedef wstring_printf tstring_printf;
+#else
+    typedef string_printf tstring_printf;
+#endif
+
+    template<class _Elem, class _Traits = std::char_traits<_Elem>, class _Ax = std::allocator<_Elem> > class basic_string_msg;
+
+    ///
+    /// Single-byte character implementation of a class to support string formatting using `FormatMessage()` style templates
+    ///
+    typedef basic_string_msg<char, std::char_traits<char>, std::allocator<char> > string_msg;
+
+    ///
+    /// Wide character implementation of a class to support string formatting using `FormatMessage()` style templates
+    ///
+    typedef basic_string_msg<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > wstring_msg;
+
+    ///
+    /// Multi-byte / Wide-character formatted string (according to _UNICODE)
+    ///
+#ifdef _UNICODE
+    typedef wstring_msg tstring_msg;
+#else
+    typedef string_msg tstring_msg;
+#endif
+
+    template<class _Elem, class _Traits = std::char_traits<_Elem>, class _Ax = std::allocator<_Elem> > class basic_string_guid;
+
+    class WINSTD_API string_guid;
+    class WINSTD_API wstring_guid;
+
+    ///
+    /// Multi-byte / Wide-character string GUID (according to _UNICODE)
+    ///
+#ifdef _UNICODE
+    typedef wstring_guid tstring_guid;
+#else
+    typedef string_guid tstring_guid;
+#endif
+
+    /// @}
+
+    /// \addtogroup WinStdMemSanitize
+    /// @{
+
+    template<class _Ty> class sanitizing_allocator;
+
+    ///
+    /// A sanitizing variant of std::string
+    ///
+    /// \note
+    /// `sanitizing_string` introduces a performance penalty. However, it provides an additional level of security.
+    /// Use for security sensitive data memory storage only.
+    ///
+    typedef std::basic_string<char, std::char_traits<char>, sanitizing_allocator<char> > sanitizing_string;
+
+    ///
+    /// A sanitizing variant of std::wstring
+    ///
+    /// \note
+    /// `sanitizing_wstring` introduces a performance penalty. However, it provides an additional level of security.
+    /// Use for security sensitive data memory storage only.
+    ///
+    typedef std::basic_string<wchar_t, std::char_traits<wchar_t>, sanitizing_allocator<wchar_t> > sanitizing_wstring;
+
+    ///
+    /// Multi-byte / Wide-character sanitizing string (according to _UNICODE)
+    ///
+#ifdef _UNICODE
+    typedef sanitizing_wstring sanitizing_tstring;
+#else
+    typedef sanitizing_string sanitizing_tstring;
+#endif
+
+    /// @}
+}
+
+/// \addtogroup WinStdStrFormat
+/// @{
+
+///
+/// Formats string using `printf()`.
+///
+/// \param[out] str       Buffer to receive string
+/// \param[in ] capacity  Size of `str` in characters
+/// \param[in ] format    String template using `printf()` style
+/// \param[in ] arg       Arguments to `format`
+///
+/// \returns Number of characters in result.
+///
 inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg);
+
+///
+/// Formats string using `printf()`.
+///
+/// \param[out] str       Buffer to receive string
+/// \param[in ] capacity  Size of `str` in characters
+/// \param[in ] format    String template using `printf()` style
+/// \param[in ] arg       Arguments to `format`
+///
+/// \returns Number of characters in result.
+///
 inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg);
 
 ///
@@ -110,198 +312,7 @@ template<class _Traits, class _Ax> inline DWORD FormatMessage(_In_ DWORD dwFlags
 ///
 template<class _Traits, class _Ax> inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments);
 
-namespace winstd
-{
-    ///
-    /// Multi-byte / Wide-character string (according to _UNICODE)
-    ///
-#ifdef _UNICODE
-    typedef std::wstring tstring;
-#else
-    typedef std::string tstring;
-#endif
-
-    ///
-    /// Deleter for unique_ptr using LocalFree
-    ///
-    template <class _Ty> struct LocalFree_delete;
-
-    ///
-    /// Deleter for unique_ptr to array of unknown size using LocalFree
-    ///
-    template <class _Ty> struct LocalFree_delete<_Ty[]>;
-
-    ///
-    /// \defgroup WinStdSysHandles System Handles
-    /// Simplifies work with object handles of various type
-    ///
-    /// @{
-
-    ///
-    /// Base abstract template class to support generic object handle keeping
-    ///
-    /// It provides basic operators and methods common to all descendands of this class establishing a base to ease the replacement of native object handle type with classes in object-oriented approach.
-    ///
-    template <class T> class handle;
-
-    ///
-    /// Base abstract template class to support object handle keeping for objects that support handle duplication
-    ///
-    template <class T> class dplhandle;
-
-    ///
-    /// Helper class to allow limited size FIFO queues implemented as vector of elements
-    ///
-    template <class T> class vector_queue;
-
-    ///
-    /// \defgroup WinStdExceptions Exceptions
-    /// Additional exceptions
-    ///
-    /// @{
-
-    ///
-    /// Numerical runtime error
-    ///
-    template <typename _Tn> class num_runtime_error;
-
-    ///
-    /// Windows runtime error
-    ///
-    class WINSTD_API win_runtime_error;
-
-    /// @}
-
-    ///
-    /// \defgroup WinStdStrFormat String Formatting
-    /// Formatted string generation
-    ///
-    /// \par Example
-    /// \code
-    /// // Please note the PCSTR typecasting invokes an operator to return
-    /// // pointer to formatted buffer rather than class reference itself.
-    /// cout << (PCSTR)(winstd::string_printf("%i is less than %i.\n", 1, 5));
-    /// \endcode
-    ///
-    /// @{
-
-    ///
-    /// Base template class to support string formatting using `printf()` style templates
-    ///
-    template<class _Elem, class _Traits = std::char_traits<_Elem>, class _Ax = std::allocator<_Elem> > class basic_string_printf;
-
-    ///
-    /// Single-byte character implementation of a class to support string formatting using `printf()` style templates
-    ///
-    typedef basic_string_printf<char, std::char_traits<char>, std::allocator<char> > string_printf;
-
-    ///
-    /// Wide character implementation of a class to support string formatting using `printf()` style templates
-    ///
-    typedef basic_string_printf<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > wstring_printf;
-
-    ///
-    /// Multi-byte / Wide-character formatted string (according to _UNICODE)
-    ///
-#ifdef _UNICODE
-    typedef wstring_printf tstring_printf;
-#else
-    typedef string_printf tstring_printf;
-#endif
-
-    ///
-    /// Base template class to support string formatting using `FormatMessage()` style templates
-    ///
-    template<class _Elem, class _Traits = std::char_traits<_Elem>, class _Ax = std::allocator<_Elem> > class basic_string_msg;
-
-    ///
-    /// Single-byte character implementation of a class to support string formatting using `FormatMessage()` style templates
-    ///
-    typedef basic_string_msg<char, std::char_traits<char>, std::allocator<char> > string_msg;
-
-    ///
-    /// Wide character implementation of a class to support string formatting using `FormatMessage()` style templates
-    ///
-    typedef basic_string_msg<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > wstring_msg;
-
-    ///
-    /// Multi-byte / Wide-character formatted string (according to _UNICODE)
-    ///
-#ifdef _UNICODE
-    typedef wstring_msg tstring_msg;
-#else
-    typedef string_msg tstring_msg;
-#endif
-
-    ///
-    /// Base template class to support converting GUID to string
-    ///
-    template<class _Elem, class _Traits = std::char_traits<_Elem>, class _Ax = std::allocator<_Elem> > class basic_string_guid;
-
-    ///
-    /// Single-byte character implementation of a class to support converting GUID to string
-    ///
-    class WINSTD_API string_guid;
-
-    ///
-    /// Wide character implementation of a class to support converting GUID to string
-    ///
-    class WINSTD_API wstring_guid;
-
-    ///
-    /// Multi-byte / Wide-character string GUID (according to _UNICODE)
-    ///
-#ifdef _UNICODE
-    typedef wstring_guid tstring_guid;
-#else
-    typedef string_guid tstring_guid;
-#endif
-
-    /// @}
-
-    /// \defgroup WinStdMemSanitize Auto-sanitize Memory Management
-    /// Sanitizes memory before dismissed
-    ///
-    /// @{
-
-    ///
-    /// An allocator template that sanitizes each memory block before it is destroyed or reallocated
-    ///
-    /// \note
-    /// `sanitizing_allocator` introduces a performance penalty. However, it provides an additional level of security.
-    /// Use for security sensitive data memory storage only.
-    ///
-    template<class _Ty> class sanitizing_allocator;
-
-    ///
-    /// A sanitizing variant of std::string
-    ///
-    /// \note
-    /// `sanitizing_string` introduces a performance penalty. However, it provides an additional level of security.
-    /// Use for security sensitive data memory storage only.
-    ///
-    typedef std::basic_string<char, std::char_traits<char>, sanitizing_allocator<char> > sanitizing_string;
-
-    ///
-    /// A sanitizing variant of std::wstring
-    ///
-    /// \note
-    /// `sanitizing_wstring` introduces a performance penalty. However, it provides an additional level of security.
-    /// Use for security sensitive data memory storage only.
-    ///
-    typedef std::basic_string<wchar_t, std::char_traits<wchar_t>, sanitizing_allocator<wchar_t> > sanitizing_wstring;
-
-    ///
-    /// Multi-byte / Wide-character sanitizing string (according to _UNICODE)
-    ///
-#ifdef _UNICODE
-    typedef sanitizing_wstring sanitizing_tstring;
-#else
-    typedef sanitizing_string sanitizing_tstring;
-#endif
-
-    /// @}
-}
+/// @}
 
 #pragma once
 
@@ -310,6 +321,9 @@ namespace winstd
 #include <memory>
 #include <vector>
 
+
+/// \addtogroup WinStdGeneral
+/// @{
 
 #ifndef WINSTD_STACK_BUFFER_BYTES
 ///
@@ -328,89 +342,19 @@ namespace winstd
 #define WINSTD_STACK_BUFFER_BYTES  1024
 #endif
 
-
-// Do not use _vsnprintf_s/_vsnwprintf_s(), since it terminates string by force even when we explicitly want to write unterminated string.
-// Threfore turn off compiler warning instead. ;)
-#pragma warning(push)
-#pragma warning(disable: 4995)
-#pragma warning(disable: 4996)
-
-inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg)
-{
-    return _vsnprintf(str, capacity, format, arg);
-}
-
-
-inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg)
-{
-    return _vsnwprintf(str, capacity, format, arg);
-}
-
-
-template<class _Elem, class _Traits, class _Ax>
-inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg)
-{
-    _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
-
-    // Try with stack buffer first.
-    int count = vsnprintf(buf, _countof(buf) - 1, format, arg);
-    if (count >= 0) {
-        // Copy from stack.
-        str.assign(buf, count);
-    } else {
-        for (size_t capacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem);; capacity *= 2) {
-            // Allocate on heap and retry.
-            std::unique_ptr<_Elem[]> buf(new _Elem[capacity]);
-            count = vsnprintf(buf.get(), capacity - 1, format, arg);
-            if (count >= 0) {
-                str.assign(buf.get(), count);
-                break;
-            }
-        }
-    }
-
-    return count;
-}
-
-#pragma warning(pop)
-
-
-template<class _Elem, class _Traits, class _Ax>
-inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...)
-{
-    va_list arg;
-    va_start(arg, format);
-    int res = vsprintf(str, format, arg);
-    va_end(arg);
-    return res;
-}
-
-
-template<class _Traits, class _Ax>
-inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
-{
-    std::unique_ptr<CHAR[], winstd::LocalFree_delete<CHAR[]> > lpBuffer;
-    DWORD dwResult = FormatMessageA(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, reinterpret_cast<LPSTR>(&lpBuffer._Myptr), 0, Arguments);
-    if (dwResult)
-        str.assign(lpBuffer.get(), dwResult);
-    return dwResult;
-}
-
-
-template<class _Traits, class _Ax>
-inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
-{
-    std::unique_ptr<WCHAR[], winstd::LocalFree_delete<WCHAR[]> > lpBuffer;
-    DWORD dwResult = FormatMessageW(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, reinterpret_cast<LPWSTR>(&lpBuffer._Myptr), 0, Arguments);
-    if (dwResult)
-        str.assign(lpBuffer.get(), dwResult);
-    return dwResult;
-}
+/// @}
 
 
 namespace winstd
 {
-    template <class _Ty> struct LocalFree_delete
+    /// \addtogroup WinStdGeneral
+    /// @{
+
+    ///
+    /// Deleter for unique_ptr using LocalFree
+    ///
+    template <class _Ty>
+    struct LocalFree_delete
     {
         typedef LocalFree_delete<_Ty> _Myt; ///< This type
 
@@ -427,6 +371,8 @@ namespace winstd
         ///
         /// Delete a pointer
         ///
+        /// \sa [LocalFree function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366730.aspx)
+        ///
         void operator()(_Ty *_Ptr) const
         {
             LocalFree(_Ptr);
@@ -434,7 +380,11 @@ namespace winstd
     };
 
 
-    template <class _Ty> struct LocalFree_delete<_Ty[]>
+    ///
+    /// Deleter for unique_ptr to array of unknown size using LocalFree
+    ///
+    template <class _Ty>
+    struct LocalFree_delete<_Ty[]>
     {
         typedef LocalFree_delete<_Ty> _Myt; ///< This type
 
@@ -454,6 +404,8 @@ namespace winstd
         ///
         /// Delete a pointer of another type
         ///
+        /// \sa [LocalFree function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366730.aspx)
+        ///
         template<class _Other>
         void operator()(_Other *) const
         {
@@ -461,7 +413,17 @@ namespace winstd
         }
     };
 
+    /// @}
 
+
+    /// \addtogroup WinStdSysHandles
+    /// @{
+
+    ///
+    /// Base abstract template class to support generic object handle keeping
+    ///
+    /// It provides basic operators and methods common to all descendands of this class establishing a base to ease the replacement of native object handle type with classes in object-oriented approach.
+    ///
     template <class T>
     class handle
     {
@@ -715,6 +677,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Base abstract template class to support object handle keeping for objects that support handle duplication
+    ///
     template <class T>
     class dplhandle : public handle<T>
     {
@@ -842,7 +807,12 @@ namespace winstd
 
     /// @}
 
+    /// \addtogroup WinStdGeneral
+    /// @{
 
+    ///
+    /// Helper class to allow limited size FIFO queues implemented as vector of elements
+    ///
     template <class T>
     class vector_queue
     {
@@ -1244,19 +1214,26 @@ namespace winstd
         size_type m_size_max;   ///< Maximum size
     };
 
+    /// @}
 
+    /// \addtogroup WinStdExceptions
+    /// @{
+
+    ///
+    /// Numerical runtime error
+    ///
     template <typename _Tn>
     class num_runtime_error : public std::runtime_error
     {
     public:
-        typedef _Tn error_type;
+        typedef _Tn error_type; ///< Error number type
 
     public:
         ///
         /// Constructs an exception
         ///
-        /// \param[in] error  Numeric error code
-        /// \param[in] msg    Error message
+        /// \param[in] num  Numeric error code
+        /// \param[in] msg  Error message
         ///
         inline num_runtime_error(_In_ error_type num, _In_ const std::string& msg) :
             m_num(num),
@@ -1319,14 +1296,17 @@ namespace winstd
     };
 
 
+    ///
+    /// Windows runtime error
+    ///
     class WINSTD_API win_runtime_error : public num_runtime_error<DWORD>
     {
     public:
         ///
         /// Constructs an exception
         ///
-        /// \param[in] error  Windows error code
-        /// \param[in] msg    Error message
+        /// \param[in] num Windows error code
+        /// \param[in] msg Error message
         ///
         inline win_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<DWORD>(num, msg.c_str())
         {
@@ -1374,7 +1354,14 @@ namespace winstd
         }
     };
 
+    /// @}
 
+    /// \addtogroup WinStdStrFormat
+    /// @{
+
+    ///
+    /// Base template class to support string formatting using `printf()` style templates
+    ///
     template<class _Elem, class _Traits, class _Ax>
     class basic_string_printf : public std::basic_string<_Elem, _Traits, _Ax>
     {
@@ -1439,6 +1426,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Base template class to support string formatting using `FormatMessage()` style templates
+    ///
     template<class _Elem, class _Traits, class _Ax>
     class basic_string_msg : public std::basic_string<_Elem, _Traits, _Ax>
     {
@@ -1547,6 +1537,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Base template class to support converting GUID to string
+    ///
     template<class _Elem, class _Traits, class _Ax>
     class basic_string_guid : public std::basic_string<_Elem, _Traits, _Ax>
     {
@@ -1557,7 +1550,8 @@ namespace winstd
         ///
         /// Initializes a new string and formats its contents to string representation of given GUID.
         ///
-        /// \param[in] guid  GUID to convert
+        /// \param[in] guid    GUID to convert
+        /// \param[in] format  A `printf()` syntax template to convert GUID to string (i.e. `"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}"`)
         ///
         inline basic_string_guid(_In_ const GUID &guid, _In_opt_z_ _Printf_format_string_ const _Elem *format)
         {
@@ -1573,6 +1567,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Single-byte character implementation of a class to support converting GUID to string
+    ///
     class WINSTD_API string_guid : public basic_string_guid<char, std::char_traits<char>, std::allocator<char> >
     {
     public:
@@ -1593,6 +1590,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Wide character implementation of a class to support converting GUID to string
+    ///
     class WINSTD_API wstring_guid : public basic_string_guid<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> >
     {
     public:
@@ -1612,11 +1612,22 @@ namespace winstd
         /// @}
     };
 
+    /// @}
+
+    /// \addtogroup WinStdMemSanitize
+    /// @{
 
     // winstd::sanitizing_allocator::destroy() member generates _Ptr parameter not used warning for primitive datatypes _Ty.
     #pragma warning(push)
     #pragma warning(disable: 4100)
 
+    ///
+    /// An allocator template that sanitizes each memory block before it is destroyed or reallocated
+    ///
+    /// \note
+    /// `sanitizing_allocator` introduces a performance penalty. However, it provides an additional level of security.
+    /// Use for security sensitive data memory storage only.
+    ///
     template<class _Ty>
     class sanitizing_allocator : public std::allocator<_Ty>
     {
@@ -1670,4 +1681,85 @@ namespace winstd
     };
 
     #pragma warning(pop)
+
+    /// @}
+}
+
+
+// Do not use _vsnprintf_s/_vsnwprintf_s(), since it terminates string by force even when we explicitly want to write unterminated string.
+// Threfore turn off compiler warning instead. ;)
+#pragma warning(push)
+#pragma warning(disable: 4995)
+#pragma warning(disable: 4996)
+
+inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg)
+{
+    return _vsnprintf(str, capacity, format, arg);
+}
+
+
+inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg)
+{
+    return _vsnwprintf(str, capacity, format, arg);
+}
+
+
+template<class _Elem, class _Traits, class _Ax>
+inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg)
+{
+    _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
+
+    // Try with stack buffer first.
+    int count = vsnprintf(buf, _countof(buf) - 1, format, arg);
+    if (count >= 0) {
+        // Copy from stack.
+        str.assign(buf, count);
+    } else {
+        for (size_t capacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem);; capacity *= 2) {
+            // Allocate on heap and retry.
+            std::unique_ptr<_Elem[]> buf(new _Elem[capacity]);
+            count = vsnprintf(buf.get(), capacity - 1, format, arg);
+            if (count >= 0) {
+                str.assign(buf.get(), count);
+                break;
+            }
+        }
+    }
+
+    return count;
+}
+
+#pragma warning(pop)
+
+
+template<class _Elem, class _Traits, class _Ax>
+inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...)
+{
+    va_list arg;
+    va_start(arg, format);
+    int res = vsprintf(str, format, arg);
+    va_end(arg);
+    return res;
+}
+
+
+template<class _Traits, class _Ax>
+inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
+{
+    std::unique_ptr<CHAR[], winstd::LocalFree_delete<CHAR[]> > lpBuffer;
+    DWORD dwResult = FormatMessageA(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, reinterpret_cast<LPSTR>(&lpBuffer._Myptr), 0, Arguments);
+    if (dwResult)
+        str.assign(lpBuffer.get(), dwResult);
+    return dwResult;
+}
+
+
+template<class _Traits, class _Ax>
+inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
+{
+    std::unique_ptr<WCHAR[], winstd::LocalFree_delete<WCHAR[]> > lpBuffer;
+    DWORD dwResult = FormatMessageW(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, reinterpret_cast<LPWSTR>(&lpBuffer._Myptr), 0, Arguments);
+    if (dwResult)
+        str.assign(lpBuffer.get(), dwResult);
+    return dwResult;
 }

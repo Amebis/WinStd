@@ -18,51 +18,22 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
+///
+/// \defgroup WinStdCOM COM object management
+/// Provides helper templates for Windows COM object manipulation
+///
+
 #include "Common.h"
 
 #include <string>
 
 namespace winstd
 {
-    ///
-    /// \defgroup WinStdCOM COM object management
-    /// Provides helper templates for Windows COM object manipulation
-    ///
-    /// @{
-
-    ///
-    /// COM object wrapper template
-    ///
     template <class T> class com_obj;
-
-    ///
-    /// BSTR string wrapper
-    ///
     class WINSTD_API bstr;
-
-    ///
-    /// VARIANT struct wrapper
-    ///
     class WINSTD_API variant;
-
-    /// @}
-
     class WINSTD_API com_initializer;
-
-    ///
-    /// \defgroup WinStdExceptions Exceptions
-    /// Additional exceptions
-    ///
-    /// @{
-
-    ///
-    /// COM runtime error
-    ///
-    /// \note Must be defined as derived class from num_runtime_error<> to allow correct type info for dynamic typecasting and prevent folding with other derivates of num_runtime_error<>.
-    ///
     class WINSTD_API com_runtime_error;
-
-    /// @}
 }
 
 #pragma once
@@ -70,6 +41,12 @@ namespace winstd
 
 namespace winstd
 {
+    /// \addtogroup WinStdCOM
+    /// @{
+
+    ///
+    /// COM object wrapper template
+    ///
     template <class T>
     class com_obj : public dplhandle<T*>
     {
@@ -144,7 +121,9 @@ namespace winstd
 
     protected:
         ///
-        /// Releases the object.
+        /// Releases the object by decrementing reference counter
+        ///
+        /// \sa [IUnknown::Release method](https://msdn.microsoft.com/en-us/library/windows/desktop/ms682317.aspx)
         ///
         virtual void free_internal()
         {
@@ -153,7 +132,9 @@ namespace winstd
 
 
         ///
-        /// Duplicates the object.
+        /// Duplicates the object by incrementing the reference counter
+        ///
+        /// \sa [IUnknown::AddRef method](https://msdn.microsoft.com/en-us/library/windows/desktop/ms691379.aspx)
         ///
         /// \param[in] h  Object handle of existing object
         ///
@@ -167,6 +148,9 @@ namespace winstd
     };
 
 
+    ///
+    /// BSTR string wrapper
+    ///
     class WINSTD_API bstr : public dplhandle<BSTR>
     {
         DPLHANDLE_IMPL(bstr)
@@ -235,6 +219,9 @@ namespace winstd
     };
 
 
+    ///
+    /// VARIANT struct wrapper
+    ///
     class WINSTD_API variant : public VARIANT
     {
     public:
@@ -925,6 +912,32 @@ namespace winstd
         }
 
         ///
+        /// Is variant less than or equal to?
+        ///
+        /// \param[in] varSrc  Variant to compare against
+        /// \return
+        /// - Non zero when variant is less than or equal to \p varSrc;
+        /// - Zero otherwise.
+        ///
+        inline bool operator<=(_In_ const VARIANT& varSrc) const
+        {
+            return !operator>(varSrc);
+        }
+
+        ///
+        /// Is variant greater than or equal to?
+        ///
+        /// \param[in] varSrc  Variant to compare against
+        /// \return
+        /// - Non zero when variant is greater than or equal to \p varSrc;
+        /// - Zero otherwise.
+        ///
+        inline bool operator>=(_In_ const VARIANT& varSrc) const
+        {
+            return !operator<(varSrc);
+        }
+
+        ///
         /// Converts a variant from one type to another.
         ///
         /// \sa [VariantChangeType function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms221258.aspx)
@@ -935,6 +948,7 @@ namespace winstd
         }
 
     private:
+        /// \cond internal
         inline HRESULT compare(_In_ const VARIANT &varLeft, _In_ const VARIANT &varRight, _In_ LCID lcid, _In_ ULONG dwFlags) const
         {
             switch(vt) {
@@ -945,9 +959,13 @@ namespace winstd
                 default:     return VarCmp(const_cast<LPVARIANT>(&varLeft), const_cast<LPVARIANT>(&varRight), lcid, dwFlags);
             }
         }
+        /// \endcond
     };
 
 
+    ///
+    /// Context scope automatic COM (un)initialization
+    ///
     class WINSTD_API com_initializer
     {
     public:
@@ -995,15 +1013,27 @@ namespace winstd
         HRESULT m_result;   ///< Result of CoInitialize call
     };
 
+    /// @}
 
+    ///
+    /// \defgroup WinStdExceptions Exceptions
+    /// Additional exceptions
+    ///
+    /// @{
+
+    ///
+    /// COM runtime error
+    ///
+    /// \note Must be defined as derived class from num_runtime_error<> to allow correct type info for dynamic typecasting and prevent folding with other derivates of num_runtime_error<>.
+    ///
     class WINSTD_API com_runtime_error : public num_runtime_error<HRESULT>
     {
     public:
         ///
         /// Constructs an exception
         ///
-        /// \param[in] error  COM error code
-        /// \param[in] msg    Error message
+        /// \param[in] num  COM error code
+        /// \param[in] msg  Error message
         ///
         inline com_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<HRESULT>(num, msg.c_str())
         {
@@ -1030,4 +1060,6 @@ namespace winstd
         {
         }
     };
+
+    /// @}
 }

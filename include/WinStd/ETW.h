@@ -18,6 +18,11 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
+///
+/// \defgroup WinStdETWAPI Event Tracing for Windows API
+/// Integrates WinStd classes with Event Tracing for Windows API
+///
+
 #include "Common.h"
 
 #include <assert.h>
@@ -32,57 +37,14 @@
 
 namespace winstd
 {
-    ///
-    /// \defgroup WinStdETWAPI Event Tracing for Windows API
-    /// Integrates WinStd classes with Event Tracing for Windows API
-    ///
-    /// @{
-
-    ///
-    /// EVENT_DATA_DESCRIPTOR wrapper
-    ///
-    class WINSTD_API __declspec(novtable) event_data;
-
-    ///
-    /// EVENT_RECORD wrapper
-    ///
-    class WINSTD_API __declspec(novtable) event_rec;
-
-    ///
-    /// ETW event provider
-    ///
+    class WINSTD_API WINSTD_NOVTABLE event_data;
+    class WINSTD_API WINSTD_NOVTABLE event_rec;
     class WINSTD_API event_provider;
-
-    ///
-    /// ETW session
-    ///
     class WINSTD_API event_session;
-
-    ///
-    /// ETW trace
-    ///
     class WINSTD_API event_trace;
-
-    ///
-    /// Helper class to enable event provider in constructor and disables it in destructor
-    ///
     class WINSTD_API event_trace_enabler;
-
-    ///
-    /// Helper class to write an event on entry/exit of scope.
-    ///
-    /// It writes one string event at creation and another at destruction.
-    ///
-    class event_fn_auto;
-
-    ///
-    /// Helper template to write an event on entry/exit of scope with one parameter (typically result).
-    ///
-    /// It writes one string event at creation and another at destruction, with allowing one sprintf type parameter for string event at destruction.
-    ///
+    class WINSTD_API event_fn_auto;
     template<class T> class event_fn_auto_ret;
-
-    /// @}
 }
 
 /// \addtogroup WinStdCryptoAPI
@@ -116,7 +78,13 @@ template<class _Ty, class _Ax> inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pE
 
 namespace winstd
 {
-    class WINSTD_API __declspec(novtable) event_data : public EVENT_DATA_DESCRIPTOR
+    /// \addtogroup WinStdETWAPI
+    /// @{
+
+    ///
+    /// EVENT_DATA_DESCRIPTOR wrapper
+    ///
+    class WINSTD_API WINSTD_NOVTABLE event_data : public EVENT_DATA_DESCRIPTOR
     {
     public:
         ///
@@ -228,7 +196,10 @@ namespace winstd
     };
 
 
-    class WINSTD_API __declspec(novtable) event_rec : public EVENT_RECORD
+    ///
+    /// EVENT_RECORD wrapper
+    ///
+    class WINSTD_API WINSTD_NOVTABLE event_rec : public EVENT_RECORD
     {
     public:
         ///
@@ -367,6 +338,9 @@ namespace winstd
     };
 
 
+    ///
+    /// ETW event provider
+    ///
     class WINSTD_API event_provider : public handle<REGHANDLE>
     {
         HANDLE_IMPL(event_provider)
@@ -549,6 +523,9 @@ namespace winstd
     };
 
 
+    ///
+    /// ETW session
+    ///
     class WINSTD_API event_session : public handle<TRACEHANDLE>
     {
         WINSTD_NONCOPYABLE(event_session)
@@ -733,6 +710,9 @@ namespace winstd
     };
 
 
+    ///
+    /// ETW trace
+    ///
     class WINSTD_API event_trace : public handle<TRACEHANDLE>
     {
         HANDLE_IMPL(event_trace)
@@ -775,6 +755,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Helper class to enable event provider in constructor and disables it in destructor
+    ///
     class WINSTD_API event_trace_enabler
     {
     public:
@@ -880,7 +863,12 @@ namespace winstd
     };
 
 
-    class event_fn_auto
+    ///
+    /// Helper class to write an event on entry/exit of scope.
+    ///
+    /// It writes one string event at creation and another at destruction.
+    ///
+    class WINSTD_API event_fn_auto
     {
     public:
         ///
@@ -966,6 +954,11 @@ namespace winstd
     };
 
 
+    ///
+    /// Helper template to write an event on entry/exit of scope with one parameter (typically result).
+    ///
+    /// It writes one string event at creation and another at destruction, with allowing one sprintf type parameter for string event at destruction.
+    ///
     template<class T>
     class event_fn_auto_ret
     {
@@ -1059,6 +1052,8 @@ namespace winstd
         EVENT_DATA_DESCRIPTOR m_desc[2];        ///< Function name and return value
         T &m_result;                            ///< Function result
     };
+
+    /// @}
 }
 
 

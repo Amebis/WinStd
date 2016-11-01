@@ -18,6 +18,11 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
+///
+/// \defgroup WinStdEAPAPI Extensible Authentication Protocol API
+/// Integrates WinStd classes with Microsoft EAP API
+///
+
 #include "Common.h"
 
 #include <Windows.h>
@@ -28,23 +33,19 @@
 
 namespace winstd
 {
-    ///
-    /// \defgroup WinStdEAPAPI Extensible Authentication Protocol API
-    /// Integrates WinStd classes with Microsoft EAP API
-    ///
-    /// @{
-
-    ///
-    /// EAP method numbers
-    ///
-    /// \sa [Extensible Authentication Protocol (EAP) Registry (Chapter: Method Types)](https://www.iana.org/assignments/eap-numbers/eap-numbers.xhtml#eap-numbers-4)
-    ///
     enum eap_type_t;
-
-    ///
-    /// Deleter for unique_ptr using EapHostPeerFreeMemory
-    ///
     struct WINSTD_API EapHostPeerFreeMemory_delete;
+    struct WINSTD_API EapHostPeerFreeRuntimeMemory_delete;
+    struct WINSTD_API EapHostPeerFreeErrorMemory_delete;
+    struct WINSTD_API EapHostPeerFreeEapError_delete;
+    class WINSTD_API WINSTD_NOVTABLE eap_attr;
+    class WINSTD_API WINSTD_NOVTABLE eap_method_prop;
+    class WINSTD_API eap_packet;
+    class WINSTD_API WINSTD_NOVTABLE eap_method_info_array;
+    class WINSTD_API eap_runtime_error;
+
+    /// \addtogroup WinStdEAPAPI
+    /// @{
 
     ///
     /// EapHost BLOB wrapper class
@@ -52,19 +53,9 @@ namespace winstd
     typedef std::unique_ptr<BYTE[], EapHostPeerFreeMemory_delete> WINSTD_API eap_blob;
 
     ///
-    /// Deleter for unique_ptr using EapHostPeerFreeRuntimeMemory
-    ///
-    struct WINSTD_API EapHostPeerFreeRuntimeMemory_delete;
-
-    ///
     /// EapHost BLOB wrapper class
     ///
     typedef std::unique_ptr<BYTE[], EapHostPeerFreeRuntimeMemory_delete> WINSTD_API eap_blob_runtime;
-
-    ///
-    /// Deleter for unique_ptr to EAP_ERROR using EapHostPeerFreeErrorMemory
-    ///
-    struct WINSTD_API EapHostPeerFreeErrorMemory_delete;
 
     ///
     /// EAP_ERROR wrapper class
@@ -72,49 +63,9 @@ namespace winstd
     typedef std::unique_ptr<EAP_ERROR, EapHostPeerFreeErrorMemory_delete> WINSTD_API eap_error;
 
     ///
-    /// Deleter for unique_ptr to EAP_ERROR using EapHostPeerFreeEapError
-    ///
-    struct WINSTD_API  EapHostPeerFreeEapError_delete;
-
-    ///
     /// EAP_ERROR wrapper class
     ///
-    typedef std::unique_ptr<EAP_ERROR,  EapHostPeerFreeEapError_delete> WINSTD_API eap_error_runtime;
-
-    ///
-    /// EAP_ATTRIBUTE wrapper class
-    ///
-    class WINSTD_API eap_attr;
-
-    ///
-    /// EAP_METHOD_PROPERTY wrapper class
-    ///
-    class WINSTD_API eap_method_prop;
-
-    ///
-    /// EapPacket wrapper class
-    ///
-    class WINSTD_API eap_packet;
-
-    ///
-    /// EAP_METHOD_INFO_ARRAY wrapper class
-    ///
-    class WINSTD_API eap_method_info_array;
-
-    /// @}
-
-    ///
-    /// \defgroup WinStdExceptions Exceptions
-    /// Additional exceptions
-    ///
-    /// @{
-
-    ///
-    /// EapHost runtime error
-    ///
-    /// \sa [EAP_ERROR structure](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363699.aspx)
-    ///
-    class WINSTD_API eap_runtime_error;
+    typedef std::unique_ptr<EAP_ERROR, EapHostPeerFreeEapError_delete> WINSTD_API eap_error_runtime;
 
     /// @}
 }
@@ -158,6 +109,14 @@ inline bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE
 
 namespace winstd
 {
+    /// \addtogroup WinStdEAPAPI
+    /// @{
+
+    ///
+    /// EAP method numbers
+    ///
+    /// \sa [Extensible Authentication Protocol (EAP) Registry (Chapter: Method Types)](https://www.iana.org/assignments/eap-numbers/eap-numbers.xhtml#eap-numbers-4)
+    ///
     #pragma warning(suppress: 4480)
     enum eap_type_t : unsigned char {
         eap_type_undefined       =   0,    ///< Undefined EAP type
@@ -182,6 +141,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Deleter for unique_ptr using EapHostPeerFreeMemory
+    ///
     struct WINSTD_API EapHostPeerFreeMemory_delete
     {
         ///
@@ -192,6 +154,8 @@ namespace winstd
         ///
         /// Delete a pointer
         ///
+        /// \sa [EapHostPeerFreeMemory function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363558.aspx)
+        ///
         template <class _T>
         void operator()(_T *_Ptr) const
         {
@@ -200,6 +164,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Deleter for unique_ptr using EapHostPeerFreeRuntimeMemory
+    ///
     struct WINSTD_API EapHostPeerFreeRuntimeMemory_delete
     {
         ///
@@ -218,6 +185,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Deleter for unique_ptr to EAP_ERROR using EapHostPeerFreeErrorMemory
+    ///
     struct WINSTD_API EapHostPeerFreeErrorMemory_delete
     {
         ///
@@ -228,6 +198,8 @@ namespace winstd
         ///
         /// Delete a pointer
         ///
+        /// \sa [EapHostPeerFreeErrorMemory function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363557.aspx)
+        ///
         void operator()(EAP_ERROR *_Ptr) const
         {
             EapHostPeerFreeErrorMemory(_Ptr);
@@ -235,24 +207,32 @@ namespace winstd
     };
 
 
-    struct WINSTD_API  EapHostPeerFreeEapError_delete
+    ///
+    /// Deleter for unique_ptr to EAP_ERROR using EapHostPeerFreeEapError
+    ///
+    struct WINSTD_API EapHostPeerFreeEapError_delete
     {
         ///
         /// Default constructor
         ///
-         EapHostPeerFreeEapError_delete() {}
+        EapHostPeerFreeEapError_delete() {}
 
         ///
         /// Delete a pointer
         ///
+        /// \sa [EapHostPeerFreeEapError function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363556.aspx)
+        ///
         void operator()(EAP_ERROR *_Ptr) const
         {
-             EapHostPeerFreeEapError(_Ptr);
+            EapHostPeerFreeEapError(_Ptr);
         }
     };
 
 
-    class WINSTD_API __declspec(novtable) eap_attr : public EAP_ATTRIBUTE
+    ///
+    /// EAP_ATTRIBUTE wrapper class
+    ///
+    class WINSTD_API WINSTD_NOVTABLE eap_attr : public EAP_ATTRIBUTE
     {
     public:
         ///
@@ -353,11 +333,14 @@ namespace winstd
         void create_ms_mppe_key(_In_ BYTE bVendorType, _In_count_(nKeySize) LPCBYTE pbKey, _In_ BYTE nKeySize);
 
     public:
-        static const EAP_ATTRIBUTE blank;
+        static const EAP_ATTRIBUTE blank;   ///< Blank EAP attribute
     };
 
 
-    class WINSTD_API __declspec(novtable) eap_method_prop : public EAP_METHOD_PROPERTY
+    ///
+    /// EAP_METHOD_PROPERTY wrapper class
+    ///
+    class WINSTD_API WINSTD_NOVTABLE eap_method_prop : public EAP_METHOD_PROPERTY
     {
     public:
         ///
@@ -406,6 +389,9 @@ namespace winstd
     };
 
 
+    ///
+    /// EapPacket wrapper class
+    ///
     class WINSTD_API eap_packet : public dplhandle<EapPacket*>
     {
         DPLHANDLE_IMPL(eap_packet)
@@ -471,7 +457,10 @@ namespace winstd
     };
 
 
-    class WINSTD_API __declspec(novtable) eap_method_info_array : public EAP_METHOD_INFO_ARRAY
+    ///
+    /// EAP_METHOD_INFO_ARRAY wrapper class
+    ///
+    class WINSTD_API WINSTD_NOVTABLE eap_method_info_array : public EAP_METHOD_INFO_ARRAY
     {
         WINSTD_NONCOPYABLE(eap_method_info_array)
 
@@ -522,11 +511,25 @@ namespace winstd
         }
 
     protected:
+        /// \cond internal
         void free_internal();
         static void free_internal(_In_ EAP_METHOD_INFO *pMethodInfo);
+        /// \endcond
     };
 
+    /// @}
 
+    ///
+    /// \defgroup WinStdExceptions Exceptions
+    /// Additional exceptions
+    ///
+    /// @{
+
+    ///
+    /// EapHost runtime error
+    ///
+    /// \sa [EAP_ERROR structure](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363699.aspx)
+    ///
     class WINSTD_API eap_runtime_error : public win_runtime_error
     {
     public:
@@ -643,6 +646,8 @@ namespace winstd
 
         GUID m_help_link_id;            ///< A unique ID that maps to a localizable string that specifies an URL for a page that contains additional information about an error or repair message
     };
+
+    /// @}
 }
 
 

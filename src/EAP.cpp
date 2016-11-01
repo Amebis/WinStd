@@ -114,6 +114,8 @@ winstd::eap_method_info_array::~eap_method_info_array()
 }
 
 
+/// \cond internal
+
 void winstd::eap_method_info_array::free_internal()
 {
     for (DWORD i = 0; i < dwNumberOfMethods; i++)
@@ -131,3 +133,5 @@ void winstd::eap_method_info_array::free_internal(_In_ EAP_METHOD_INFO *pMethodI
     EapHostPeerFreeMemory((BYTE*)pMethodInfo->pwszAuthorName);
     EapHostPeerFreeMemory((BYTE*)pMethodInfo->pwszFriendlyName);
 }
+
+/// \endcond

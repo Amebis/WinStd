@@ -18,6 +18,11 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
+///
+/// \defgroup WinStdWLANAPI WLAN API
+/// Integrates WinStd classes with Microsoft WLAN API
+///
+
 #include "Common.h"
 
 #include <wlanapi.h>
@@ -28,28 +33,14 @@
 // without a WLAN interface.
 extern DWORD (WINAPI *pfnWlanReasonCodeToString)(__in DWORD dwReasonCode, __in DWORD dwBufferSize, __in_ecount(dwBufferSize) PWCHAR pStringBuffer, __reserved PVOID pReserved);
 
-///
-/// \defgroup WinStdWLANAPI WLAN API
-/// Integrates WinStd classes with Microsoft WLAN API
-///
-/// @{
-
 namespace winstd {
-    ///
-    /// Deleter for unique_ptr using WlanFreeMemory
-    ///
     template <class _Ty> struct WlanFreeMemory_delete;
-
-    ///
-    /// Deleter for unique_ptr to array of unknown size using WlanFreeMemory
-    ///
     template <class _Ty> struct WlanFreeMemory_delete<_Ty[]>;
-
-    ///
-    /// WLAN handle wrapper
-    ///
     class WINSTD_API wlan_handle;
 }
+
+/// \addtogroup WinStdWLANAPI
+/// @{
 
 ///
 /// Retrieves a string that describes a specified reason code and stores it in a std::wstring string.
@@ -57,7 +48,7 @@ namespace winstd {
 /// \sa [WlanReasonCodeToString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms706768.aspx)
 ///
 /// \note
-/// Since Wlanapi.dll is not always present, the \c pfnWlanReasonCodeToString pointer to \c WlanReasonCodeToString
+/// Since Wlanapi.dll is not always present, the `pfnWlanReasonCodeToString` pointer to `WlanReasonCodeToString()`
 /// function must be loaded dynamically.
 ///
 template<class _Elem, class _Traits, class _Ax> inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved);
@@ -69,6 +60,12 @@ template<class _Elem, class _Traits, class _Ax> inline DWORD WlanReasonCodeToStr
 
 namespace winstd
 {
+    /// \addtogroup WinStdWLANAPI
+    /// @{
+
+    ///
+    /// Deleter for unique_ptr using WlanFreeMemory
+    ///
     template <class _Ty> struct WlanFreeMemory_delete
     {
         typedef WlanFreeMemory_delete<_Ty> _Myt; ///< This type
@@ -93,6 +90,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Deleter for unique_ptr to array of unknown size using WlanFreeMemory
+    ///
     template <class _Ty> struct WlanFreeMemory_delete<_Ty[]>
     {
         typedef WlanFreeMemory_delete<_Ty> _Myt; ///< This type
@@ -121,6 +121,9 @@ namespace winstd
     };
 
 
+    ///
+    /// WLAN handle wrapper
+    ///
     class WINSTD_API wlan_handle : public handle<HANDLE>
     {
         HANDLE_IMPL(wlan_handle)
@@ -163,6 +166,8 @@ namespace winstd
         ///
         virtual void free_internal();
     };
+
+    /// @}
 }
 
 

@@ -18,6 +18,11 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
+///
+/// \defgroup WinStdCryptoAPI Cryptography API
+/// Integrates WinStd classes with Microsoft Cryptography API
+///
+
 #include "Common.h"
 
 #include <wincred.h>
@@ -26,23 +31,8 @@
 
 namespace winstd
 {
-    ///
-    /// \defgroup WinStdCryptoAPI Cryptography API
-    /// Integrates WinStd classes with Microsoft Cryptography API
-    ///
-    /// @{
-
-    ///
-    /// Deleter for unique_ptr using CredFree
-    ///
     template <class _Ty> struct CredFree_delete;
-
-    ///
-    /// Deleter for unique_ptr to array of unknown size using CredFree
-    ///
     template <class _Ty> struct CredFree_delete<_Ty[]>;
-
-    /// @}
 }
 
 
@@ -56,11 +46,7 @@ namespace winstd
 ///
 inline BOOL CredEnumerate(_In_ LPCTSTR Filter, _In_ DWORD Flags, _Out_ DWORD *Count, _Out_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials);
 
-///
-/// Encrypts the specified credentials so that only the current security context can decrypt them.
-///
-/// \sa [CredProtect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374803.aspx)
-///
+/// @copydoc CredProtectW()
 template<class _Elem, class _Traits, class _Ax> inline BOOL CredProtectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
 
 ///
@@ -70,11 +56,7 @@ template<class _Elem, class _Traits, class _Ax> inline BOOL CredProtectA(_In_ BO
 ///
 template<class _Elem, class _Traits, class _Ax> inline BOOL CredProtectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
 
-///
-/// Decrypts credentials that were previously encrypted by using the CredProtect function.
-///
-/// \sa [CredUnprotect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375186.aspx)
-///
+/// @copydoc CredUnprotectW()
 template<class _Elem, class _Traits, class _Ax> inline BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials);
 
 ///
@@ -91,6 +73,12 @@ template<class _Elem, class _Traits, class _Ax> inline BOOL CredUnprotectW(_In_ 
 
 namespace winstd
 {
+    /// \addtogroup WinStdCryptoAPI
+    /// @{
+
+    ///
+    /// Deleter for unique_ptr using CredFree
+    ///
     template <class _Ty> struct CredFree_delete
     {
         typedef CredFree_delete<_Ty> _Myt; ///< This type
@@ -108,6 +96,8 @@ namespace winstd
         ///
         /// Delete a pointer
         ///
+        /// \sa [CredFree function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374796.aspx)
+        ///
         void operator()(_Ty *_Ptr) const
         {
             CredFree(_Ptr);
@@ -115,6 +105,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Deleter for unique_ptr to array of unknown size using CredFree
+    ///
     template <class _Ty> struct CredFree_delete<_Ty[]>
     {
         typedef CredFree_delete<_Ty> _Myt; ///< This type
@@ -127,6 +120,8 @@ namespace winstd
         ///
         /// Delete a pointer
         ///
+        /// \sa [CredFree function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374796.aspx)
+        ///
         void operator()(_Ty *_Ptr) const
         {
             CredFree(_Ptr);
@@ -135,12 +130,16 @@ namespace winstd
         ///
         /// Delete a pointer of another type
         ///
+        /// \sa [CredFree function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374796.aspx)
+        ///
         template<class _Other>
         void operator()(_Other *) const
         {
             CredFree(_Ptr);
         }
     };
+
+    /// @}
 }
 
 

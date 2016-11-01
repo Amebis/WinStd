@@ -25,7 +25,7 @@
 // StringToGuidA
 //////////////////////////////////////////////////////////////////////
 
-BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_ LPCSTR *lpszGuidEnd)
+BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd)
 {
     GUID g;
     LPSTR lpszEnd;
@@ -88,7 +88,7 @@ BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_
 }
 
 
-BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_ LPCWSTR *lpszGuidEnd)
+BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd)
 {
     GUID g;
     LPWSTR lpszEnd;

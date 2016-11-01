@@ -18,6 +18,11 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
+///
+/// \defgroup WinStdHexadecimal Hexadecimal conversion
+/// Provides Hexadecimal conversion for WinStd classes
+///
+
 #include "Common.h"
 
 #include <string>
@@ -25,23 +30,8 @@
 
 namespace winstd
 {
-    ///
-    /// \defgroup WinStdHexadecimal Hexadecimal conversion
-    /// Provides Hexadecimal conversion for WinStd classes
-    ///
-    /// @{
-
-    ///
-    /// Hexadecimal encoding session
-    ///
     class WINSTD_API hex_enc;
-
-    ///
-    /// Hexadecimal decoding session
-    ///
     class WINSTD_API hex_dec;
-
-    /// @}
 }
 
 #pragma once
@@ -49,6 +39,12 @@ namespace winstd
 
 namespace winstd
 {
+    /// \addtogroup WinStdHexadecimal
+    /// @{
+
+    ///
+    /// Hexadecimal encoding session
+    ///
     class WINSTD_API hex_enc
     {
     public:
@@ -102,6 +98,9 @@ namespace winstd
     };
 
 
+    ///
+    /// Hexadecimal decoding session
+    ///
     class WINSTD_API hex_dec
     {
     public:
@@ -186,4 +185,6 @@ namespace winstd
         unsigned char buf;  ///< Internal buffer
         size_t num;         ///< Number of nibbles used in `buf`
     };
+
+    /// @}
 }

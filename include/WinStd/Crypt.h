@@ -18,6 +18,11 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
+///
+/// \defgroup WinStdCryptoAPI Cryptography API
+/// Integrates WinStd classes with Microsoft Cryptography API
+///
+
 #include "Common.h"
 
 #include <WinCrypt.h>
@@ -25,17 +30,21 @@
 #include <string>
 #include <vector>
 
-///
-/// \defgroup WinStdCryptoAPI Cryptography API
-/// Integrates WinStd classes with Microsoft Cryptography API
-///
+namespace winstd
+{
+    class WINSTD_API cert_context;
+    class WINSTD_API cert_chain_context;
+    class WINSTD_API cert_store;
+    class WINSTD_API crypt_prov;
+    class WINSTD_API crypt_hash;
+    class WINSTD_API crypt_key;
+    class WINSTD_API data_blob;
+}
+
+/// \addtogroup WinStdCryptoAPI
 /// @{
 
-///
-/// Obtains the subject or issuer name from a certificate [CERT_CONTEXT](https://msdn.microsoft.com/en-us/library/windows/desktop/aa377189.aspx) structure and stores it in a std::string string.
-///
-/// \sa [CertGetNameString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376086.aspx)
-///
+/// @copydoc CertGetNameStringW()
 template<class _Elem, class _Traits, class _Ax> inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
 
 ///
@@ -96,6 +105,11 @@ template<class _Ty, class _Ax> inline BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In
 
 /// @}
 
+#pragma once
+
+#include <assert.h>
+
+
 namespace winstd
 {
     /// \addtogroup WinStdCryptoAPI
@@ -104,44 +118,581 @@ namespace winstd
     ///
     /// PCCERT_CONTEXT wrapper class
     ///
-    class WINSTD_API cert_context;
+    class WINSTD_API cert_context : public dplhandle<PCCERT_CONTEXT>
+    {
+        DPLHANDLE_IMPL(cert_context)
+
+    public:
+        ///
+        /// Destroys the certificate context.
+        ///
+        /// \sa [CertFreeCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376075.aspx)
+        ///
+        virtual ~cert_context();
+
+        ///
+        /// Creates the certificate context.
+        ///
+        /// \return
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
+        /// \sa [CertCreateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376033.aspx)
+        ///
+        inline bool create(_In_  DWORD dwCertEncodingType, _In_  const BYTE *pbCertEncoded, _In_  DWORD cbCertEncoded)
+        {
+            handle_type h = CertCreateCertificateContext(dwCertEncodingType, pbCertEncoded, cbCertEncoded);
+            if (h) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+        ///
+        /// Is certificate equal to?
+        ///
+        /// \param[in] other  Certificate to compare against
+        /// \return
+        /// - Non zero when certificate is equal to \p other;
+        /// - Zero otherwise.
+        ///
+        inline bool operator==(_In_ const handle_type &other) const
+        {
+            return
+                m_h == other ||
+                m_h->cbCertEncoded == other->cbCertEncoded && memcmp(m_h->pbCertEncoded, other->pbCertEncoded, m_h->cbCertEncoded) == 0;
+        }
+
+        ///
+        /// Is certificate not equal to?
+        ///
+        /// \param[in] other  Certificate to compare against
+        /// \return
+        /// - Non zero when certificate is not equal to \p other;
+        /// - Zero otherwise.
+        ///
+        inline bool operator!=(_In_ const handle_type &other) const
+        {
+            return !operator==(other);
+        }
+
+        ///
+        /// Is certificate less than?
+        ///
+        /// \param[in] other  Certificate to compare against
+        /// \return
+        /// - Non zero when certificate is less than \p other;
+        /// - Zero otherwise.
+        ///
+        inline bool operator<(_In_ const handle_type &other) const
+        {
+            int r = memcmp(m_h->pbCertEncoded, other->pbCertEncoded, std::min<DWORD>(m_h->cbCertEncoded, other->cbCertEncoded));
+            return r < 0 || r == 0 && m_h->cbCertEncoded < other->cbCertEncoded;
+        }
+
+        ///
+        /// Is certificate greater than?
+        ///
+        /// \param[in] other  Certificate to compare against
+        /// \return
+        /// - Non zero when certificate is greater than \p other;
+        /// - Zero otherwise.
+        ///
+        inline bool operator>(_In_ const handle_type &other) const
+        {
+            int r = memcmp(m_h->pbCertEncoded, other->pbCertEncoded, std::min<DWORD>(m_h->cbCertEncoded, other->cbCertEncoded));
+            return r > 0 || r == 0 && m_h->cbCertEncoded > other->cbCertEncoded;
+        }
+
+        ///
+        /// Is certificate less than or equal?
+        ///
+        /// \param[in] other  Certificate to compare against
+        /// \return
+        /// - Non zero when certificate is less than \p other;
+        /// - Zero otherwise.
+        ///
+        inline bool operator<=(_In_ const handle_type &other) const
+        {
+            return !operator>(other);
+        }
+
+        ///
+        /// Is certificate greater than or equal?
+        ///
+        /// \param[in] other  Certificate to compare against
+        /// \return
+        /// - Non zero when certificate is greater than \p other;
+        /// - Zero otherwise.
+        ///
+        inline bool operator>=(_In_ const handle_type &other) const
+        {
+            return !operator<(other);
+        }
+
+    protected:
+        ///
+        /// Destroys the certificate context.
+        ///
+        /// \sa [CertFreeCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376075.aspx)
+        ///
+        virtual void free_internal();
+
+        ///
+        /// Duplicates the certificate context.
+        ///
+        /// \param[in] h  Object handle of existing certificate context
+        ///
+        /// \return Duplicated certificate context handle
+        ///
+        /// \sa [CertDuplicateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376045.aspx)
+        ///
+        virtual handle_type duplicate_internal(_In_ handle_type h) const;
+    };
+
 
     ///
     /// PCCERT_CHAIN_CONTEXT wrapper class
     ///
-    class WINSTD_API cert_chain_context;
+    class WINSTD_API cert_chain_context : public dplhandle<PCCERT_CHAIN_CONTEXT>
+    {
+        DPLHANDLE_IMPL(cert_chain_context)
+
+    public:
+        ///
+        /// Destroys the certificate chain context.
+        ///
+        /// \sa [CertFreeCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376073.aspx)
+        ///
+        virtual ~cert_chain_context();
+
+        ///
+        /// Creates the certificate chain context.
+        ///
+        /// \return
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
+        /// \sa [CertGetCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376078.aspx)
+        ///
+        inline bool create(_In_opt_ HCERTCHAINENGINE hChainEngine, _In_ PCCERT_CONTEXT pCertContext, _In_opt_ LPFILETIME pTime, _In_opt_ HCERTSTORE hAdditionalStore, _In_ PCERT_CHAIN_PARA pChainPara, _In_ DWORD dwFlags, __reserved LPVOID pvReserved = NULL)
+        {
+            handle_type h;
+            if (CertGetCertificateChain(hChainEngine, pCertContext, pTime, hAdditionalStore, pChainPara, dwFlags, pvReserved, &h)) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+    protected:
+        ///
+        /// Destroys the certificate chain context.
+        ///
+        /// \sa [CertFreeCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376073.aspx)
+        ///
+        virtual void free_internal();
+
+        ///
+        /// Duplicates the certificate chain context.
+        ///
+        /// \param[in] h  Object handle of existing certificate chain context
+        ///
+        /// \return Duplicated certificate chain context handle
+        ///
+        /// \sa [CertDuplicateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376045.aspx)
+        ///
+        virtual handle_type duplicate_internal(_In_ handle_type h) const;
+    };
+
 
     ///
     /// HCERTSTORE wrapper class
     ///
-    class WINSTD_API cert_store;
+    class WINSTD_API cert_store : public handle<HCERTSTORE>
+    {
+        HANDLE_IMPL(cert_store)
+
+    public:
+        ///
+        /// Closes the certificate store.
+        ///
+        /// \sa [CertCloseStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376026.aspx)
+        ///
+        virtual ~cert_store();
+
+        ///
+        /// Opens the certificate store.
+        ///
+        /// \return
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
+        /// \sa [CertOpenStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376559.aspx)
+        ///
+        inline bool create(_In_ LPCSTR lpszStoreProvider, _In_ DWORD dwEncodingType, _In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ DWORD dwFlags, _In_opt_ const void *pvPara)
+        {
+            handle_type h = CertOpenStore(lpszStoreProvider, dwEncodingType, hCryptProv, dwFlags, pvPara);
+            if (h) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+        ///
+        /// Opens the most common system certificate store. To open certificate stores with more complex requirements, such as file-based or memory-based stores, use `create()`.
+        ///
+        /// \return
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
+        /// \sa [CertOpenSystemStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376560.aspx)
+        ///
+        inline bool create(_In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ LPCTSTR szSubsystemProtocol)
+        {
+            handle_type h = CertOpenSystemStore(hCryptProv, szSubsystemProtocol);
+            if (h) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+    protected:
+        ///
+        /// Closes the certificate store.
+        ///
+        /// \sa [CertCloseStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376026.aspx)
+        ///
+        virtual void free_internal();
+    };
+
 
     ///
     /// HCRYPTPROV wrapper class
     ///
-    class WINSTD_API crypt_prov;
+    class WINSTD_API crypt_prov : public handle<HCRYPTPROV>
+    {
+        HANDLE_IMPL(crypt_prov)
+
+    public:
+        ///
+        /// Releases the cryptographic context.
+        ///
+        /// \sa [CryptReleaseContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380268.aspx)
+        ///
+        virtual ~crypt_prov();
+
+        ///
+        /// Acquires the cryptographic context.
+        ///
+        /// \return
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
+        /// \sa [CryptAcquireContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379886.aspx)
+        ///
+        inline bool create(_In_opt_ LPCTSTR szContainer, _In_opt_ LPCTSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags = 0)
+        {
+            handle_type h;
+            if (CryptAcquireContext(&h, szContainer, szProvider, dwProvType, dwFlags)) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+    protected:
+        ///
+        /// Releases the cryptographic context.
+        ///
+        /// \sa [CryptReleaseContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380268.aspx)
+        ///
+        virtual void free_internal();
+    };
+
 
     ///
     /// HCRYPTHASH wrapper class
     ///
-    class WINSTD_API crypt_hash;
+    class WINSTD_API crypt_hash : public dplhandle<HCRYPTHASH>
+    {
+        DPLHANDLE_IMPL(crypt_hash)
+
+    public:
+        ///
+        /// Destroys the hash context.
+        ///
+        /// \sa [CryptDestroyHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379917.aspx)
+        ///
+        virtual ~crypt_hash();
+
+        ///
+        /// Creates the hash context.
+        ///
+        /// \return
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
+        /// \sa [CryptCreateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379908.aspx)
+        ///
+        inline bool create(_In_ HCRYPTPROV  hProv, _In_ ALG_ID Algid, _In_opt_ HCRYPTKEY hKey = NULL, _In_opt_ DWORD dwFlags = 0)
+        {
+            handle_type h;
+            if (CryptCreateHash(hProv, Algid, hKey, dwFlags, &h)) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+    protected:
+        ///
+        /// Destroys the hash context.
+        ///
+        /// \sa [CryptDestroyHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379917.aspx)
+        ///
+        virtual void free_internal();
+
+        ///
+        /// Duplicates the hash context.
+        ///
+        /// \param[in] h  Object handle of existing hash context
+        ///
+        /// \return Duplicated hash context handle
+        ///
+        /// \sa [CryptDuplicateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379919.aspx)
+        ///
+        virtual handle_type duplicate_internal(_In_ handle_type h) const;
+    };
+
 
     ///
     /// HCRYPTKEY wrapper class
     ///
-    class WINSTD_API crypt_key;
+    class WINSTD_API crypt_key : public dplhandle<HCRYPTKEY>
+    {
+        DPLHANDLE_IMPL(crypt_key)
+
+    public:
+        ///
+        /// Destroys the key.
+        ///
+        /// \sa [CryptDestroyKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379918.aspx)
+        ///
+        virtual ~crypt_key();
+
+        ///
+        /// Generates the key.
+        ///
+        /// \sa [CryptGenKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379941.aspx)
+        ///
+        inline bool generate(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ DWORD dwFlags)
+        {
+            handle_type h;
+            if (CryptGenKey(hProv, Algid, dwFlags, &h)) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+        ///
+        /// Imports the key.
+        ///
+        /// \sa [CryptImportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380207.aspx)
+        ///
+        inline bool import(_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) const BYTE *pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags)
+        {
+            handle_type h;
+            if (CryptImportKey(hProv, pbData, dwDataLen, hPubKey, dwFlags, &h)) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+        ///
+        /// Imports the public key.
+        ///
+        /// \sa [CryptImportPublicKeyInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380209.aspx)
+        ///
+        inline bool import_public(_In_ HCRYPTPROV hCryptProv, _In_ DWORD dwCertEncodingType, _In_ PCERT_PUBLIC_KEY_INFO pInfo)
+        {
+            handle_type h;
+            if (CryptImportPublicKeyInfo(hCryptProv, dwCertEncodingType, pInfo, &h)) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+        ///
+        /// Generates cryptographic session keys derived from a base data value.
+        ///
+        /// \sa [CryptDeriveKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379916.aspx)
+        ///
+        inline bool derive(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ HCRYPTHASH hBaseData, _In_ DWORD dwFlags)
+        {
+            handle_type h;
+            if (CryptDeriveKey(hProv, Algid, hBaseData, dwFlags, &h)) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+        ///
+        /// Creates Exponent-of-one key
+        ///
+        /// \sa [How to export and import plain text session keys by using CryptoAPI](https://support.microsoft.com/en-us/kb/228786)
+        ///
+        /// \param[in] hProv      Handle of cryptographics provider to use
+        /// \param[in] dwKeySpec  Key specification (`AT_KEYEXCHANGE` or `AT_SIGNATURE`)
+        ///
+        bool create_exp1(_In_ HCRYPTPROV hProv, _In_ DWORD dwKeySpec);
+
+    protected:
+        ///
+        /// Destroys the key.
+        ///
+        /// \sa [CryptDestroyKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379918.aspx)
+        ///
+        virtual void free_internal();
+
+        ///
+        /// Duplicates the key.
+        ///
+        /// \param[in] h  Object handle of existing key
+        ///
+        /// \return Duplicated key handle
+        ///
+        /// \sa [CryptDuplicateKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379920.aspx)
+        ///
+        virtual handle_type duplicate_internal(_In_ handle_type h) const;
+    };
+
 
     ///
     /// DATA_BLOB wrapper class
     ///
-    class WINSTD_API data_blob;
+    class WINSTD_API data_blob : public DATA_BLOB
+    {
+    public:
+        ///
+        /// Initializes an empty BLOB.
+        ///
+        inline data_blob()
+        {
+            cbData = 0;
+            pbData = NULL;
+        }
+
+        ///
+        /// Initializes a BLOB from existing data.
+        ///
+        inline data_blob(_In_count_(size) BYTE *data, _In_ DWORD size)
+        {
+            cbData = size;
+            pbData = data;
+        }
+
+        ///
+        /// Duplicate an existing BLOB.
+        ///
+        inline data_blob(_In_ const DATA_BLOB &other)
+        {
+            cbData = other.cbData;
+            if (cbData) {
+                pbData = (BYTE*)LocalAlloc(LMEM_FIXED, other.cbData);
+                assert(pbData);
+                memcpy(pbData, other.pbData, other.cbData);
+            } else
+                pbData = NULL;
+        }
+
+        ///
+        /// Move an existing BLOB.
+        ///
+        inline data_blob(_Inout_ DATA_BLOB &&other)
+        {
+            cbData = other.cbData;
+            pbData = other.pbData;
+            other.cbData = 0;
+            other.pbData = NULL;
+        }
+
+        ///
+        /// Destroys the BLOB.
+        ///
+        virtual ~data_blob();
+
+        ///
+        /// Copy an existing BLOB.
+        ///
+        inline data_blob& operator=(_In_ const DATA_BLOB &other)
+        {
+            if (this != &other) {
+                cbData = other.cbData;
+                if (pbData)
+                    LocalFree(pbData);
+                if (cbData) {
+                    pbData = (BYTE*)LocalAlloc(LMEM_FIXED, other.cbData);
+                    assert(pbData);
+                    memcpy(pbData, other.pbData, other.cbData);
+                } else
+                    pbData = NULL;
+            }
+
+            return *this;
+        }
+
+        ///
+        /// Move an existing BLOB.
+        ///
+        inline data_blob& operator=(_Inout_ DATA_BLOB &&other)
+        {
+            if (this != &other) {
+                cbData = other.cbData;
+                if (pbData)
+                    LocalFree(pbData);
+                pbData = other.pbData;
+                other.cbData = 0;
+                other.pbData = NULL;
+            }
+
+            return *this;
+        }
+
+        ///
+        /// Get BLOB size.
+        ///
+        inline DWORD size() const
+        {
+            return cbData;
+        }
+
+        ///
+        /// Get BLOB buffer.
+        ///
+        inline const BYTE* data() const
+        {
+            return pbData;
+        }
+
+        ///
+        /// Get BLOB buffer.
+        ///
+        inline BYTE* data()
+        {
+            return pbData;
+        }
+    };
 
     /// @}
 }
-
-#pragma once
-
-#include <assert.h>
 
 
 template<class _Elem, class _Traits, class _Ax>
@@ -328,563 +879,4 @@ inline BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BO
     }
 
     return FALSE;
-}
-
-
-namespace winstd
-{
-    class WINSTD_API cert_context : public dplhandle<PCCERT_CONTEXT>
-    {
-        DPLHANDLE_IMPL(cert_context)
-
-    public:
-        ///
-        /// Destroys the certificate context.
-        ///
-        /// \sa [CertFreeCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376075.aspx)
-        ///
-        virtual ~cert_context();
-
-        ///
-        /// Creates the certificate context.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [CertCreateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376033.aspx)
-        ///
-        inline bool create(_In_  DWORD dwCertEncodingType, _In_  const BYTE *pbCertEncoded, _In_  DWORD cbCertEncoded)
-        {
-            handle_type h = CertCreateCertificateContext(dwCertEncodingType, pbCertEncoded, cbCertEncoded);
-            if (h) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-        ///
-        /// Is certificate equal to?
-        ///
-        /// \param[in] other  Certificate to compare against
-        /// \return
-        /// - Non zero when certificate is equal to \p other;
-        /// - Zero otherwise.
-        ///
-        inline bool operator==(_In_ const handle_type &other) const
-        {
-            return
-                m_h == other ||
-                m_h->cbCertEncoded == other->cbCertEncoded && memcmp(m_h->pbCertEncoded, other->pbCertEncoded, m_h->cbCertEncoded) == 0;
-        }
-
-        ///
-        /// Is certificate not equal to?
-        ///
-        /// \param[in] other  Certificate to compare against
-        /// \return
-        /// - Non zero when certificate is not equal to \p other;
-        /// - Zero otherwise.
-        ///
-        inline bool operator!=(_In_ const handle_type &other) const
-        {
-            return !operator==(other);
-        }
-
-        ///
-        /// Is certificate less than?
-        ///
-        /// \param[in] other  Certificate to compare against
-        /// \return
-        /// - Non zero when certificate is less than \p other;
-        /// - Zero otherwise.
-        ///
-        inline bool operator<(_In_ const handle_type &other) const
-        {
-            int r = memcmp(m_h->pbCertEncoded, other->pbCertEncoded, std::min<DWORD>(m_h->cbCertEncoded, other->cbCertEncoded));
-            return r < 0 || r == 0 && m_h->cbCertEncoded < other->cbCertEncoded;
-        }
-
-        ///
-        /// Is certificate greater than?
-        ///
-        /// \param[in] other  Certificate to compare against
-        /// \return
-        /// - Non zero when certificate is greater than \p other;
-        /// - Zero otherwise.
-        ///
-        inline bool operator>(_In_ const handle_type &other) const
-        {
-            int r = memcmp(m_h->pbCertEncoded, other->pbCertEncoded, std::min<DWORD>(m_h->cbCertEncoded, other->cbCertEncoded));
-            return r > 0 || r == 0 && m_h->cbCertEncoded > other->cbCertEncoded;
-        }
-
-        ///
-        /// Is certificate less than or equal?
-        ///
-        /// \param[in] other  Certificate to compare against
-        /// \return
-        /// - Non zero when certificate is less than \p other;
-        /// - Zero otherwise.
-        ///
-        inline bool operator<=(_In_ const handle_type &other) const
-        {
-            return !operator>(other);
-        }
-
-        ///
-        /// Is certificate greater than or equal?
-        ///
-        /// \param[in] other  Certificate to compare against
-        /// \return
-        /// - Non zero when certificate is greater than \p other;
-        /// - Zero otherwise.
-        ///
-        inline bool operator>=(_In_ const handle_type &other) const
-        {
-            return !operator<(other);
-        }
-
-    protected:
-        ///
-        /// Destroys the certificate context.
-        ///
-        /// \sa [CertFreeCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376075.aspx)
-        ///
-        virtual void free_internal();
-
-        ///
-        /// Duplicates the certificate context.
-        ///
-        /// \param[in] h  Object handle of existing certificate context
-        ///
-        /// \return Duplicated certificate context handle
-        ///
-        /// \sa [CertDuplicateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376045.aspx)
-        ///
-        virtual handle_type duplicate_internal(_In_ handle_type h) const;
-    };
-
-
-    class WINSTD_API cert_chain_context : public dplhandle<PCCERT_CHAIN_CONTEXT>
-    {
-        DPLHANDLE_IMPL(cert_chain_context)
-
-    public:
-        ///
-        /// Destroys the certificate chain context.
-        ///
-        /// \sa [CertFreeCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376073.aspx)
-        ///
-        virtual ~cert_chain_context();
-
-        ///
-        /// Creates the certificate chain context.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [CertGetCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376078.aspx)
-        ///
-        inline bool create(_In_opt_ HCERTCHAINENGINE hChainEngine, _In_ PCCERT_CONTEXT pCertContext, _In_opt_ LPFILETIME pTime, _In_opt_ HCERTSTORE hAdditionalStore, _In_ PCERT_CHAIN_PARA pChainPara, _In_ DWORD dwFlags, __reserved LPVOID pvReserved = NULL)
-        {
-            handle_type h;
-            if (CertGetCertificateChain(hChainEngine, pCertContext, pTime, hAdditionalStore, pChainPara, dwFlags, pvReserved, &h)) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-    protected:
-        ///
-        /// Destroys the certificate chain context.
-        ///
-        /// \sa [CertFreeCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376073.aspx)
-        ///
-        virtual void free_internal();
-
-        ///
-        /// Duplicates the certificate chain context.
-        ///
-        /// \param[in] h  Object handle of existing certificate chain context
-        ///
-        /// \return Duplicated certificate chain context handle
-        ///
-        /// \sa [CertDuplicateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376045.aspx)
-        ///
-        virtual handle_type duplicate_internal(_In_ handle_type h) const;
-    };
-
-
-    class WINSTD_API cert_store : public handle<HCERTSTORE>
-    {
-        HANDLE_IMPL(cert_store)
-
-    public:
-        ///
-        /// Closes the certificate store.
-        ///
-        /// \sa [CertCloseStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376026.aspx)
-        ///
-        virtual ~cert_store();
-
-        ///
-        /// Opens the certificate store.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [CertOpenStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376559.aspx)
-        ///
-        inline bool create(_In_ LPCSTR lpszStoreProvider, _In_ DWORD dwEncodingType, _In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ DWORD dwFlags, _In_opt_ const void *pvPara)
-        {
-            handle_type h = CertOpenStore(lpszStoreProvider, dwEncodingType, hCryptProv, dwFlags, pvPara);
-            if (h) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-        ///
-        /// Opens the most common system certificate store. To open certificate stores with more complex requirements, such as file-based or memory-based stores, use `create()`.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [CertOpenSystemStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376560.aspx)
-        ///
-        inline bool create(_In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ LPCTSTR szSubsystemProtocol)
-        {
-            handle_type h = CertOpenSystemStore(hCryptProv, szSubsystemProtocol);
-            if (h) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-    protected:
-        ///
-        /// Closes the certificate store.
-        ///
-        /// \sa [CertCloseStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376026.aspx)
-        ///
-        virtual void free_internal();
-    };
-
-
-    class WINSTD_API crypt_prov : public handle<HCRYPTPROV>
-    {
-        HANDLE_IMPL(crypt_prov)
-
-    public:
-        ///
-        /// Releases the cryptographic context.
-        ///
-        /// \sa [CryptReleaseContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380268.aspx)
-        ///
-        virtual ~crypt_prov();
-
-        ///
-        /// Acquires the cryptographic context.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [CryptAcquireContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379886.aspx)
-        ///
-        inline bool create(_In_opt_ LPCTSTR szContainer, _In_opt_ LPCTSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags = 0)
-        {
-            handle_type h;
-            if (CryptAcquireContext(&h, szContainer, szProvider, dwProvType, dwFlags)) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-    protected:
-        ///
-        /// Releases the cryptographic context.
-        ///
-        /// \sa [CryptReleaseContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380268.aspx)
-        ///
-        virtual void free_internal();
-    };
-
-
-    class WINSTD_API crypt_hash : public dplhandle<HCRYPTHASH>
-    {
-        DPLHANDLE_IMPL(crypt_hash)
-
-    public:
-        ///
-        /// Destroys the hash context.
-        ///
-        /// \sa [CryptDestroyHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379917.aspx)
-        ///
-        virtual ~crypt_hash();
-
-        ///
-        /// Creates the hash context.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [CryptCreateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379908.aspx)
-        ///
-        inline bool create(_In_ HCRYPTPROV  hProv, _In_ ALG_ID Algid, _In_opt_ HCRYPTKEY hKey = NULL, _In_opt_ DWORD dwFlags = 0)
-        {
-            handle_type h;
-            if (CryptCreateHash(hProv, Algid, hKey, dwFlags, &h)) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-    protected:
-        ///
-        /// Destroys the hash context.
-        ///
-        /// \sa [CryptDestroyHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379917.aspx)
-        ///
-        virtual void free_internal();
-
-        ///
-        /// Duplicates the hash context.
-        ///
-        /// \param[in] h  Object handle of existing hash context
-        ///
-        /// \return Duplicated hash context handle
-        ///
-        /// \sa [CryptDuplicateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379919.aspx)
-        ///
-        virtual handle_type duplicate_internal(_In_ handle_type h) const;
-    };
-
-
-    class WINSTD_API crypt_key : public dplhandle<HCRYPTKEY>
-    {
-        DPLHANDLE_IMPL(crypt_key)
-
-    public:
-        ///
-        /// Destroys the key.
-        ///
-        /// \sa [CryptDestroyKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379918.aspx)
-        ///
-        virtual ~crypt_key();
-
-        ///
-        /// Generates the key.
-        ///
-        /// \sa [CryptGenKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379941.aspx)
-        ///
-        inline bool generate(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ DWORD dwFlags)
-        {
-            handle_type h;
-            if (CryptGenKey(hProv, Algid, dwFlags, &h)) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-        ///
-        /// Imports the key.
-        ///
-        /// \sa [CryptImportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380207.aspx)
-        ///
-        inline bool import(_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) const BYTE *pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags)
-        {
-            handle_type h;
-            if (CryptImportKey(hProv, pbData, dwDataLen, hPubKey, dwFlags, &h)) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-        ///
-        /// Imports the public key.
-        ///
-        /// \sa [CryptImportPublicKeyInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380209.aspx)
-        ///
-        inline bool import_public(_In_ HCRYPTPROV hCryptProv, _In_ DWORD dwCertEncodingType, _In_ PCERT_PUBLIC_KEY_INFO pInfo)
-        {
-            handle_type h;
-            if (CryptImportPublicKeyInfo(hCryptProv, dwCertEncodingType, pInfo, &h)) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-        ///
-        /// Generates cryptographic session keys derived from a base data value.
-        ///
-        /// \sa [CryptDeriveKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379916.aspx)
-        ///
-        inline bool derive(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ HCRYPTHASH hBaseData, _In_ DWORD dwFlags)
-        {
-            handle_type h;
-            if (CryptDeriveKey(hProv, Algid, hBaseData, dwFlags, &h)) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-        ///
-        /// Creates Exponent-of-one key
-        ///
-        /// \sa [How to export and import plain text session keys by using CryptoAPI](https://support.microsoft.com/en-us/kb/228786)
-        ///
-        /// \param[in] hProv      Handle of cryptographics provider to use
-        /// \param[in] dwKeySpec  Key specification (`AT_KEYEXCHANGE` or `AT_SIGNATURE`)
-        ///
-        bool create_exp1(_In_ HCRYPTPROV hProv, _In_ DWORD dwKeySpec);
-
-    protected:
-        ///
-        /// Destroys the key.
-        ///
-        /// \sa [CryptDestroyKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379918.aspx)
-        ///
-        virtual void free_internal();
-
-        ///
-        /// Duplicates the key.
-        ///
-        /// \param[in] h  Object handle of existing key
-        ///
-        /// \return Duplicated key handle
-        ///
-        /// \sa [CryptDuplicateKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379920.aspx)
-        ///
-        virtual handle_type duplicate_internal(_In_ handle_type h) const;
-    };
-
-
-    class WINSTD_API data_blob : public DATA_BLOB
-    {
-    public:
-        ///
-        /// Initializes an empty BLOB.
-        ///
-        inline data_blob()
-        {
-            cbData = 0;
-            pbData = NULL;
-        }
-
-        ///
-        /// Initializes a BLOB from existing data.
-        ///
-        inline data_blob(_In_count_(size) BYTE *data, _In_ DWORD size)
-        {
-            cbData = size;
-            pbData = data;
-        }
-
-        ///
-        /// Duplicate an existing BLOB.
-        ///
-        inline data_blob(_In_ const DATA_BLOB &other)
-        {
-            cbData = other.cbData;
-            if (cbData) {
-                pbData = (BYTE*)LocalAlloc(LMEM_FIXED, other.cbData);
-                assert(pbData);
-                memcpy(pbData, other.pbData, other.cbData);
-            } else
-                pbData = NULL;
-        }
-
-        ///
-        /// Move an existing BLOB.
-        ///
-        inline data_blob(_Inout_ DATA_BLOB &&other)
-        {
-            cbData = other.cbData;
-            pbData = other.pbData;
-            other.cbData = 0;
-            other.pbData = NULL;
-        }
-
-        ///
-        /// Destroys the BLOB.
-        ///
-        virtual ~data_blob();
-
-        ///
-        /// Copy an existing BLOB.
-        ///
-        inline data_blob& operator=(_In_ const DATA_BLOB &other)
-        {
-            if (this != &other) {
-                cbData = other.cbData;
-                if (pbData)
-                    LocalFree(pbData);
-                if (cbData) {
-                    pbData = (BYTE*)LocalAlloc(LMEM_FIXED, other.cbData);
-                    assert(pbData);
-                    memcpy(pbData, other.pbData, other.cbData);
-                } else
-                    pbData = NULL;
-            }
-
-            return *this;
-        }
-
-        ///
-        /// Move an existing BLOB.
-        ///
-        inline data_blob& operator=(_Inout_ DATA_BLOB &&other)
-        {
-            if (this != &other) {
-                cbData = other.cbData;
-                if (pbData)
-                    LocalFree(pbData);
-                pbData = other.pbData;
-                other.cbData = 0;
-                other.pbData = NULL;
-            }
-
-            return *this;
-        }
-
-        ///
-        /// Get BLOB size.
-        ///
-        inline DWORD size() const
-        {
-            return cbData;
-        }
-
-        ///
-        /// Get BLOB buffer.
-        ///
-        inline const BYTE* data() const
-        {
-            return pbData;
-        }
-
-        ///
-        /// Get BLOB buffer.
-        ///
-        inline BYTE* data()
-        {
-            return pbData;
-        }
-    };
 }

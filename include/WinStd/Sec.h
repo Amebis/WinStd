@@ -18,6 +18,11 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
+///
+/// \defgroup WinStdSecurityAPI Security API
+/// Integrates WinStd classes with Microsoft Security API
+///
+
 #include "Common.h"
 
 #include <Security.h>
@@ -26,53 +31,16 @@
 
 namespace winstd
 {
-    ///
-    /// \defgroup WinStdSecurityAPI Security API
-    /// Integrates WinStd classes with Microsoft Security API
-    ///
-    /// @{
-
-    ///
-    /// PCredHandle wrapper class
-    ///
     class WINSTD_API sec_credentials;
-
-    ///
-    /// PCtxtHandle wrapper class
-    ///
     class WINSTD_API sec_context;
-
-    ///
-    /// SecBufferDesc wrapper class
-    ///
     class WINSTD_API sec_buffer_desc;
-
-    /// @}
-
-    ///
-    /// \defgroup WinStdExceptions Exceptions
-    /// Additional exceptions
-    ///
-    /// @{
-
-    ///
-    /// Security runtime error
-    ///
-    /// \note Must be defined as derived class from num_runtime_error<> to allow correct type info for dynamic typecasting and prevent folding with other derivates of num_runtime_error<>.
-    ///
     class WINSTD_API sec_runtime_error;
-
-    /// @}
 }
 
 /// \addtogroup WinStdSecurityAPI
 /// @{
 
-///
-/// Retrieves the name of the user or other security principal associated with the calling thread and stores it in a std::string string.
-///
-/// \sa [GetUserNameEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724435.aspx)
-///
+/// @copydoc GetUserNameExW()
 template<class _Elem, class _Traits, class _Ax> BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sName);
 
 ///
@@ -89,6 +57,12 @@ template<class _Elem, class _Traits, class _Ax> BOOLEAN GetUserNameExW(_In_ EXTE
 
 namespace winstd
 {
+    /// \addtogroup WinStdSecurityAPI
+    /// @{
+
+    ///
+    /// PCredHandle wrapper class
+    ///
     class WINSTD_API sec_credentials : public handle<PCredHandle>
     {
         WINSTD_NONCOPYABLE(sec_credentials)
@@ -105,8 +79,8 @@ namespace winstd
         ///
         /// Initializes a new class with an already available object handle.
         ///
-        /// \param[in] h     Initial class handle value
-        /// \param[in] prop  Credentials expiration
+        /// \param[in] h        Initial class handle value
+        /// \param[in] expires  Credentials expiration
         ///
         inline sec_credentials(_In_opt_ handle_type h, _In_ const TimeStamp expires) :
             m_expires(expires),
@@ -188,6 +162,9 @@ namespace winstd
     };
 
 
+    ///
+    /// PCtxtHandle wrapper class
+    ///
     class WINSTD_API sec_context : public handle<PCtxtHandle>
     {
     public:
@@ -299,6 +276,9 @@ namespace winstd
     };
 
 
+    ///
+    /// SecBufferDesc wrapper class
+    ///
     class WINSTD_API sec_buffer_desc : public SecBufferDesc
     {
     public:
@@ -320,15 +300,27 @@ namespace winstd
         virtual ~sec_buffer_desc();
     };
 
+    /// @}
 
+    ///
+    /// \defgroup WinStdExceptions Exceptions
+    /// Additional exceptions
+    ///
+    /// @{
+
+    ///
+    /// Security runtime error
+    ///
+    /// \note Must be defined as derived class from num_runtime_error<> to allow correct type info for dynamic typecasting and prevent folding with other derivates of num_runtime_error<>.
+    ///
     class WINSTD_API sec_runtime_error : public num_runtime_error<SECURITY_STATUS>
     {
     public:
         ///
         /// Constructs an exception
         ///
-        /// \param[in] error  Security provider error code
-        /// \param[in] msg    Error message
+        /// \param[in] num  Security provider error code
+        /// \param[in] msg  Error message
         ///
         inline sec_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<SECURITY_STATUS>(num, msg.c_str())
         {
@@ -355,6 +347,8 @@ namespace winstd
         {
         }
     };
+
+    /// @}
 }
 
 
