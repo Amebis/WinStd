@@ -408,7 +408,7 @@ namespace winstd
         ///
         /// \param[in] code  EAP code (one of EapCode enum values)
         /// \param[in] id    Packet ID
-        /// \param[in] size  Initial packet size. Must be at least 4.
+        /// \param[in] size  Total packet size in bytes, including header. Must be at least 4B.
         ///
         /// \note Packet data (beyond first 4B) is not initialized.
         ///
@@ -418,7 +418,7 @@ namespace winstd
         ///
         inline bool create(_In_ EapCode code, _In_ BYTE id, _In_ WORD size)
         {
-            assert(size >= 4); // EAP packets must contain at least 4B.
+            assert(size >= 4); // EAP packets must contain at least Code, Id, and Length fields: 4B.
 
             handle_type h = (handle_type)HeapAlloc(GetProcessHeap(), 0, size);
             if (h) {
