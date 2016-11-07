@@ -90,6 +90,12 @@
 #endif
 
 ///
+/// Stringizing macro
+///
+#define STRING_IMPL(x)  #x
+#define STRING(x)       STRING_IMPL(x)
+
+///
 /// Declares a class as non-copyable
 ///
 #define WINSTD_NONCOPYABLE(C) \
