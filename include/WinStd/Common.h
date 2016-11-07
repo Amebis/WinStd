@@ -90,9 +90,13 @@
 #endif
 
 ///
-/// Stringizing macro
+/// Stringizing macro helper
 ///
 #define STRING_IMPL(x)  #x
+
+///
+/// Stringizing macro
+///
 #define STRING(x)       STRING_IMPL(x)
 
 ///
