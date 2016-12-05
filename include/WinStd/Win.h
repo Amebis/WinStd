@@ -1120,8 +1120,6 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
 template<class _Ty, class _Ax>
 inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData)
 {
-    assert(0); // TODO: Test this code.
-
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = sizeof(aStackBuffer);
@@ -1146,8 +1144,6 @@ inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_ LPCSTR lpValueName, __r
 template<class _Ty, class _Ax>
 inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData)
 {
-    assert(0); // TODO: Test this code.
-
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = sizeof(aStackBuffer);
