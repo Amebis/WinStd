@@ -99,77 +99,114 @@ namespace winstd
 
 
         ///
-        /// Template to construct class with generic data.
+        /// Construct class pointing to an `int`.
         ///
-        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        /// \param[in] data  Event data
         ///
-        template<class T>
-        inline event_data(_In_ const T &data)
+        /// \note This class saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        inline event_data(_In_ const int &data)
         {
-            EventDataDescCreate(this, &data, (ULONG)(sizeof(T)));
+            EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
         }
 
 
         ///
-        /// Construct class with string.
+        /// Construct class pointing to an `unsigned int`.
         ///
-        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        /// \param[in] data  Event data
+        ///
+        /// \note This class saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        inline event_data(_In_ const unsigned int &data)
+        {
+            EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
+        }
+
+
+        ///
+        /// Construct class pointing to a `long`.
+        ///
+        /// \param[in] data  Event data
+        ///
+        /// \note This class saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        inline event_data(_In_ const long &data)
+        {
+            EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
+        }
+
+
+        ///
+        /// Construct class pointing to an `unsigned long`.
+        ///
+        /// \param[in] data  Event data
+        ///
+        /// \note This class saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        inline event_data(_In_ const unsigned long &data)
+        {
+            EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
+        }
+
+
+        ///
+        /// Construct class pointing to a `GUID`.
+        ///
+        /// \param[in] data  Event data
+        ///
+        /// \note This class saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        inline event_data(_In_ const GUID &data)
+        {
+            EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
+        }
+
+
+        ///
+        /// Construct class pointing to a string.
+        ///
+        /// \param[in] data  Event data. When `NULL`, the event data will be `"<null>"`.
+        ///
+        /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
         inline event_data(_In_ const char *data)
         {
             if (data)
                 EventDataDescCreate(this, data, (ULONG)((strlen(data) + 1) * sizeof(*data)));
-            else
-                EventDataDescCreate(this, NULL, 0);
+            else {
+                // Writing NULL pointer with 0B length causes trouble in Event Viewer: message template string is displayed only, parameters are not rendered.
+                static const char null[] = "<null>";
+                EventDataDescCreate(this, null, sizeof(null));
+            }
         }
 
 
         ///
-        /// Construct class with string.
+        /// Construct class pointing to a wide string.
         ///
-        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        /// \param[in] data  Event data. When `NULL`, the event data will be `"<null>"`.
         ///
-        inline event_data(_In_ char *data)
-        {
-            if (data)
-                EventDataDescCreate(this, data, (ULONG)((strlen(data) + 1) * sizeof(*data)));
-            else
-                EventDataDescCreate(this, NULL, 0);
-        }
-
-
-        ///
-        /// Construct class with wide string.
-        ///
-        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
         inline event_data(_In_ const wchar_t *data)
         {
             if (data)
                 EventDataDescCreate(this, data, (ULONG)((wcslen(data) + 1) * sizeof(*data)));
-            else
-                EventDataDescCreate(this, NULL, 0);
+            else {
+                // Writing NULL pointer with 0B length causes trouble in Event Viewer: message template string is displayed only, parameters are not rendered.
+                static const wchar_t null[] = L"<null>";
+                EventDataDescCreate(this, null, sizeof(null));
+            }
         }
 
 
         ///
-        /// Construct class with wide string.
+        /// Template to construct pointing to a `std::basic_string<>`.
         ///
-        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        /// \param[in] data  Event data
         ///
-        inline event_data(_In_ wchar_t *data)
-        {
-            if (data)
-                EventDataDescCreate(this, data, (ULONG)((wcslen(data) + 1) * sizeof(*data)));
-            else
-                EventDataDescCreate(this, NULL, 0);
-        }
-
-
-        ///
-        /// Template to construct class with string.
-        ///
-        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
         template<class _Elem, class _Traits, class _Ax>
         inline event_data(_In_ const std::basic_string<_Elem, _Traits, _Ax> &data)
@@ -179,9 +216,12 @@ namespace winstd
 
 
         ///
-        /// Construct class with binary data.
+        /// Construct class pointing to binary data.
         ///
-        /// \note This class is saves a reference to the data only. Therefore, data must be kept available.
+        /// \param[in] data  Pointer to event data
+        /// \param[in] size  Size of \p data in bytes
+        ///
+        /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
         inline event_data(_In_bytecount_(size) const void *data, _In_ ULONG size)
         {
