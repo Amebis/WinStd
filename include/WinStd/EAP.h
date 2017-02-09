@@ -119,25 +119,27 @@ namespace winstd
     ///
     #pragma warning(suppress: 4480)
     enum eap_type_t : unsigned char {
-        eap_type_undefined       =   0,    ///< Undefined EAP type
-        eap_type_identity        =   1,    ///< Identity
-        eap_type_notification    =   2,    ///< Notification
-        eap_type_nak             =   3,    ///< Legacy Nak
-        eap_type_md5_challenge   =   4,    ///< MD5-Challenge
-        eap_type_otp             =   5,    ///< One-Time Password (OTP)
-        eap_type_gtc             =   6,    ///< Generic Token Card (GTC)
-        eap_type_tls             =  13,    ///< EAP-TLS
-        eap_type_ttls            =  21,    ///< EAP-TTLS
-        eap_type_peap            =  25,    ///< EAP-PEAP
-        eap_type_mschapv2        =  26,    ///< EAP-MSCHAPv2
+        eap_type_undefined       =   0,                 ///< Undefined EAP type
+        eap_type_identity        =   1,                 ///< Identity
+        eap_type_notification    =   2,                 ///< Notification
+        eap_type_nak             =   3,                 ///< Legacy Nak
+        eap_type_md5_challenge   =   4,                 ///< MD5-Challenge
+        eap_type_otp             =   5,                 ///< One-Time Password (OTP)
+        eap_type_gtc             =   6,                 ///< Generic Token Card (GTC)
+        eap_type_tls             =  13,                 ///< EAP-TLS
+        eap_type_ttls            =  21,                 ///< EAP-TTLS
+        eap_type_peap            =  25,                 ///< EAP-PEAP
+        eap_type_mschapv2        =  26,                 ///< EAP-MSCHAPv2
 
-        eap_type_legacy_pap      = 192,    ///< PAP (Not actually an EAP method; Moved to the Unassigned area)
-        eap_type_legacy_mschapv2 = 193,    ///< MSCHAPv2 (Not actually an EAP method; Moved to the Unassigned area)
+        eap_type_gtcp            = 128 + eap_type_gtc,  ///< EAP-GTC using a password
 
-        eap_type_start           =   1,    ///< Start of EAP methods
-        eap_type_end             = 192,    ///< End of EAP methods (non-inclusive)
-        eap_type_noneap_start    = 192,    ///< Start of non-EAP methods
-        eap_type_noneap_end      = 254,    ///< End of non-EAP methods (non-inclusive)
+        eap_type_legacy_pap      = 192,                 ///< PAP (Not actually an EAP method; Moved to the Unassigned area)
+        eap_type_legacy_mschapv2 = 193,                 ///< MSCHAPv2 (Not actually an EAP method; Moved to the Unassigned area)
+
+        eap_type_start           =   1,                 ///< Start of EAP methods
+        eap_type_end             = 192,                 ///< End of EAP methods (non-inclusive)
+        eap_type_noneap_start    = 192,                 ///< Start of non-EAP methods
+        eap_type_noneap_end      = 254,                 ///< End of non-EAP methods (non-inclusive)
     };
 
 
