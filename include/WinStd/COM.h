@@ -83,7 +83,7 @@ namespace winstd
         {
             handle_type h;
             HRESULT hr = CoCreateInstance(rclsid, pUnkOuter, dwClsContext, __uuidof(T), (void**)&h);
-            if (SUCCEEDED(h))
+            if (SUCCEEDED(hr))
                 attach(h);
             return hr;
         }
