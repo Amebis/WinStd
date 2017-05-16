@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2016 Amebis
+    Copyright 1991-2017 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -35,6 +35,7 @@ namespace winstd
     class WINSTD_API win_handle;
     class WINSTD_API library;
     class WINSTD_API process;
+    class WINSTD_API file;
     class WINSTD_API heap;
     template <class _Ty> class heap_allocator;
     class WINSTD_API actctx_activator;
@@ -373,6 +374,33 @@ namespace winstd
         inline bool open(_In_ DWORD dwDesiredAccess, _In_ BOOL bInheritHandle, _In_ DWORD dwProcessId)
         {
             handle_type h = OpenProcess(dwDesiredAccess, bInheritHandle, dwProcessId);
+            if (h) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+    };
+
+
+    ///
+    /// File handle wrapper
+    ///
+    class WINSTD_API file : public win_handle
+    {
+    public:
+        ///
+        /// Opens file handle.
+        ///
+        /// \sa [CreateFile function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx)
+        ///
+        /// \return
+        /// - \c true when succeeds;
+        /// - \c false when fails. Use `GetLastError()` for failure reason.
+        ///
+        inline bool create(_In_ LPCTSTR lpFileName, _In_ DWORD dwDesiredAccess, _In_ DWORD dwShareMode, _In_ DWORD dwCreationDisposition, _In_opt_ DWORD dwFlagsAndAttributes = FILE_ATTRIBUTE_NORMAL, _In_opt_ LPSECURITY_ATTRIBUTES lpSecurityAttributes = NULL, _In_opt_ HANDLE hTemplateFile = NULL)
+        {
+            handle_type h = CreateFile(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
             if (h) {
                 attach(h);
                 return true;

@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2016 Amebis
+    Copyright 1991-2017 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -61,6 +61,32 @@ namespace winstd
         inline com_obj(_In_ REFCLSID rclsid, _In_opt_ LPUNKNOWN pUnkOuter = NULL, DWORD dwClsContext = CLSCTX_ALL)
         {
             CoCreateInstance(rclsid, pUnkOuter, dwClsContext, __uuidof(T), (LPVOID*)&m_h);
+        }
+
+
+        ///
+        /// Queries the object for another interface and creates new class with it
+        ///
+        /// \sa [IUnknown::QueryInterface method](https://msdn.microsoft.com/en-us/library/windows/desktop/ms682521.aspx)
+        ///
+        template <class _Other>
+        inline com_obj(_Out_ _Other **other)
+        {
+            assert(other);
+            other->QueryInterface(__uuidof(T), (void**)&m_h);
+        }
+
+
+        ///
+        /// Queries the object for another interface and creates new class with it
+        ///
+        /// \sa [IUnknown::QueryInterface method](https://msdn.microsoft.com/en-us/library/windows/desktop/ms682521.aspx)
+        ///
+        template <class _Other>
+        inline com_obj(_Out_ com_obj<_Other> &other)
+        {
+            assert(other);
+            other->QueryInterface(__uuidof(T), (void**)&m_h);
         }
 
 

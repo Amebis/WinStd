@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2016 Amebis
+    Copyright 1991-2017 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -126,8 +126,6 @@ inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ s
 template<class _Elem, class _Traits, class _Ax>
 inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
-    assert(0); // TODO: Test this code.
-
     _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
@@ -182,8 +180,6 @@ inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 template<class _Elem, class _Traits, class _Ax>
 inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
-    assert(0); // TODO: Test this code.
-
     _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
@@ -238,8 +234,6 @@ inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_s
 template<class _Elem, class _Traits, class _Ax>
 inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
-    assert(0); // TODO: Test this code.
-
     _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
@@ -314,8 +308,6 @@ inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Ou
 template<class _Elem, class _Traits, class _Ax>
 inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
-    assert(0); // TODO: Test this code.
-
     _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
     UINT uiResult;
