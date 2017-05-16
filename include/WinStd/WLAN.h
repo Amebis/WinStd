@@ -174,8 +174,6 @@ namespace winstd
 template<class _Elem, class _Traits, class _Ax>
 inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved)
 {
-    assert(0); // TODO: Test this code.
-
     DWORD dwSize = 0;
 
     if (!::pfnWlanReasonCodeToString)
@@ -189,7 +187,7 @@ inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::basic_st
         DWORD dwResult = ::pfnWlanReasonCodeToString(dwReasonCode, dwSize, szBuffer.get(), pReserved);
         if (dwResult == ERROR_SUCCESS) {
             DWORD dwLength = (DWORD)wcsnlen(szBuffer.get(), dwSize);
-            if (dwLength < dwSize) {
+            if (dwLength < dwSize - 1) {
                 // Buffer was long enough.
                 sValue.assign(szBuffer.get(), dwLength);
                 return ERROR_SUCCESS;
