@@ -42,6 +42,7 @@ namespace winstd
     class WINSTD_API user_impersonator;
     class WINSTD_API vmemory;
     class WINSTD_API reg_key;
+    class WINSTD_API security_id;
 }
 
 
@@ -821,6 +822,31 @@ namespace winstd
         /// Closes a handle to the registry key.
         ///
         /// \sa [RegCloseKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724837.aspx)
+        ///
+        virtual void free_internal();
+    };
+
+
+    ///
+    /// SID wrapper class
+    ///
+    class WINSTD_API security_id : public handle<PSID>
+    {
+        HANDLE_IMPL(security_id)
+
+    public:
+        ///
+        /// Closes a handle to the SID.
+        ///
+        /// \sa [FreeSid function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa446631.aspx)
+        ///
+        virtual ~security_id();
+
+    protected:
+        ///
+        /// Closes a handle to the SID.
+        ///
+        /// \sa [FreeSid function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa446631.aspx)
         ///
         virtual void free_internal();
     };

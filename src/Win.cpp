@@ -309,3 +309,20 @@ void winstd::reg_key::free_internal()
 {
     RegCloseKey(m_h);
 }
+
+
+//////////////////////////////////////////////////////////////////////
+// winstd::security_id
+//////////////////////////////////////////////////////////////////////
+
+winstd::security_id::~security_id()
+{
+    if (m_h)
+        FreeSid(m_h);
+}
+
+
+void winstd::security_id::free_internal()
+{
+    FreeSid(m_h);
+}
