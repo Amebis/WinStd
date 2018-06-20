@@ -166,7 +166,7 @@ namespace winstd
         ///
         /// Construct class pointing to a string.
         ///
-        /// \param[in] data  Event data. When `NULL`, the event data will be `"<null>"`.
+        /// \param[in] data  Event data. When `NULL`, the event data will be `"(null)"`.
         ///
         /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
@@ -176,7 +176,7 @@ namespace winstd
                 EventDataDescCreate(this, data, (ULONG)((strlen(data) + 1) * sizeof(*data)));
             else {
                 // Writing NULL pointer with 0B length causes trouble in Event Viewer: message template string is displayed only, parameters are not rendered.
-                static const char null[] = "<null>";
+                static const char null[] = "(null)";
                 EventDataDescCreate(this, null, sizeof(null));
             }
         }
@@ -185,7 +185,7 @@ namespace winstd
         ///
         /// Construct class pointing to a wide string.
         ///
-        /// \param[in] data  Event data. When `NULL`, the event data will be `"<null>"`.
+        /// \param[in] data  Event data. When `NULL`, the event data will be `"(null)"`.
         ///
         /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
@@ -195,7 +195,7 @@ namespace winstd
                 EventDataDescCreate(this, data, (ULONG)((wcslen(data) + 1) * sizeof(*data)));
             else {
                 // Writing NULL pointer with 0B length causes trouble in Event Viewer: message template string is displayed only, parameters are not rendered.
-                static const wchar_t null[] = L"<null>";
+                static const wchar_t null[] = L"(null)";
                 EventDataDescCreate(this, null, sizeof(null));
             }
         }
