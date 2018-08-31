@@ -109,6 +109,8 @@ template<class _Ty, class _Ax> inline BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In
 
 #include <assert.h>
 
+#include <algorithm>
+
 
 namespace winstd
 {
