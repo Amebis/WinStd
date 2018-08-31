@@ -147,7 +147,8 @@ inline BOOL CredEnumerate(_In_ LPCTSTR Filter, _In_ DWORD Flags, _Out_ DWORD *Co
 {
     PCREDENTIAL *pCredentials;
     if (CredEnumerate(Filter, Flags, Count, &pCredentials)) {
-        cCredentials.swap(std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> >(pCredentials));
+        std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > cred(pCredentials);
+        cCredentials.swap(cred);
         return TRUE;
     } else
         return FALSE;
