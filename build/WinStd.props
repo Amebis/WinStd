@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ImportGroup Label="PropertySheets" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="..\..\..\include\$(Platform).props" />
+    <Import Project="..\..\..\include\$(Configuration).props" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
   <ItemDefinitionGroup>
@@ -12,5 +15,33 @@
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
   </ItemDefinitionGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ClCompile Include="..\src\Base64.cpp" />
+    <ClCompile Include="..\src\COM.cpp" />
+    <ClCompile Include="..\src\Crypt.cpp" />
+    <ClCompile Include="..\src\EAP.cpp" />
+    <ClCompile Include="..\src\ETW.cpp" />
+    <ClCompile Include="..\src\Sec.cpp" />
+    <ClCompile Include="..\src\StdAfx.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\src\Win.cpp" />
+    <ClCompile Include="..\src\WLAN.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\WinStd\Base64.h" />
+    <ClInclude Include="..\include\WinStd\COM.h" />
+    <ClInclude Include="..\include\WinStd\Cred.h" />
+    <ClInclude Include="..\include\WinStd\Crypt.h" />
+    <ClInclude Include="..\include\WinStd\EAP.h" />
+    <ClInclude Include="..\include\WinStd\Common.h" />
+    <ClInclude Include="..\include\WinStd\ETW.h" />
+    <ClInclude Include="..\include\WinStd\Hex.h" />
+    <ClInclude Include="..\include\WinStd\MSI.h" />
+    <ClInclude Include="..\include\WinStd\Sec.h" />
+    <ClInclude Include="..\include\WinStd\Shell.h" />
+    <ClInclude Include="..\include\WinStd\Win.h" />
+    <ClInclude Include="..\include\WinStd\WLAN.h" />
+    <ClInclude Include="..\src\StdAfx.h" />
+  </ItemGroup>
 </Project>

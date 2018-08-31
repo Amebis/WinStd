@@ -45,64 +45,24 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\include\Win32.props" />
-    <Import Project="..\..\..\include\Release.props" />
     <Import Project="WinStd.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\include\Win32.props" />
-    <Import Project="..\..\..\include\Debug.props" />
     <Import Project="WinStd.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\include\x64.props" />
-    <Import Project="..\..\..\include\Release.props" />
     <Import Project="WinStd.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\include\x64.props" />
-    <Import Project="..\..\..\include\Debug.props" />
     <Import Project="WinStd.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\Base64.cpp" />
-    <ClCompile Include="..\src\COM.cpp" />
-    <ClCompile Include="..\src\Crypt.cpp" />
-    <ClCompile Include="..\src\EAP.cpp" />
-    <ClCompile Include="..\src\ETW.cpp" />
-    <ClCompile Include="..\src\Sec.cpp" />
-    <ClCompile Include="..\src\StdAfx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\src\Win.cpp" />
-    <ClCompile Include="..\src\WLAN.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\include\WinStd\Base64.h" />
-    <ClInclude Include="..\include\WinStd\COM.h" />
-    <ClInclude Include="..\include\WinStd\Cred.h" />
-    <ClInclude Include="..\include\WinStd\Crypt.h" />
-    <ClInclude Include="..\include\WinStd\EAP.h" />
-    <ClInclude Include="..\include\WinStd\Common.h" />
-    <ClInclude Include="..\include\WinStd\ETW.h" />
-    <ClInclude Include="..\include\WinStd\Hex.h" />
-    <ClInclude Include="..\include\WinStd\MSI.h" />
-    <ClInclude Include="..\include\WinStd\Sec.h" />
-    <ClInclude Include="..\include\WinStd\Shell.h" />
-    <ClInclude Include="..\include\WinStd\Win.h" />
-    <ClInclude Include="..\include\WinStd\WLAN.h" />
-    <ClInclude Include="..\src\StdAfx.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
