@@ -968,9 +968,9 @@ namespace winstd
         ///
         /// \sa [VariantChangeType function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms221258.aspx)
         ///
-        inline HRESULT change_type(_In_ VARTYPE vt, _In_opt_ USHORT wFlags = 0)
+        inline HRESULT change_type(_In_ VARTYPE _vt, _In_opt_ USHORT wFlags = 0)
         {
-            return VariantChangeType(this, this, wFlags, vt);
+            return VariantChangeType(this, this, wFlags, _vt);
         }
 
     private:
