@@ -140,6 +140,12 @@ private:
 
 /// @}
 
+
+#ifndef _FormatMessage_format_string_
+#define _FormatMessage_format_string_
+#endif
+
+
 namespace winstd
 {
     /// \addtogroup WinStdStrFormat
@@ -273,7 +279,9 @@ namespace winstd
 ///
 /// \returns Number of characters in result.
 ///
+#if _MSC_VER <= 1600
 inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg);
+#endif
 
 ///
 /// Formats string using `printf()`.
@@ -1702,10 +1710,14 @@ namespace winstd
 #pragma warning(disable: 4995)
 #pragma warning(disable: 4996)
 
+#if _MSC_VER <= 1600
+
 inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg)
 {
     return _vsnprintf(str, capacity, format, arg);
 }
+
+#endif
 
 
 inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg)
