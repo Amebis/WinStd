@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2017 Amebis
+    Copyright 1991-2018 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -164,11 +164,38 @@ namespace winstd
 
     template <class _Ty> struct LocalFree_delete;
     template <class _Ty> struct LocalFree_delete<_Ty[]>;
+    template<class _Ty, class _Dx = std::default_delete<_Ty>> class ref_unique_ptr;
+    template<class _Ty, class _Dx> class ref_unique_ptr<_Ty[], _Dx>;
     template <class T> class handle;
     template <class T> class dplhandle;
     template <class T> class vector_queue;
     template <typename _Tn> class num_runtime_error;
     class WINSTD_API win_runtime_error;
+
+    /// \addtogroup WinStdGeneral
+    /// @{
+
+    ///
+    /// Helper function template for returning pointers to std::unique_ptr
+    ///
+    /// \param[inout] owner  Original owner of the pointer
+    ///
+    /// \returns A helper wrapper class to handle returning a reference to the pointer
+    ///
+    template<class _Ty, class _Dx> inline ref_unique_ptr<_Ty, _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty, _Dx> &owner);
+
+    ///
+    /// Helper function template for returning pointers to std::unique_ptr
+    /// (specialization for arrays)
+    ///
+    /// \param[inout] owner  Original owner of the pointer
+    ///
+    /// \returns A helper wrapper class to handle returning a reference to the pointer
+    ///
+    template<class _Ty, class _Dx> inline ref_unique_ptr<_Ty[], _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner);
+
+    /// @}
+
 
     /// \addtogroup WinStdStrFormat
     /// @{
@@ -430,6 +457,147 @@ namespace winstd
             LocalFree(_Ptr);
         }
     };
+
+
+    ///
+    /// Helper class for returning pointers to std::unique_ptr
+    ///
+    template<class _Ty, class _Dx>
+    class ref_unique_ptr
+    {
+    public:
+        ///
+        /// Takes ownership of the pointer
+        ///
+        /// \param[inout] owner  Object to attach helper to
+        ///
+        inline ref_unique_ptr(_Inout_ std::unique_ptr<_Ty, _Dx> &owner) :
+            m_own(owner),
+            m_ptr(owner.release())
+        {}
+
+        ///
+        /// Moves object
+        ///
+        /// \param[inout] other  Source object
+        ///
+        inline ref_unique_ptr(_Inout_ ref_unique_ptr<_Ty, _Dx> &&other) :
+            m_own(other.m_own),
+            m_ptr(other.m_ptr)
+        {
+            other.m_ptr = nullptr;
+        }
+
+        ///
+        /// Returns ownership of the pointer
+        ///
+        inline ~ref_unique_ptr()
+        {
+            if (m_ptr != nullptr)
+                m_own.reset(m_ptr);
+        }
+
+        ///
+        /// Operator for pointer-to-pointer parameters by value use-cases.
+        ///
+        /// \return Pointer to the pointer
+        ///
+        inline operator typename _Ty**()
+        {
+            return &m_ptr;
+        }
+
+        ///
+        /// Operator for reverence-to-pointer parameters by value use-cases.
+        ///
+        /// \return Reference to the pointer
+        ///
+        inline operator typename _Ty*&()
+        {
+            return m_ptr;
+        }
+
+    protected:
+        std::unique_ptr<_Ty, _Dx> &m_own;   ///< Original owner of the pointer
+        _Ty                       *m_ptr;   ///< Pointer
+    };
+
+
+    ///
+    /// Helper class for returning pointers to std::unique_ptr
+    /// (specialization for arrays)
+    ///
+    template<class _Ty, class _Dx>
+    class ref_unique_ptr<_Ty[], _Dx>
+    {
+    public:
+        ///
+        /// Takes ownership of the pointer
+        ///
+        /// \param[inout] owner  Object to attach helper to
+        ///
+        inline ref_unique_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) :
+            m_own(owner),
+            m_ptr(owner.release())
+        {}
+
+        ///
+        /// Moves object
+        ///
+        /// \param[inout] other  Source object
+        ///
+        inline ref_unique_ptr(_Inout_ ref_unique_ptr<_Ty[], _Dx> &&other) :
+            m_own(other.m_own),
+            m_ptr(other.m_ptr)
+        {
+            other.m_ptr = nullptr;
+        }
+
+        ///
+        /// Returns ownership of the pointer
+        ///
+        inline ~ref_unique_ptr()
+        {
+            if (m_ptr != nullptr)
+                m_own.reset(m_ptr);
+        }
+
+        ///
+        /// Operator for pointer-to-pointer parameters by value use-cases.
+        ///
+        /// \return Pointer to the pointer
+        ///
+        inline operator typename _Ty**()
+        {
+            return &m_ptr;
+        }
+
+        ///
+        /// Operator for reverence-to-pointer parameters by value use-cases.
+        ///
+        /// \return Reference to the pointer
+        ///
+        inline operator typename _Ty*&()
+        {
+            return m_ptr;
+        }
+
+    protected:
+        std::unique_ptr<_Ty[], _Dx> &m_own;   ///< Original owner of the pointer
+        _Ty                         *m_ptr;   ///< Pointer
+    };
+
+    template<class _Ty, class _Dx>
+    inline ref_unique_ptr<_Ty, _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty, _Dx> &owner)
+    {
+        return ref_unique_ptr<_Ty, _Dx>(owner);
+    }
+
+    template<class _Ty, class _Dx>
+    inline ref_unique_ptr<_Ty[], _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner)
+    {
+        return ref_unique_ptr<_Ty[], _Dx>(owner);
+    }
 
     /// @}
 
@@ -1769,7 +1937,7 @@ template<class _Traits, class _Ax>
 inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
 {
     std::unique_ptr<CHAR[], winstd::LocalFree_delete<CHAR[]> > lpBuffer;
-    DWORD dwResult = FormatMessageA(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, reinterpret_cast<LPSTR>(&lpBuffer._Myptr), 0, Arguments);
+    DWORD dwResult = FormatMessageA(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, reinterpret_cast<LPSTR>((LPSTR*)get_ptr(lpBuffer)), 0, Arguments);
     if (dwResult)
         str.assign(lpBuffer.get(), dwResult);
     return dwResult;
@@ -1780,7 +1948,7 @@ template<class _Traits, class _Ax>
 inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
 {
     std::unique_ptr<WCHAR[], winstd::LocalFree_delete<WCHAR[]> > lpBuffer;
-    DWORD dwResult = FormatMessageW(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, reinterpret_cast<LPWSTR>(&lpBuffer._Myptr), 0, Arguments);
+    DWORD dwResult = FormatMessageW(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, reinterpret_cast<LPWSTR>((LPWSTR*)get_ptr(lpBuffer)), 0, Arguments);
     if (dwResult)
         str.assign(lpBuffer.get(), dwResult);
     return dwResult;
