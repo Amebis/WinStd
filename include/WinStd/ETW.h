@@ -459,14 +459,41 @@ namespace winstd
         inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ const EVENT_DATA_DESCRIPTOR param1, ...)
         {
             assert(m_h);
-            UNREFERENCED_PARAMETER(param1);
+
+            // The first argument (param1) is outside of varadic argument list.
+            if (param1.Ptr      == winstd::event_data::blank.Ptr      &&
+                param1.Size     == winstd::event_data::blank.Size     &&
+                param1.Reserved == winstd::event_data::blank.Reserved)
+                return EventWrite(m_h, EventDescriptor, 0, NULL);
 
             va_list arg;
-            va_start(arg, EventDescriptor);
-            ULONG ulResult = write(EventDescriptor, arg);
-            va_end(arg);
+            va_start(arg, param1);
+            va_list arg_start = arg;
+            std::vector<EVENT_DATA_DESCRIPTOR> params;
+            ULONG param_count;
 
-            return ulResult;
+            // Preallocate array.
+            for (param_count = 1;; param_count++) {
+                const EVENT_DATA_DESCRIPTOR &p = va_arg(arg, const EVENT_DATA_DESCRIPTOR);
+                if (p.Ptr      == winstd::event_data::blank.Ptr      &&
+                    p.Size     == winstd::event_data::blank.Size     &&
+                    p.Reserved == winstd::event_data::blank.Reserved) break;
+            }
+            params.reserve(param_count);
+
+            // Copy parameters to array.
+            arg = arg_start;
+            params.push_back(param1);
+            for (;;) {
+                const EVENT_DATA_DESCRIPTOR &p = va_arg(arg, const EVENT_DATA_DESCRIPTOR);
+                if (p.Ptr      == winstd::event_data::blank.Ptr      &&
+                    p.Size     == winstd::event_data::blank.Size     &&
+                    p.Reserved == winstd::event_data::blank.Reserved) break;
+                params.push_back(p);
+            }
+
+            va_end(arg);
+            return EventWrite(m_h, EventDescriptor, param_count, params.data());
         }
 
 
