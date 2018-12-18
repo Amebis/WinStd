@@ -32,6 +32,9 @@
     <ClCompile Include="..\src\Win.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\WinTrust.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\Sec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -44,6 +47,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\WinStd\Win.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\WinStd\WinTrust.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\WinStd\MSI.h">

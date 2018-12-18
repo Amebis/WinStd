@@ -31,6 +31,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\src\Win.cpp" />
+    <ClCompile Include="..\src\WinTrust.cpp" />
     <ClCompile Include="..\src\WLAN.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +47,7 @@
     <ClInclude Include="..\include\WinStd\Sec.h" />
     <ClInclude Include="..\include\WinStd\Shell.h" />
     <ClInclude Include="..\include\WinStd\Win.h" />
+    <ClInclude Include="..\include\WinStd\WinTrust.h" />
     <ClInclude Include="..\include\WinStd\WLAN.h" />
     <ClInclude Include="..\src\StdAfx.h" />
   </ItemGroup>
