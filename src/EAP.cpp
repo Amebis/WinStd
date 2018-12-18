@@ -46,6 +46,8 @@ void winstd::eap_attr::create_ms_mppe_key(_In_ BYTE bVendorType, _In_count_(nKey
         nKeySize       + // Key
         nPaddingLength;  // Padding
 
+#pragma warning(push)
+#pragma warning(disable: 6386)
     LPBYTE p = new BYTE[dwLengthNew];
     p[0] = 0x00;                                    // Vendor-Id (0x137 = 311 = Microsoft)
     p[1] = 0x00;                                    // --|
@@ -56,6 +58,7 @@ void winstd::eap_attr::create_ms_mppe_key(_In_ BYTE bVendorType, _In_count_(nKey
     p[6] = 0x00;                                    // Salt
     p[7] = 0x00;                                    // --^
     p[8] = nKeySize;                                // Key-Length
+#pragma warning(pop)
     memcpy(p + 9, pbKey, nKeySize);                 // Key
     memset(p + 9 + nKeySize, 0, nPaddingLength);    // Padding
 

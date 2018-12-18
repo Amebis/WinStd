@@ -117,11 +117,11 @@ private: \
 ///
 #define HANDLE_IMPL(C) \
 public: \
-    inline    C        (                       )                                     {                                                             } \
-    inline    C        (_In_    handle_type   h) : handle<handle_type>(          h ) {                                                             } \
-    inline    C        (_Inout_ C           &&h) : handle<handle_type>(std::move(h)) {                                                             } \
-    inline C& operator=(_In_    handle_type   h)                                     { handle<handle_type>::operator=(          h ); return *this; } \
-    inline C& operator=(_Inout_ C           &&h)                                     { handle<handle_type>::operator=(std::move(h)); return *this; } \
+    inline    C        (                       )                                              {                                                             } \
+    inline    C        (_In_    handle_type   h)          : handle<handle_type>(          h ) {                                                             } \
+    inline    C        (_Inout_ C           &&h) noexcept : handle<handle_type>(std::move(h)) {                                                             } \
+    inline C& operator=(_In_    handle_type   h)                                              { handle<handle_type>::operator=(          h ); return *this; } \
+    inline C& operator=(_Inout_ C           &&h) noexcept                                     { handle<handle_type>::operator=(std::move(h)); return *this; } \
 WINSTD_NONCOPYABLE(C)
 
 ///
@@ -129,13 +129,13 @@ WINSTD_NONCOPYABLE(C)
 ///
 #define DPLHANDLE_IMPL(C) \
 public: \
-    inline    C        (                             )                                                     {                                                                } \
-    inline    C        (_In_          handle_type   h) : dplhandle<handle_type>(                   h     ) {                                                                } \
-    inline    C        (_In_    const C            &h) : dplhandle<handle_type>(duplicate_internal(h.m_h)) {                                                                } \
-    inline    C        (_Inout_       C           &&h) : dplhandle<handle_type>(std::move         (h    )) {                                                                } \
-    inline C& operator=(_In_          handle_type   h)                                                     { dplhandle<handle_type>::operator=(          h ); return *this; } \
-    inline C& operator=(_In_    const C            &h)                                                     { dplhandle<handle_type>::operator=(          h ); return *this; } \
-    inline C& operator=(_Inout_       C           &&h)                                                     { dplhandle<handle_type>::operator=(std::move(h)); return *this; } \
+    inline    C        (                             )                                                              {                                                                } \
+    inline    C        (_In_          handle_type   h)          : dplhandle<handle_type>(                   h     ) {                                                                } \
+    inline    C        (_In_    const C            &h)          : dplhandle<handle_type>(duplicate_internal(h.m_h)) {                                                                } \
+    inline    C        (_Inout_       C           &&h) noexcept : dplhandle<handle_type>(std::move         (h    )) {                                                                } \
+    inline C& operator=(_In_          handle_type   h)                                                              { dplhandle<handle_type>::operator=(          h ); return *this; } \
+    inline C& operator=(_In_    const C            &h)                                                              { dplhandle<handle_type>::operator=(          h ); return *this; } \
+    inline C& operator=(_Inout_       C           &&h) noexcept                                                     { dplhandle<handle_type>::operator=(std::move(h)); return *this; } \
 private:
 
 /// @}
@@ -640,7 +640,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline handle(_Inout_ handle<handle_type> &&h)
+        inline handle(_Inout_ handle<handle_type> &&h) noexcept
         {
             // Transfer handle.
             m_h   = h.m_h;
@@ -669,7 +669,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline handle<handle_type>& operator=(_Inout_ handle<handle_type> &&h)
+        inline handle<handle_type>& operator=(_Inout_ handle<handle_type> &&h) noexcept
         {
             if (this != std::addressof(h)) {
                 // Transfer handle.
@@ -900,7 +900,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline dplhandle<handle_type>(_Inout_ dplhandle<handle_type> &&h) : handle<handle_type>(std::move(h))
+        inline dplhandle<handle_type>(_Inout_ dplhandle<handle_type> &&h) noexcept : handle<handle_type>(std::move(h))
         {
         }
 
@@ -947,7 +947,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline dplhandle<handle_type>& operator=(_Inout_ dplhandle<handle_type> &&h)
+        inline dplhandle<handle_type>& operator=(_Inout_ dplhandle<handle_type> &&h) noexcept
         {
             handle<handle_type>::operator=(std::move(h));
             return *this;
@@ -1739,7 +1739,7 @@ namespace winstd
         /// \param[in] guid    GUID to convert
         /// \param[in] format  A `printf()` syntax template to convert GUID to string (i.e. `"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}"`)
         ///
-        inline basic_string_guid(_In_ const GUID &guid, _In_opt_z_ _Printf_format_string_ const _Elem *format)
+        inline basic_string_guid(_In_ const GUID &guid, _In_z_ _Printf_format_string_ const _Elem *format)
         {
             sprintf<_Elem, _Traits, _Ax>(*this, format,
                 guid.Data1,

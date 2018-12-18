@@ -810,7 +810,7 @@ inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &d
 template<class _Ty, class _Ax>
 inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData)
 {
-    DWORD dwKeyBLOBSize;
+    DWORD dwKeyBLOBSize = 0;
 
     if (CryptExportKey(hKey, hExpKey, dwBlobType, dwFlags, NULL, &dwKeyBLOBSize)) {
         aData.resize((dwKeyBLOBSize + sizeof(_Ty) - 1) / sizeof(_Ty));

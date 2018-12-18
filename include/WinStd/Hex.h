@@ -107,7 +107,9 @@ namespace winstd
         ///
         /// Constructs blank decoding session
         ///
-        inline hex_dec() : num(0)
+        inline hex_dec() :
+            buf(0),
+            num(0)
         {
         }
 
@@ -115,13 +117,13 @@ namespace winstd
         ///
         /// Decodes one block of information, and _appends_ it to the output
         ///
-        /// \param[out] out      Output
-        /// \param[out] is_last  Was this the last block of data? Actually, is this block of data complete?
-        /// \param[in ] data     Data to decode
-        /// \param[in ] size     Length of `data` in bytes
+        /// \param[inout] out      Output
+        /// \param[out  ] is_last  Was this the last block of data? Actually, is this block of data complete?
+        /// \param[in   ] data     Data to decode
+        /// \param[in   ] size     Length of `data` in bytes
         ///
         template<class _Ty, class _Ax, class _Tchr>
-        inline void decode(_Out_ std::vector<_Ty, _Ax> &out, _Out_ bool &is_last, _In_z_count_(size) const _Tchr *data, _In_ size_t size)
+        inline void decode(_Inout_ std::vector<_Ty, _Ax> &out, _Out_ bool &is_last, _In_z_count_(size) const _Tchr *data, _In_ size_t size)
         {
             is_last = false;
 

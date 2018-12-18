@@ -53,6 +53,9 @@ namespace winstd
         ///
         inline base64_enc() : num(0)
         {
+            buf[0] = 0;
+            buf[1] = 0;
+            buf[2] = 0;
         }
 
 
@@ -181,6 +184,10 @@ namespace winstd
         ///
         inline base64_dec() : num(0)
         {
+            buf[0] = 0;
+            buf[1] = 0;
+            buf[2] = 0;
+            buf[3] = 0;
         }
 
 

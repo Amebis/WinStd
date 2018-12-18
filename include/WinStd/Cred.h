@@ -44,7 +44,7 @@ namespace winstd
 ///
 /// \sa [CredEnumerate function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374794.aspx)
 ///
-inline BOOL CredEnumerate(_In_ LPCTSTR Filter, _In_ DWORD Flags, _Out_ DWORD *Count, _Out_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials);
+inline BOOL CredEnumerate(_In_ LPCTSTR Filter, _Reserved_ DWORD Flags, _Out_ DWORD *Count, _Out_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials);
 
 /// @copydoc CredProtectW()
 template<class _Elem, class _Traits, class _Ax> inline BOOL CredProtectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
@@ -143,15 +143,12 @@ namespace winstd
 }
 
 
-inline BOOL CredEnumerate(_In_ LPCTSTR Filter, _In_ DWORD Flags, _Out_ DWORD *Count, _Out_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials)
+inline BOOL CredEnumerate(_In_ LPCTSTR Filter, _Reserved_ DWORD Flags, _Out_ DWORD *Count, _Out_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials)
 {
-    PCREDENTIAL *pCredentials;
-    if (CredEnumerate(Filter, Flags, Count, &pCredentials)) {
-        std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > cred(pCredentials);
-        cCredentials.swap(cred);
-        return TRUE;
-    } else
-        return FALSE;
+    PCREDENTIAL *pCredentials = NULL;
+    BOOL bResult = CredEnumerate(Filter, Flags, Count, &pCredentials);
+    cCredentials.reset(pCredentials);
+    return bResult;
 }
 
 

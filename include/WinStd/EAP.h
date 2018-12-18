@@ -265,7 +265,7 @@ namespace winstd
         ///
         /// Moves an existing EAP attribute.
         ///
-        inline eap_attr(_Inout_ eap_attr &&a)
+        inline eap_attr(_Inout_ eap_attr &&a) noexcept
         {
             eaType   = a.eaType;
             dwLength = a.dwLength;
@@ -308,7 +308,7 @@ namespace winstd
         ///
         /// Moves an existing EAP attribute.
         ///
-        inline eap_attr& operator=(_Inout_ eap_attr &&a)
+        inline eap_attr& operator=(_Inout_ eap_attr &&a) noexcept
         {
             if (this != &a) {
                 eaType   = a.eaType;
@@ -481,7 +481,7 @@ namespace winstd
         ///
         /// \param[inout] other  A rvalue reference of another object
         ///
-        inline eap_method_info_array(_Inout_ eap_method_info_array &&other)
+        inline eap_method_info_array(_Inout_ eap_method_info_array &&other) noexcept
         {
             dwNumberOfMethods       = other.dwNumberOfMethods;
             pEapMethods             = other.pEapMethods;
@@ -499,7 +499,7 @@ namespace winstd
         ///
         /// \param[inout] other  A rvalue reference of another object
         ///
-        inline eap_method_info_array& operator=(_Inout_ eap_method_info_array &&other)
+        inline eap_method_info_array& operator=(_Inout_ eap_method_info_array &&other) noexcept
         {
             if (this != std::addressof(other)) {
                 if (pEapMethods)

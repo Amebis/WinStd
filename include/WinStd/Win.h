@@ -107,7 +107,7 @@ template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringW(_In_ L
 #endif
 
 /// @copydoc StringToGuidW()
-BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd = NULL);
+_Success_(return) BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd = NULL);
 
 ///
 /// Parses string with GUID and stores it to GUID
@@ -120,7 +120,7 @@ BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_
 /// - `TRUE` if GUID successfuly parsed;
 /// - `FALSE` otherwise.
 ///
-BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd = NULL);
+_Success_(return) BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd = NULL);
 /// @copydoc StringToGuidW()
 #ifdef _UNICODE
 #define StringToGuid StringToGuidW
@@ -663,7 +663,7 @@ namespace winstd
         /// \param[in] proc  Handle of process the memory belongs to
         /// \param[in] h     Initial object handle value
         ///
-        inline vmemory(_In_opt_ handle_type h, _In_ HANDLE proc) :
+        inline vmemory(_In_ handle_type h, _In_ HANDLE proc) :
             m_proc(proc),
             handle<LPVOID>(h)
         {
@@ -674,7 +674,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline vmemory(_Inout_ vmemory &&h) :
+        inline vmemory(_Inout_ vmemory &&h) noexcept :
             m_proc(std::move(h.m_proc)),
             handle<LPVOID>(std::move(h))
         {
@@ -692,7 +692,7 @@ namespace winstd
         ///
         /// \param[inout] other  A rvalue reference of another object
         ///
-        inline vmemory& operator=(_Inout_ vmemory &&other)
+        inline vmemory& operator=(_Inout_ vmemory &&other) noexcept
         {
             if (this != std::addressof(other)) {
                 (handle<handle_type>&&)*this = std::move(other);

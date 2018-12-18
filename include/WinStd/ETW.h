@@ -280,7 +280,7 @@ namespace winstd
         ///
         /// \param[in] other  Event record to move
         ///
-        inline event_rec(_Inout_ event_rec&& other) : EVENT_RECORD(other)
+        inline event_rec(_Inout_ event_rec&& other) noexcept : EVENT_RECORD(other)
         {
             memset((EVENT_RECORD*)&other, 0, sizeof(EVENT_RECORD));
         }
@@ -331,7 +331,7 @@ namespace winstd
         ///
         /// \param[in] other  Event record to move
         ///
-        inline event_rec& operator=(_Inout_ event_rec&& other)
+        inline event_rec& operator=(_Inout_ event_rec&& other) noexcept
         {
             if (this != std::addressof(other)) {
                 (EVENT_RECORD&)*this = other;
@@ -473,7 +473,7 @@ namespace winstd
             ULONG param_count;
 
             // Preallocate array.
-            for (param_count = 1;; param_count++) {
+            for (param_count = 1; param_count < MAX_EVENT_DATA_DESCRIPTORS; param_count++) {
                 const EVENT_DATA_DESCRIPTOR &p = va_arg(arg, const EVENT_DATA_DESCRIPTOR);
                 if (p.Ptr      == winstd::event_data::blank.Ptr      &&
                     p.Size     == winstd::event_data::blank.Size     &&
@@ -493,7 +493,10 @@ namespace winstd
             }
 
             va_end(arg);
+#pragma warning(push)
+#pragma warning(disable: 28020)
             return EventWrite(m_h, EventDescriptor, param_count, params.data());
+#pragma warning(pop)
         }
 
 
@@ -517,7 +520,7 @@ namespace winstd
             ULONG param_count;
 
             // Preallocate array.
-            for (param_count = 0;; param_count++) {
+            for (param_count = 0; param_count < MAX_EVENT_DATA_DESCRIPTORS; param_count++) {
                 const EVENT_DATA_DESCRIPTOR &p = va_arg(arg, const EVENT_DATA_DESCRIPTOR);
                 if (p.Ptr      == winstd::event_data::blank.Ptr      &&
                     p.Size     == winstd::event_data::blank.Size     &&
@@ -535,7 +538,10 @@ namespace winstd
                 params.push_back(p);
             }
 
+#pragma warning(push)
+#pragma warning(disable: 28020)
             return EventWrite(m_h, EventDescriptor, param_count, params.data());
+#pragma warning(pop)
         }
 
 
@@ -548,7 +554,7 @@ namespace winstd
         ///
         /// \sa [EventWriteString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363750v=vs.85.aspx)
         ///
-        inline ULONG write(_In_ UCHAR Level, _In_ ULONGLONG Keyword, _In_ _Printf_format_string_ PCWSTR String, ...)
+        inline ULONG write(_In_ UCHAR Level, _In_ ULONGLONG Keyword, _In_z_ _Printf_format_string_ PCWSTR String, ...)
         {
             assert(m_h);
 
@@ -625,7 +631,7 @@ namespace winstd
         ///
         /// \param[inout] other  A rvalue reference of another session
         ///
-        inline event_session(_Inout_ event_session &&other) :
+        inline event_session(_Inout_ event_session &&other) noexcept :
             m_prop(std::move(other.m_prop)),
             handle(std::move(other))
         {
@@ -645,7 +651,7 @@ namespace winstd
         ///
         /// \param[inout] other  A rvalue reference of another object
         ///
-        inline event_session& operator=(_Inout_ event_session &&other)
+        inline event_session& operator=(_Inout_ event_session &&other) noexcept
         {
             if (this != std::addressof(other)) {
                 (handle<handle_type>&&)*this = std::move(other);
@@ -964,7 +970,7 @@ namespace winstd
         ///
         /// Moves the object
         ///
-        inline event_fn_auto(_Inout_ event_fn_auto &&other) :
+        inline event_fn_auto(_Inout_ event_fn_auto &&other) noexcept :
             m_ep(other.m_ep),
             m_event_dest(other.m_event_dest),
             m_fn_name(std::move(other.m_fn_name))
@@ -1001,7 +1007,7 @@ namespace winstd
         ///
         /// Moves the object
         ///
-        inline event_fn_auto& operator=(_Inout_ event_fn_auto &&other)
+        inline event_fn_auto& operator=(_Inout_ event_fn_auto &&other) noexcept
         {
             if (this != &other) {
                 assert(&m_ep == &other.m_ep);
@@ -1142,6 +1148,7 @@ inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhCon
         return TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, info.get(), &ulSize);
     }
 
+    info.reset(nullptr);
     return ulResult;
 }
 
@@ -1164,6 +1171,7 @@ inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pM
         return TdhGetEventMapInformation(pEvent, pMapName, info.get(), &ulSize);
     }
 
+    info.reset(nullptr);
     return ulResult;
 }
 
