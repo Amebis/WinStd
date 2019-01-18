@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -20,6 +20,8 @@
 
 #pragma once
 
+#define _WINSOCKAPI_    // Prevent inclusion of winsock.h in windows.h.
+
 #include "../include/WinStd/Base64.h"
 #include "../include/WinStd/COM.h"
 #include "../include/WinStd/Cred.h"
@@ -33,8 +35,10 @@
 #if defined(SECURITY_WIN32) || defined(SECURITY_KERNEL) || defined(SECURITY_MAC)
 #include "../include/WinStd/Sec.h"
 #endif
+#include "../include/WinStd/SetupAPI.h"
 #include "../include/WinStd/Shell.h"
 #include "../include/WinStd/Win.h"
+#include "../include/WinStd/WinSock2.h"
 #include "../include/WinStd/WinTrust.h"
 #include "../include/WinStd/WLAN.h"
 #include "../include/WinStd/Common.h"

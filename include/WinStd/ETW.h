@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -55,21 +55,21 @@ namespace winstd
 ///
 /// \sa [TdhGetEventInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964840.aspx)
 ///
-inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info);
+inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Inout_ std::unique_ptr<TRACE_EVENT_INFO> &info);
 
 ///
 /// Retrieves information about the event map contained in the event.
 ///
 /// \sa [TdhGetEventMapInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964841.aspx)
 ///
-inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Out_ std::unique_ptr<EVENT_MAP_INFO> &info);
+inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Inout_ std::unique_ptr<EVENT_MAP_INFO> &info);
 
 ///
 /// Retrieves a property value from the event data.
 ///
 /// \sa [TdhGetProperty function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964843.aspx)
 ///
-template<class _Ty, class _Ax> inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_ PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Out_ std::vector<_Ty, _Ax> &aData);
+template<class _Ty, class _Ax> inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_ PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Inout_ std::vector<_Ty, _Ax> &aData);
 
 /// @}
 
@@ -381,9 +381,9 @@ namespace winstd
     ///
     /// ETW event provider
     ///
-    class WINSTD_API event_provider : public handle<REGHANDLE>
+    class WINSTD_API event_provider : public handle<REGHANDLE, NULL>
     {
-        HANDLE_IMPL(event_provider)
+        HANDLE_IMPL(event_provider, NULL)
 
     public:
         ///
@@ -424,7 +424,7 @@ namespace winstd
         ///
         inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor)
         {
-            assert(m_h);
+            assert(m_h != invalid);
             return EventWrite(m_h, EventDescriptor, 0, NULL);
         }
 
@@ -440,7 +440,7 @@ namespace winstd
         ///
         inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ ULONG UserDataCount = 0, _In_opt_count_(UserDataCount) PEVENT_DATA_DESCRIPTOR UserData = NULL)
         {
-            assert(m_h);
+            assert(m_h != invalid);
             return EventWrite(m_h, EventDescriptor, UserDataCount, UserData);
         }
 
@@ -458,7 +458,7 @@ namespace winstd
         ///
         inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ const EVENT_DATA_DESCRIPTOR param1, ...)
         {
-            assert(m_h);
+            assert(m_h != invalid);
 
             // The first argument (param1) is outside of varadic argument list.
             if (param1.Ptr      == winstd::event_data::blank.Ptr      &&
@@ -513,7 +513,7 @@ namespace winstd
         ///
         inline ULONG write(_In_ PCEVENT_DESCRIPTOR EventDescriptor, _In_ va_list arg)
         {
-            assert(m_h);
+            assert(m_h != invalid);
 
             va_list arg_start = arg;
             std::vector<EVENT_DATA_DESCRIPTOR> params;
@@ -556,7 +556,7 @@ namespace winstd
         ///
         inline ULONG write(_In_ UCHAR Level, _In_ ULONGLONG Keyword, _In_z_ _Printf_format_string_ PCWSTR String, ...)
         {
-            assert(m_h);
+            assert(m_h != invalid);
 
             std::wstring msg;
             va_list arg;
@@ -599,7 +599,7 @@ namespace winstd
     ///
     /// ETW session
     ///
-    class WINSTD_API event_session : public handle<TRACEHANDLE>
+    class WINSTD_API event_session : public handle<TRACEHANDLE, 0>
     {
         WINSTD_NONCOPYABLE(event_session)
 
@@ -654,8 +654,8 @@ namespace winstd
         inline event_session& operator=(_Inout_ event_session &&other) noexcept
         {
             if (this != std::addressof(other)) {
-                (handle<handle_type>&&)*this = std::move(other);
-                m_prop                       = std::move(other.m_prop);
+                (handle<handle_type, 0>&&)*this = std::move(other);
+                m_prop                          = std::move(other.m_prop);
             }
             return *this;
         }
@@ -694,7 +694,7 @@ namespace winstd
         ///
         inline void attach(_In_opt_ handle_type h, _In_ EVENT_TRACE_PROPERTIES *prop)
         {
-            handle<handle_type>::attach(h);
+            handle<handle_type, 0>::attach(h);
             m_prop.reset(prop);
         }
 
@@ -708,7 +708,7 @@ namespace winstd
         ///
         /// \sa [StartTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa364117.aspx)
         ///
-        inline ULONG create(_In_ LPCTSTR SessionName, _In_ const EVENT_TRACE_PROPERTIES *Properties)
+        inline ULONG create(_In_z_ LPCTSTR SessionName, _In_ const EVENT_TRACE_PROPERTIES *Properties)
         {
             handle_type h;
             std::unique_ptr<EVENT_TRACE_PROPERTIES> prop(reinterpret_cast<EVENT_TRACE_PROPERTIES*>(new char[Properties->Wnode.BufferSize]));
@@ -731,7 +731,7 @@ namespace winstd
         ///
         inline ULONG enable_trace(_In_ LPCGUID ProviderId, _In_ UCHAR Level, _In_opt_ ULONGLONG MatchAnyKeyword = 0, _In_opt_ ULONGLONG MatchAllKeyword = 0, _In_opt_ ULONG EnableProperty = 0, _In_opt_ PEVENT_FILTER_DESCRIPTOR EnableFilterDesc = NULL)
         {
-            assert(m_h);
+            assert(m_h != invalid);
             return EnableTraceEx(
                 ProviderId,
                 &m_prop->Wnode.Guid,
@@ -756,7 +756,7 @@ namespace winstd
         ///
         inline ULONG disable_trace(_In_ LPCGUID ProviderId, _In_ UCHAR Level, _In_opt_ ULONGLONG MatchAnyKeyword = 0, _In_opt_ ULONGLONG MatchAllKeyword = 0, _In_opt_ ULONG EnableProperty = 0, _In_opt_ PEVENT_FILTER_DESCRIPTOR EnableFilterDesc = NULL)
         {
-            assert(m_h);
+            assert(m_h != invalid);
             return EnableTraceEx(
                 ProviderId,
                 &m_prop->Wnode.Guid,
@@ -786,9 +786,9 @@ namespace winstd
     ///
     /// ETW trace
     ///
-    class WINSTD_API event_trace : public handle<TRACEHANDLE>
+    class WINSTD_API event_trace : public handle<TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE>
     {
-        HANDLE_IMPL(event_trace)
+        HANDLE_IMPL(event_trace, INVALID_PROCESSTRACE_HANDLE)
 
     public:
         ///
@@ -811,7 +811,7 @@ namespace winstd
         inline bool create(_Inout_ PEVENT_TRACE_LOGFILE Logfile)
         {
             handle_type h = OpenTrace(Logfile);
-            if (h != (TRACEHANDLE)INVALID_HANDLE_VALUE) {
+            if (h != invalid) {
                 attach(h);
                 return true;
             } else
@@ -1130,7 +1130,7 @@ namespace winstd
 }
 
 
-inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info)
+inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Inout_ std::unique_ptr<TRACE_EVENT_INFO> &info)
 {
     BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
     ULONG ulSize = sizeof(szBuffer), ulResult;
@@ -1148,12 +1148,11 @@ inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhCon
         return TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, info.get(), &ulSize);
     }
 
-    info.reset(nullptr);
     return ulResult;
 }
 
 
-inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Out_ std::unique_ptr<EVENT_MAP_INFO> &info)
+inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Inout_ std::unique_ptr<EVENT_MAP_INFO> &info)
 {
     BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
     ULONG ulSize = sizeof(szBuffer), ulResult;
@@ -1171,13 +1170,12 @@ inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pM
         return TdhGetEventMapInformation(pEvent, pMapName, info.get(), &ulSize);
     }
 
-    info.reset(nullptr);
     return ulResult;
 }
 
 
 template<class _Ty, class _Ax>
-inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_ PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Out_ std::vector<_Ty, _Ax> &aData)
+inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_ PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Inout_ std::vector<_Ty, _Ax> &aData)
 {
     ULONG ulSize, ulResult;
 

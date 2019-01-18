@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -45,35 +45,35 @@ namespace winstd
 /// @{
 
 /// @copydoc CertGetNameStringW()
-template<class _Elem, class _Traits, class _Ax> inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
+template<class _Elem, class _Traits, class _Ax> inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
 
 ///
 /// Obtains the subject or issuer name from a certificate [CERT_CONTEXT](https://msdn.microsoft.com/en-us/library/windows/desktop/aa377189.aspx) structure and stores it in a std::wstring string.
 ///
 /// \sa [CertGetNameString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376086.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
+template<class _Elem, class _Traits, class _Ax> inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
 
 ///
 /// Retrieves the information contained in an extended property of a certificate context.
 ///
 /// \sa [CertGetCertificateContextProperty function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376079.aspx)
 ///
-template<class _Ty, class _Ax> inline BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Out_ std::vector<_Ty, _Ax> &aData);
+template<class _Ty, class _Ax> inline BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Inout_ std::vector<_Ty, _Ax> &aData);
 
 ///
 /// Retrieves data that governs the operations of a hash object. The actual hash value can be retrieved by using this function.
 ///
 /// \sa [CryptGetHashParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379947.aspx)
 ///
-template<class _Ty, class _Ax> inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
+template<class _Ty, class _Ax> inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Inout_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
 
 ///
 /// Retrieves data that governs the operations of a key.
 ///
 /// \sa [CryptGetKeyParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379949.aspx)
 ///
-template<class _Ty, class _Ax> inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
+template<class _Ty, class _Ax> inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Inout_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
 
 ///
 /// Retrieves data that governs the operations of a key.
@@ -87,7 +87,7 @@ template<class T> inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD d
 ///
 /// \sa [CryptExportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379931.aspx)
 ///
-template<class _Ty, class _Ax> inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData);
+template<class _Ty, class _Ax> inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData);
 
 ///
 /// Encrypts data.
@@ -120,9 +120,9 @@ namespace winstd
     ///
     /// PCCERT_CONTEXT wrapper class
     ///
-    class WINSTD_API cert_context : public dplhandle<PCCERT_CONTEXT>
+    class WINSTD_API cert_context : public dplhandle<PCCERT_CONTEXT, NULL>
     {
-        DPLHANDLE_IMPL(cert_context)
+        DPLHANDLE_IMPL(cert_context, NULL)
 
     public:
         ///
@@ -144,7 +144,7 @@ namespace winstd
         inline bool create(_In_  DWORD dwCertEncodingType, _In_  const BYTE *pbCertEncoded, _In_  DWORD cbCertEncoded)
         {
             handle_type h = CertCreateCertificateContext(dwCertEncodingType, pbCertEncoded, cbCertEncoded);
-            if (h) {
+            if (h != invalid) {
                 attach(h);
                 return true;
             } else
@@ -161,6 +161,7 @@ namespace winstd
         ///
         inline bool operator==(_In_ const handle_type &other) const
         {
+            // TODO: [Crypto] Make constant time.
             return
                 m_h == other ||
                 m_h->cbCertEncoded == other->cbCertEncoded && memcmp(m_h->pbCertEncoded, other->pbCertEncoded, m_h->cbCertEncoded) == 0;
@@ -189,6 +190,7 @@ namespace winstd
         ///
         inline bool operator<(_In_ const handle_type &other) const
         {
+            // TODO: [Crypto] Make constant time.
             int r = memcmp(m_h->pbCertEncoded, other->pbCertEncoded, std::min<DWORD>(m_h->cbCertEncoded, other->cbCertEncoded));
             return r < 0 || r == 0 && m_h->cbCertEncoded < other->cbCertEncoded;
         }
@@ -203,6 +205,7 @@ namespace winstd
         ///
         inline bool operator>(_In_ const handle_type &other) const
         {
+            // TODO: [Crypto] Make constant time.
             int r = memcmp(m_h->pbCertEncoded, other->pbCertEncoded, std::min<DWORD>(m_h->cbCertEncoded, other->cbCertEncoded));
             return r > 0 || r == 0 && m_h->cbCertEncoded > other->cbCertEncoded;
         }
@@ -257,9 +260,9 @@ namespace winstd
     ///
     /// PCCERT_CHAIN_CONTEXT wrapper class
     ///
-    class WINSTD_API cert_chain_context : public dplhandle<PCCERT_CHAIN_CONTEXT>
+    class WINSTD_API cert_chain_context : public dplhandle<PCCERT_CHAIN_CONTEXT, NULL>
     {
-        DPLHANDLE_IMPL(cert_chain_context)
+        DPLHANDLE_IMPL(cert_chain_context, NULL)
 
     public:
         ///
@@ -312,9 +315,9 @@ namespace winstd
     ///
     /// HCERTSTORE wrapper class
     ///
-    class WINSTD_API cert_store : public handle<HCERTSTORE>
+    class WINSTD_API cert_store : public handle<HCERTSTORE, NULL>
     {
-        HANDLE_IMPL(cert_store)
+        HANDLE_IMPL(cert_store, NULL)
 
     public:
         ///
@@ -336,7 +339,7 @@ namespace winstd
         inline bool create(_In_ LPCSTR lpszStoreProvider, _In_ DWORD dwEncodingType, _In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ DWORD dwFlags, _In_opt_ const void *pvPara)
         {
             handle_type h = CertOpenStore(lpszStoreProvider, dwEncodingType, hCryptProv, dwFlags, pvPara);
-            if (h) {
+            if (h != invalid) {
                 attach(h);
                 return true;
             } else
@@ -352,10 +355,10 @@ namespace winstd
         ///
         /// \sa [CertOpenSystemStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376560.aspx)
         ///
-        inline bool create(_In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ LPCTSTR szSubsystemProtocol)
+        inline bool create(_In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_z_ LPCTSTR szSubsystemProtocol)
         {
             handle_type h = CertOpenSystemStore(hCryptProv, szSubsystemProtocol);
-            if (h) {
+            if (h != invalid) {
                 attach(h);
                 return true;
             } else
@@ -375,9 +378,9 @@ namespace winstd
     ///
     /// HCRYPTPROV wrapper class
     ///
-    class WINSTD_API crypt_prov : public handle<HCRYPTPROV>
+    class WINSTD_API crypt_prov : public handle<HCRYPTPROV, NULL>
     {
-        HANDLE_IMPL(crypt_prov)
+        HANDLE_IMPL(crypt_prov, NULL)
 
     public:
         ///
@@ -396,7 +399,7 @@ namespace winstd
         ///
         /// \sa [CryptAcquireContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379886.aspx)
         ///
-        inline bool create(_In_opt_ LPCTSTR szContainer, _In_opt_ LPCTSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags = 0)
+        inline bool create(_In_opt_z_ LPCTSTR szContainer, _In_opt_z_ LPCTSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags = 0)
         {
             handle_type h;
             if (CryptAcquireContext(&h, szContainer, szProvider, dwProvType, dwFlags)) {
@@ -419,9 +422,9 @@ namespace winstd
     ///
     /// HCRYPTHASH wrapper class
     ///
-    class WINSTD_API crypt_hash : public dplhandle<HCRYPTHASH>
+    class WINSTD_API crypt_hash : public dplhandle<HCRYPTHASH, NULL>
     {
-        DPLHANDLE_IMPL(crypt_hash)
+        DPLHANDLE_IMPL(crypt_hash, NULL)
 
     public:
         ///
@@ -474,9 +477,9 @@ namespace winstd
     ///
     /// HCRYPTKEY wrapper class
     ///
-    class WINSTD_API crypt_key : public dplhandle<HCRYPTKEY>
+    class WINSTD_API crypt_key : public dplhandle<HCRYPTKEY, NULL>
     {
-        DPLHANDLE_IMPL(crypt_key)
+        DPLHANDLE_IMPL(crypt_key, NULL)
 
     public:
         ///
@@ -698,7 +701,7 @@ namespace winstd
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
+inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
 {
     // Query the final string length first.
     DWORD dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
@@ -712,7 +715,7 @@ inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
+inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_ void *pvTypePara, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
 {
     // Query the final string length first.
     DWORD dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
@@ -726,7 +729,7 @@ inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
 
 
 template<class _Ty, class _Ax>
-inline BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Out_ std::vector<_Ty, _Ax> &aData)
+inline BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Inout_ std::vector<_Ty, _Ax> &aData)
 {
     BYTE buf[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = WINSTD_STACK_BUFFER_BYTES;
@@ -742,13 +745,12 @@ inline BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertCo
             return TRUE;
     }
 
-    aData.clear();
     return FALSE;
 }
 
 
 template<class _Ty, class _Ax>
-inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
+inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Inout_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
 {
     BYTE buf[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = WINSTD_STACK_BUFFER_BYTES;
@@ -764,7 +766,6 @@ inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ s
             return TRUE;
     }
 
-    aData.clear();
     return FALSE;
 }
 
@@ -778,7 +779,7 @@ inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ T
 
 
 template<class _Ty, class _Ax>
-inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
+inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Inout_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
 {
     BYTE buf[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = WINSTD_STACK_BUFFER_BYTES;
@@ -794,7 +795,6 @@ inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std:
             return TRUE;
     }
 
-    aData.clear();
     return FALSE;
 }
 
@@ -808,7 +808,7 @@ inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &d
 
 
 template<class _Ty, class _Ax>
-inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData)
+inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
 {
     DWORD dwKeyBLOBSize = 0;
 
@@ -818,7 +818,6 @@ inline BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWO
             return TRUE;
     }
 
-    aData.clear();
     return FALSE;
 }
 

@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -80,7 +80,7 @@ const EAP_ATTRIBUTE winstd::eap_attr::blank = {};
 
 winstd::eap_packet::~eap_packet()
 {
-    if (m_h)
+    if (m_h != invalid)
         HeapFree(GetProcessHeap(), 0, m_h);
 }
 
@@ -95,9 +95,9 @@ winstd::eap_packet::handle_type winstd::eap_packet::duplicate_internal(_In_ hand
 {
     WORD n = ntohs(*(WORD*)h->Length);
     handle_type h2 = (handle_type)HeapAlloc(GetProcessHeap(), 0, n);
-    if (!h2) {
+    if (h2 == invalid) {
         SetLastError(ERROR_OUTOFMEMORY);
-        return NULL;
+        return invalid;
     }
 
     memcpy(h2, h, n);

@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -41,14 +41,14 @@ namespace winstd
 /// @{
 
 /// @copydoc GetUserNameExW()
-template<class _Elem, class _Traits, class _Ax> BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sName);
+template<class _Elem, class _Traits, class _Ax> BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName);
 
 ///
 /// Retrieves the name of the user or other security principal associated with the calling thread and stores it in a std::wstring string.
 ///
 /// \sa [GetUserNameEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724435.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sName);
+template<class _Elem, class _Traits, class _Ax> BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName);
 
 /// @}
 
@@ -223,7 +223,7 @@ namespace winstd
         ///
         inline SECURITY_STATUS initialize(
             _In_opt_    PCredHandle    phCredential,
-            _In_opt_    LPCTSTR        pszTargetName,
+            _In_opt_z_  LPCTSTR        pszTargetName,
             _In_        ULONG          fContextReq,
             _In_        ULONG          TargetDataRep,
             _In_opt_    PSecBufferDesc pInput,
@@ -253,7 +253,7 @@ namespace winstd
         ///
         inline SECURITY_STATUS process(
             _In_opt_    PCredHandle    phCredential,
-            _In_opt_    LPCTSTR        pszTargetName,
+            _In_opt_z_  LPCTSTR        pszTargetName,
             _In_        ULONG          fContextReq,
             _In_        ULONG          TargetDataRep,
             _In_opt_    PSecBufferDesc pInput,
@@ -322,7 +322,7 @@ namespace winstd
         /// \param[in] num  Security provider error code
         /// \param[in] msg  Error message
         ///
-        inline sec_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<SECURITY_STATUS>(num, msg.c_str())
+        inline sec_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<SECURITY_STATUS>(num, msg)
         {
         }
 
@@ -353,7 +353,7 @@ namespace winstd
 
 
 template<class _Elem, class _Traits, class _Ax>
-BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sName)
+BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName)
 {
     assert(0); // TODO: Test this code.
 
@@ -376,13 +376,12 @@ BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_st
         }
     }
 
-    sName.clear();
     return FALSE;
 }
 
 
 template<class _Elem, class _Traits, class _Ax>
-BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sName)
+BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName)
 {
     assert(0); // TODO: Test this code.
 
@@ -405,6 +404,5 @@ BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Out_ std::basic_st
         }
     }
 
-    sName.clear();
     return FALSE;
 }

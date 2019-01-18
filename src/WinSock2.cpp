@@ -1,6 +1,6 @@
 /*
     Copyright 1991-2019 Amebis
-    Copyright 2016 GÉANT
+    Copyright 2016 GÃ‰ANT
 
     This file is part of WinStd.
 
@@ -20,15 +20,23 @@
 
 #include "StdAfx.h"
 
-#pragma comment(lib, "Wintrust.lib")
 
+#if (NTDDI_VERSION >= NTDDI_WINXPSP2) || (_WIN32_WINNT >= 0x0502)
 
 //////////////////////////////////////////////////////////////////////
-// winstd::wintrust
+// winstd::addrinfo
 //////////////////////////////////////////////////////////////////////
 
-winstd::wintrust::~wintrust()
+winstd::addrinfo::~addrinfo()
 {
-    m_wtd.dwStateAction = WTD_STATEACTION_CLOSE;
-    WinVerifyTrust(m_hwnd, (GUID*)&m_action, &m_wtd);
+    if (m_h != invalid)
+        FreeAddrInfo(m_h);
 }
+
+
+void winstd::addrinfo::free_internal()
+{
+    FreeAddrInfo(m_h);
+}
+
+#endif

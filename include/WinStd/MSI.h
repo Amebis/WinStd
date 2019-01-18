@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -34,61 +34,61 @@
 /// @{
 
 /// @copydoc MsiGetPropertyW()
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_z_ LPCSTR szName, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
 /// Gets the value for an installer property and stores it in a std::wstring string.
 ///
 /// \sa [MsiGetProperty function](https://msdn.microsoft.com/en-us/library/aa370134.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_z_ LPCWSTR szName, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 /// @copydoc MsiRecordGetStringW()
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
 /// Returns the string value of a record field and stores it in a std::wstring string.
 ///
 /// \sa [MsiRecordGetString function](https://msdn.microsoft.com/en-us/library/aa370368.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 /// @copydoc MsiFormatRecordW()
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiFormatRecordA(_In_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
 /// Formats record field data and properties using a format string and stores it in a std::wstring string.
 ///
 /// \sa [MsiFormatRecord function](https://msdn.microsoft.com/en-us/library/aa370109.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiFormatRecordW(_In_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
 /// Reads bytes from a record stream field into a std::vector buffer.
 ///
 /// \sa [MsiRecordReadStream function](https://msdn.microsoft.com/en-us/library/aa370370.aspx)
 ///
-template<class _Ty, class _Ax> inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::vector<_Ty, _Ax> &binData);
+template<class _Ty, class _Ax> inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Inout_ std::vector<_Ty, _Ax> &binData);
 
 /// @copydoc MsiGetTargetPathW()
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_z_ LPCSTR szFolder, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
 /// Returns the full target path for a folder in the Directory table and stores it in a std::wstring string.
 ///
 /// \sa [MsiGetTargetPath function](https://msdn.microsoft.com/en-us/library/aa370303.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_z_ LPCWSTR szFolder, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 /// @copydoc MsiGetComponentPathW()
-template<class _Elem, class _Traits, class _Ax> inline INSTALLSTATE MsiGetComponentPathA(_In_ LPCSTR szProduct, _In_ LPCSTR szComponent, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline INSTALLSTATE MsiGetComponentPathA(_In_z_ LPCSTR szProduct, _In_z_ LPCSTR szComponent, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
 /// Returns the full path to an installed component. If the key path for the component is a registry key then the registry key is returned.
 ///
 /// \sa [MsiGetComponentPath function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa370112.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline INSTALLSTATE MsiGetComponentPathW(_In_ LPCWSTR szProduct, _In_ LPCWSTR szComponent, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline INSTALLSTATE MsiGetComponentPathW(_In_z_ LPCWSTR szProduct, _In_z_ LPCWSTR szComponent, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 /// @}
 
@@ -96,7 +96,7 @@ template<class _Elem, class _Traits, class _Ax> inline INSTALLSTATE MsiGetCompon
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_z_ LPCSTR szName, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -124,7 +124,7 @@ inline UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szName, _Out_ s
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_z_ LPCWSTR szName, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
@@ -150,7 +150,7 @@ inline UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szName, _Out_ 
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -178,7 +178,7 @@ inline UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
@@ -204,7 +204,7 @@ inline UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline UINT MsiFormatRecordA(_In_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -232,7 +232,7 @@ inline UINT MsiFormatRecordA(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_s
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline UINT MsiFormatRecordW(_In_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
@@ -258,7 +258,7 @@ inline UINT MsiFormatRecordW(MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_s
 
 
 template<class _Ty, class _Ax>
-inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Out_ std::vector<_Ty, _Ax> &binData)
+inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField, _Inout_ std::vector<_Ty, _Ax> &binData)
 {
     assert(0); // TODO: Test this code.
 
@@ -278,7 +278,7 @@ inline UINT MsiRecordReadStream(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_z_ LPCSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -306,7 +306,7 @@ inline UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_ LPCSTR szFolder, _Ou
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_z_ LPCWSTR szFolder, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
@@ -332,7 +332,7 @@ inline UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_ LPCWSTR szFolder, _O
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline INSTALLSTATE MsiGetComponentPathA(_In_ LPCSTR szProduct, _In_ LPCSTR szComponent, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline INSTALLSTATE MsiGetComponentPathA(_In_z_ LPCSTR szProduct, _In_z_ LPCSTR szComponent, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);
@@ -358,7 +358,7 @@ inline INSTALLSTATE MsiGetComponentPathA(_In_ LPCSTR szProduct, _In_ LPCSTR szCo
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline INSTALLSTATE MsiGetComponentPathW(_In_ LPCWSTR szProduct, _In_ LPCWSTR szComponent, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline INSTALLSTATE MsiGetComponentPathW(_In_z_ LPCWSTR szProduct, _In_z_ LPCWSTR szComponent, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(szStackBuffer);

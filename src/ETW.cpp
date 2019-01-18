@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -118,7 +118,7 @@ void winstd::event_rec::set_user_data_internal(_In_ USHORT size, _In_bytecount_(
 
 winstd::event_provider::~event_provider()
 {
-    if (m_h)
+    if (m_h != invalid)
         EventUnregister(m_h);
 }
 
@@ -155,7 +155,7 @@ VOID NTAPI winstd::event_provider::enable_callback(_In_ LPCGUID SourceId, _In_ U
 
 winstd::event_session::~event_session()
 {
-    if (m_h)
+    if (m_h != invalid)
         ControlTrace(m_h, name(), m_prop.get(), EVENT_TRACE_CONTROL_STOP);
 }
 
@@ -192,7 +192,7 @@ winstd::event_trace_enabler::~event_trace_enabler()
 
 winstd::event_trace::~event_trace()
 {
-    if (m_h)
+    if (m_h != invalid)
         CloseTrace(m_h);
 }
 

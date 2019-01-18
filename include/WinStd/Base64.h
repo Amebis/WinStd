@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -68,7 +68,7 @@ namespace winstd
         /// \param[in ] is_last  Is this the last block of data?
         ///
         template<class _Elem, class _Traits, class _Ax>
-        inline void encode(_Out_ std::basic_string<_Elem, _Traits, _Ax> &out, _In_bytecount_(size) const void *data, _In_ size_t size, _In_opt_ bool is_last = true)
+        inline void encode(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &out, _In_bytecount_(size) const void *data, _In_ size_t size, _In_opt_ bool is_last = true)
         {
             assert(data || !size);
 
@@ -200,7 +200,7 @@ namespace winstd
         /// \param[in ] size     Length of `data` in bytes
         ///
         template<class _Ty, class _Ax, class _Tchr>
-        inline void decode(_Out_ std::vector<_Ty, _Ax> &out, _Out_ bool &is_last, _In_z_count_(size) const _Tchr *data, _In_ size_t size)
+        inline void decode(_Inout_ std::vector<_Ty, _Ax> &out, _Out_ bool &is_last, _In_z_count_(size) const _Tchr *data, _In_ size_t size)
         {
             is_last = false;
 

@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -29,7 +29,7 @@
 
 winstd::cert_context::~cert_context()
 {
-    if (m_h)
+    if (m_h != invalid)
         CertFreeCertificateContext(m_h);
 }
 
@@ -52,7 +52,7 @@ winstd::cert_context::handle_type winstd::cert_context::duplicate_internal(_In_ 
 
 winstd::cert_chain_context::~cert_chain_context()
 {
-    if (m_h)
+    if (m_h != invalid)
         CertFreeCertificateChain(m_h);
 }
 
@@ -75,7 +75,7 @@ winstd::cert_chain_context::handle_type winstd::cert_chain_context::duplicate_in
 
 winstd::cert_store::~cert_store()
 {
-    if (m_h)
+    if (m_h != invalid)
         CertCloseStore(m_h, 0);
 }
 
@@ -92,7 +92,7 @@ void winstd::cert_store::free_internal()
 
 winstd::crypt_prov::~crypt_prov()
 {
-    if (m_h)
+    if (m_h != invalid)
         CryptReleaseContext(m_h, 0);
 }
 
@@ -109,7 +109,7 @@ void winstd::crypt_prov::free_internal()
 
 winstd::crypt_hash::~crypt_hash()
 {
-    if (m_h)
+    if (m_h != invalid)
         CryptDestroyHash(m_h);
 }
 
@@ -122,8 +122,8 @@ void winstd::crypt_hash::free_internal()
 
 winstd::crypt_hash::handle_type winstd::crypt_hash::duplicate_internal(_In_ handle_type h) const
 {
-    handle_type hNew = NULL;
-    return CryptDuplicateHash(h, NULL, 0, &hNew) ? hNew : NULL;
+    handle_type hNew = invalid;
+    return CryptDuplicateHash(h, NULL, 0, &hNew) ? hNew : invalid;
 }
 
 
@@ -133,7 +133,7 @@ winstd::crypt_hash::handle_type winstd::crypt_hash::duplicate_internal(_In_ hand
 
 winstd::crypt_key::~crypt_key()
 {
-    if (m_h)
+    if (m_h != invalid)
         CryptDestroyKey(m_h);
 }
 
@@ -209,8 +209,8 @@ void winstd::crypt_key::free_internal()
 
 winstd::crypt_key::handle_type winstd::crypt_key::duplicate_internal(_In_ handle_type h) const
 {
-    handle_type hNew = NULL;
-    return CryptDuplicateKey(h, NULL, 0, &hNew) ? hNew : NULL;
+    handle_type hNew = invalid;
+    return CryptDuplicateKey(h, NULL, 0, &hNew) ? hNew : invalid;
 }
 
 
@@ -220,6 +220,6 @@ winstd::crypt_key::handle_type winstd::crypt_key::duplicate_internal(_In_ handle
 
 winstd::data_blob::~data_blob()
 {
-    if (pbData)
+    if (pbData != NULL)
         LocalFree(pbData);
 }

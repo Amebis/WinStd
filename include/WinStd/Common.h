@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -46,6 +46,7 @@
 
 #include <stdarg.h>
 
+#include <iostream>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -107,7 +108,52 @@ private: \
     inline    C        (_In_ const C &h); \
     inline C& operator=(_In_ const C &h);
 
+///
+/// Declares a class as non-movable
+///
+#define WINSTD_NONMOVABLE(C) \
+private: \
+    inline    C        (_Inout_ C &&h); \
+    inline C& operator=(_Inout_ C &&h);
+
 /// @}
+
+
+/// \addtogroup WinStdStrFormat
+/// @{
+
+///
+/// LPTSTR printf/scanf format specifier
+///
+#ifdef UNICODE
+#define PRINTF_LPTSTR "ls"
+#else
+#define PRINTF_LPTSTR "s"
+#endif
+
+///
+/// LPOLESTR printf/scanf format specifier
+///
+#ifdef OLE2ANSI
+#define PRINTF_LPOLESTR  "hs"
+#else
+#define PRINTF_LPOLESTR  "ls"
+#endif
+
+#ifdef _UNICODE
+#define _tcin   (std::wcin )
+#define _tcout  (std::wcout)
+#define _tcerr  (std::wcerr)
+#define _tclog  (std::wclog)
+#else
+#define _tcin   (std::cin )
+#define _tcout  (std::cout)
+#define _tcerr  (std::cerr)
+#define _tclog  (std::clog)
+#endif
+
+/// @}
+
 
 /// \addtogroup WinStdSysHandles
 /// @{
@@ -115,27 +161,27 @@ private: \
 ///
 /// Implements default constructors and operators to prevent their auto-generation by compiler.
 ///
-#define HANDLE_IMPL(C) \
+#define HANDLE_IMPL(C, INVAL) \
 public: \
-    inline    C        (                       )                                              {                                                             } \
-    inline    C        (_In_    handle_type   h)          : handle<handle_type>(          h ) {                                                             } \
-    inline    C        (_Inout_ C           &&h) noexcept : handle<handle_type>(std::move(h)) {                                                             } \
-    inline C& operator=(_In_    handle_type   h)                                              { handle<handle_type>::operator=(          h ); return *this; } \
-    inline C& operator=(_Inout_ C           &&h) noexcept                                     { handle<handle_type>::operator=(std::move(h)); return *this; } \
+    inline    C        (                       )                                                     {                                                                    } \
+    inline    C        (_In_    handle_type   h)          : handle<handle_type, INVAL>(          h ) {                                                                    } \
+    inline    C        (_Inout_ C           &&h) noexcept : handle<handle_type, INVAL>(std::move(h)) {                                                                    } \
+    inline C& operator=(_In_    handle_type   h)                                                     { handle<handle_type, INVAL>::operator=(          h ); return *this; } \
+    inline C& operator=(_Inout_ C           &&h) noexcept                                            { handle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
 WINSTD_NONCOPYABLE(C)
 
 ///
 /// Implements default constructors and operators to prevent their auto-generation by compiler.
 ///
-#define DPLHANDLE_IMPL(C) \
+#define DPLHANDLE_IMPL(C, INVAL) \
 public: \
-    inline    C        (                             )                                                              {                                                                } \
-    inline    C        (_In_          handle_type   h)          : dplhandle<handle_type>(                   h     ) {                                                                } \
-    inline    C        (_In_    const C            &h)          : dplhandle<handle_type>(duplicate_internal(h.m_h)) {                                                                } \
-    inline    C        (_Inout_       C           &&h) noexcept : dplhandle<handle_type>(std::move         (h    )) {                                                                } \
-    inline C& operator=(_In_          handle_type   h)                                                              { dplhandle<handle_type>::operator=(          h ); return *this; } \
-    inline C& operator=(_In_    const C            &h)                                                              { dplhandle<handle_type>::operator=(          h ); return *this; } \
-    inline C& operator=(_Inout_       C           &&h) noexcept                                                     { dplhandle<handle_type>::operator=(std::move(h)); return *this; } \
+    inline    C        (                             )                                                                     {                                                                       } \
+    inline    C        (_In_          handle_type   h)          : dplhandle<handle_type, INVAL>(                   h     ) {                                                                       } \
+    inline    C        (_In_    const C            &h)          : dplhandle<handle_type, INVAL>(duplicate_internal(h.m_h)) {                                                                       } \
+    inline    C        (_Inout_       C           &&h) noexcept : dplhandle<handle_type, INVAL>(std::move         (h    )) {                                                                       } \
+    inline C& operator=(_In_          handle_type   h)                                                                     { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
+    inline C& operator=(_In_    const C            &h)                                                                     { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
+    inline C& operator=(_Inout_       C           &&h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
 private:
 
 /// @}
@@ -166,8 +212,8 @@ namespace winstd
     template <class _Ty> struct LocalFree_delete<_Ty[]>;
     template<class _Ty, class _Dx = std::default_delete<_Ty>> class ref_unique_ptr;
     template<class _Ty, class _Dx> class ref_unique_ptr<_Ty[], _Dx>;
-    template <class T> class handle;
-    template <class T> class dplhandle;
+    template <class T, T INVAL> class handle;
+    template <class T, T INVAL> class dplhandle;
     template <class T> class vector_queue;
     template <typename _Tn> class num_runtime_error;
     class WINSTD_API win_runtime_error;
@@ -262,6 +308,8 @@ namespace winstd
     /// @{
 
     template<class _Ty> class sanitizing_allocator;
+    template<size_t N> class __declspec(novtable) sanitizing_blob;
+
 
     ///
     /// A sanitizing variant of std::string
@@ -331,7 +379,7 @@ inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _
 ///
 /// \returns Number of characters in result.
 ///
-template<class _Elem, class _Traits, class _Ax> inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg);
+template<class _Elem, class _Traits, class _Ax> inline int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg);
 
 ///
 /// Formats string using `printf()`.
@@ -341,27 +389,28 @@ template<class _Elem, class _Traits, class _Ax> inline int vsprintf(_Out_ std::b
 ///
 /// \returns Number of characters in result.
 ///
-template<class _Elem, class _Traits, class _Ax> inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...);
+template<class _Elem, class _Traits, class _Ax> inline int sprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...);
 
 ///
 /// Formats a message string.
 ///
 /// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
 ///
-template<class _Traits, class _Ax> inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments);
+template<class _Traits, class _Ax> inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Inout_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments);
 
 ///
 /// Formats a message string.
 ///
 /// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
 ///
-template<class _Traits, class _Ax> inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments);
+template<class _Traits, class _Ax> inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments);
 
 /// @}
 
 #pragma once
 
 #include <assert.h>
+#include <tchar.h>
 
 #include <memory>
 #include <vector>
@@ -610,7 +659,7 @@ namespace winstd
     ///
     /// It provides basic operators and methods common to all descendands of this class establishing a base to ease the replacement of native object handle type with classes in object-oriented approach.
     ///
-    template <class T>
+    template <class T, const T INVAL>
     class handle
     {
     public:
@@ -620,9 +669,14 @@ namespace winstd
         typedef T handle_type;
 
         ///
-        /// Initializes a new class instance with the object handle set to NULL.
+        /// Invalid handle value
         ///
-        inline handle() : m_h(NULL)
+        static const T invalid;
+
+        ///
+        /// Initializes a new class instance with the object handle set to INVAL.
+        ///
+        inline handle() : m_h(invalid)
         {
         }
 
@@ -640,17 +694,17 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline handle(_Inout_ handle<handle_type> &&h) noexcept
+        inline handle(_Inout_ handle<handle_type, INVAL> &&h) noexcept
         {
             // Transfer handle.
             m_h   = h.m_h;
-            h.m_h = NULL;
+            h.m_h = invalid;
         }
 
     private:
         // This class is noncopyable.
-        handle(_In_ const handle<handle_type> &h);
-        handle<handle_type>& operator=(_In_ const handle<handle_type> &h);
+        handle(_In_ const handle<handle_type, INVAL> &h);
+        handle<handle_type, INVAL>& operator=(_In_ const handle<handle_type, INVAL> &h);
 
     public:
         ///
@@ -658,7 +712,7 @@ namespace winstd
         ///
         /// \param[in] h  Object handle value
         ///
-        inline handle<handle_type>& operator=(_In_ handle_type h)
+        inline handle<handle_type, INVAL>& operator=(_In_ handle_type h)
         {
             attach(h);
             return *this;
@@ -669,14 +723,14 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline handle<handle_type>& operator=(_Inout_ handle<handle_type> &&h) noexcept
+        inline handle<handle_type, INVAL>& operator=(_Inout_ handle<handle_type, INVAL> &&h) noexcept
         {
             if (this != std::addressof(h)) {
                 // Transfer handle.
-                if (m_h)
+                if (m_h != invalid)
                     free_internal();
                 m_h   = h.m_h;
-                h.m_h = NULL;
+                h.m_h = invalid;
             }
             return *this;
         }
@@ -698,7 +752,7 @@ namespace winstd
         ///
         inline handle_type*& operator*() const
         {
-            assert(m_h != NULL);
+            assert(m_h != invalid);
             return *m_h;
         }
 
@@ -708,7 +762,7 @@ namespace winstd
         ///
         inline handle_type* operator&()
         {
-            assert(m_h == NULL);
+            assert(m_h == invalid);
             return &m_h;
         }
 
@@ -719,20 +773,20 @@ namespace winstd
         ///
         inline handle_type operator->() const
         {
-            assert(m_h != NULL);
+            assert(m_h != invalid);
             return m_h;
         }
 
         ///
-        /// Tests if the object handle is NULL.
+        /// Tests if the object handle is INVAL.
         ///
         /// \return
-        /// - Non zero when object handle is NULL;
+        /// - Non zero when object handle is INVAL;
         /// - Zero otherwise.
         ///
         inline bool operator!() const
         {
-            return m_h == NULL;
+            return m_h == invalid;
         }
 
         ///
@@ -816,13 +870,13 @@ namespace winstd
         ///
         /// Sets a new object handle for the class
         ///
-        /// When the current object handle of the class is non-NULL, the object is destroyed first.
+        /// When the current object handle of the class is non-INVAL, the object is destroyed first.
         ///
         /// \param[in] h  New object handle
         ///
-        inline void attach(_In_ handle_type h)
+        inline void attach(_In_opt_ handle_type h)
         {
-            if (m_h)
+            if (m_h != invalid)
                 free_internal();
             m_h = h;
         }
@@ -835,7 +889,7 @@ namespace winstd
         inline handle_type detach()
         {
             handle_type h = m_h;
-            m_h = NULL;
+            m_h = invalid;
             return h;
         }
 
@@ -844,9 +898,9 @@ namespace winstd
         ///
         inline void free()
         {
-            if (m_h) {
+            if (m_h != invalid) {
                 free_internal();
-                m_h = NULL;
+                m_h = invalid;
             }
         }
 
@@ -863,15 +917,19 @@ namespace winstd
     };
 
 
+    template <class T, const T INVAL>
+    const T handle<T, INVAL>::invalid = INVAL;
+
+
     ///
     /// Base abstract template class to support object handle keeping for objects that support handle duplication
     ///
-    template <class T>
-    class dplhandle : public handle<T>
+    template <class T, T INVAL>
+    class dplhandle : public handle<T, INVAL>
     {
     public:
         ///
-        /// Initializes a new class instance with the object handle set to NULL.
+        /// Initializes a new class instance with the object handle set to INVAL.
         ///
         inline dplhandle()
         {
@@ -882,7 +940,7 @@ namespace winstd
         ///
         /// \param[in] h  Initial object handle value
         ///
-        inline dplhandle(_In_ handle_type h) : handle<handle_type>(h)
+        inline dplhandle(_In_ handle_type h) : handle<handle_type, INVAL>(h)
         {
         }
 
@@ -891,7 +949,7 @@ namespace winstd
         ///
         /// \param[inout] h  A reference of another object
         ///
-        inline dplhandle<handle_type>(_In_ const dplhandle<handle_type> &h) : handle<handle_type>(internal_duplicate(h.m_h))
+        inline dplhandle<handle_type, INVAL>(_In_ const dplhandle<handle_type, INVAL> &h) : handle<handle_type, INVAL>(internal_duplicate(h.m_h))
         {
         }
 
@@ -900,7 +958,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline dplhandle<handle_type>(_Inout_ dplhandle<handle_type> &&h) noexcept : handle<handle_type>(std::move(h))
+        inline dplhandle<handle_type, INVAL>(_Inout_ dplhandle<handle_type, INVAL> &&h) noexcept : handle<handle_type, INVAL>(std::move(h))
         {
         }
 
@@ -909,9 +967,9 @@ namespace winstd
         ///
         /// \param[in] h  Object handle value
         ///
-        inline dplhandle<handle_type>& operator=(_In_ handle_type h)
+        inline dplhandle<handle_type, INVAL>& operator=(_In_ handle_type h)
         {
-            handle<handle_type>::operator=(h);
+            handle<handle_type, INVAL>::operator=(h);
             return *this;
         }
 
@@ -920,23 +978,23 @@ namespace winstd
         ///
         /// \param[in] h  Object
         ///
-        inline dplhandle<handle_type>& operator=(_In_ const dplhandle<handle_type> &h)
+        inline dplhandle<handle_type, INVAL>& operator=(_In_ const dplhandle<handle_type, INVAL> &h)
         {
             if (this != std::addressof(h)) {
-                if (h.m_h) {
+                if (h.m_h != invalid) {
                     handle_type h_new = duplicate_internal(h.m_h);
-                    if (h_new) {
-                        if (m_h)
+                    if (h_new != invalid) {
+                        if (m_h != invalid)
                             free_internal();
 
                         m_h = h_new;
                     } else
                         assert(0); // Could not duplicate the handle
                 } else {
-                    if (m_h)
+                    if (m_h != invalid)
                         free_internal();
 
-                    m_h = NULL;
+                    m_h = invalid;
                 }
             }
             return *this;
@@ -947,9 +1005,9 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline dplhandle<handle_type>& operator=(_Inout_ dplhandle<handle_type> &&h) noexcept
+        inline dplhandle<handle_type, INVAL>& operator=(_Inout_ dplhandle<handle_type, INVAL> &&h) noexcept
         {
-            handle<handle_type>::operator=(std::move(h));
+            handle<handle_type, INVAL>::operator=(std::move(h));
             return *this;
         }
 
@@ -960,7 +1018,7 @@ namespace winstd
         ///
         inline handle_type duplicate() const
         {
-            return m_h ? duplicate_internal(m_h) : NULL;
+            return m_h != invalid ? duplicate_internal(m_h) : invalid;
         }
 
         ///
@@ -974,10 +1032,10 @@ namespace winstd
         ///
         inline bool attach_duplicated(_In_ handle_type h)
         {
-            if (m_h)
+            if (m_h != invalid)
                 free_internal();
 
-            return h ? (m_h = duplicate_internal(h)) != NULL : (m_h = NULL, true);
+            return h != invalid ? (m_h = duplicate_internal(h)) != invalid : (m_h = invalid, true);
         }
 
     protected:
@@ -1423,7 +1481,7 @@ namespace winstd
         ///
         inline num_runtime_error(_In_ error_type num, _In_ const std::string& msg) :
             m_num(num),
-            runtime_error(msg.c_str())
+            runtime_error(msg)
         {
         }
 
@@ -1494,7 +1552,7 @@ namespace winstd
         /// \param[in] num Windows error code
         /// \param[in] msg Error message
         ///
-        inline win_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<DWORD>(num, msg.c_str())
+        inline win_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<DWORD>(num, msg)
         {
         }
 
@@ -1515,7 +1573,7 @@ namespace winstd
         ///
         /// \param[in] msg  Error message
         ///
-        inline win_runtime_error(_In_ const std::string& msg) : num_runtime_error<DWORD>(GetLastError(), msg.c_str())
+        inline win_runtime_error(_In_ const std::string& msg) : num_runtime_error<DWORD>(GetLastError(), msg)
         {
         }
 
@@ -1537,6 +1595,23 @@ namespace winstd
         ///
         inline win_runtime_error(const win_runtime_error &other) : num_runtime_error<DWORD>(other)
         {
+        }
+
+
+        ///
+        /// Returns a user-readable Windows error message
+        ///
+        /// \sa [FormatMessage function](https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-formatmessage)
+        ///
+        inline tstring msg(_In_opt_ DWORD dwLanguageId = 0) const
+        {
+            tstring str;
+            if (FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, 0, m_num, dwLanguageId, str, NULL)) {
+                // Stock Windows error messages contain CRLF. Well... Trim all the trailing white space.
+                str.erase(str.find_last_not_of(_T(" \t\n\r\f\v")) + 1);
+            } else
+                sprintf(str, m_num >= 0x10000 ? _T("Error 0x%X") : _T("Error %u"), m_num);
+            return str;
         }
     };
 
@@ -1868,6 +1943,33 @@ namespace winstd
 
     #pragma warning(pop)
 
+    ///
+    /// Sanitizing BLOB
+    ///
+    template<size_t N>
+    class __declspec(novtable) sanitizing_blob
+    {
+    public:
+        ///
+        /// Constructs uninitialized BLOB
+        ///
+        inline sanitizing_blob()
+        {
+            ZeroMemory(m_data, N);
+        }
+
+        ///
+        /// Sanitizes BLOB
+        ///
+        inline ~sanitizing_blob()
+        {
+            SecureZeroMemory(m_data, N);
+        }
+
+    public:
+        unsigned char m_data[N];    ///< BLOB data
+    };
+
     /// @}
 }
 
@@ -1895,7 +1997,7 @@ inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg)
+inline int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg)
 {
     _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
 
@@ -1923,7 +2025,7 @@ inline int vsprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _P
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...)
+inline int sprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...)
 {
     va_list arg;
     va_start(arg, format);
@@ -1934,7 +2036,7 @@ inline int sprintf(_Out_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Pr
 
 
 template<class _Traits, class _Ax>
-inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
+inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Inout_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
 {
     std::unique_ptr<CHAR[], winstd::LocalFree_delete<CHAR[]> > lpBuffer;
     DWORD dwResult = FormatMessageA(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, reinterpret_cast<LPSTR>((LPSTR*)get_ptr(lpBuffer)), 0, Arguments);
@@ -1945,7 +2047,7 @@ inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ D
 
 
 template<class _Traits, class _Ax>
-inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
+inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
 {
     std::unique_ptr<WCHAR[], winstd::LocalFree_delete<WCHAR[]> > lpBuffer;
     DWORD dwResult = FormatMessageW(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, reinterpret_cast<LPWSTR>((LPWSTR*)get_ptr(lpBuffer)), 0, Arguments);

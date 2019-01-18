@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -30,6 +30,7 @@
 namespace winstd
 {
     class WINSTD_API com_runtime_error;
+    struct WINSTD_API CoTaskMemFree_delete;
     template <class T> class com_obj;
     class WINSTD_API bstr;
     class WINSTD_API variant;
@@ -62,7 +63,7 @@ namespace winstd
         /// \param[in] num  COM error code
         /// \param[in] msg  Error message
         ///
-        inline com_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<HRESULT>(num, msg.c_str())
+        inline com_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<HRESULT>(num, msg)
         {
         }
 
@@ -93,12 +94,34 @@ namespace winstd
     /// @{
 
     ///
+    /// Deleter for unique_ptr using CoTaskMemFree
+    ///
+    struct WINSTD_API CoTaskMemFree_delete
+    {
+        ///
+        /// Default constructor
+        ///
+        CoTaskMemFree_delete() {}
+
+        ///
+        /// Delete a pointer
+        ///
+        /// \sa [CoTaskMemFree function](https://docs.microsoft.com/en-us/windows/desktop/api/combaseapi/nf-combaseapi-cotaskmemfree)
+        ///
+        template <class _T>
+        void operator()(_T *_Ptr) const
+        {
+            CoTaskMemFree(_Ptr);
+        }
+    };
+
+    ///
     /// COM object wrapper template
     ///
     template <class T>
-    class com_obj : public dplhandle<T*>
+    class com_obj : public dplhandle<T*, NULL>
     {
-        DPLHANDLE_IMPL(com_obj)
+        DPLHANDLE_IMPL(com_obj, NULL)
 
     public:
         ///
@@ -143,7 +166,7 @@ namespace winstd
         ///
         virtual ~com_obj()
         {
-            if (m_h)
+            if (m_h != invalid)
                 m_h->Release();
         }
 
@@ -225,9 +248,9 @@ namespace winstd
     ///
     /// BSTR string wrapper
     ///
-    class WINSTD_API bstr : public dplhandle<BSTR>
+    class WINSTD_API bstr : public dplhandle<BSTR, NULL>
     {
-        DPLHANDLE_IMPL(bstr)
+        DPLHANDLE_IMPL(bstr, NULL)
 
     public:
         ///

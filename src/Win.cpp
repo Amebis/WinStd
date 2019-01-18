@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -152,29 +152,12 @@ _Success_(return) BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ L
 
 
 //////////////////////////////////////////////////////////////////////
-// winstd::win_handle
-//////////////////////////////////////////////////////////////////////
-
-winstd::win_handle::~win_handle()
-{
-    if (m_h)
-        CloseHandle(m_h);
-}
-
-
-void winstd::win_handle::free_internal()
-{
-    CloseHandle(m_h);
-}
-
-
-//////////////////////////////////////////////////////////////////////
 // winstd::library
 //////////////////////////////////////////////////////////////////////
 
 winstd::library::~library()
 {
-    if (m_h)
+    if (m_h != invalid)
         FreeLibrary(m_h);
 }
 
@@ -186,12 +169,46 @@ void winstd::library::free_internal()
 
 
 //////////////////////////////////////////////////////////////////////
+// winstd::critical_section
+//////////////////////////////////////////////////////////////////////
+
+winstd::critical_section::critical_section()
+{
+    InitializeCriticalSection(&m_data);
+}
+
+
+winstd::critical_section::~critical_section()
+{
+    DeleteCriticalSection(&m_data);
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// winstd::find_file
+//////////////////////////////////////////////////////////////////////
+
+winstd::find_file::~find_file()
+{
+    if (m_h != invalid) {
+        FindClose(m_h);
+    }
+}
+
+
+void winstd::find_file::free_internal()
+{
+    FindClose(m_h);
+}
+
+
+//////////////////////////////////////////////////////////////////////
 // winstd::heap
 //////////////////////////////////////////////////////////////////////
 
 winstd::heap::~heap()
 {
-    if (m_h) {
+    if (m_h != invalid) {
         enumerate();
         HeapDestroy(m_h);
     }
@@ -200,6 +217,8 @@ winstd::heap::~heap()
 
 bool winstd::heap::enumerate()
 {
+    assert(m_h != invalid);
+
     bool found = false;
 
     // Lock the heap for exclusive access.
@@ -278,12 +297,30 @@ winstd::user_impersonator::~user_impersonator()
 
 
 //////////////////////////////////////////////////////////////////////
+// winstd::console_ctrl_handler
+//////////////////////////////////////////////////////////////////////
+
+winstd::console_ctrl_handler::console_ctrl_handler(_In_opt_ PHANDLER_ROUTINE HandlerRoutine) :
+    m_handler(HandlerRoutine)
+{
+    m_cookie = SetConsoleCtrlHandler(m_handler, TRUE);
+}
+
+
+winstd::console_ctrl_handler::~console_ctrl_handler()
+{
+    if (m_cookie)
+        SetConsoleCtrlHandler(m_handler, FALSE);
+}
+
+
+//////////////////////////////////////////////////////////////////////
 // winstd::vmemory
 //////////////////////////////////////////////////////////////////////
 
 winstd::vmemory::~vmemory()
 {
-    if (m_h)
+    if (m_h != invalid)
         VirtualFreeEx(m_proc, m_h, 0, MEM_RELEASE);
 }
 
@@ -300,7 +337,7 @@ void winstd::vmemory::free_internal()
 
 winstd::reg_key::~reg_key()
 {
-    if (m_h)
+    if (m_h != invalid)
         RegCloseKey(m_h);
 }
 
@@ -317,7 +354,7 @@ void winstd::reg_key::free_internal()
 
 winstd::security_id::~security_id()
 {
-    if (m_h)
+    if (m_h != invalid)
         FreeSid(m_h);
 }
 

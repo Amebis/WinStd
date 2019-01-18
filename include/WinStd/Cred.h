@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -44,27 +44,27 @@ namespace winstd
 ///
 /// \sa [CredEnumerate function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374794.aspx)
 ///
-inline BOOL CredEnumerate(_In_ LPCTSTR Filter, _Reserved_ DWORD Flags, _Out_ DWORD *Count, _Out_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials);
+inline BOOL CredEnumerate(_In_z_ LPCTSTR Filter, _Reserved_ DWORD Flags, _Out_ DWORD *Count, _Inout_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials);
 
 /// @copydoc CredProtectW()
-template<class _Elem, class _Traits, class _Ax> inline BOOL CredProtectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
+template<class _Elem, class _Traits, class _Ax> inline BOOL CredProtectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR pszCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
 
 ///
 /// Encrypts the specified credentials so that only the current security context can decrypt them.
 ///
 /// \sa [CredProtect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374803.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline BOOL CredProtectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
+template<class _Elem, class _Traits, class _Ax> inline BOOL CredProtectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR pszCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
 
 /// @copydoc CredUnprotectW()
-template<class _Elem, class _Traits, class _Ax> inline BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials);
+template<class _Elem, class _Traits, class _Ax> inline BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials);
 
 ///
 /// Decrypts credentials that were previously encrypted by using the CredProtect function.
 ///
 /// \sa [CredUnprotect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375186.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials);
+template<class _Elem, class _Traits, class _Ax> inline BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials);
 
 /// @}
 
@@ -143,17 +143,20 @@ namespace winstd
 }
 
 
-inline BOOL CredEnumerate(_In_ LPCTSTR Filter, _Reserved_ DWORD Flags, _Out_ DWORD *Count, _Out_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials)
+inline BOOL CredEnumerate(_In_z_ LPCTSTR Filter, _Reserved_ DWORD Flags, _Out_ DWORD *Count, _Inout_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials)
 {
-    PCREDENTIAL *pCredentials = NULL;
-    BOOL bResult = CredEnumerate(Filter, Flags, Count, &pCredentials);
-    cCredentials.reset(pCredentials);
-    return bResult;
+    PCREDENTIAL *pCredentials;
+    if (CredEnumerate(Filter, Flags, Count, &pCredentials)) {
+        cCredentials.reset(pCredentials);
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline BOOL CredProtectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType)
+inline BOOL CredProtectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR pszCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType)
 {
     _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(buf);
@@ -177,7 +180,7 @@ inline BOOL CredProtectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszCredentials, _In_ DWO
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline BOOL CredProtectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType)
+inline BOOL CredProtectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR pszCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType)
 {
     _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(buf);
@@ -201,7 +204,7 @@ inline BOOL CredProtectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszCredentials, _In_ DW
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials)
+inline BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials)
 {
     _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(buf);
@@ -225,7 +228,7 @@ inline BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_ LPCSTR pszProtectedCredential
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_ LPCWSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials)
+inline BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials)
 {
     _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
     DWORD dwSize = _countof(buf);

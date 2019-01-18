@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -105,6 +105,7 @@ inline bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE
 #include <EapHostPeerTypes.h>
 #include <eapmethodtypes.h>
 #include <eappapis.h>
+#include <WinSock2.h>
 
 
 namespace winstd
@@ -394,9 +395,9 @@ namespace winstd
     ///
     /// EapPacket wrapper class
     ///
-    class WINSTD_API eap_packet : public dplhandle<EapPacket*>
+    class WINSTD_API eap_packet : public dplhandle<EapPacket*, NULL>
     {
-        DPLHANDLE_IMPL(eap_packet)
+        DPLHANDLE_IMPL(eap_packet, NULL)
 
     public:
         ///
@@ -423,7 +424,7 @@ namespace winstd
             assert(size >= 4); // EAP packets must contain at least Code, Id, and Length fields: 4B.
 
             handle_type h = (handle_type)HeapAlloc(GetProcessHeap(), 0, size);
-            if (h) {
+            if (h != NULL) {
                         h->Code   = (BYTE)      code ;
                         h->Id     =             id   ;
                 *(WORD*)h->Length =       htons(size);
@@ -442,7 +443,7 @@ namespace winstd
         ///
         inline WORD size() const
         {
-            return m_h ? ntohs(*(WORD*)m_h->Length) : 0;
+            return m_h != NULL ? ntohs(*(WORD*)m_h->Length) : 0;
         }
 
 

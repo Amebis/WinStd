@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -64,7 +64,7 @@ namespace winstd
         /// \param[in ] size  Length of `data` in bytes
         ///
         template<class _Elem, class _Traits, class _Ax>
-        inline void encode(_Out_ std::basic_string<_Elem, _Traits, _Ax> &out, _In_bytecount_(size) const void *data, _In_ size_t size)
+        inline void encode(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &out, _In_bytecount_(size) const void *data, _In_ size_t size)
         {
             assert(data || !size);
 

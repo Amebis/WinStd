@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 1991-2018 Amebis
+    Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
     This file is part of WinStd.
@@ -51,7 +51,7 @@ namespace winstd {
 /// Since Wlanapi.dll is not always present, the `pfnWlanReasonCodeToString` pointer to `WlanReasonCodeToString()`
 /// function must be loaded dynamically.
 ///
-template<class _Elem, class _Traits, class _Ax> inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved);
+template<class _Elem, class _Traits, class _Ax> inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved);
 
 /// @}
 
@@ -124,9 +124,9 @@ namespace winstd
     ///
     /// WLAN handle wrapper
     ///
-    class WINSTD_API wlan_handle : public handle<HANDLE>
+    class WINSTD_API wlan_handle : public handle<HANDLE, NULL>
     {
-        HANDLE_IMPL(wlan_handle)
+        HANDLE_IMPL(wlan_handle, NULL)
 
     public:
         ///
@@ -172,7 +172,7 @@ namespace winstd
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved)
+inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved)
 {
     DWORD dwSize = 0;
 

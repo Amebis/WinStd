@@ -27,10 +27,12 @@
     <ClCompile Include="..\src\EAP.cpp" />
     <ClCompile Include="..\src\ETW.cpp" />
     <ClCompile Include="..\src\Sec.cpp" />
+    <ClCompile Include="..\src\SetupAPI.cpp" />
     <ClCompile Include="..\src\StdAfx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\src\Win.cpp" />
+    <ClCompile Include="..\src\WinSock2.cpp" />
     <ClCompile Include="..\src\WinTrust.cpp" />
     <ClCompile Include="..\src\WLAN.cpp" />
   </ItemGroup>
@@ -45,8 +47,10 @@
     <ClInclude Include="..\include\WinStd\Hex.h" />
     <ClInclude Include="..\include\WinStd\MSI.h" />
     <ClInclude Include="..\include\WinStd\Sec.h" />
+    <ClInclude Include="..\include\WinStd\SetupAPI.h" />
     <ClInclude Include="..\include\WinStd\Shell.h" />
     <ClInclude Include="..\include\WinStd\Win.h" />
+    <ClInclude Include="..\include\WinStd\WinSock2.h" />
     <ClInclude Include="..\include\WinStd\WinTrust.h" />
     <ClInclude Include="..\include\WinStd\WLAN.h" />
     <ClInclude Include="..\src\StdAfx.h" />
