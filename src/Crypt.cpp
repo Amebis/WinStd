@@ -149,7 +149,7 @@ bool winstd::crypt_key::create_exp1(_In_ HCRYPTPROV hProv, _In_ DWORD dwKeySpec)
     handle_type h;
     if (CryptGenKey(hProv, dwKeySpec, CRYPT_EXPORTABLE, &h)) {
         // Export the private key, we'll convert it to a private exponent of one key.
-        std::vector<BYTE> key_blob;
+        std::vector<BYTE, sanitizing_allocator<BYTE>> key_blob;
         if (CryptExportKey(h, 0, PRIVATEKEYBLOB, 0, key_blob)) {
             CryptDestroyKey(h);
 
