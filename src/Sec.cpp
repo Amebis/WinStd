@@ -29,7 +29,7 @@
 
 winstd::sec_credentials::~sec_credentials()
 {
-    if (m_h) {
+    if (m_h != invalid) {
         FreeCredentialsHandle(m_h);
         delete m_h;
     }
@@ -49,7 +49,7 @@ void winstd::sec_credentials::free_internal()
 
 winstd::sec_context::~sec_context()
 {
-    if (m_h) {
+    if (m_h != invalid) {
         DeleteSecurityContext(m_h);
         delete m_h;
     }

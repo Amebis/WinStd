@@ -63,7 +63,7 @@ namespace winstd
     ///
     /// PCredHandle wrapper class
     ///
-    class WINSTD_API sec_credentials : public handle<PCredHandle>
+    class WINSTD_API sec_credentials : public handle<PCredHandle, NULL>
     {
         WINSTD_NONCOPYABLE(sec_credentials)
 
@@ -95,7 +95,7 @@ namespace winstd
         ///
         inline sec_credentials(_Inout_ sec_credentials &&h) :
             m_expires(std::move(h.m_expires)),
-            handle<PCredHandle>(std::move(h))
+            handle<PCredHandle, NULL>(std::move(h))
         {
         }
 
@@ -114,8 +114,8 @@ namespace winstd
         sec_credentials& operator=(_Inout_ sec_credentials &&h)
         {
             if (this != std::addressof(h)) {
-                *(handle<handle_type>*)this = std::move(h);
-                m_expires                   = std::move(h.m_expires);
+                *(handle<handle_type, NULL>*)this = std::move(h);
+                m_expires = std::move(h.m_expires);
             }
             return *this;
         }
@@ -165,7 +165,7 @@ namespace winstd
     ///
     /// PCtxtHandle wrapper class
     ///
-    class WINSTD_API sec_context : public handle<PCtxtHandle>
+    class WINSTD_API sec_context : public handle<PCtxtHandle, NULL>
     {
     public:
         ///
@@ -173,7 +173,7 @@ namespace winstd
         ///
         inline sec_context() :
             m_attrib(0),
-            handle<PCtxtHandle>()
+            handle<PCtxtHandle, NULL>()
         {
             m_expires.QuadPart = -1;
         }
@@ -186,7 +186,7 @@ namespace winstd
         inline sec_context(_Inout_ sec_context &&h) :
             m_attrib (std::move(h.m_attrib )),
             m_expires(std::move(h.m_expires)),
-            handle<PCtxtHandle>(std::move(h))
+            handle<PCtxtHandle, NULL>(std::move(h))
         {
         }
 
@@ -205,7 +205,7 @@ namespace winstd
         sec_context& operator=(_Inout_ sec_context &&h)
         {
             if (this != std::addressof(h)) {
-                *(handle<handle_type>*)this = std::move(h);
+                *(handle<handle_type, NULL>*)this = std::move(h);
                 m_attrib  = std::move(h.m_attrib);
                 m_expires = std::move(h.m_expires);
             }
