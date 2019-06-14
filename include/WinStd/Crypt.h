@@ -612,7 +612,7 @@ namespace winstd
             cbData = other.cbData;
             if (cbData) {
                 pbData = (BYTE*)LocalAlloc(LMEM_FIXED, other.cbData);
-                assert(pbData);
+                if (!pbData) throw win_runtime_error("LocalAlloc failed.");
                 memcpy(pbData, other.pbData, other.cbData);
             } else
                 pbData = NULL;
@@ -645,7 +645,7 @@ namespace winstd
                     LocalFree(pbData);
                 if (cbData) {
                     pbData = (BYTE*)LocalAlloc(LMEM_FIXED, other.cbData);
-                    assert(pbData);
+                    if (!pbData) throw win_runtime_error("LocalAlloc failed.");
                     memcpy(pbData, other.pbData, other.cbData);
                 } else
                     pbData = NULL;
