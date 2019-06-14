@@ -192,6 +192,12 @@ private:
 #endif
 
 
+#ifndef _LPCBYTE_DEFINED
+#define _LPCBYTE_DEFINED
+typedef const BYTE *LPCBYTE;
+#endif
+
+
 namespace winstd
 {
     /// \addtogroup WinStdStrFormat

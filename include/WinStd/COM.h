@@ -39,6 +39,7 @@ namespace winstd
 
 #pragma once
 
+#include <unknwn.h>
 
 namespace winstd
 {
