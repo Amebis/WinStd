@@ -141,7 +141,7 @@ namespace winstd
         ///
         /// \sa [CertCreateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376033.aspx)
         ///
-        inline bool create(_In_  DWORD dwCertEncodingType, _In_  const BYTE *pbCertEncoded, _In_  DWORD cbCertEncoded)
+        inline bool create(_In_  DWORD dwCertEncodingType, _In_  LPCBYTE pbCertEncoded, _In_  DWORD cbCertEncoded)
         {
             handle_type h = CertCreateCertificateContext(dwCertEncodingType, pbCertEncoded, cbCertEncoded);
             if (h != invalid) {
@@ -509,7 +509,7 @@ namespace winstd
         ///
         /// \sa [CryptImportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380207.aspx)
         ///
-        inline bool import(_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) const BYTE *pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags)
+        inline bool import(_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) LPCBYTE pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags)
         {
             handle_type h;
             if (CryptImportKey(hProv, pbData, dwDataLen, hPubKey, dwFlags, &h)) {
