@@ -1498,7 +1498,7 @@ namespace winstd
         /// \param[in] num  Numeric error code
         /// \param[in] msg  Error message
         ///
-        inline num_runtime_error(_In_ error_type num, _In_z_ const char *msg) :
+        inline num_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) :
             m_num(num),
             runtime_error(msg)
         {
@@ -1569,7 +1569,7 @@ namespace winstd
         /// \param[in] num  Windows error code
         /// \param[in] msg  Error message
         ///
-        inline win_runtime_error(_In_ error_type num, _In_z_ const char *msg) : num_runtime_error<DWORD>(num, msg)
+        inline win_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<DWORD>(num, msg)
         {
         }
 
@@ -1589,7 +1589,7 @@ namespace winstd
         ///
         /// \param[in] msg  Error message
         ///
-        inline win_runtime_error(_In_z_ const char *msg) : num_runtime_error<DWORD>(GetLastError(), msg)
+        inline win_runtime_error(_In_opt_z_ const char *msg = nullptr) : num_runtime_error<DWORD>(GetLastError(), msg)
         {
         }
 

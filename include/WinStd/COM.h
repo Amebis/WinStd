@@ -75,7 +75,7 @@ namespace winstd
         /// \param[in] num  COM error code
         /// \param[in] msg  Error message
         ///
-        inline com_runtime_error(_In_ error_type num, _In_z_ const char *msg) : num_runtime_error<HRESULT>(num, msg)
+        inline com_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<HRESULT>(num, msg)
         {
         }
 

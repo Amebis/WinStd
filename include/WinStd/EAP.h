@@ -561,7 +561,7 @@ namespace winstd
         /// \param[in] err  EapHost error descriptor
         /// \param[in] msg  Error message
         ///
-        inline eap_runtime_error(_In_ const EAP_ERROR &err, _In_z_ const char *msg) :
+        inline eap_runtime_error(_In_ const EAP_ERROR &err, _In_opt_z_ const char *msg = nullptr) :
             m_type           (err.type            ),
             m_reason         (err.dwReasonCode    ),
             m_root_cause_id  (err.rootCauseGuid   ),

@@ -68,7 +68,7 @@ namespace winstd
         /// \param[in] num  WinSock2 error code
         /// \param[in] msg  Error message
         ///
-        inline ws2_runtime_error(_In_ error_type num, _In_z_ const char *msg) : num_runtime_error<int>(num, msg)
+        inline ws2_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<int>(num, msg)
         {
         }
 
@@ -88,7 +88,7 @@ namespace winstd
         ///
         /// \param[in] msg  Error message
         ///
-        inline ws2_runtime_error(_In_z_ const char *msg) : num_runtime_error<int>(WSAGetLastError(), msg)
+        inline ws2_runtime_error(_In_opt_z_ const char *msg = nullptr) : num_runtime_error<int>(WSAGetLastError(), msg)
         {
         }
 

@@ -333,7 +333,7 @@ namespace winstd
         /// \param[in] num  Security provider error code
         /// \param[in] msg  Error message
         ///
-        inline sec_runtime_error(_In_ error_type num, _In_z_ const char *msg) : num_runtime_error<SECURITY_STATUS>(num, msg)
+        inline sec_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<SECURITY_STATUS>(num, msg)
         {
         }
 
