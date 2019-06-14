@@ -345,6 +345,7 @@ namespace winstd
         ///
         /// Moves VARIANT from another
         ///
+        #pragma warning(suppress: 26495) // vt member is initialized as a result of memcpy()
         inline variant(_Inout_ VARIANT&& varSrc)
         {
             memcpy(this, &varSrc, sizeof(VARIANT));
@@ -532,13 +533,13 @@ namespace winstd
             assert(pSrc != NULL);
 
             LPSAFEARRAY pCopy;
-            HRESULT hRes = SafeArrayCopy((LPSAFEARRAY)pSrc, &pCopy);
-            if (SUCCEEDED(hRes)) {
-                SafeArrayGetVartype((LPSAFEARRAY)pSrc, &vt);
-                vt |= VT_ARRAY;
-                parray = pCopy;
-            } else
-                assert(0);
+            HRESULT hr = SafeArrayCopy((LPSAFEARRAY)pSrc, &pCopy);
+            if (FAILED(hr))
+                throw winstd::com_runtime_error(hr, "SafeArrayCopy failed.");
+
+            SafeArrayGetVartype((LPSAFEARRAY)pSrc, &vt);
+            vt |= VT_ARRAY;
+            parray = pCopy;
         }
 
         ///

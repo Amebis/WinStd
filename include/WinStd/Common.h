@@ -496,7 +496,7 @@ namespace winstd
         ///
         /// Delete a pointer
         ///
-        void operator()(_Ty *_Ptr) const
+        void operator()(_Frees_ptr_opt_ _Ty *_Ptr) const
         {
             LocalFree(_Ptr);
         }
