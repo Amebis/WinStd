@@ -1,13 +1,17 @@
 ﻿# WinStd
+
 Provides additional templates and function helpers for Windows API using Standard C++
 
 ## Features
+
 ### Lightweight Classes
+
 ...to simplify Windows allocated memory and resources focused on their release to prevent leakage
 
 The classes provide unified create methods and free destructors. They are like _smart-pointers_ for various Windows resources. Once created, you use the class instance as a snap-in replacement for pointers/handles parameters in the standard Win32 API functions.
 
-Example:
+#### Example
+
 ```C++
 // Load and set icon.
 winstd::library lib_shell32;
@@ -16,13 +20,15 @@ if (lib_shell32.load(_T("shell32.dll"), NULL, LOAD_LIBRARY_AS_DATAFILE | LOAD_LI
 ```
 
 ### Functions and Templates
+
 ...to extend standard Win32 API functions for variable-size outputs
 
 Different Win32 API functions have different ways of returning variable-sized data. Getting tired of carefully studying MSDN for each particular Win32 API function how to preallocate the output memory correctly? We too...
 
 WinStd provides a subset of Win32 API identically named functions (C++ polymorphism to the rescue), where one can use `std::string`, `std::wstring`, `std::vector<>` etc. as an output parameter. WinStd handles all the dirty work with memory allocation for you, so you can focus on your code.
 
-Example:
+#### Example
+
 ```C++
 // Encode response as OEM.
 std::string response;
@@ -31,9 +37,11 @@ std::cout << response.c_str() << std::endl;
 ```
 
 ### String Formatters
+
 ...for those situations where one must quckly compose a temporary string using `sprintf()` or `FormatMessage()`
 
-Example:
+#### Example
+
 ```C++
 if (dwMaxSendPacketSize < sizeof(EapPacket))
     throw std::invalid_argument(
@@ -44,9 +52,11 @@ if (dwMaxSendPacketSize < sizeof(EapPacket))
 ```
 
 ## Building
+
 The `WinStd.vcxproj` requires Microsoft Visual Studio 2010 SP1 and `..\..\include` folder with `common.props`, `Debug.props`, `Release.props`, `Win32.props`, and `x64.props` files to customize building process for individual applications.
 
 ## Usage
+
 1. Clone the repository into your solution folder.
 2. Add the `WinStd.vcxproj` to your solution.
 3. Add WinStd's `include` folder to _Additional Include Directories_ in your project's C/C++ settings.
@@ -68,6 +78,7 @@ void main()
 More examples and use-cases can be found in [GÉANTLink](https://github.com/Amebis/GEANTLink) and [ZRCola](https://github.com/Amebis/ZRCola) projects source code. They make heavy use of WinStd.
 
 ## Debugging
+
 For user friendlier display of variables of WinStd types in Visual Studio 2010 debugger, find the file `autoexp.dat` in your `C:\Program Files (x86)\Microsoft Visual Studio 2010` and open it with Notepad.
 Locate the `[AutoExpand]` section and add the following lines:
 ```
