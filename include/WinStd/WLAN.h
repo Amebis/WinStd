@@ -181,7 +181,8 @@ inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_
 
     for (;;) {
         // Increment size and allocate buffer.
-        std::unique_ptr<_Elem[]> szBuffer(new _Elem[dwSize += 1024]);
+        dwSize += 1024;
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[dwSize]);
 
         // Try!
         DWORD dwResult = ::pfnWlanReasonCodeToString(dwReasonCode, dwSize, szBuffer.get(), pReserved);

@@ -93,7 +93,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline sec_credentials(_Inout_ sec_credentials &&h) :
+        inline sec_credentials(_Inout_ sec_credentials &&h) noexcept :
             m_expires(std::move(h.m_expires)),
             handle<PCredHandle, NULL>(std::move(h))
         {
@@ -111,7 +111,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        sec_credentials& operator=(_Inout_ sec_credentials &&h)
+        sec_credentials& operator=(_Inout_ sec_credentials &&h) noexcept
         {
             if (this != std::addressof(h)) {
                 *(handle<handle_type, NULL>*)this = std::move(h);
@@ -183,7 +183,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline sec_context(_Inout_ sec_context &&h) :
+        inline sec_context(_Inout_ sec_context &&h) noexcept :
             m_attrib (std::move(h.m_attrib )),
             m_expires(std::move(h.m_expires)),
             handle<PCtxtHandle, NULL>(std::move(h))
@@ -202,7 +202,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        sec_context& operator=(_Inout_ sec_context &&h)
+        sec_context& operator=(_Inout_ sec_context &&h) noexcept
         {
             if (this != std::addressof(h)) {
                 *(handle<handle_type, NULL>*)this = std::move(h);
@@ -230,6 +230,8 @@ namespace winstd
             _Inout_opt_ PSecBufferDesc pOutput)
         {
             handle_type h = new CtxtHandle;
+            h->dwUpper = 0;
+            h->dwLower = 0;
             ULONG attr;
             TimeStamp exp;
             SECURITY_STATUS res = InitializeSecurityContext(phCredential, NULL, const_cast<LPTSTR>(pszTargetName), fContextReq, 0, TargetDataRep, pInput, 0, h, pOutput, &attr, &exp);

@@ -55,21 +55,21 @@ namespace winstd
 ///
 /// \sa [TdhGetEventInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964840.aspx)
 ///
-inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Inout_ std::unique_ptr<TRACE_EVENT_INFO> &info);
+inline _Success_(return == ERROR_SUCCESS) ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_reads_opt_(TdhContextCount) PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info);
 
 ///
 /// Retrieves information about the event map contained in the event.
 ///
 /// \sa [TdhGetEventMapInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964841.aspx)
 ///
-inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Inout_ std::unique_ptr<EVENT_MAP_INFO> &info);
+inline _Success_(return == ERROR_SUCCESS) ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Inout_ std::unique_ptr<EVENT_MAP_INFO> &info);
 
 ///
 /// Retrieves a property value from the event data.
 ///
 /// \sa [TdhGetProperty function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964843.aspx)
 ///
-template<class _Ty, class _Ax> inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_ PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Inout_ std::vector<_Ty, _Ax> &aData);
+template<class _Ty, class _Ax> inline _Success_(return == ERROR_SUCCESS) ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_reads_opt_(TdhContextCount) PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_reads_(PropertyDataCount) PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Inout_ std::vector<_Ty, _Ax> &aData);
 
 /// @}
 
@@ -105,6 +105,7 @@ namespace winstd
         ///
         /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
+        #pragma warning(suppress: 26495) // EventDataDescCreate() initializes all members of EVENT_DATA_DESCRIPTOR
         inline event_data(_In_ const int &data)
         {
             EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
@@ -118,6 +119,7 @@ namespace winstd
         ///
         /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
+        #pragma warning(suppress: 26495) // EventDataDescCreate() initializes all members of EVENT_DATA_DESCRIPTOR
         inline event_data(_In_ const unsigned int &data)
         {
             EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
@@ -131,6 +133,7 @@ namespace winstd
         ///
         /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
+        #pragma warning(suppress: 26495) // EventDataDescCreate() initializes all members of EVENT_DATA_DESCRIPTOR
         inline event_data(_In_ const long &data)
         {
             EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
@@ -144,6 +147,7 @@ namespace winstd
         ///
         /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
+        #pragma warning(suppress: 26495) // EventDataDescCreate() initializes all members of EVENT_DATA_DESCRIPTOR
         inline event_data(_In_ const unsigned long &data)
         {
             EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
@@ -157,6 +161,7 @@ namespace winstd
         ///
         /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
+        #pragma warning(suppress: 26495) // EventDataDescCreate() initializes all members of EVENT_DATA_DESCRIPTOR
         inline event_data(_In_ const GUID &data)
         {
             EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
@@ -170,7 +175,8 @@ namespace winstd
         ///
         /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
-        inline event_data(_In_ const char *data)
+        #pragma warning(suppress: 26495) // EventDataDescCreate() initializes all members of EVENT_DATA_DESCRIPTOR
+        inline event_data(_In_opt_z_ const char *data)
         {
             if (data)
                 EventDataDescCreate(this, data, (ULONG)((strlen(data) + 1) * sizeof(*data)));
@@ -189,7 +195,8 @@ namespace winstd
         ///
         /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
-        inline event_data(_In_ const wchar_t *data)
+        #pragma warning(suppress: 26495) // EventDataDescCreate() initializes all members of EVENT_DATA_DESCRIPTOR
+        inline event_data(_In_opt_z_ const wchar_t *data)
         {
             if (data)
                 EventDataDescCreate(this, data, (ULONG)((wcslen(data) + 1) * sizeof(*data)));
@@ -208,6 +215,7 @@ namespace winstd
         ///
         /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
+        #pragma warning(suppress: 26495) // EventDataDescCreate() initializes all members of EVENT_DATA_DESCRIPTOR
         template<class _Elem, class _Traits, class _Ax>
         inline event_data(_In_ const std::basic_string<_Elem, _Traits, _Ax> &data)
         {
@@ -223,6 +231,7 @@ namespace winstd
         ///
         /// \note This class saves a reference to the data only. Therefore, data must be kept available.
         ///
+        #pragma warning(suppress: 26495) // EventDataDescCreate() initializes all members of EVENT_DATA_DESCRIPTOR
         inline event_data(_In_bytecount_(size) const void *data, _In_ ULONG size)
         {
             EventDataDescCreate(this, data, size);
@@ -1130,7 +1139,7 @@ namespace winstd
 }
 
 
-inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _Inout_ std::unique_ptr<TRACE_EVENT_INFO> &info)
+inline _Success_(return == ERROR_SUCCESS) ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_reads_opt_(TdhContextCount) PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info)
 {
     BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
     ULONG ulSize = sizeof(szBuffer), ulResult;
@@ -1152,7 +1161,7 @@ inline ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhCon
 }
 
 
-inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Inout_ std::unique_ptr<EVENT_MAP_INFO> &info)
+inline _Success_(return == ERROR_SUCCESS) ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Inout_ std::unique_ptr<EVENT_MAP_INFO> &info)
 {
     BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
     ULONG ulSize = sizeof(szBuffer), ulResult;
@@ -1175,7 +1184,7 @@ inline ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pM
 
 
 template<class _Ty, class _Ax>
-inline ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_ PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_ PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Inout_ std::vector<_Ty, _Ax> &aData)
+inline _Success_(return == ERROR_SUCCESS) ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_reads_opt_(TdhContextCount) PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_reads_(PropertyDataCount) PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Inout_ std::vector<_Ty, _Ax> &aData)
 {
     ULONG ulSize, ulResult;
 

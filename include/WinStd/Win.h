@@ -54,47 +54,47 @@ namespace winstd
 /// @{
 
 /// @copydoc GetModuleFileNameW()
-template<class _Elem, class _Traits, class _Ax> inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
 /// Retrieves the fully qualified path for the file that contains the specified module and stores it in a std::wstring string.
 ///
 /// \sa [GetModuleFileName function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms683197.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 /// @copydoc GetWindowTextW()
-template<class _Elem, class _Traits, class _Ax> inline int GetWindowTextA(_In_ HWND hWnd, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
 /// Copies the text of the specified window's title bar (if it has one) into a std::wstring string.
 ///
 /// \sa [GetWindowText function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633520.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline int GetWindowTextW(_In_ HWND hWnd, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 /// @copydoc GetFileVersionInfoW()
-template<class _Ty, class _Ax> inline BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Inout_ std::vector<_Ty, _Ax> &aValue);
+template<class _Ty, class _Ax> inline _Success_(return != 0) BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue);
 
 ///
 /// Retrieves version information for the specified file and stores it in a std::vector buffer.
 ///
 /// \sa [GetFileVersionInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms647003.aspx)
 ///
-template<class _Ty, class _Ax> inline BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Inout_ std::vector<_Ty, _Ax> &aValue);
+template<class _Ty, class _Ax> inline _Success_(return != 0) BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue);
 
 /// @copydoc ExpandEnvironmentStringsW()
-template<class _Elem, class _Traits, class _Ax> inline DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
 /// Expands environment-variable strings, replaces them with the values defined for the current user, and stores it in a std::wstring string.
 ///
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 /// @copydoc GuidToStringW()
-template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringA(_In_ LPCGUID lpGuid, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &str);
+template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str);
 
 ///
 /// Formats GUID and stores it in a std::wstring string.
@@ -102,7 +102,7 @@ template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringA(_In_ L
 /// \param[in ] lpGuid  Pointer to GUID
 /// \param[out] str     String to store the result to
 ///
-template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &str);
+template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str);
 /// @copydoc GuidToStringW()
 #ifdef _UNICODE
 #define GuidToString GuidToStringW
@@ -150,7 +150,7 @@ _Success_(return) BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ L
 /// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
 /// Queries for a string value in the registry and stores it in a std::wstring string.
@@ -170,29 +170,29 @@ template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringVal
 /// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 /// @copydoc RegQueryValueExW()
-template<class _Ty, class _Ax> inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Inout_ std::vector<_Ty, _Ax> &aData);
+template<class _Ty, class _Ax> inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData);
 
 ///
 /// Retrieves the type and data for the specified value name associated with an open registry key and stores the data in a std::vector buffer.
 ///
 /// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
 ///
-template<class _Ty, class _Ax> inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Inout_ std::vector<_Ty, _Ax> &aData);
+template<class _Ty, class _Ax> inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData);
 
 #if _WIN32_WINNT >= _WIN32_WINNT_VISTA
 
 /// @copydoc RegLoadMUIStringW()
-template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCSTR pszDirectory);
+template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCSTR pszDirectory);
 
 ///
 /// Loads the specified string from the specified key and subkey, and stores it in a std::wstring string.
 ///
 /// \sa [RegLoadMUIString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724890.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCWSTR pszDirectory);
+template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCWSTR pszDirectory);
 
 #endif
 
@@ -201,21 +201,21 @@ template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegLoadMUIStringW
 ///
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
-template<class _Traits, class _Ax> inline int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Inout_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
+template<class _Traits, class _Ax> inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::vector. The new character vector is not necessarily from a multibyte character set.
 ///
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
-template<class _Ax> inline int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Inout_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
+template<class _Ax> inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
 ///
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
-template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _Inout_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _Out_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
@@ -224,7 +224,7 @@ template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline int Wide
 ///
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
-template<class _Traits, class _Ax> inline int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Inout_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
+template<class _Traits, class _Ax> inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::vector. The new character vector is not necessarily from a multibyte character set.
@@ -233,7 +233,7 @@ template<class _Traits, class _Ax> inline int SecureWideCharToMultiByte(_In_ UIN
 ///
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
-template<class _Ax> inline int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Inout_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
+template<class _Ax> inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
@@ -242,28 +242,28 @@ template<class _Ax> inline int SecureWideCharToMultiByte(_In_ UINT CodePage, _In
 ///
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
-template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _Inout_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _Out_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
 ///
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
-template<class _Traits, class _Ax> inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr);
+template<class _Traits, class _Ax> inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr);
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::vector. The character vector is not necessarily from a multibyte character set.
 ///
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
-template<class _Ax> inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Inout_ std::vector<wchar_t, _Ax> &sWideCharStr);
+template<class _Ax> inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr);
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
 ///
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
-template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Inout_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr);
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr);
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
@@ -272,7 +272,7 @@ template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline int Mult
 ///
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
-template<class _Traits, class _Ax> inline int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr);
+template<class _Traits, class _Ax> inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr);
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::vector. The character vector is not necessarily from a multibyte character set.
@@ -281,7 +281,7 @@ template<class _Traits, class _Ax> inline int SecureMultiByteToWideChar(_In_ UIN
 ///
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
-template<class _Ax> inline int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Inout_ std::vector<wchar_t, _Ax> &sWideCharStr);
+template<class _Ax> inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr);
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
@@ -290,17 +290,17 @@ template<class _Ax> inline int SecureMultiByteToWideChar(_In_ UINT CodePage, _In
 ///
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
-template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Inout_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr);
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr);
 
 /// @copydoc LoadStringW
-template<class _Traits, class _Ax> inline int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Inout_ std::basic_string<char, _Traits, _Ax> &sBuffer);
+template<class _Traits, class _Ax> inline _Success_(return != 0) int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer);
 
 ///
 /// Loads a string resource from the executable file associated with a specified module.
 ///
 /// \sa [LoadString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms647486.aspx)
 ///
-template<class _Traits, class _Ax> inline int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer);
+template<class _Traits, class _Ax> inline _Success_(return != 0) int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer);
 
 ///
 /// Formats and sends a string to the debugger for display.
@@ -331,31 +331,31 @@ inline VOID OutputDebugStr(_In_z_ LPCSTR lpOutputString, ...);
 inline VOID OutputDebugStr(_In_z_ LPCWSTR lpOutputString, ...);
 
 /// @copydoc GetDateFormatW()
-template<class _Elem, class _Traits, class _Ax> inline int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCSTR lpFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sDate);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate);
 
 ///
 /// Formats a date as a date string for a locale specified by the locale identifier. The function formats either a specified date or the local system date. 
 ///
 /// \sa [GetDateFormat function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd318086.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCWSTR lpFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sDate);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCWSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate);
 
 /// @copydoc LookupAccountSidW()
-template<class _Elem, class _Traits, class _Ax> inline BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse);
 
 ///
 /// Retrieves the name of the account for this SID and the name of the first domain on which this SID is found.
 ///
 /// \sa [LookupAccountSid function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379166.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse);
 
 ///
 /// Retrieves a specified type of information about an access token. The calling process must have appropriate access rights to obtain the information.
 ///
 /// \sa [GetTokenInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa446671.aspx)
 ///
-template<class _Ty> inline BOOL GetTokenInformation(_In_ HANDLE TokenHandle, _In_ TOKEN_INFORMATION_CLASS TokenInformationClass, _Inout_ std::unique_ptr<_Ty> &TokenInformation);
+template<class _Ty> inline _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, _In_ TOKEN_INFORMATION_CLASS TokenInformationClass, _Out_ std::unique_ptr<_Ty> &TokenInformation);
 
 /// @}
 
@@ -1135,7 +1135,7 @@ namespace winstd
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -1162,7 +1162,7 @@ inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Inout_ std::basic_str
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     _Elem szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
 
@@ -1187,7 +1187,7 @@ inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Inout_ std::basic_str
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline int GetWindowTextA(_In_ HWND hWnd, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline _Success_(return != 0) int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -1216,7 +1216,7 @@ inline int GetWindowTextA(_In_ HWND hWnd, _Inout_ std::basic_string<_Elem, _Trai
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline int GetWindowTextW(_In_ HWND hWnd, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline _Success_(return != 0) int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -1245,7 +1245,7 @@ inline int GetWindowTextW(_In_ HWND hWnd, _Inout_ std::basic_string<_Elem, _Trai
 
 
 template<class _Ty, class _Ax>
-inline BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Inout_ std::vector<_Ty, _Ax> &aValue)
+inline _Success_(return != 0) BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -1261,7 +1261,7 @@ inline BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilename, __reserved DWORD d
 
 
 template<class _Ty, class _Ax>
-inline BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Inout_ std::vector<_Ty, _Ax> &aValue)
+inline _Success_(return != 0) BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -1277,7 +1277,7 @@ inline BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFilename, __reserved DWORD 
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -1301,7 +1301,7 @@ inline DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Inout_ std::basic_s
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline _Success_(return != 0) DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     for (DWORD dwSizeOut = (DWORD)wcslen(lpSrc) + 0x100;;) {
         DWORD dwSizeIn = dwSizeOut;
@@ -1323,7 +1323,7 @@ inline DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Inout_ std::basic_
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline VOID GuidToStringA(_In_ LPCGUID lpGuid, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &str)
+inline VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str)
 {
     assert(0); // TODO: Test this code.
 
@@ -1337,7 +1337,7 @@ inline VOID GuidToStringA(_In_ LPCGUID lpGuid, _Inout_ std::basic_string<_Elem, 
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &str)
+inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str)
 {
     assert(0); // TODO: Test this code.
 
@@ -1351,7 +1351,7 @@ inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Inout_ std::basic_string<_Elem, 
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
@@ -1398,7 +1398,7 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Inout
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
 {
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
@@ -1445,14 +1445,14 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Inou
 
 
 template<class _Ty, class _Ax>
-inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Inout_ std::vector<_Ty, _Ax> &aData)
+inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData)
 {
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = sizeof(aStackBuffer);
 
     // Try with stack buffer first.
-    lResult = RegQueryValueExA(hKey, lpValueName, lpReserved, NULL, aStackBuffer, &dwSize);
+    lResult = RegQueryValueExA(hKey, lpValueName, lpReserved, lpType, aStackBuffer, &dwSize);
     if (lResult == ERROR_SUCCESS) {
         // Copy from stack buffer.
         aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
@@ -1460,7 +1460,7 @@ inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, _
     } else if (lResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap and retry.
         aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        lResult = RegQueryValueExA(hKey, lpValueName, lpReserved, lpType, aData.data(), &dwSize);
+        lResult = RegQueryValueExA(hKey, lpValueName, lpReserved, NULL, aData.data(), &dwSize);
     }
 
     return lResult;
@@ -1468,14 +1468,14 @@ inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, _
 
 
 template<class _Ty, class _Ax>
-inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Inout_ std::vector<_Ty, _Ax> &aData)
+inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData)
 {
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = sizeof(aStackBuffer);
 
     // Try with stack buffer first.
-    lResult = RegQueryValueExW(hKey, lpValueName, lpReserved, NULL, aStackBuffer, &dwSize);
+    lResult = RegQueryValueExW(hKey, lpValueName, lpReserved, lpType, aStackBuffer, &dwSize);
     if (lResult == ERROR_SUCCESS) {
         // Copy from stack buffer.
         aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
@@ -1483,7 +1483,7 @@ inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, 
     } else if (lResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap and retry.
         aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        lResult = RegQueryValueExW(hKey, lpValueName, lpReserved, lpType, aData.data(), &dwSize);
+        lResult = RegQueryValueExW(hKey, lpValueName, lpReserved, NULL, aData.data(), &dwSize);
     }
 
     return lResult;
@@ -1493,7 +1493,7 @@ inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, 
 #if _WIN32_WINNT >= _WIN32_WINNT_VISTA
 
 template<class _Elem, class _Traits, class _Ax>
-inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCSTR pszDirectory)
+inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCSTR pszDirectory)
 {
     // According to "Remarks" section in MSDN documentation of RegLoadMUIString(),
     // this function is defined but not implemented as ANSI variation.
@@ -1503,7 +1503,7 @@ inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _In
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCWSTR pszDirectory)
+inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCWSTR pszDirectory)
 {
     LSTATUS lResult;
     _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
@@ -1529,7 +1529,7 @@ inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _I
 
 
 template<class _Traits, class _Ax>
-inline int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Inout_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
+inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
 {
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
 
@@ -1551,7 +1551,7 @@ inline int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_cou
 
 
 template<class _Ax>
-inline int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Inout_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
+inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
 {
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
 
@@ -1572,7 +1572,7 @@ inline int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_cou
 
 
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-inline int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Inout_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
+inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
 {
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
 
@@ -1594,7 +1594,7 @@ inline int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ std:
 
 
 template<class _Traits, class _Ax>
-inline int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Inout_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
+inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
 {
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
 
@@ -1619,7 +1619,7 @@ inline int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In
 
 
 template<class _Ax>
-inline int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Inout_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
+inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
 {
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
 
@@ -1642,7 +1642,7 @@ inline int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In
 
 
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-inline int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Inout_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
+inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
 {
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
 
@@ -1667,7 +1667,7 @@ inline int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In
 
 
 template<class _Traits, class _Ax>
-inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr)
+inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr)
 {
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
 
@@ -1689,7 +1689,7 @@ inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_cou
 
 
 template<class _Ax>
-inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Inout_ std::vector<wchar_t, _Ax> &sWideCharStr)
+inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr)
 {
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
 
@@ -1710,7 +1710,7 @@ inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_cou
 
 
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr)
+inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr)
 {
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
 
@@ -1732,7 +1732,7 @@ inline int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ cons
 
 
 template<class _Traits, class _Ax>
-inline int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr)
+inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr)
 {
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
 
@@ -1757,7 +1757,7 @@ inline int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In
 
 
 template<class _Ax>
-inline int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Inout_ std::vector<wchar_t, _Ax> &sWideCharStr)
+inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr)
 {
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
 
@@ -1780,7 +1780,7 @@ inline int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In
 
 
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-inline int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr)
+inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr)
 {
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
 
@@ -1805,7 +1805,7 @@ inline int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In
 
 
 template<class _Traits, class _Ax>
-inline int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Inout_ std::basic_string<char, _Traits, _Ax> &sBuffer)
+inline _Success_(return != 0) int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer)
 {
     // Get read-only pointer to string resource.
     LPCSTR pszStr;
@@ -1819,7 +1819,7 @@ inline int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Inou
 
 
 template<class _Traits, class _Ax>
-inline int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer)
+inline _Success_(return != 0) int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer)
 {
     // Get read-only pointer to string resource.
     LPCWSTR pszStr;
@@ -1866,7 +1866,7 @@ inline VOID OutputDebugStr(_In_z_ LPCWSTR lpOutputString, ...)
 }
 
 
-template<class _Elem, class _Traits, class _Ax> inline int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCSTR lpFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sDate)
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate)
 {
     int iResult = GetDateFormatA(Locale, dwFlags, lpDate, lpFormat, NULL, 0);
     if (iResult) {
@@ -1881,7 +1881,7 @@ template<class _Elem, class _Traits, class _Ax> inline int GetDateFormatA(_In_ L
 }
 
 
-template<class _Elem, class _Traits, class _Ax> inline int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCWSTR lpFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sDate)
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCWSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate)
 {
     int iResult = GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, NULL, 0);
     if (iResult) {
@@ -1897,7 +1897,7 @@ template<class _Elem, class _Traits, class _Ax> inline int GetDateFormatW(_In_ L
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse)
+inline _Success_(return != 0) BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse)
 {
     assert(0); // TODO: Test this code.
 
@@ -1932,7 +1932,7 @@ inline BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemName, _In_ PSID lpSid, _
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse)
+inline _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse)
 {
     assert(0); // TODO: Test this code.
 
@@ -1967,7 +1967,7 @@ inline BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystemName, _In_ PSID lpSid, 
 
 
 template<class _Ty>
-inline BOOL GetTokenInformation(_In_ HANDLE TokenHandle, _In_ TOKEN_INFORMATION_CLASS TokenInformationClass, _Inout_ std::unique_ptr<_Ty> &TokenInformation)
+inline _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, _In_ TOKEN_INFORMATION_CLASS TokenInformationClass, _Out_ std::unique_ptr<_Ty> &TokenInformation)
 {
     BYTE szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(BYTE)];
     DWORD dwSize;

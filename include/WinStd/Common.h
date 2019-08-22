@@ -163,11 +163,11 @@ private: \
 ///
 #define HANDLE_IMPL(C, INVAL) \
 public: \
-    inline    C        (                       )                                                     {                                                                    } \
-    inline    C        (_In_    handle_type   h)          : handle<handle_type, INVAL>(          h ) {                                                                    } \
-    inline    C        (_Inout_ C           &&h) noexcept : handle<handle_type, INVAL>(std::move(h)) {                                                                    } \
-    inline C& operator=(_In_    handle_type   h)                                                     { handle<handle_type, INVAL>::operator=(          h ); return *this; } \
-    inline C& operator=(_Inout_ C           &&h) noexcept                                            { handle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
+    inline    C        (                        )                                                     {                                                                    } \
+    inline    C        (_In_opt_ handle_type   h)          : handle<handle_type, INVAL>(          h ) {                                                                    } \
+    inline    C        (_Inout_  C           &&h) noexcept : handle<handle_type, INVAL>(std::move(h)) {                                                                    } \
+    inline C& operator=(_In_opt_ handle_type   h)                                                     { handle<handle_type, INVAL>::operator=(          h ); return *this; } \
+    inline C& operator=(_Inout_  C           &&h) noexcept                                            { handle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
 WINSTD_NONCOPYABLE(C)
 
 ///
@@ -175,13 +175,13 @@ WINSTD_NONCOPYABLE(C)
 ///
 #define DPLHANDLE_IMPL(C, INVAL) \
 public: \
-    inline    C        (                             )                                                                     {                                                                       } \
-    inline    C        (_In_          handle_type   h)          : dplhandle<handle_type, INVAL>(                   h     ) {                                                                       } \
-    inline    C        (_In_    const C            &h)          : dplhandle<handle_type, INVAL>(duplicate_internal(h.m_h)) {                                                                       } \
-    inline    C        (_Inout_       C           &&h) noexcept : dplhandle<handle_type, INVAL>(std::move         (h    )) {                                                                       } \
-    inline C& operator=(_In_          handle_type   h)                                                                     { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
-    inline C& operator=(_In_    const C            &h)                                                                     { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
-    inline C& operator=(_Inout_       C           &&h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
+    inline    C        (                              )                                                                     {                                                                       } \
+    inline    C        (_In_opt_       handle_type   h)          : dplhandle<handle_type, INVAL>(                   h     ) {                                                                       } \
+    inline    C        (_In_     const C            &h)          : dplhandle<handle_type, INVAL>(duplicate_internal(h.m_h)) {                                                                       } \
+    inline    C        (_Inout_        C           &&h) noexcept : dplhandle<handle_type, INVAL>(std::move         (h    )) {                                                                       } \
+    inline C& operator=(_In_opt_       handle_type   h)                                                                     { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
+    inline C& operator=(_In_     const C            &h)                                                                     { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
+    inline C& operator=(_Inout_        C           &&h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
 private:
 
 /// @}
@@ -691,7 +691,7 @@ namespace winstd
         ///
         /// \param[in] h  Initial object handle value
         ///
-        inline handle(_In_ handle_type h) : m_h(h)
+        inline handle(_In_opt_ handle_type h) : m_h(h)
         {
         }
 
@@ -718,7 +718,7 @@ namespace winstd
         ///
         /// \param[in] h  Object handle value
         ///
-        inline handle<handle_type, INVAL>& operator=(_In_ handle_type h)
+        inline handle<handle_type, INVAL>& operator=(_In_opt_ handle_type h)
         {
             attach(h);
             return *this;
@@ -803,7 +803,7 @@ namespace winstd
         /// - Non zero when object handle is less than h;
         /// - Zero otherwise.
         ///
-        inline bool operator<(_In_ handle_type h) const
+        inline bool operator<(_In_opt_ handle_type h) const
         {
             return m_h < h;
         }
@@ -816,7 +816,7 @@ namespace winstd
         /// - Non zero when object handle is less than or equal to h;
         /// - Zero otherwise.
         ///
-        inline bool operator<=(_In_ handle_type h) const
+        inline bool operator<=(_In_opt_ handle_type h) const
         {
             return !operator>(h);
         }
@@ -829,7 +829,7 @@ namespace winstd
         /// - Non zero when object handle is greater than or equal to h;
         /// - Zero otherwise.
         ///
-        inline bool operator>=(_In_ handle_type h) const
+        inline bool operator>=(_In_opt_ handle_type h) const
         {
             return !operator<(h);
         }
@@ -842,7 +842,7 @@ namespace winstd
         /// - Non zero when object handle is greater than h;
         /// - Zero otherwise.
         ///
-        inline bool operator>(_In_ handle_type h) const
+        inline bool operator>(_In_opt_ handle_type h) const
         {
             return h < m_h;
         }
@@ -855,7 +855,7 @@ namespace winstd
         /// - Non zero when object handle is not equal to h;
         /// - Zero otherwise.
         ///
-        inline bool operator!=(_In_ handle_type h) const
+        inline bool operator!=(_In_opt_ handle_type h) const
         {
             return !operator==(h);
         }
@@ -868,7 +868,7 @@ namespace winstd
         /// - Non zero when object handle is equal to h;
         /// - Zero otherwise.
         ///
-        inline bool operator==(_In_ handle_type h) const
+        inline bool operator==(_In_opt_ handle_type h) const
         {
             return m_h == h;
         }
@@ -946,7 +946,7 @@ namespace winstd
         ///
         /// \param[in] h  Initial object handle value
         ///
-        inline dplhandle(_In_ handle_type h) : handle<handle_type, INVAL>(h)
+        inline dplhandle(_In_opt_ handle_type h) : handle<handle_type, INVAL>(h)
         {
         }
 
@@ -973,7 +973,7 @@ namespace winstd
         ///
         /// \param[in] h  Object handle value
         ///
-        inline dplhandle<handle_type, INVAL>& operator=(_In_ handle_type h)
+        inline dplhandle<handle_type, INVAL>& operator=(_In_opt_ handle_type h)
         {
             handle<handle_type, INVAL>::operator=(h);
             return *this;
@@ -1036,7 +1036,7 @@ namespace winstd
         /// - true when duplication succeeds;
         /// - false when duplication fails. In case of failure obtaining the extended error information is object type specific (for example: `GetLastError()`).
         ///
-        inline bool attach_duplicated(_In_ handle_type h)
+        inline bool attach_duplicated(_In_opt_ handle_type h)
         {
             if (m_h != invalid)
                 free_internal();
