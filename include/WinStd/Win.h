@@ -832,11 +832,11 @@ namespace winstd
         ///
         /// Construct the impersonator and impersonates the given user
         ///
-        /// \param[in] hToken  A handle to a primary or impersonation access token that represents a logged-on user
+        /// \param[in] hToken  A handle to a primary or impersonation access token that represents a logged-on user or NULL for no impersonation.
         ///
         /// \sa [ImpersonateLoggedOnUser function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa378612.aspx)
         ///
-        user_impersonator(_In_ HANDLE hToken);
+        user_impersonator(_In_opt_ HANDLE hToken);
 
         ///
         /// Reverts to current user and destructs the impersonator

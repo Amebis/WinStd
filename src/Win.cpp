@@ -283,9 +283,9 @@ winstd::actctx_activator::~actctx_activator()
 // winstd::user_impersonator
 //////////////////////////////////////////////////////////////////////
 
-winstd::user_impersonator::user_impersonator(_In_ HANDLE hToken)
+winstd::user_impersonator::user_impersonator(_In_opt_ HANDLE hToken)
 {
-    m_cookie = ImpersonateLoggedOnUser(hToken);
+    m_cookie = hToken && ImpersonateLoggedOnUser(hToken);
 }
 
 
