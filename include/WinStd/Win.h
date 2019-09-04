@@ -1904,8 +1904,8 @@ inline _Success_(return != 0) BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemN
     DWORD dwNameLen = 0, dwRefDomainLen = 0;
 
     if (LookupAccountSidA(lpSystemName, lpSid,
-        NULL, sName                 ? &dwNameLen      : NULL,
-        NULL, sReferencedDomainName ? &dwRefDomainLen : NULL,
+        NULL, &dwNameLen     ,
+        NULL, &dwRefDomainLen,
         peUse))
     {
         // Name and domain is blank.
@@ -1917,8 +1917,8 @@ inline _Success_(return != 0) BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemN
         std::unique_ptr<_Elem[]> bufName     (new _Elem[dwNameLen     ]);
         std::unique_ptr<_Elem[]> bufRefDomain(new _Elem[dwRefDomainLen]);
         if (LookupAccountSidA(lpSystemName, lpSid,
-            bufName     .get(), sName                 ? &dwNameLen      : NULL,
-            bufRefDomain.get(), sReferencedDomainName ? &dwRefDomainLen : NULL,
+            bufName     .get(), &dwNameLen     ,
+            bufRefDomain.get(), &dwRefDomainLen,
             peUse))
         {
             if (sName                ) sName                ->assign(bufName     .get(), dwNameLen      - 1);
@@ -1939,8 +1939,8 @@ inline _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystem
     DWORD dwNameLen = 0, dwRefDomainLen = 0;
 
     if (LookupAccountSidW(lpSystemName, lpSid,
-        NULL, sName                 ? &dwNameLen      : NULL,
-        NULL, sReferencedDomainName ? &dwRefDomainLen : NULL,
+        NULL, &dwNameLen     ,
+        NULL, &dwRefDomainLen,
         peUse))
     {
         // Name and domain is blank.
@@ -1952,8 +1952,8 @@ inline _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystem
         std::unique_ptr<_Elem[]> bufName     (new _Elem[dwNameLen     ]);
         std::unique_ptr<_Elem[]> bufRefDomain(new _Elem[dwRefDomainLen]);
         if (LookupAccountSidW(lpSystemName, lpSid,
-            bufName     .get(), sName                 ? &dwNameLen      : NULL,
-            bufRefDomain.get(), sReferencedDomainName ? &dwRefDomainLen : NULL,
+            bufName     .get(), &dwNameLen     ,
+            bufRefDomain.get(), &dwRefDomainLen,
             peUse))
         {
             if (sName                ) sName                ->assign(bufName     .get(), dwNameLen      - 1);
