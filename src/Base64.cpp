@@ -1,4 +1,4 @@
-﻿/*
+/*
     Copyright 1991-2019 Amebis
     Copyright 2016 GÉANT
 
