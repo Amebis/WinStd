@@ -33,7 +33,7 @@
 
 namespace winstd
 {
-    enum eap_type_t;
+    enum eap_type_t : unsigned char;
     struct WINSTD_API EapHostPeerFreeMemory_delete;
     struct WINSTD_API EapHostPeerFreeRuntimeMemory_delete;
     struct WINSTD_API EapHostPeerFreeErrorMemory_delete;
