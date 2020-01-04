@@ -33,7 +33,7 @@
 
 namespace winstd
 {
-    enum eap_type_t : unsigned char;
+    enum class eap_type_t : unsigned char;
     struct WINSTD_API EapHostPeerFreeMemory_delete;
     struct WINSTD_API EapHostPeerFreeRuntimeMemory_delete;
     struct WINSTD_API EapHostPeerFreeErrorMemory_delete;
@@ -107,6 +107,8 @@ inline bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE
 #include <eappapis.h>
 #include <WinSock2.h>
 
+#pragma warning(push)
+#pragma warning(disable: 26812) // Windows EAP API is using unscoped enums
 
 namespace winstd
 {
@@ -119,28 +121,28 @@ namespace winstd
     /// \sa [Extensible Authentication Protocol (EAP) Registry (Chapter: Method Types)](https://www.iana.org/assignments/eap-numbers/eap-numbers.xhtml#eap-numbers-4)
     ///
     #pragma warning(suppress: 4480)
-    enum eap_type_t : unsigned char {
-        eap_type_undefined       =   0,                 ///< Undefined EAP type
-        eap_type_identity        =   1,                 ///< Identity
-        eap_type_notification    =   2,                 ///< Notification
-        eap_type_nak             =   3,                 ///< Legacy Nak
-        eap_type_md5_challenge   =   4,                 ///< MD5-Challenge
-        eap_type_otp             =   5,                 ///< One-Time Password (OTP)
-        eap_type_gtc             =   6,                 ///< Generic Token Card (GTC)
-        eap_type_tls             =  13,                 ///< EAP-TLS
-        eap_type_ttls            =  21,                 ///< EAP-TTLS
-        eap_type_peap            =  25,                 ///< EAP-PEAP
-        eap_type_mschapv2        =  26,                 ///< EAP-MSCHAPv2
+    enum class eap_type_t : unsigned char {
+        undefined       =   0,          ///< Undefined EAP type
+        identity        =   1,          ///< Identity
+        notification    =   2,          ///< Notification
+        nak             =   3,          ///< Legacy Nak
+        md5_challenge   =   4,          ///< MD5-Challenge
+        otp             =   5,          ///< One-Time Password (OTP)
+        gtc             =   6,          ///< Generic Token Card (GTC)
+        tls             =  13,          ///< EAP-TLS
+        ttls            =  21,          ///< EAP-TTLS
+        peap            =  25,          ///< EAP-PEAP
+        mschapv2        =  26,          ///< EAP-MSCHAPv2
 
-        eap_type_gtcp            = 128 + eap_type_gtc,  ///< EAP-GTC using a password
+        gtcp            = 128 + gtc,    ///< EAP-GTC using a password
 
-        eap_type_legacy_pap      = 192,                 ///< PAP (Not actually an EAP method; Moved to the Unassigned area)
-        eap_type_legacy_mschapv2 = 193,                 ///< MSCHAPv2 (Not actually an EAP method; Moved to the Unassigned area)
+        legacy_pap      = 192,          ///< PAP (Not actually an EAP method; Moved to the Unassigned area)
+        legacy_mschapv2 = 193,          ///< MSCHAPv2 (Not actually an EAP method; Moved to the Unassigned area)
 
-        eap_type_start           =   1,                 ///< Start of EAP methods
-        eap_type_end             = 192,                 ///< End of EAP methods (non-inclusive)
-        eap_type_noneap_start    = 192,                 ///< Start of non-EAP methods
-        eap_type_noneap_end      = 254,                 ///< End of non-EAP methods (non-inclusive)
+        start           =   1,          ///< Start of EAP methods
+        end             = 192,          ///< End of EAP methods (non-inclusive)
+        noneap_start    = 192,          ///< Start of non-EAP methods
+        noneap_end      = 254,          ///< End of non-EAP methods (non-inclusive)
     };
 
 
@@ -668,3 +670,5 @@ inline bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE
 {
     return !operator==(a, b);
 }
+
+#pragma warning(pop)
