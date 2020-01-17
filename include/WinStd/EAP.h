@@ -131,7 +131,7 @@ namespace winstd
         gtc             =   6,          ///< Generic Token Card (GTC)
         tls             =  13,          ///< EAP-TLS
         ttls            =  21,          ///< EAP-TTLS
-        peap            =  25,          ///< EAP-PEAP
+        peap            =  25,          ///< PEAP
         mschapv2        =  26,          ///< EAP-MSCHAPv2
 
         gtcp            = 128 + gtc,    ///< EAP-GTC using a password
