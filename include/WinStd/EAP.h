@@ -133,6 +133,7 @@ namespace winstd
         ttls            =  21,          ///< EAP-TTLS
         peap            =  25,          ///< PEAP
         mschapv2        =  26,          ///< EAP-MSCHAPv2
+        ms_auth_tlv     =  33,          ///< MS-Authentication-TLV
 
         gtcp            = 128 + gtc,    ///< EAP-GTC using a password
 
