@@ -99,6 +99,34 @@ namespace winstd
 
 
         ///
+        /// Construct class pointing to an `char`.
+        ///
+        /// \param[in] data  Event data
+        ///
+        /// \note This class saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        #pragma warning(suppress: 26495) // EventDataDescCreate() initializes all members of EVENT_DATA_DESCRIPTOR
+        inline event_data(_In_ const char &data)
+        {
+            EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
+        }
+
+
+        ///
+        /// Construct class pointing to an `unsigned char`.
+        ///
+        /// \param[in] data  Event data
+        ///
+        /// \note This class saves a reference to the data only. Therefore, data must be kept available.
+        ///
+        #pragma warning(suppress: 26495) // EventDataDescCreate() initializes all members of EVENT_DATA_DESCRIPTOR
+        inline event_data(_In_ const unsigned char &data)
+        {
+            EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
+        }
+
+
+        ///
         /// Construct class pointing to an `int`.
         ///
         /// \param[in] data  Event data
