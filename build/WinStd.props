@@ -9,7 +9,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <Lib>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
@@ -28,7 +28,7 @@
     <ClCompile Include="..\src\ETW.cpp" />
     <ClCompile Include="..\src\Sec.cpp" />
     <ClCompile Include="..\src\SetupAPI.cpp" />
-    <ClCompile Include="..\src\StdAfx.cpp">
+    <ClCompile Include="..\src\PCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\src\Win.cpp" />
@@ -53,6 +53,6 @@
     <ClInclude Include="..\include\WinStd\WinSock2.h" />
     <ClInclude Include="..\include\WinStd\WinTrust.h" />
     <ClInclude Include="..\include\WinStd\WLAN.h" />
-    <ClInclude Include="..\src\StdAfx.h" />
+    <ClInclude Include="..\src\PCH.h" />
   </ItemGroup>
 </Project>

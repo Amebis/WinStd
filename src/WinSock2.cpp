@@ -18,7 +18,7 @@
     along with Setup. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "StdAfx.h"
+#include "PCH.h"
 
 
 #if (NTDDI_VERSION >= NTDDI_WINXPSP2) || (_WIN32_WINNT >= 0x0502)
