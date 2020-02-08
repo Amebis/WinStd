@@ -1,0 +1,18 @@
+version: 1.0.{build}
+environment:
+  matrix:
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      PROJECT_FILE: WinStd-15.0.sln
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      PROJECT_FILE: WinStd-16.0.sln
+configuration:
+  - Debug
+  - Release
+platform:
+  - Win32
+  - x64
+  - ARM64
+build:
+  project: $(PROJECT_FILE)
+  parallel: true
+  verbosity: minimal
