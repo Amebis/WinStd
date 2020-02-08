@@ -46,19 +46,26 @@ std::cout << response.c_str() << std::endl;
 if (dwMaxSendPacketSize < sizeof(EapPacket))
     throw std::invalid_argument(
         winstd::string_printf(
-            "Maximum packet size too small (minimum: %u, available: %u).",
+            "Maximum packet size too small (minimum: %zu, available: %u).",
             sizeof(EapPacket) + 1,
             dwMaxSendPacketSize));
 ```
 
 ## Building
 
-The `WinStd.vcxproj` requires Microsoft Visual Studio 2010 SP1 and `..\..\include` folder with `common.props`, `Debug.props`, `Release.props`, `Win32.props`, and `x64.props` files to customize building process for individual applications.
+Requires:
+- Microsoft Visual Studio 2017-2019
+- `..\..\include` folder with the following files to customize building process for individual applications (optional):
+  - `Debug.props`
+  - `Release.props`
+  - `ARM64.props`
+  - `x64.props`
+  - `Win32.props`
 
 ## Usage
 
 1. Clone the repository into your solution folder.
-2. Add the `WinStd.vcxproj` to your solution.
+2. Add the appropriate `build\WinStd-<version>.vcxproj` to your solution.
 3. Add WinStd's `include` folder to _Additional Include Directories_ in your project's C/C++ settings.
 4. Add a new reference to WinStd project from your project's common properties.
 5. Include `.h` files from WinStd as needed:
@@ -76,122 +83,3 @@ void main()
 ```
 
 More examples and use-cases can be found in [GÉANTLink](https://github.com/Amebis/GEANTLink) and [ZRCola](https://github.com/Amebis/ZRCola) projects source code. They make heavy use of WinStd.
-
-## Debugging
-
-For user friendlier display of variables of WinStd types in Visual Studio 2010 debugger, find the file `autoexp.dat` in your `C:\Program Files (x86)\Microsoft Visual Studio 2010` and open it with Notepad.
-Locate the `[AutoExpand]` section and add the following lines:
-```
-winstd::variant=$BUILTIN(VARIANT)
-```
-Locate the `[Visualizer]` section and add the following lines:
-```
-; WinStd
-winstd::com_obj<*>|winstd::handle<*>|winstd::dplhandle<*>|winstd::cert_context|winstd::cert_chain_context|winstd::cert_store|winstd::crypt_prov|winstd::crypt_hash|winstd::crypt_key|winstd::event_provider|winstd::library|winstd::heap{
-        preview            ([$e.m_h])
-}
-winstd::bstr{
-        preview            ([$e.m_h,su])
-        stringview        ([$e.m_h,sub])
-}
-winstd::vector_queue<*>{
-    preview (
-        #(
-            "[",
-            $e.m_count,
-            "](",
-            #array(
-                expr: $e.m_data._Myptr[($e.m_head + $i)%$e.m_size_max],
-                size: $e.m_count
-            ),
-            ")"
-        )
-    )
-
-    children (
-        #(
-            #([size] : $e.m_count),
-            #([capacity] : $e.m_size_max),
-            #array(
-                expr: $e.m_data._Myptr[($e.m_head + $i)%$e.m_size_max],
-                size: $e.m_count
-            )
-        )
-    )
-}
-winstd::sanitizing_vector<*>{
-    preview (
-        #(
-            "S[",
-            $e._Mylast - $e._Myfirst,
-            "](",
-            #array(
-                expr: $e._Myfirst[$i],
-                size: $e._Mylast - $e._Myfirst
-            ),
-            ")"
-        )
-    )
-
-    children (
-        #(
-            #([size] : $e._Mylast - $e._Myfirst),
-            #([capacity] : $e._Myend - $e._Myfirst),
-            #array(
-                expr: $e._Myfirst[$i],
-                size: $e._Mylast - $e._Myfirst
-            )
-        )
-    )
-}
-winstd::eap_attr{
-    preview (
-        #(
-            $e.eaType,
-            " [",
-            $e.dwLength,
-            "](",
-            #array(
-                expr: $e.pValue[$i],
-                size: $e.dwLength
-            ),
-            ")"
-        )
-    )
-
-    children (
-        #(
-            #([type] : $e.eaType),
-            #([size] : $e.dwLength),
-            #array(
-                expr: $e.pValue[$i],
-                size: $e.dwLength
-            )
-        )
-    )
-}
-winstd::event_data{
-    preview (
-        #(
-            "[",
-            $e.Size,
-            "](",
-            #array(
-                expr: [((unsigned char*)$e.Ptr)[$i],x],
-                size: $e.Size
-            ),
-            ")"
-        )
-    )
-
-    children (
-        #(
-            #([size] : $e.Size),
-            #array(
-                expr: [((unsigned char*)$e.Ptr)[$i],x],
-                size: $e.Size
-            )
-        )
-    )
-}
-```
