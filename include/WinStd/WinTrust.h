@@ -47,6 +47,9 @@ namespace winstd
     ///
     class WINSTD_API wintrust
     {
+        WINSTD_NONCOPYABLE(wintrust)
+        WINSTD_NONMOVABLE(wintrust)
+
     public:
         ///
         /// Initializes a new class instance.
@@ -56,7 +59,7 @@ namespace winstd
             m_action(action),
             m_wtd(wtd)
         {
-            LONG lResult = WinVerifyTrust(m_hwnd, &m_action, &m_wtd);
+            const LONG lResult = WinVerifyTrust(m_hwnd, &m_action, &m_wtd);
             if (lResult != ERROR_SUCCESS)
                 throw win_runtime_error(lResult, "WinVerifyTrust failed.");
         }

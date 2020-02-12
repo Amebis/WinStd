@@ -94,16 +94,6 @@ namespace winstd
 
 
         ///
-        /// Copies an exception
-        ///
-        /// \param[in] other  Exception to copy from
-        ///
-        inline ws2_runtime_error(const ws2_runtime_error &other) : num_runtime_error<int>(other)
-        {
-        }
-
-
-        ///
         /// Returns a user-readable Windows error message
         ///
         /// \sa [FormatMessage function](https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-formatmessage)
@@ -167,7 +157,7 @@ namespace winstd
         ///
         /// \sa [FreeAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-freeaddrinfow)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
     };
 
 #endif

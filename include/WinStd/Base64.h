@@ -51,7 +51,7 @@ namespace winstd
         ///
         /// Constructs blank encoding session
         ///
-        inline base64_enc() : num(0)
+        inline base64_enc() noexcept : num(0)
         {
             buf[0] = 0;
             buf[1] = 0;
@@ -99,7 +99,7 @@ namespace winstd
         ///
         /// Resets encoding session
         ///
-        inline void clear()
+        inline void clear() noexcept
         {
             num = 0;
         }
@@ -112,7 +112,7 @@ namespace winstd
         ///
         /// \returns Maximum number of bytes for the encoded data of `size` length
         ///
-        inline size_t enc_size(size_t size) const
+        inline size_t enc_size(size_t size) const noexcept
         {
             return ((num + size + 2)/3)*4;
         }
@@ -182,7 +182,7 @@ namespace winstd
         ///
         /// Constructs blank decoding session
         ///
-        inline base64_dec() : num(0)
+        inline base64_dec() noexcept : num(0)
         {
             buf[0] = 0;
             buf[1] = 0;
@@ -235,7 +235,7 @@ namespace winstd
         ///
         /// Resets decoding session
         ///
-        inline void clear()
+        inline void clear() noexcept
         {
             num = 0;
         }
@@ -248,7 +248,7 @@ namespace winstd
         ///
         /// \returns Maximum number of bytes for the decoded data of `size` length
         ///
-        inline size_t dec_size(size_t size) const
+        inline size_t dec_size(size_t size) const noexcept
         {
             return ((num + size + 3)/4)*3;
         }

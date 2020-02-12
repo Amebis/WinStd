@@ -32,7 +32,7 @@ winstd::wlan_handle::~wlan_handle()
 }
 
 
-void winstd::wlan_handle::free_internal()
+void winstd::wlan_handle::free_internal() noexcept
 {
     WlanCloseHandle(m_h, NULL);
 }

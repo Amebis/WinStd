@@ -34,7 +34,7 @@ winstd::addrinfo::~addrinfo()
 }
 
 
-void winstd::addrinfo::free_internal()
+void winstd::addrinfo::free_internal() noexcept
 {
     FreeAddrInfo(m_h);
 }

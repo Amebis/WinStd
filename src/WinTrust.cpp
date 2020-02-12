@@ -30,5 +30,5 @@
 winstd::wintrust::~wintrust()
 {
     m_wtd.dwStateAction = WTD_STATEACTION_CLOSE;
-    WinVerifyTrust(m_hwnd, (GUID*)&m_action, &m_wtd);
+    WinVerifyTrust(m_hwnd, &m_action, &m_wtd);
 }

@@ -34,7 +34,7 @@ winstd::setup_device_info_list::~setup_device_info_list()
 }
 
 
-void winstd::setup_device_info_list::free_internal()
+void winstd::setup_device_info_list::free_internal() noexcept
 {
     SetupDiDestroyDeviceInfoList(m_h);
 }

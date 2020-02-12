@@ -34,13 +34,13 @@ winstd::cert_context::~cert_context()
 }
 
 
-void winstd::cert_context::free_internal()
+void winstd::cert_context::free_internal() noexcept
 {
     CertFreeCertificateContext(m_h);
 }
 
 
-winstd::cert_context::handle_type winstd::cert_context::duplicate_internal(_In_ handle_type h) const
+winstd::cert_context::handle_type winstd::cert_context::duplicate_internal(_In_ handle_type h) const noexcept
 {
     return CertDuplicateCertificateContext(h);
 }
@@ -57,13 +57,13 @@ winstd::cert_chain_context::~cert_chain_context()
 }
 
 
-void winstd::cert_chain_context::free_internal()
+void winstd::cert_chain_context::free_internal() noexcept
 {
     CertFreeCertificateChain(m_h);
 }
 
 
-winstd::cert_chain_context::handle_type winstd::cert_chain_context::duplicate_internal(_In_ handle_type h) const
+winstd::cert_chain_context::handle_type winstd::cert_chain_context::duplicate_internal(_In_ handle_type h) const noexcept
 {
     return CertDuplicateCertificateChain(h);
 }
@@ -80,7 +80,7 @@ winstd::cert_store::~cert_store()
 }
 
 
-void winstd::cert_store::free_internal()
+void winstd::cert_store::free_internal() noexcept
 {
     CertCloseStore(m_h, 0);
 }
@@ -97,7 +97,7 @@ winstd::crypt_prov::~crypt_prov()
 }
 
 
-void winstd::crypt_prov::free_internal()
+void winstd::crypt_prov::free_internal() noexcept
 {
     CryptReleaseContext(m_h, 0);
 }
@@ -114,13 +114,13 @@ winstd::crypt_hash::~crypt_hash()
 }
 
 
-void winstd::crypt_hash::free_internal()
+void winstd::crypt_hash::free_internal() noexcept
 {
     CryptDestroyHash(m_h);
 }
 
 
-winstd::crypt_hash::handle_type winstd::crypt_hash::duplicate_internal(_In_ handle_type h) const
+winstd::crypt_hash::handle_type winstd::crypt_hash::duplicate_internal(_In_ handle_type h) const noexcept
 {
     handle_type hNew = invalid;
     return CryptDuplicateHash(h, NULL, 0, &hNew) ? hNew : invalid;
@@ -155,7 +155,7 @@ bool winstd::crypt_key::create_exp1(_In_ HCRYPTPROV hProv, _In_ DWORD dwKeySpec)
 
             // Get the byte length of the key.
             size_t
-                size_key   = *(DWORD*)&key_blob[12]/8,
+                size_key   = *reinterpret_cast<DWORD*>(&key_blob[12])/8,
                 size_prime = size_key/2;
 
             // Modify the Exponent in Key BLOB format
@@ -163,7 +163,7 @@ bool winstd::crypt_key::create_exp1(_In_ HCRYPTPROV hProv, _In_ DWORD dwKeySpec)
 
             // Convert pubexp in rsapubkey to 1
             LPBYTE ptr = &key_blob[16];
-            *(DWORD*)ptr = 1;
+            *reinterpret_cast<DWORD*>(ptr) = 1;
             ptr += sizeof(DWORD);
 
             // Skip modulus, prime1, prime2
@@ -189,7 +189,7 @@ bool winstd::crypt_key::create_exp1(_In_ HCRYPTPROV hProv, _In_ DWORD dwKeySpec)
             memset(ptr + 1, 0, size_key - 1);
 
             // Import the exponent-of-one private key.
-            if (CryptImportKey(hProv, key_blob.data(), (DWORD)key_blob.size(), 0, 0, &h)) {
+            if (CryptImportKey(hProv, key_blob.data(), static_cast<DWORD>(key_blob.size()), 0, 0, &h)) {
                 attach(h);
                 return true;
             }
@@ -201,13 +201,13 @@ bool winstd::crypt_key::create_exp1(_In_ HCRYPTPROV hProv, _In_ DWORD dwKeySpec)
 }
 
 
-void winstd::crypt_key::free_internal()
+void winstd::crypt_key::free_internal() noexcept
 {
     CryptDestroyKey(m_h);
 }
 
 
-winstd::crypt_key::handle_type winstd::crypt_key::duplicate_internal(_In_ handle_type h) const
+winstd::crypt_key::handle_type winstd::crypt_key::duplicate_internal(_In_ handle_type h) const noexcept
 {
     handle_type hNew = invalid;
     return CryptDuplicateKey(h, NULL, 0, &hNew) ? hNew : invalid;
@@ -218,6 +218,7 @@ winstd::crypt_key::handle_type winstd::crypt_key::duplicate_internal(_In_ handle
 // winstd::data_blob
 //////////////////////////////////////////////////////////////////////
 
+#pragma warning(suppress: 26432) // Copy constructor and assignment operator are also present, but not detected by code analysis as they are using base type source object reference.
 winstd::data_blob::~data_blob()
 {
     if (pbData != NULL)

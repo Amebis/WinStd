@@ -68,7 +68,7 @@ namespace winstd
         ///
         inline bool create(
             _In_opt_ const GUID * ClassGuid,
-            _In_opt_ HWND         hwndParent)
+            _In_opt_ HWND         hwndParent) noexcept
         {
             handle_type h = SetupDiCreateDeviceInfoList(ClassGuid, hwndParent);
             if (h != invalid) {
@@ -95,7 +95,7 @@ namespace winstd
             _In_       DWORD        Flags,
             _In_opt_   HDEVINFO     DeviceInfoSet,
             _In_opt_   PCTSTR       MachineName,
-            _Reserved_ PVOID        Reserved)
+            _Reserved_ PVOID        Reserved) noexcept
         {
             handle_type h = SetupDiGetClassDevsEx(ClassGuid, Enumerator, hwndParent, Flags, DeviceInfoSet, MachineName, Reserved);
             if (h != invalid) {
@@ -112,7 +112,7 @@ namespace winstd
         ///
         /// \sa [SetupDiDestroyDeviceInfoList function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdidestroydeviceinfolist)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
     };
 
 
@@ -121,6 +121,9 @@ namespace winstd
     ///
     class WINSTD_API setup_driver_info_list_builder
     {
+        WINSTD_NONCOPYABLE(setup_driver_info_list_builder)
+        WINSTD_NONMOVABLE(setup_driver_info_list_builder)
+
     public:
         ///
         /// Construct the builder and builds a list of drivers that is associated with a specific device or with the global class driver list for a device information set.
@@ -130,7 +133,7 @@ namespace winstd
         inline setup_driver_info_list_builder(
             _In_        HDEVINFO         DeviceInfoSet,
             _Inout_opt_ PSP_DEVINFO_DATA DeviceInfoData,
-            _In_        DWORD            DriverType) :
+            _In_        DWORD            DriverType) noexcept :
             m_DeviceInfoSet (DeviceInfoSet),
             m_DeviceInfoData(DeviceInfoData),
             m_DriverType    (DriverType)
@@ -151,7 +154,7 @@ namespace winstd
         ///
         /// \sa [SetupDiBuildDriverInfoList function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdibuilddriverinfolist)
         ///
-        inline BOOL status() const
+        inline BOOL status() const noexcept
         {
             return m_result;
         }

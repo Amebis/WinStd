@@ -105,16 +105,16 @@
 ///
 #define WINSTD_NONCOPYABLE(C) \
 private: \
-    inline    C        (_In_ const C &h); \
-    inline C& operator=(_In_ const C &h);
+    inline    C        (_In_ const C &h) noexcept; \
+    inline C& operator=(_In_ const C &h) noexcept;
 
 ///
 /// Declares a class as non-movable
 ///
 #define WINSTD_NONMOVABLE(C) \
 private: \
-    inline    C        (_Inout_ C &&h); \
-    inline C& operator=(_Inout_ C &&h);
+    inline    C        (_Inout_ C &&h) noexcept; \
+    inline C& operator=(_Inout_ C &&h) noexcept;
 
 /// @}
 
@@ -163,10 +163,10 @@ private: \
 ///
 #define HANDLE_IMPL(C, INVAL) \
 public: \
-    inline    C        (                        )                                                     {                                                                    } \
-    inline    C        (_In_opt_ handle_type   h)          : handle<handle_type, INVAL>(          h ) {                                                                    } \
+    inline    C        (                        ) noexcept                                            {                                                                    } \
+    inline    C        (_In_opt_ handle_type   h) noexcept : handle<handle_type, INVAL>(          h ) {                                                                    } \
     inline    C        (_Inout_  C           &&h) noexcept : handle<handle_type, INVAL>(std::move(h)) {                                                                    } \
-    inline C& operator=(_In_opt_ handle_type   h)                                                     { handle<handle_type, INVAL>::operator=(          h ); return *this; } \
+    inline C& operator=(_In_opt_ handle_type   h) noexcept                                            { handle<handle_type, INVAL>::operator=(          h ); return *this; } \
     inline C& operator=(_Inout_  C           &&h) noexcept                                            { handle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
 WINSTD_NONCOPYABLE(C)
 
@@ -175,12 +175,12 @@ WINSTD_NONCOPYABLE(C)
 ///
 #define DPLHANDLE_IMPL(C, INVAL) \
 public: \
-    inline    C        (                              )                                                                     {                                                                       } \
-    inline    C        (_In_opt_       handle_type   h)          : dplhandle<handle_type, INVAL>(                   h     ) {                                                                       } \
-    inline    C        (_In_     const C            &h)          : dplhandle<handle_type, INVAL>(duplicate_internal(h.m_h)) {                                                                       } \
+    inline    C        (                              ) noexcept                                                            {                                                                       } \
+    inline    C        (_In_opt_       handle_type   h) noexcept : dplhandle<handle_type, INVAL>(                   h     ) {                                                                       } \
+    inline    C        (_In_     const C            &h) noexcept : dplhandle<handle_type, INVAL>(duplicate_internal(h.m_h)) {                                                                       } \
     inline    C        (_Inout_        C           &&h) noexcept : dplhandle<handle_type, INVAL>(std::move         (h    )) {                                                                       } \
-    inline C& operator=(_In_opt_       handle_type   h)                                                                     { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
-    inline C& operator=(_In_     const C            &h)                                                                     { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
+    inline C& operator=(_In_opt_       handle_type   h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
+    inline C& operator=(_In_     const C            &h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
     inline C& operator=(_Inout_        C           &&h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
 private:
 
@@ -234,7 +234,7 @@ namespace winstd
     ///
     /// \returns A helper wrapper class to handle returning a reference to the pointer
     ///
-    template<class _Ty, class _Dx> inline ref_unique_ptr<_Ty, _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty, _Dx> &owner);
+    template<class _Ty, class _Dx> inline ref_unique_ptr<_Ty, _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty, _Dx> &owner) noexcept;
 
     ///
     /// Helper function template for returning pointers to std::unique_ptr
@@ -244,7 +244,7 @@ namespace winstd
     ///
     /// \returns A helper wrapper class to handle returning a reference to the pointer
     ///
-    template<class _Ty, class _Dx> inline ref_unique_ptr<_Ty[], _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner);
+    template<class _Ty, class _Dx> inline ref_unique_ptr<_Ty[], _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept;
 
     /// @}
 
@@ -374,7 +374,7 @@ inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_
 ///
 /// \returns Number of characters in result.
 ///
-inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg);
+inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg) noexcept;
 
 ///
 /// Formats string using `printf()`.
@@ -491,12 +491,12 @@ namespace winstd
         ///
         /// Default construct
         ///
-        LocalFree_delete() {}
+        LocalFree_delete() noexcept {}
 
         ///
         /// Delete a pointer
         ///
-        void operator()(_Frees_ptr_opt_ _Ty *_Ptr) const
+        void operator()(_Frees_ptr_opt_ _Ty *_Ptr) const noexcept
         {
             LocalFree(_Ptr);
         }
@@ -582,6 +582,8 @@ namespace winstd
     /// Helper class for returning pointers to std::unique_ptr
     /// (specialization for arrays)
     ///
+    #pragma warning(push)
+    #pragma warning(disable: 26432) // Copy constructor and assignment operator are also present, but not detected by code analysis as they are using base type source object reference.
     template<class _Ty, class _Dx>
     class ref_unique_ptr<_Ty[], _Dx>
     {
@@ -591,10 +593,27 @@ namespace winstd
         ///
         /// \param[inout] owner  Object to attach helper to
         ///
-        inline ref_unique_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) :
+        inline ref_unique_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept :
             m_own(owner),
             m_ptr(owner.release())
         {}
+
+        ///
+        /// Takes ownership of the pointer
+        ///
+        /// \param[inout] owner  Object to attach helper to
+        ///
+        /// \returns Reference to this object
+        ///
+        inline ref_unique_ptr& operator=(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept
+        {
+            if (this != &other) {
+                m_own = owner;
+                m_ptr = owner.release();
+            }
+
+            return *this;
+        }
 
         ///
         /// Moves object
@@ -609,9 +628,27 @@ namespace winstd
         }
 
         ///
+        /// Moves object
+        ///
+        /// \param[inout] other  Source object
+        ///
+        /// \returns Reference to this object
+        ///
+        inline ref_unique_ptr& operator=(_Inout_ ref_unique_ptr<_Ty[], _Dx> &&other)
+        {
+            if (this != &other) {
+                m_own = other.m_own;
+                m_ptr = other.m_ptr;
+                other.m_ptr = nullptr;
+            }
+
+            return *this;
+        }
+
+        ///
         /// Returns ownership of the pointer
         ///
-        inline ~ref_unique_ptr()
+        virtual ~ref_unique_ptr()
         {
             if (m_ptr != nullptr)
                 m_own.reset(m_ptr);
@@ -622,7 +659,7 @@ namespace winstd
         ///
         /// \return Pointer to the pointer
         ///
-        inline operator typename _Ty**()
+        inline operator typename _Ty**() noexcept
         {
             return &m_ptr;
         }
@@ -641,15 +678,16 @@ namespace winstd
         std::unique_ptr<_Ty[], _Dx> &m_own;   ///< Original owner of the pointer
         _Ty                         *m_ptr;   ///< Pointer
     };
+    #pragma warning(pop)
 
     template<class _Ty, class _Dx>
-    inline ref_unique_ptr<_Ty, _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty, _Dx> &owner)
+    inline ref_unique_ptr<_Ty, _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty, _Dx> &owner) noexcept
     {
         return ref_unique_ptr<_Ty, _Dx>(owner);
     }
 
     template<class _Ty, class _Dx>
-    inline ref_unique_ptr<_Ty[], _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner)
+    inline ref_unique_ptr<_Ty[], _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept
     {
         return ref_unique_ptr<_Ty[], _Dx>(owner);
     }
@@ -682,7 +720,7 @@ namespace winstd
         ///
         /// Initializes a new class instance with the object handle set to INVAL.
         ///
-        inline handle() : m_h(invalid)
+        inline handle() noexcept : m_h(invalid)
         {
         }
 
@@ -691,7 +729,7 @@ namespace winstd
         ///
         /// \param[in] h  Initial object handle value
         ///
-        inline handle(_In_opt_ handle_type h) : m_h(h)
+        inline handle(_In_opt_ handle_type h) noexcept : m_h(h)
         {
         }
 
@@ -709,8 +747,8 @@ namespace winstd
 
     private:
         // This class is noncopyable.
-        handle(_In_ const handle<handle_type, INVAL> &h);
-        handle<handle_type, INVAL>& operator=(_In_ const handle<handle_type, INVAL> &h);
+        inline handle(_In_ const handle<handle_type, INVAL> &h) noexcept {};
+        inline handle<handle_type, INVAL>& operator=(_In_ const handle<handle_type, INVAL> &h) noexcept {};
 
     public:
         ///
@@ -718,7 +756,7 @@ namespace winstd
         ///
         /// \param[in] h  Object handle value
         ///
-        inline handle<handle_type, INVAL>& operator=(_In_opt_ handle_type h)
+        inline handle<handle_type, INVAL>& operator=(_In_opt_ handle_type h) noexcept
         {
             attach(h);
             return *this;
@@ -729,6 +767,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
+        #pragma warning(suppress: 26432) // Move constructor is also present, but not detected by code analysis somehow.
         inline handle<handle_type, INVAL>& operator=(_Inout_ handle<handle_type, INVAL> &&h) noexcept
         {
             if (this != std::addressof(h)) {
@@ -880,7 +919,7 @@ namespace winstd
         ///
         /// \param[in] h  New object handle
         ///
-        inline void attach(_In_opt_ handle_type h)
+        inline void attach(_In_opt_ handle_type h) noexcept
         {
             if (m_h != invalid)
                 free_internal();
@@ -916,7 +955,7 @@ namespace winstd
         ///
         /// Abstract member function that must be implemented by child classes to do the actual object destruction.
         ///
-        virtual void free_internal() = 0;
+        virtual void free_internal() noexcept = 0;
 
     protected:
         handle_type m_h; ///< Object handle
@@ -937,7 +976,7 @@ namespace winstd
         ///
         /// Initializes a new class instance with the object handle set to INVAL.
         ///
-        inline dplhandle()
+        inline dplhandle() noexcept
         {
         }
 
@@ -946,7 +985,7 @@ namespace winstd
         ///
         /// \param[in] h  Initial object handle value
         ///
-        inline dplhandle(_In_opt_ handle_type h) : handle<handle_type, INVAL>(h)
+        inline dplhandle(_In_opt_ handle_type h) noexcept : handle<handle_type, INVAL>(h)
         {
         }
 
@@ -955,7 +994,7 @@ namespace winstd
         ///
         /// \param[inout] h  A reference of another object
         ///
-        inline dplhandle<handle_type, INVAL>(_In_ const dplhandle<handle_type, INVAL> &h) : handle<handle_type, INVAL>(internal_duplicate(h.m_h))
+        inline dplhandle<handle_type, INVAL>(_In_ const dplhandle<handle_type, INVAL> &h) noexcept : handle<handle_type, INVAL>(duplicate_internal(h.m_h))
         {
         }
 
@@ -973,7 +1012,7 @@ namespace winstd
         ///
         /// \param[in] h  Object handle value
         ///
-        inline dplhandle<handle_type, INVAL>& operator=(_In_opt_ handle_type h)
+        inline dplhandle<handle_type, INVAL>& operator=(_In_opt_ handle_type h) noexcept
         {
             handle<handle_type, INVAL>::operator=(h);
             return *this;
@@ -984,7 +1023,7 @@ namespace winstd
         ///
         /// \param[in] h  Object
         ///
-        inline dplhandle<handle_type, INVAL>& operator=(_In_ const dplhandle<handle_type, INVAL> &h)
+        inline dplhandle<handle_type, INVAL>& operator=(_In_ const dplhandle<handle_type, INVAL> &h) noexcept
         {
             if (this != std::addressof(h)) {
                 if (h.m_h != invalid) {
@@ -1011,6 +1050,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
+        #pragma warning(disable: 26432) // Move constructor is also present, but not detected by code analysis somehow.
         inline dplhandle<handle_type, INVAL>& operator=(_Inout_ dplhandle<handle_type, INVAL> &&h) noexcept
         {
             handle<handle_type, INVAL>::operator=(std::move(h));
@@ -1052,7 +1092,7 @@ namespace winstd
         ///
         /// \return Duplicated object handle
         ///
-        virtual handle_type duplicate_internal(_In_ handle_type h) const = 0;
+        virtual handle_type duplicate_internal(_In_ handle_type h) const noexcept = 0;
     };
 
     /// @}
@@ -1506,34 +1546,6 @@ namespace winstd
 
 
         ///
-        /// Copies an exception
-        ///
-        /// \param[in] other  Exception to copy from
-        ///
-        inline num_runtime_error(const num_runtime_error<_Tn> &other) :
-            m_num(other.m_num),
-            runtime_error(other)
-        {
-        }
-
-
-        ///
-        /// Copies an exception
-        ///
-        /// \param[in] other  Exception to copy from
-        ///
-        inline num_runtime_error& operator=(const num_runtime_error<_Tn> &other)
-        {
-            if (this != addressof(other)) {
-                *(runtime_error*)this = other;
-                m_num                 = other.m_num;
-            }
-
-            return *this;
-        }
-
-
-        ///
         /// Returns the Windows error number
         ///
         inline error_type number() const
@@ -1590,16 +1602,6 @@ namespace winstd
         /// \param[in] msg  Error message
         ///
         inline win_runtime_error(_In_opt_z_ const char *msg = nullptr) : num_runtime_error<DWORD>(GetLastError(), msg)
-        {
-        }
-
-
-        ///
-        /// Copies an exception
-        ///
-        /// \param[in] other  Exception to copy from
-        ///
-        inline win_runtime_error(const win_runtime_error &other) : num_runtime_error<DWORD>(other)
         {
         }
 
@@ -1914,7 +1916,7 @@ namespace winstd
         ///
         /// Construct default allocator
         ///
-        inline sanitizing_allocator() : _Mybase()
+        inline sanitizing_allocator() noexcept : _Mybase()
         {
         }
 
@@ -1931,7 +1933,7 @@ namespace winstd
         /// Construct from a related allocator
         ///
         template<class _Other>
-        inline sanitizing_allocator(_In_ const sanitizing_allocator<_Other> &_Othr) : _Mybase(_Othr)
+        inline sanitizing_allocator(_In_ const sanitizing_allocator<_Other> &_Othr) noexcept : _Mybase(_Othr)
         {
         }
 
@@ -1939,7 +1941,7 @@ namespace winstd
         ///
         /// Deallocate object at _Ptr sanitizing its content first
         ///
-        inline void deallocate(_In_ pointer _Ptr, _In_ size_type _Size)
+        void deallocate(_In_ pointer _Ptr, _In_ size_type _Size)
         {
             // Sanitize then free.
             SecureZeroMemory(_Ptr, _Size);
@@ -1996,7 +1998,7 @@ inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_
 #endif
 
 
-inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg)
+inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg) noexcept
 {
     return _vsnwprintf(str, capacity, format, arg);
 }
@@ -2015,7 +2017,7 @@ inline int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ 
     } else {
         for (size_t capacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem);; capacity *= 2) {
             // Allocate on heap and retry.
-            std::unique_ptr<_Elem[]> buf_dyn(new _Elem[capacity]);
+            auto buf_dyn = std::make_unique<_Elem[]>(capacity);
             count = vsnprintf(buf_dyn.get(), capacity - 1, format, arg);
             if (count >= 0) {
                 str.assign(buf_dyn.get(), count);
@@ -2035,7 +2037,7 @@ inline int sprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _
 {
     va_list arg;
     va_start(arg, format);
-    int res = vsprintf(str, format, arg);
+    const int res = vsprintf(str, format, arg);
     va_end(arg);
     return res;
 }

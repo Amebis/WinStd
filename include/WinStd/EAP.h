@@ -84,7 +84,7 @@ namespace winstd
 /// - Non zero when \p a is equal to \p b;
 /// - Zero otherwise.
 ///
-inline bool operator==(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b);
+inline bool operator==(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b) noexcept;
 
 ///
 /// Are EAP method types non-equal?
@@ -96,7 +96,7 @@ inline bool operator==(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE
 /// - Non zero when \p a is not equal to \p b;
 /// - Zero otherwise.
 ///
-inline bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b);
+inline bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b) noexcept;
 
 /// @}
 
@@ -155,7 +155,7 @@ namespace winstd
         ///
         /// Default constructor
         ///
-        EapHostPeerFreeMemory_delete() {}
+        EapHostPeerFreeMemory_delete() noexcept {}
 
         ///
         /// Delete a pointer
@@ -178,7 +178,7 @@ namespace winstd
         ///
         /// Default constructor
         ///
-        EapHostPeerFreeRuntimeMemory_delete() {}
+        EapHostPeerFreeRuntimeMemory_delete() noexcept {}
 
         ///
         /// Delete a pointer
@@ -199,14 +199,14 @@ namespace winstd
         ///
         /// Default constructor
         ///
-        EapHostPeerFreeErrorMemory_delete() {}
+        EapHostPeerFreeErrorMemory_delete() noexcept {}
 
         ///
         /// Delete a pointer
         ///
         /// \sa [EapHostPeerFreeErrorMemory function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363557.aspx)
         ///
-        void operator()(EAP_ERROR *_Ptr) const
+        void operator()(EAP_ERROR *_Ptr) const noexcept
         {
             EapHostPeerFreeErrorMemory(_Ptr);
         }
@@ -221,14 +221,14 @@ namespace winstd
         ///
         /// Default constructor
         ///
-        EapHostPeerFreeEapError_delete() {}
+        EapHostPeerFreeEapError_delete() noexcept {}
 
         ///
         /// Delete a pointer
         ///
         /// \sa [EapHostPeerFreeEapError function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363556.aspx)
         ///
-        void operator()(EAP_ERROR *_Ptr) const
+        void operator()(EAP_ERROR *_Ptr) const noexcept
         {
             EapHostPeerFreeEapError(_Ptr);
         }
@@ -238,13 +238,15 @@ namespace winstd
     ///
     /// EAP_ATTRIBUTE wrapper class
     ///
+    #pragma warning(push)
+    #pragma warning(disable: 26432) // Copy constructor and assignment operator are also present, but not detected by code analysis as they are using base type source object reference.
     class WINSTD_API WINSTD_NOVTABLE eap_attr : public EAP_ATTRIBUTE
     {
     public:
         ///
         /// Initializes a new EAP attribute set to eatReserved.
         ///
-        inline eap_attr()
+        inline eap_attr() noexcept
         {
             eaType   = eatReserved;
             dwLength = 0;
@@ -341,6 +343,7 @@ namespace winstd
     public:
         static const EAP_ATTRIBUTE blank;   ///< Blank EAP attribute
     };
+    #pragma warning(pop)
 
 
     ///
@@ -355,7 +358,7 @@ namespace winstd
         /// \param[in] type   EAP method property type
         /// \param[in] value  Property value
         ///
-        inline eap_method_prop(_In_ EAP_METHOD_PROPERTY_TYPE type, _In_ BOOL value)
+        inline eap_method_prop(_In_ EAP_METHOD_PROPERTY_TYPE type, _In_ BOOL value) noexcept
         {
             eapMethodPropertyType                  = type;
             eapMethodPropertyValueType             = empvtBool;
@@ -370,7 +373,7 @@ namespace winstd
         /// \param[in] type   EAP method property type
         /// \param[in] value  Property value
         ///
-        inline eap_method_prop(_In_ EAP_METHOD_PROPERTY_TYPE type, _In_ DWORD value)
+        inline eap_method_prop(_In_ EAP_METHOD_PROPERTY_TYPE type, _In_ DWORD value) noexcept
         {
             eapMethodPropertyType                   = type;
             eapMethodPropertyValueType              = empvtDword;
@@ -385,12 +388,12 @@ namespace winstd
         /// \param[in] type   EAP method property type
         /// \param[in] value  Property value
         ///
-        inline eap_method_prop(_In_ EAP_METHOD_PROPERTY_TYPE type, _In_z_ LPCWSTR value)
+        inline eap_method_prop(_In_ EAP_METHOD_PROPERTY_TYPE type, _In_z_ LPCWSTR value) noexcept
         {
             eapMethodPropertyType                    = type;
             eapMethodPropertyValueType               = empvtString;
-            eapMethodPropertyValue.empvString.length = (DWORD)(sizeof(WCHAR)*(wcslen(value) + 1));
-            eapMethodPropertyValue.empvString.value  = (BYTE*)value;
+            eapMethodPropertyValue.empvString.length = static_cast<DWORD>(sizeof(WCHAR)*(wcslen(value) + 1));
+            eapMethodPropertyValue.empvString.value  = const_cast<BYTE*>(reinterpret_cast<const BYTE*>(value));
         }
     };
 
@@ -422,15 +425,15 @@ namespace winstd
         /// - true when creation succeeds;
         /// - false when creation fails. For extended error information, call `GetLastError()`.
         ///
-        inline bool create(_In_ EapCode code, _In_ BYTE id, _In_ WORD size)
+        inline bool create(_In_ EapCode code, _In_ BYTE id, _In_ WORD size) noexcept
         {
             assert(size >= 4); // EAP packets must contain at least Code, Id, and Length fields: 4B.
 
-            handle_type h = (handle_type)HeapAlloc(GetProcessHeap(), 0, size);
+            handle_type h = static_cast<handle_type>(HeapAlloc(GetProcessHeap(), 0, size));
             if (h != NULL) {
-                        h->Code   = (BYTE)      code ;
-                        h->Id     =             id   ;
-                *(WORD*)h->Length =       htons(size);
+                h->Code = static_cast<BYTE>(code);
+                h->Id = id;
+                *reinterpret_cast<WORD*>(h->Length) = htons(size);
 
                 attach(h);
                 return true;
@@ -444,7 +447,7 @@ namespace winstd
         ///
         /// Returns total EAP packet size in bytes.
         ///
-        inline WORD size() const
+        inline WORD size() const noexcept
         {
             return m_h != NULL ? ntohs(*(WORD*)m_h->Length) : 0;
         }
@@ -454,12 +457,12 @@ namespace winstd
         ///
         /// Destroys the EAP packet.
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
 
         ///
         /// Duplicates the EAP packet.
         ///
-        virtual handle_type duplicate_internal(_In_ handle_type h) const;
+        handle_type duplicate_internal(_In_ handle_type h) const noexcept override;
     };
 
 
@@ -474,7 +477,7 @@ namespace winstd
         ///
         /// Constructs an empty array
         ///
-        inline eap_method_info_array()
+        inline eap_method_info_array() noexcept
         {
             dwNumberOfMethods = 0;
             pEapMethods       = NULL;
@@ -518,8 +521,8 @@ namespace winstd
 
     protected:
         /// \cond internal
-        void free_internal();
-        static void free_internal(_In_ EAP_METHOD_INFO *pMethodInfo);
+        void free_internal() noexcept;
+        static void free_internal(_In_ EAP_METHOD_INFO *pMethodInfo) noexcept;
         /// \endcond
     };
 
@@ -580,7 +583,7 @@ namespace winstd
         ///
         /// Returns EAP method type
         ///
-        inline const EAP_METHOD_TYPE& type() const
+        inline const EAP_METHOD_TYPE& type() const noexcept
         {
             return m_type;
         }
@@ -589,7 +592,7 @@ namespace winstd
         ///
         /// Returns the reason code for error
         ///
-        inline DWORD reason() const
+        inline DWORD reason() const noexcept
         {
             return m_reason;
         }
@@ -598,7 +601,7 @@ namespace winstd
         ///
         /// Returns root cause ID
         ///
-        inline const GUID& root_cause_id() const
+        inline const GUID& root_cause_id() const noexcept
         {
             return m_root_cause_id;
         }
@@ -607,7 +610,7 @@ namespace winstd
         ///
         /// Returns root cause ID
         ///
-        inline const wchar_t* root_cause() const
+        inline const wchar_t* root_cause() const noexcept
         {
             return m_root_cause_desc.c_str();
         }
@@ -616,7 +619,7 @@ namespace winstd
         ///
         /// Returns repair ID
         ///
-        inline const GUID& repair_id() const
+        inline const GUID& repair_id() const noexcept
         {
             return m_repair_id;
         }
@@ -625,7 +628,7 @@ namespace winstd
         ///
         /// Returns root cause ID
         ///
-        inline const wchar_t* repair() const
+        inline const wchar_t* repair() const noexcept
         {
             return m_repair_desc.c_str();
         }
@@ -634,7 +637,7 @@ namespace winstd
         ///
         /// Returns help_link ID
         ///
-        inline const GUID& help_link_id() const
+        inline const GUID& help_link_id() const noexcept
         {
             return m_help_link_id;
         }
@@ -657,7 +660,7 @@ namespace winstd
 }
 
 
-inline bool operator==(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b)
+inline bool operator==(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b) noexcept
 {
     return
         a.eapType.type         == b.eapType.type         &&
@@ -667,7 +670,7 @@ inline bool operator==(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE
 }
 
 
-inline bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b)
+inline bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b) noexcept
 {
     return !operator==(a, b);
 }

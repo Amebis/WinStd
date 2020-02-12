@@ -155,7 +155,7 @@ namespace winstd
         ///
         /// \sa [FreeCredentialsHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375417.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
 
     public:
         TimeStamp m_expires;    ///< Credentials expiration time
@@ -270,7 +270,7 @@ namespace winstd
         ///
         /// \sa [DeleteSecurityContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375354.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
 
     public:
         ULONG     m_attrib;     ///< Context attributes

@@ -36,7 +36,7 @@ winstd::sec_credentials::~sec_credentials()
 }
 
 
-void winstd::sec_credentials::free_internal()
+void winstd::sec_credentials::free_internal() noexcept
 {
     FreeCredentialsHandle(m_h);
     delete m_h;
@@ -56,7 +56,7 @@ winstd::sec_context::~sec_context()
 }
 
 
-void winstd::sec_context::free_internal()
+void winstd::sec_context::free_internal() noexcept
 {
     DeleteSecurityContext(m_h);
     delete m_h;

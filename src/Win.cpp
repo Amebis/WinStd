@@ -25,7 +25,7 @@
 // StringToGuidA
 //////////////////////////////////////////////////////////////////////
 
-_Success_(return) BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd)
+_Success_(return) BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd) noexcept
 {
     GUID g;
     LPSTR lpszEnd;
@@ -44,7 +44,7 @@ _Success_(return) BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LP
 
     ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
     if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
-    g.Data2 = (unsigned short)ulTmp;
+    g.Data2 = static_cast<unsigned short>(ulTmp);
     lpszGuid = lpszEnd;
 
     if (*lpszGuid != '-') return FALSE;
@@ -52,7 +52,7 @@ _Success_(return) BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LP
 
     ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
     if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
-    g.Data3 = (unsigned short)ulTmp;
+    g.Data3 = static_cast<unsigned short>(ulTmp);
     lpszGuid = lpszEnd;
 
     if (*lpszGuid != '-') return FALSE;
@@ -60,8 +60,8 @@ _Success_(return) BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LP
 
     ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
     if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
-    g.Data4[0] = (unsigned char)((ulTmp >> 8) & 0xff);
-    g.Data4[1] = (unsigned char)( ulTmp       & 0xff);
+    g.Data4[0] = static_cast<unsigned char>((ulTmp >> 8) & 0xff);
+    g.Data4[1] = static_cast<unsigned char>( ulTmp       & 0xff);
     lpszGuid = lpszEnd;
 
     if (*lpszGuid != '-') return FALSE;
@@ -69,12 +69,12 @@ _Success_(return) BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LP
 
     ullTmp = _strtoui64(lpszGuid, &lpszEnd, 16);
     if (errno == ERANGE || ullTmp > 0xFFFFFFFFFFFF) return FALSE;
-    g.Data4[2] = (unsigned char)((ullTmp >> 40) & 0xff);
-    g.Data4[3] = (unsigned char)((ullTmp >> 32) & 0xff);
-    g.Data4[4] = (unsigned char)((ullTmp >> 24) & 0xff);
-    g.Data4[5] = (unsigned char)((ullTmp >> 16) & 0xff);
-    g.Data4[6] = (unsigned char)((ullTmp >>  8) & 0xff);
-    g.Data4[7] = (unsigned char)( ullTmp        & 0xff);
+    g.Data4[2] = static_cast<unsigned char>((ullTmp >> 40) & 0xff);
+    g.Data4[3] = static_cast<unsigned char>((ullTmp >> 32) & 0xff);
+    g.Data4[4] = static_cast<unsigned char>((ullTmp >> 24) & 0xff);
+    g.Data4[5] = static_cast<unsigned char>((ullTmp >> 16) & 0xff);
+    g.Data4[6] = static_cast<unsigned char>((ullTmp >>  8) & 0xff);
+    g.Data4[7] = static_cast<unsigned char>( ullTmp        & 0xff);
     lpszGuid = lpszEnd;
 
     if (*lpszGuid != '}') return FALSE;
@@ -88,7 +88,7 @@ _Success_(return) BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LP
 }
 
 
-_Success_(return) BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd)
+_Success_(return) BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd) noexcept
 {
     GUID g;
     LPWSTR lpszEnd;
@@ -107,7 +107,7 @@ _Success_(return) BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ L
 
     ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
     if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
-    g.Data2 = (unsigned short)ulTmp;
+    g.Data2 = static_cast<unsigned short>(ulTmp);
     lpszGuid = lpszEnd;
 
     if (*lpszGuid != '-') return FALSE;
@@ -115,7 +115,7 @@ _Success_(return) BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ L
 
     ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
     if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
-    g.Data3 = (unsigned short)ulTmp;
+    g.Data3 = static_cast<unsigned short>(ulTmp);
     lpszGuid = lpszEnd;
 
     if (*lpszGuid != '-') return FALSE;
@@ -123,8 +123,8 @@ _Success_(return) BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ L
 
     ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
     if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
-    g.Data4[0] = (unsigned char)((ulTmp >> 8) & 0xff);
-    g.Data4[1] = (unsigned char)( ulTmp       & 0xff);
+    g.Data4[0] = static_cast<unsigned char>((ulTmp >> 8) & 0xff);
+    g.Data4[1] = static_cast<unsigned char>( ulTmp       & 0xff);
     lpszGuid = lpszEnd;
 
     if (*lpszGuid != '-') return FALSE;
@@ -132,12 +132,12 @@ _Success_(return) BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ L
 
     ullTmp = _wcstoui64(lpszGuid, &lpszEnd, 16);
     if (errno == ERANGE || ullTmp > 0xFFFFFFFFFFFF) return FALSE;
-    g.Data4[2] = (unsigned char)((ullTmp >> 40) & 0xff);
-    g.Data4[3] = (unsigned char)((ullTmp >> 32) & 0xff);
-    g.Data4[4] = (unsigned char)((ullTmp >> 24) & 0xff);
-    g.Data4[5] = (unsigned char)((ullTmp >> 16) & 0xff);
-    g.Data4[6] = (unsigned char)((ullTmp >>  8) & 0xff);
-    g.Data4[7] = (unsigned char)( ullTmp        & 0xff);
+    g.Data4[2] = static_cast<unsigned char>((ullTmp >> 40) & 0xff);
+    g.Data4[3] = static_cast<unsigned char>((ullTmp >> 32) & 0xff);
+    g.Data4[4] = static_cast<unsigned char>((ullTmp >> 24) & 0xff);
+    g.Data4[5] = static_cast<unsigned char>((ullTmp >> 16) & 0xff);
+    g.Data4[6] = static_cast<unsigned char>((ullTmp >>  8) & 0xff);
+    g.Data4[7] = static_cast<unsigned char>( ullTmp        & 0xff);
     lpszGuid = lpszEnd;
 
     if (*lpszGuid != '}') return FALSE;
@@ -162,7 +162,7 @@ winstd::library::~library()
 }
 
 
-void winstd::library::free_internal()
+void winstd::library::free_internal() noexcept
 {
     FreeLibrary(m_h);
 }
@@ -174,7 +174,11 @@ void winstd::library::free_internal()
 
 winstd::critical_section::critical_section()
 {
-    InitializeCriticalSection(&m_data);
+    __try {
+        InitializeCriticalSection(&m_data);
+    } __except(EXCEPTION_EXECUTE_HANDLER) {
+        throw std::runtime_error("InitializeCriticalSection failed");
+    }
 }
 
 
@@ -196,7 +200,7 @@ winstd::find_file::~find_file()
 }
 
 
-void winstd::find_file::free_internal()
+void winstd::find_file::free_internal() noexcept
 {
     FindClose(m_h);
 }
@@ -215,7 +219,7 @@ winstd::heap::~heap()
 }
 
 
-bool winstd::heap::enumerate()
+bool winstd::heap::enumerate() noexcept
 {
     assert(m_h != invalid);
 
@@ -243,7 +247,7 @@ bool winstd::heap::enumerate()
         }
     }
 
-    DWORD dwResult = GetLastError();
+    const DWORD dwResult = GetLastError();
     if (dwResult != ERROR_NO_MORE_ITEMS)
         OutputDebugStr(_T("HeapWalk failed (error %u).\n"), dwResult);
 
@@ -254,7 +258,7 @@ bool winstd::heap::enumerate()
 }
 
 
-void winstd::heap::free_internal()
+void winstd::heap::free_internal() noexcept
 {
     enumerate();
     HeapDestroy(m_h);
@@ -265,7 +269,7 @@ void winstd::heap::free_internal()
 // winstd::actctx_activator
 //////////////////////////////////////////////////////////////////////
 
-winstd::actctx_activator::actctx_activator(_In_ HANDLE hActCtx)
+winstd::actctx_activator::actctx_activator(_In_ HANDLE hActCtx) noexcept
 {
     if (!ActivateActCtx(hActCtx, &m_cookie))
         m_cookie = 0;
@@ -283,7 +287,7 @@ winstd::actctx_activator::~actctx_activator()
 // winstd::user_impersonator
 //////////////////////////////////////////////////////////////////////
 
-winstd::user_impersonator::user_impersonator(_In_opt_ HANDLE hToken)
+winstd::user_impersonator::user_impersonator(_In_opt_ HANDLE hToken) noexcept
 {
     m_cookie = hToken && ImpersonateLoggedOnUser(hToken);
 }
@@ -300,7 +304,7 @@ winstd::user_impersonator::~user_impersonator()
 // winstd::console_ctrl_handler
 //////////////////////////////////////////////////////////////////////
 
-winstd::console_ctrl_handler::console_ctrl_handler(_In_opt_ PHANDLER_ROUTINE HandlerRoutine) :
+winstd::console_ctrl_handler::console_ctrl_handler(_In_opt_ PHANDLER_ROUTINE HandlerRoutine) noexcept :
     m_handler(HandlerRoutine)
 {
     m_cookie = SetConsoleCtrlHandler(m_handler, TRUE);
@@ -325,7 +329,7 @@ winstd::vmemory::~vmemory()
 }
 
 
-void winstd::vmemory::free_internal()
+void winstd::vmemory::free_internal() noexcept
 {
     VirtualFreeEx(m_proc, m_h, 0, MEM_RELEASE);
 }
@@ -342,7 +346,7 @@ winstd::reg_key::~reg_key()
 }
 
 
-void winstd::reg_key::free_internal()
+void winstd::reg_key::free_internal() noexcept
 {
     RegCloseKey(m_h);
 }
@@ -359,7 +363,7 @@ winstd::security_id::~security_id()
 }
 
 
-void winstd::security_id::free_internal()
+void winstd::security_id::free_internal() noexcept
 {
     FreeSid(m_h);
 }

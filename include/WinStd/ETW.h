@@ -613,7 +613,7 @@ namespace winstd
         ///
         /// \sa [EventUnregister function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363749.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
 
 
         ///
@@ -813,7 +813,7 @@ namespace winstd
         ///
         /// \sa [ControlTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363696.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
 
     protected:
         std::unique_ptr<EVENT_TRACE_PROPERTIES> m_prop; ///< Session properties
@@ -861,7 +861,7 @@ namespace winstd
         ///
         /// \sa [CloseTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363686.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
     };
 
 

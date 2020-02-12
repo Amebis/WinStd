@@ -32,13 +32,13 @@ winstd::bstr::~bstr()
 }
 
 
-void winstd::bstr::free_internal()
+void winstd::bstr::free_internal() noexcept
 {
     SysFreeString(m_h);
 }
 
 
-winstd::bstr::handle_type winstd::bstr::duplicate_internal(_In_ handle_type h) const
+winstd::bstr::handle_type winstd::bstr::duplicate_internal(_In_ handle_type h) const noexcept
 {
     return SysAllocStringLen(h, SysStringLen(h));
 }
@@ -48,6 +48,7 @@ winstd::bstr::handle_type winstd::bstr::duplicate_internal(_In_ handle_type h) c
 // winstd::variant
 //////////////////////////////////////////////////////////////////////
 
+#pragma warning(suppress: 26432) // Copy constructor and assignment operator are also present, but not detected by code analysis as they are using base type source object reference.
 winstd::variant::~variant()
 {
     VariantClear(this);

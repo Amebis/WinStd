@@ -141,7 +141,7 @@ namespace winstd
         ///
         /// \sa [CertCreateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376033.aspx)
         ///
-        inline bool create(_In_  DWORD dwCertEncodingType, _In_  LPCBYTE pbCertEncoded, _In_  DWORD cbCertEncoded)
+        inline bool create(_In_  DWORD dwCertEncodingType, _In_  LPCBYTE pbCertEncoded, _In_  DWORD cbCertEncoded) noexcept
         {
             handle_type h = CertCreateCertificateContext(dwCertEncodingType, pbCertEncoded, cbCertEncoded);
             if (h != invalid) {
@@ -159,7 +159,7 @@ namespace winstd
         /// - Non zero when certificate is equal to \p other;
         /// - Zero otherwise.
         ///
-        inline bool operator==(_In_ const handle_type &other) const
+        inline bool operator==(_In_ const handle_type &other) const noexcept
         {
             // TODO: [Crypto] Make constant time.
             return
@@ -175,7 +175,7 @@ namespace winstd
         /// - Non zero when certificate is not equal to \p other;
         /// - Zero otherwise.
         ///
-        inline bool operator!=(_In_ const handle_type &other) const
+        inline bool operator!=(_In_ const handle_type &other) const noexcept
         {
             return !operator==(other);
         }
@@ -188,10 +188,10 @@ namespace winstd
         /// - Non zero when certificate is less than \p other;
         /// - Zero otherwise.
         ///
-        inline bool operator<(_In_ const handle_type &other) const
+        inline bool operator<(_In_ const handle_type &other) const noexcept
         {
             // TODO: [Crypto] Make constant time.
-            int r = memcmp(m_h->pbCertEncoded, other->pbCertEncoded, std::min<DWORD>(m_h->cbCertEncoded, other->cbCertEncoded));
+            const int r = memcmp(m_h->pbCertEncoded, other->pbCertEncoded, std::min<DWORD>(m_h->cbCertEncoded, other->cbCertEncoded));
             return r < 0 || r == 0 && m_h->cbCertEncoded < other->cbCertEncoded;
         }
 
@@ -203,10 +203,10 @@ namespace winstd
         /// - Non zero when certificate is greater than \p other;
         /// - Zero otherwise.
         ///
-        inline bool operator>(_In_ const handle_type &other) const
+        inline bool operator>(_In_ const handle_type &other) const noexcept
         {
             // TODO: [Crypto] Make constant time.
-            int r = memcmp(m_h->pbCertEncoded, other->pbCertEncoded, std::min<DWORD>(m_h->cbCertEncoded, other->cbCertEncoded));
+            const int r = memcmp(m_h->pbCertEncoded, other->pbCertEncoded, std::min<DWORD>(m_h->cbCertEncoded, other->cbCertEncoded));
             return r > 0 || r == 0 && m_h->cbCertEncoded > other->cbCertEncoded;
         }
 
@@ -218,7 +218,7 @@ namespace winstd
         /// - Non zero when certificate is less than \p other;
         /// - Zero otherwise.
         ///
-        inline bool operator<=(_In_ const handle_type &other) const
+        inline bool operator<=(_In_ const handle_type &other) const noexcept
         {
             return !operator>(other);
         }
@@ -231,7 +231,7 @@ namespace winstd
         /// - Non zero when certificate is greater than \p other;
         /// - Zero otherwise.
         ///
-        inline bool operator>=(_In_ const handle_type &other) const
+        inline bool operator>=(_In_ const handle_type &other) const noexcept
         {
             return !operator<(other);
         }
@@ -242,7 +242,7 @@ namespace winstd
         ///
         /// \sa [CertFreeCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376075.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
 
         ///
         /// Duplicates the certificate context.
@@ -253,7 +253,7 @@ namespace winstd
         ///
         /// \sa [CertDuplicateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376045.aspx)
         ///
-        virtual handle_type duplicate_internal(_In_ handle_type h) const;
+        handle_type duplicate_internal(_In_ handle_type h) const noexcept override;
     };
 
 
@@ -281,7 +281,7 @@ namespace winstd
         ///
         /// \sa [CertGetCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376078.aspx)
         ///
-        inline bool create(_In_opt_ HCERTCHAINENGINE hChainEngine, _In_ PCCERT_CONTEXT pCertContext, _In_opt_ LPFILETIME pTime, _In_opt_ HCERTSTORE hAdditionalStore, _In_ PCERT_CHAIN_PARA pChainPara, _In_ DWORD dwFlags, __reserved LPVOID pvReserved = NULL)
+        inline bool create(_In_opt_ HCERTCHAINENGINE hChainEngine, _In_ PCCERT_CONTEXT pCertContext, _In_opt_ LPFILETIME pTime, _In_opt_ HCERTSTORE hAdditionalStore, _In_ PCERT_CHAIN_PARA pChainPara, _In_ DWORD dwFlags, __reserved LPVOID pvReserved = NULL) noexcept
         {
             handle_type h;
             if (CertGetCertificateChain(hChainEngine, pCertContext, pTime, hAdditionalStore, pChainPara, dwFlags, pvReserved, &h)) {
@@ -297,7 +297,7 @@ namespace winstd
         ///
         /// \sa [CertFreeCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376073.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
 
         ///
         /// Duplicates the certificate chain context.
@@ -308,7 +308,7 @@ namespace winstd
         ///
         /// \sa [CertDuplicateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376045.aspx)
         ///
-        virtual handle_type duplicate_internal(_In_ handle_type h) const;
+        handle_type duplicate_internal(_In_ handle_type h) const noexcept override;
     };
 
 
@@ -336,7 +336,7 @@ namespace winstd
         ///
         /// \sa [CertOpenStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376559.aspx)
         ///
-        inline bool create(_In_ LPCSTR lpszStoreProvider, _In_ DWORD dwEncodingType, _In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ DWORD dwFlags, _In_opt_ const void *pvPara)
+        inline bool create(_In_ LPCSTR lpszStoreProvider, _In_ DWORD dwEncodingType, _In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ DWORD dwFlags, _In_opt_ const void *pvPara) noexcept
         {
             handle_type h = CertOpenStore(lpszStoreProvider, dwEncodingType, hCryptProv, dwFlags, pvPara);
             if (h != invalid) {
@@ -355,7 +355,7 @@ namespace winstd
         ///
         /// \sa [CertOpenSystemStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376560.aspx)
         ///
-        inline bool create(_In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_z_ LPCTSTR szSubsystemProtocol)
+        inline bool create(_In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_z_ LPCTSTR szSubsystemProtocol) noexcept
         {
             handle_type h = CertOpenSystemStore(hCryptProv, szSubsystemProtocol);
             if (h != invalid) {
@@ -371,7 +371,7 @@ namespace winstd
         ///
         /// \sa [CertCloseStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376026.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
     };
 
 
@@ -399,7 +399,7 @@ namespace winstd
         ///
         /// \sa [CryptAcquireContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379886.aspx)
         ///
-        inline bool create(_In_opt_z_ LPCTSTR szContainer, _In_opt_z_ LPCTSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags = 0)
+        inline bool create(_In_opt_z_ LPCTSTR szContainer, _In_opt_z_ LPCTSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags = 0) noexcept
         {
             handle_type h;
             if (CryptAcquireContext(&h, szContainer, szProvider, dwProvType, dwFlags)) {
@@ -415,7 +415,7 @@ namespace winstd
         ///
         /// \sa [CryptReleaseContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380268.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
     };
 
 
@@ -443,7 +443,7 @@ namespace winstd
         ///
         /// \sa [CryptCreateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379908.aspx)
         ///
-        inline bool create(_In_ HCRYPTPROV  hProv, _In_ ALG_ID Algid, _In_opt_ HCRYPTKEY hKey = NULL, _In_opt_ DWORD dwFlags = 0)
+        inline bool create(_In_ HCRYPTPROV  hProv, _In_ ALG_ID Algid, _In_opt_ HCRYPTKEY hKey = NULL, _In_opt_ DWORD dwFlags = 0) noexcept
         {
             handle_type h;
             if (CryptCreateHash(hProv, Algid, hKey, dwFlags, &h)) {
@@ -459,7 +459,7 @@ namespace winstd
         ///
         /// \sa [CryptDestroyHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379917.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
 
         ///
         /// Duplicates the hash context.
@@ -470,7 +470,7 @@ namespace winstd
         ///
         /// \sa [CryptDuplicateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379919.aspx)
         ///
-        virtual handle_type duplicate_internal(_In_ handle_type h) const;
+        handle_type duplicate_internal(_In_ handle_type h) const noexcept override;
     };
 
 
@@ -494,7 +494,7 @@ namespace winstd
         ///
         /// \sa [CryptGenKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379941.aspx)
         ///
-        inline bool generate(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ DWORD dwFlags)
+        inline bool generate(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ DWORD dwFlags) noexcept
         {
             handle_type h;
             if (CryptGenKey(hProv, Algid, dwFlags, &h)) {
@@ -509,7 +509,7 @@ namespace winstd
         ///
         /// \sa [CryptImportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380207.aspx)
         ///
-        inline bool import(_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) LPCBYTE pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags)
+        inline bool import(_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) LPCBYTE pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags) noexcept
         {
             handle_type h;
             if (CryptImportKey(hProv, pbData, dwDataLen, hPubKey, dwFlags, &h)) {
@@ -524,7 +524,7 @@ namespace winstd
         ///
         /// \sa [CryptImportPublicKeyInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380209.aspx)
         ///
-        inline bool import_public(_In_ HCRYPTPROV hCryptProv, _In_ DWORD dwCertEncodingType, _In_ PCERT_PUBLIC_KEY_INFO pInfo)
+        inline bool import_public(_In_ HCRYPTPROV hCryptProv, _In_ DWORD dwCertEncodingType, _In_ PCERT_PUBLIC_KEY_INFO pInfo) noexcept
         {
             handle_type h;
             if (CryptImportPublicKeyInfo(hCryptProv, dwCertEncodingType, pInfo, &h)) {
@@ -539,7 +539,7 @@ namespace winstd
         ///
         /// \sa [CryptDeriveKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379916.aspx)
         ///
-        inline bool derive(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ HCRYPTHASH hBaseData, _In_ DWORD dwFlags)
+        inline bool derive(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ HCRYPTHASH hBaseData, _In_ DWORD dwFlags) noexcept
         {
             handle_type h;
             if (CryptDeriveKey(hProv, Algid, hBaseData, dwFlags, &h)) {
@@ -565,7 +565,7 @@ namespace winstd
         ///
         /// \sa [CryptDestroyKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379918.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
 
         ///
         /// Duplicates the key.
@@ -576,20 +576,21 @@ namespace winstd
         ///
         /// \sa [CryptDuplicateKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379920.aspx)
         ///
-        virtual handle_type duplicate_internal(_In_ handle_type h) const;
+        handle_type duplicate_internal(_In_ handle_type h) const noexcept override;
     };
-
 
     ///
     /// DATA_BLOB wrapper class
     ///
+    #pragma warning(push)
+    #pragma warning(disable: 26432) // Copy constructor and assignment operator are also present, but not detected by code analysis as they are using base type source object reference.
     class WINSTD_API data_blob : public DATA_BLOB
     {
     public:
         ///
         /// Initializes an empty BLOB.
         ///
-        inline data_blob()
+        inline data_blob() noexcept
         {
             cbData = 0;
             pbData = NULL;
@@ -598,7 +599,7 @@ namespace winstd
         ///
         /// Initializes a BLOB from existing data.
         ///
-        inline data_blob(_In_count_(size) BYTE *data, _In_ DWORD size)
+        inline data_blob(_In_count_(size) BYTE *data, _In_ DWORD size) noexcept
         {
             cbData = size;
             pbData = data;
@@ -611,7 +612,7 @@ namespace winstd
         {
             cbData = other.cbData;
             if (cbData) {
-                pbData = (BYTE*)LocalAlloc(LMEM_FIXED, other.cbData);
+                pbData = static_cast<BYTE*>(LocalAlloc(LMEM_FIXED, other.cbData));
                 if (!pbData) throw win_runtime_error("LocalAlloc failed.");
                 memcpy(pbData, other.pbData, other.cbData);
             } else
@@ -621,7 +622,7 @@ namespace winstd
         ///
         /// Move an existing BLOB.
         ///
-        inline data_blob(_Inout_ DATA_BLOB &&other) noexcept
+        inline data_blob(_Inout_ data_blob &&other) noexcept
         {
             cbData = other.cbData;
             pbData = other.pbData;
@@ -644,7 +645,7 @@ namespace winstd
                 if (pbData)
                     LocalFree(pbData);
                 if (cbData) {
-                    pbData = (BYTE*)LocalAlloc(LMEM_FIXED, other.cbData);
+                    pbData = static_cast<BYTE*>(LocalAlloc(LMEM_FIXED, other.cbData));
                     if (!pbData) throw win_runtime_error("LocalAlloc failed.");
                     memcpy(pbData, other.pbData, other.cbData);
                 } else
@@ -657,7 +658,7 @@ namespace winstd
         ///
         /// Move an existing BLOB.
         ///
-        inline data_blob& operator=(_Inout_ DATA_BLOB &&other) noexcept
+        inline data_blob& operator=(_Inout_ data_blob &&other) noexcept
         {
             if (this != &other) {
                 cbData = other.cbData;
@@ -674,7 +675,7 @@ namespace winstd
         ///
         /// Get BLOB size.
         ///
-        inline DWORD size() const
+        inline DWORD size() const noexcept
         {
             return cbData;
         }
@@ -682,7 +683,7 @@ namespace winstd
         ///
         /// Get BLOB buffer.
         ///
-        inline const BYTE* data() const
+        inline const BYTE* data() const noexcept
         {
             return pbData;
         }
@@ -690,11 +691,12 @@ namespace winstd
         ///
         /// Get BLOB buffer.
         ///
-        inline BYTE* data()
+        inline BYTE* data() noexcept
         {
             return pbData;
         }
     };
+    #pragma warning(pop)
 
     /// @}
 }

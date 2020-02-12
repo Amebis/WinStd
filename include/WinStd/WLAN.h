@@ -145,10 +145,10 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
-        inline bool open(_In_ DWORD dwClientVersion, _Out_ PDWORD pdwNegotiatedVersion)
+        inline bool open(_In_ DWORD dwClientVersion, _Out_ PDWORD pdwNegotiatedVersion) noexcept
         {
             handle_type h;
-            DWORD dwResult = WlanOpenHandle(dwClientVersion, 0, pdwNegotiatedVersion, &h);
+            const DWORD dwResult = WlanOpenHandle(dwClientVersion, 0, pdwNegotiatedVersion, &h);
             if (dwResult == ERROR_SUCCESS) {
                 attach(h);
                 return true;
@@ -164,7 +164,7 @@ namespace winstd
         ///
         /// \sa [WlanCloseHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms706610(v=vs.85).aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
     };
 
     /// @}

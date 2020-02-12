@@ -123,7 +123,7 @@ winstd::event_provider::~event_provider()
 }
 
 
-void winstd::event_provider::free_internal()
+void winstd::event_provider::free_internal() noexcept
 {
     EventUnregister(m_h);
 }
@@ -160,7 +160,7 @@ winstd::event_session::~event_session()
 }
 
 
-void winstd::event_session::free_internal()
+void winstd::event_session::free_internal() noexcept
 {
     ControlTrace(m_h, name(), m_prop.get(), EVENT_TRACE_CONTROL_STOP);
 }
@@ -197,7 +197,7 @@ winstd::event_trace::~event_trace()
 }
 
 
-void winstd::event_trace::free_internal()
+void winstd::event_trace::free_internal() noexcept
 {
     CloseTrace(m_h);
 }

@@ -54,47 +54,47 @@ namespace winstd
 /// @{
 
 /// @copydoc GetModuleFileNameW()
-template<class _Elem, class _Traits, class _Ax> inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept;
 
 ///
 /// Retrieves the fully qualified path for the file that contains the specified module and stores it in a std::wstring string.
 ///
 /// \sa [GetModuleFileName function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms683197.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept;
 
 /// @copydoc GetWindowTextW()
-template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept;
 
 ///
 /// Copies the text of the specified window's title bar (if it has one) into a std::wstring string.
 ///
 /// \sa [GetWindowText function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633520.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept;
 
 /// @copydoc GetFileVersionInfoW()
-template<class _Ty, class _Ax> inline _Success_(return != 0) BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue);
+template<class _Ty, class _Ax> inline _Success_(return != 0) BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue) noexcept;
 
 ///
 /// Retrieves version information for the specified file and stores it in a std::vector buffer.
 ///
 /// \sa [GetFileVersionInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms647003.aspx)
 ///
-template<class _Ty, class _Ax> inline _Success_(return != 0) BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue);
+template<class _Ty, class _Ax> inline _Success_(return != 0) BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue) noexcept;
 
 /// @copydoc ExpandEnvironmentStringsW()
-template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept;
 
 ///
 /// Expands environment-variable strings, replaces them with the values defined for the current user, and stores it in a std::wstring string.
 ///
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept;
 
 /// @copydoc GuidToStringW()
-template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str);
+template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str) noexcept;
 
 ///
 /// Formats GUID and stores it in a std::wstring string.
@@ -102,7 +102,7 @@ template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringA(_In_ L
 /// \param[in ] lpGuid  Pointer to GUID
 /// \param[out] str     String to store the result to
 ///
-template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str);
+template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str) noexcept;
 /// @copydoc GuidToStringW()
 #ifdef _UNICODE
 #define GuidToString GuidToStringW
@@ -111,7 +111,7 @@ template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringW(_In_ L
 #endif
 
 /// @copydoc StringToGuidW()
-_Success_(return) BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd = NULL);
+_Success_(return) BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd = NULL) noexcept;
 
 ///
 /// Parses string with GUID and stores it to GUID
@@ -124,7 +124,7 @@ _Success_(return) BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LP
 /// - `TRUE` if GUID successfuly parsed;
 /// - `FALSE` otherwise.
 ///
-_Success_(return) BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd = NULL);
+_Success_(return) BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd = NULL) noexcept;
 /// @copydoc StringToGuidW()
 #ifdef _UNICODE
 #define StringToGuid StringToGuidW
@@ -150,7 +150,7 @@ _Success_(return) BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ L
 /// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept;
 
 ///
 /// Queries for a string value in the registry and stores it in a std::wstring string.
@@ -170,29 +170,29 @@ template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringVal
 /// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept;
 
 /// @copydoc RegQueryValueExW()
-template<class _Ty, class _Ax> inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData);
+template<class _Ty, class _Ax> inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData) noexcept;
 
 ///
 /// Retrieves the type and data for the specified value name associated with an open registry key and stores the data in a std::vector buffer.
 ///
 /// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
 ///
-template<class _Ty, class _Ax> inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData);
+template<class _Ty, class _Ax> inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData) noexcept;
 
 #if _WIN32_WINNT >= _WIN32_WINNT_VISTA
 
 /// @copydoc RegLoadMUIStringW()
-template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCSTR pszDirectory);
+template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCSTR pszDirectory) noexcept;
 
 ///
 /// Loads the specified string from the specified key and subkey, and stores it in a std::wstring string.
 ///
 /// \sa [RegLoadMUIString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724890.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCWSTR pszDirectory);
+template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCWSTR pszDirectory) noexcept;
 
 #endif
 
@@ -201,21 +201,21 @@ template<class _Elem, class _Traits, class _Ax> inline LSTATUS RegLoadMUIStringW
 ///
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
-template<class _Traits, class _Ax> inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
+template<class _Traits, class _Ax> inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept;
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::vector. The new character vector is not necessarily from a multibyte character set.
 ///
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
-template<class _Ax> inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
+template<class _Ax> inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept;
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
 ///
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
-template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _Out_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _Out_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept;
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
@@ -224,7 +224,7 @@ template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success
 ///
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
-template<class _Traits, class _Ax> inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
+template<class _Traits, class _Ax> inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept;
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::vector. The new character vector is not necessarily from a multibyte character set.
@@ -233,7 +233,7 @@ template<class _Traits, class _Ax> inline _Success_(return != 0) int SecureWideC
 ///
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
-template<class _Ax> inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
+template<class _Ax> inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept;
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
@@ -242,28 +242,28 @@ template<class _Ax> inline _Success_(return != 0) int SecureWideCharToMultiByte(
 ///
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
-template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _Out_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar);
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _Out_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept;
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
 ///
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
-template<class _Traits, class _Ax> inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr);
+template<class _Traits, class _Ax> inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr) noexcept;
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::vector. The character vector is not necessarily from a multibyte character set.
 ///
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
-template<class _Ax> inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr);
+template<class _Ax> inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr) noexcept;
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
 ///
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
-template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr);
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr) noexcept;
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
@@ -272,7 +272,7 @@ template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success
 ///
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
-template<class _Traits, class _Ax> inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr);
+template<class _Traits, class _Ax> inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr) noexcept;
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::vector. The character vector is not necessarily from a multibyte character set.
@@ -281,7 +281,7 @@ template<class _Traits, class _Ax> inline _Success_(return != 0) int SecureMulti
 ///
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
-template<class _Ax> inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr);
+template<class _Ax> inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr) noexcept;
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
@@ -290,72 +290,72 @@ template<class _Ax> inline _Success_(return != 0) int SecureMultiByteToWideChar(
 ///
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
-template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr);
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr) noexcept;
 
 /// @copydoc LoadStringW
-template<class _Traits, class _Ax> inline _Success_(return != 0) int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer);
+template<class _Traits, class _Ax> inline _Success_(return != 0) int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer) noexcept;
 
 ///
 /// Loads a string resource from the executable file associated with a specified module.
 ///
 /// \sa [LoadString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms647486.aspx)
 ///
-template<class _Traits, class _Ax> inline _Success_(return != 0) int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer);
+template<class _Traits, class _Ax> inline _Success_(return != 0) int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer) noexcept;
 
 ///
 /// Formats and sends a string to the debugger for display.
 ///
 /// \sa [OutputDebugString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx)
 ///
-inline VOID OutputDebugStrV(_In_z_ LPCSTR lpOutputString, _In_ va_list arg);
+inline VOID OutputDebugStrV(_In_z_ LPCSTR lpOutputString, _In_ va_list arg) noexcept;
 
 ///
 /// Formats and sends a string to the debugger for display.
 ///
 /// \sa [OutputDebugString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx)
 ///
-inline VOID OutputDebugStrV(_In_z_ LPCWSTR lpOutputString, _In_ va_list arg);
+inline VOID OutputDebugStrV(_In_z_ LPCWSTR lpOutputString, _In_ va_list arg) noexcept;
 
 ///
 /// Formats and sends a string to the debugger for display.
 ///
 /// \sa [OutputDebugString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx)
 ///
-inline VOID OutputDebugStr(_In_z_ LPCSTR lpOutputString, ...);
+inline VOID OutputDebugStr(_In_z_ LPCSTR lpOutputString, ...) noexcept;
 
 ///
 /// Formats and sends a string to the debugger for display.
 ///
 /// \sa [OutputDebugString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx)
 ///
-inline VOID OutputDebugStr(_In_z_ LPCWSTR lpOutputString, ...);
+inline VOID OutputDebugStr(_In_z_ LPCWSTR lpOutputString, ...) noexcept;
 
 /// @copydoc GetDateFormatW()
-template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate) noexcept;
 
 ///
 /// Formats a date as a date string for a locale specified by the locale identifier. The function formats either a specified date or the local system date. 
 ///
 /// \sa [GetDateFormat function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd318086.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCWSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCWSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate) noexcept;
 
 /// @copydoc LookupAccountSidW()
-template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse) noexcept;
 
 ///
 /// Retrieves the name of the account for this SID and the name of the first domain on which this SID is found.
 ///
 /// \sa [LookupAccountSid function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379166.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse);
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse) noexcept;
 
 ///
 /// Retrieves a specified type of information about an access token. The calling process must have appropriate access rights to obtain the information.
 ///
 /// \sa [GetTokenInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa446671.aspx)
 ///
-template<class _Ty> inline _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, _In_ TOKEN_INFORMATION_CLASS TokenInformationClass, _Out_ std::unique_ptr<_Ty> &TokenInformation);
+template<class _Ty> inline _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, _In_ TOKEN_INFORMATION_CLASS TokenInformationClass, _Out_ std::unique_ptr<_Ty> &TokenInformation) noexcept;
 
 /// @}
 
@@ -393,7 +393,7 @@ namespace winstd
         ///
         /// \sa [CloseHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724211.aspx)
         ///
-        virtual void free_internal()
+        void free_internal() noexcept override
         {
             CloseHandle(m_h);
         }
@@ -424,7 +424,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
-        inline bool load(_In_z_ LPCTSTR lpFileName, __reserved handle_type hFile, _In_ DWORD dwFlags)
+        inline bool load(_In_z_ LPCTSTR lpFileName, __reserved handle_type hFile, _In_ DWORD dwFlags) noexcept
         {
             handle_type h = LoadLibraryEx(lpFileName, hFile, dwFlags);
             if (h != invalid) {
@@ -440,7 +440,7 @@ namespace winstd
         ///
         /// \sa [FreeLibrary function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms683152.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
     };
 
 
@@ -459,7 +459,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
-        inline bool open(_In_ DWORD dwDesiredAccess, _In_ BOOL bInheritHandle, _In_ DWORD dwProcessId)
+        inline bool open(_In_ DWORD dwDesiredAccess, _In_ BOOL bInheritHandle, _In_ DWORD dwProcessId) noexcept
         {
             handle_type h = OpenProcess(dwDesiredAccess, bInheritHandle, dwProcessId);
             if (h != invalid) {
@@ -486,7 +486,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
-        inline bool create(_In_z_ LPCTSTR lpFileName, _In_ DWORD dwDesiredAccess, _In_ DWORD dwShareMode, _In_ DWORD dwCreationDisposition, _In_opt_ DWORD dwFlagsAndAttributes = FILE_ATTRIBUTE_NORMAL, _In_opt_ LPSECURITY_ATTRIBUTES lpSecurityAttributes = NULL, _In_opt_ HANDLE hTemplateFile = NULL)
+        inline bool create(_In_z_ LPCTSTR lpFileName, _In_ DWORD dwDesiredAccess, _In_ DWORD dwShareMode, _In_ DWORD dwCreationDisposition, _In_opt_ DWORD dwFlagsAndAttributes = FILE_ATTRIBUTE_NORMAL, _In_opt_ LPSECURITY_ATTRIBUTES lpSecurityAttributes = NULL, _In_opt_ HANDLE hTemplateFile = NULL) noexcept
         {
             handle_type h = CreateFile(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
             if (h != invalid) {
@@ -513,7 +513,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
-        inline bool create(_In_ BOOL bManualReset, _In_ BOOL bInitialState, _In_opt_ LPSECURITY_ATTRIBUTES lpEventAttributes = NULL, _In_opt_z_ LPCTSTR lpName = NULL)
+        inline bool create(_In_ BOOL bManualReset, _In_ BOOL bInitialState, _In_opt_ LPSECURITY_ATTRIBUTES lpEventAttributes = NULL, _In_opt_z_ LPCTSTR lpName = NULL) noexcept
         {
             handle_type h = CreateEvent(lpEventAttributes, bManualReset, bInitialState, lpName);
             if (h != invalid) {
@@ -532,7 +532,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
-        inline bool open(_In_ DWORD dwDesiredAccess, _In_ BOOL bInheritHandle, _In_z_ LPCTSTR lpName)
+        inline bool open(_In_ DWORD dwDesiredAccess, _In_ BOOL bInheritHandle, _In_z_ LPCTSTR lpName) noexcept
         {
             handle_type h = OpenEvent(dwDesiredAccess, bInheritHandle, lpName);
             if (h != invalid) {
@@ -572,7 +572,7 @@ namespace winstd
         ///
         /// \return Pointer to critical section
         ///
-        inline operator LPCRITICAL_SECTION()
+        inline operator LPCRITICAL_SECTION() noexcept
         {
             return &m_data;
         }
@@ -606,7 +606,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
-        inline bool find(_In_ LPCTSTR lpFileName, _Out_ LPWIN32_FIND_DATA lpFindFileData)
+        inline bool find(_In_ LPCTSTR lpFileName, _Out_ LPWIN32_FIND_DATA lpFindFileData) noexcept
         {
             handle_type h = FindFirstFile(lpFileName, lpFindFileData);
             if (h != invalid) {
@@ -622,7 +622,7 @@ namespace winstd
         ///
         /// \sa [FindClose function](https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-findclose)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
     };
 
 
@@ -650,7 +650,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
-        inline bool create(_In_ DWORD flOptions, _In_ SIZE_T dwInitialSize, _In_ SIZE_T dwMaximumSize)
+        inline bool create(_In_ DWORD flOptions, _In_ SIZE_T dwInitialSize, _In_ SIZE_T dwMaximumSize) noexcept
         {
             handle_type h = HeapCreate(flOptions, dwInitialSize, dwMaximumSize);
             if (h != invalid) {
@@ -667,7 +667,7 @@ namespace winstd
         /// - `true` if any blocks found;
         /// - `false` otherwise.
         ///
-        bool enumerate();
+        bool enumerate() noexcept;
 
     protected:
         ///
@@ -675,7 +675,7 @@ namespace winstd
         ///
         /// \sa [HeapDestroy function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366700.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
     };
 
 
@@ -801,6 +801,9 @@ namespace winstd
     ///
     class WINSTD_API actctx_activator
     {
+        WINSTD_NONCOPYABLE(actctx_activator)
+        WINSTD_NONMOVABLE(actctx_activator)
+
     public:
         ///
         /// Construct the activator and activates the given activation context
@@ -809,7 +812,7 @@ namespace winstd
         ///
         /// \sa [ActivateActCtx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374151.aspx)
         ///
-        actctx_activator(_In_ HANDLE hActCtx);
+        actctx_activator(_In_ HANDLE hActCtx) noexcept;
 
         ///
         /// Deactivates activation context and destructs the activator
@@ -828,6 +831,9 @@ namespace winstd
     ///
     class WINSTD_API user_impersonator
     {
+        WINSTD_NONCOPYABLE(user_impersonator)
+        WINSTD_NONMOVABLE(user_impersonator)
+
     public:
         ///
         /// Construct the impersonator and impersonates the given user
@@ -836,7 +842,7 @@ namespace winstd
         ///
         /// \sa [ImpersonateLoggedOnUser function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa378612.aspx)
         ///
-        user_impersonator(_In_opt_ HANDLE hToken);
+        user_impersonator(_In_opt_ HANDLE hToken) noexcept;
 
         ///
         /// Reverts to current user and destructs the impersonator
@@ -855,6 +861,9 @@ namespace winstd
     ///
     class WINSTD_API console_ctrl_handler
     {
+        WINSTD_NONCOPYABLE(console_ctrl_handler)
+        WINSTD_NONMOVABLE(console_ctrl_handler)
+
     public:
         ///
         /// Construct the console control handler object and pushes the given handler to the console control handler stack
@@ -863,7 +872,7 @@ namespace winstd
         ///
         /// \sa [SetConsoleCtrlHandler function](https://docs.microsoft.com/en-us/windows/console/setconsolectrlhandler)
         ///
-        console_ctrl_handler(_In_opt_ PHANDLER_ROUTINE HandlerRoutine);
+        console_ctrl_handler(_In_opt_ PHANDLER_ROUTINE HandlerRoutine) noexcept;
 
         ///
         /// Pops console control handler from the console control handler stack
@@ -889,7 +898,7 @@ namespace winstd
         ///
         /// Initializes a new class instance with the memory handle set to INVAL.
         ///
-        inline vmemory() : m_proc(NULL)
+        inline vmemory() noexcept : m_proc(NULL)
         {
         }
 
@@ -899,7 +908,7 @@ namespace winstd
         /// \param[in] proc  Handle of process the memory belongs to
         /// \param[in] h     Initial object handle value
         ///
-        inline vmemory(_In_ handle_type h, _In_ HANDLE proc) :
+        inline vmemory(_In_ handle_type h, _In_ HANDLE proc) noexcept :
             m_proc(proc),
             handle<LPVOID, NULL>(h)
         {
@@ -945,7 +954,7 @@ namespace winstd
         /// \param[in] proc  Handle of process the memory belongs to
         /// \param[in] h     Initial object handle value
         ///
-        inline void attach(_In_ HANDLE proc, _In_opt_ handle_type h)
+        inline void attach(_In_ HANDLE proc, _In_opt_ handle_type h) noexcept
         {
             m_proc = proc;
             if (m_h != invalid)
@@ -966,8 +975,8 @@ namespace winstd
             _In_     HANDLE hProcess,
             _In_opt_ LPVOID lpAddress,
             _In_     SIZE_T dwSize,
-            _In_     DWORD  flAllocationType, 
-            _In_     DWORD  flProtect)
+            _In_     DWORD  flAllocationType,
+            _In_     DWORD  flProtect) noexcept
         {
             handle_type h = VirtualAllocEx(hProcess, lpAddress, dwSize, flAllocationType, flProtect);
             if (h != invalid) {
@@ -983,7 +992,7 @@ namespace winstd
         ///
         /// \sa [VirtualFreeEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366894.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
 
     protected:
         HANDLE m_proc;  ///< Handle of memory's process
@@ -1021,10 +1030,10 @@ namespace winstd
             _In_      DWORD                 dwOptions,
             _In_      REGSAM                samDesired,
             _In_opt_  LPSECURITY_ATTRIBUTES lpSecurityAttributes = NULL,
-            _Out_opt_ LPDWORD               lpdwDisposition = NULL)
+            _Out_opt_ LPDWORD               lpdwDisposition = NULL) noexcept
         {
             handle_type h;
-            LSTATUS s = RegCreateKeyEx(hKey, lpSubKey, 0, lpClass, dwOptions, samDesired, lpSecurityAttributes, &h, lpdwDisposition);
+            const LSTATUS s = RegCreateKeyEx(hKey, lpSubKey, 0, lpClass, dwOptions, samDesired, lpSecurityAttributes, &h, lpdwDisposition);
             if (s == ERROR_SUCCESS) {
                 attach(h);
                 return true;
@@ -1047,10 +1056,10 @@ namespace winstd
             _In_       HKEY    hKey,
             _In_opt_z_ LPCTSTR lpSubKey,
             _In_       DWORD   ulOptions,
-            _In_       REGSAM  samDesired)
+            _In_       REGSAM  samDesired) noexcept
         {
             handle_type h;
-            LONG s = RegOpenKeyEx(hKey, lpSubKey, ulOptions, samDesired, &h);
+            const LONG s = RegOpenKeyEx(hKey, lpSubKey, ulOptions, samDesired, &h);
             if (s == ERROR_SUCCESS) {
                 attach(h);
                 return true;
@@ -1066,7 +1075,7 @@ namespace winstd
         ///
         /// \sa [RegCloseKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724837.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
     };
 
 
@@ -1091,7 +1100,7 @@ namespace winstd
         ///
         /// \sa [FreeSid function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa446631.aspx)
         ///
-        virtual void free_internal();
+        void free_internal() noexcept override;
     };
 
 
@@ -1100,11 +1109,14 @@ namespace winstd
     ///
     class WINSTD_API process_information : public PROCESS_INFORMATION
     {
+        WINSTD_NONCOPYABLE(process_information)
+        WINSTD_NONMOVABLE(process_information)
+
     public:
         ///
         /// Constructs blank PROCESS_INFORMATION
         ///
-        inline process_information()
+        inline process_information() noexcept
         {
             hProcess    = INVALID_HANDLE_VALUE;
             hThread     = INVALID_HANDLE_VALUE;
@@ -1135,7 +1147,7 @@ namespace winstd
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept
 {
     assert(0); // TODO: Test this code.
 
@@ -1162,7 +1174,7 @@ inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_strin
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept
 {
     _Elem szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
 
@@ -1187,7 +1199,7 @@ inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_strin
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline _Success_(return != 0) int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline _Success_(return != 0) int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept
 {
     assert(0); // TODO: Test this code.
 
@@ -1216,7 +1228,7 @@ inline _Success_(return != 0) int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basi
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline _Success_(return != 0) int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline _Success_(return != 0) int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept
 {
     assert(0); // TODO: Test this code.
 
@@ -1245,7 +1257,7 @@ inline _Success_(return != 0) int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basi
 
 
 template<class _Ty, class _Ax>
-inline _Success_(return != 0) BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue)
+inline _Success_(return != 0) BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue) noexcept
 {
     assert(0); // TODO: Test this code.
 
@@ -1261,7 +1273,7 @@ inline _Success_(return != 0) BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilen
 
 
 template<class _Ty, class _Ax>
-inline _Success_(return != 0) BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue)
+inline _Success_(return != 0) BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue) noexcept
 {
     assert(0); // TODO: Test this code.
 
@@ -1277,7 +1289,7 @@ inline _Success_(return != 0) BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFile
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept
 {
     assert(0); // TODO: Test this code.
 
@@ -1301,7 +1313,7 @@ inline _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSr
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline _Success_(return != 0) DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline _Success_(return != 0) DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept
 {
     for (DWORD dwSizeOut = (DWORD)wcslen(lpSrc) + 0x100;;) {
         DWORD dwSizeIn = dwSizeOut;
@@ -1323,7 +1335,7 @@ inline _Success_(return != 0) DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpS
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str)
+inline VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str) noexcept
 {
     assert(0); // TODO: Test this code.
 
@@ -1337,7 +1349,7 @@ inline VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _T
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str)
+inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str) noexcept
 {
     assert(0); // TODO: Test this code.
 
@@ -1351,7 +1363,7 @@ inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _T
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept
 {
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
@@ -1398,7 +1410,7 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue)
+inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept
 {
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
@@ -1445,7 +1457,7 @@ inline LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
 
 
 template<class _Ty, class _Ax>
-inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData)
+inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData) noexcept
 {
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
@@ -1468,7 +1480,7 @@ inline LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, _
 
 
 template<class _Ty, class _Ax>
-inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData)
+inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData) noexcept
 {
     LSTATUS lResult;
     BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
@@ -1493,7 +1505,7 @@ inline LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, 
 #if _WIN32_WINNT >= _WIN32_WINNT_VISTA
 
 template<class _Elem, class _Traits, class _Ax>
-inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCSTR pszDirectory)
+inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCSTR pszDirectory) noexcept
 {
     // According to "Remarks" section in MSDN documentation of RegLoadMUIString(),
     // this function is defined but not implemented as ANSI variation.
@@ -1503,7 +1515,7 @@ inline LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _Ou
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCWSTR pszDirectory)
+inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCWSTR pszDirectory) noexcept
 {
     LSTATUS lResult;
     _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
@@ -1529,7 +1541,7 @@ inline LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _O
 
 
 template<class _Traits, class _Ax>
-inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
+inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
 {
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
 
@@ -1551,7 +1563,7 @@ inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ D
 
 
 template<class _Ax>
-inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
+inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
 {
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
 
@@ -1572,7 +1584,7 @@ inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ D
 
 
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
+inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
 {
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
 
@@ -1594,7 +1606,7 @@ inline _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ D
 
 
 template<class _Traits, class _Ax>
-inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
+inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
 {
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
 
@@ -1619,7 +1631,7 @@ inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, 
 
 
 template<class _Ax>
-inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
+inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
 {
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
 
@@ -1642,7 +1654,7 @@ inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, 
 
 
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar)
+inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
 {
     CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
 
@@ -1667,7 +1679,7 @@ inline _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, 
 
 
 template<class _Traits, class _Ax>
-inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr)
+inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr) noexcept
 {
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
 
@@ -1689,7 +1701,7 @@ inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ D
 
 
 template<class _Ax>
-inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr)
+inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr) noexcept
 {
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
 
@@ -1710,7 +1722,7 @@ inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ D
 
 
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr)
+inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr) noexcept
 {
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
 
@@ -1732,7 +1744,7 @@ inline _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ D
 
 
 template<class _Traits, class _Ax>
-inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr)
+inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr) noexcept
 {
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
 
@@ -1757,7 +1769,7 @@ inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, 
 
 
 template<class _Ax>
-inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr)
+inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr) noexcept
 {
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
 
@@ -1780,7 +1792,7 @@ inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, 
 
 
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr)
+inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr) noexcept
 {
     WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
 
@@ -1805,7 +1817,7 @@ inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, 
 
 
 template<class _Traits, class _Ax>
-inline _Success_(return != 0) int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer)
+inline _Success_(return != 0) int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer) noexcept
 {
     // Get read-only pointer to string resource.
     LPCSTR pszStr;
@@ -1819,7 +1831,7 @@ inline _Success_(return != 0) int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstanc
 
 
 template<class _Traits, class _Ax>
-inline _Success_(return != 0) int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer)
+inline _Success_(return != 0) int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer) noexcept
 {
     // Get read-only pointer to string resource.
     LPCWSTR pszStr;
@@ -1832,23 +1844,23 @@ inline _Success_(return != 0) int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstanc
 }
 
 
-inline VOID OutputDebugStrV(_In_z_ LPCSTR lpOutputString, _In_ va_list arg)
+inline VOID OutputDebugStrV(_In_z_ LPCSTR lpOutputString, _In_ va_list arg) noexcept
 {
     std::string str;
-    vsprintf(str, lpOutputString, arg);
+    try { vsprintf(str, lpOutputString, arg); } catch (...) { return; }
     OutputDebugStringA(str.c_str());
 }
 
 
-inline VOID OutputDebugStrV(_In_z_ LPCWSTR lpOutputString, _In_ va_list arg)
+inline VOID OutputDebugStrV(_In_z_ LPCWSTR lpOutputString, _In_ va_list arg) noexcept
 {
     std::wstring str;
-    vsprintf(str, lpOutputString, arg);
+    try { vsprintf(str, lpOutputString, arg); } catch (...) { return; }
     OutputDebugStringW(str.c_str());
 }
 
 
-inline VOID OutputDebugStr(_In_z_ LPCSTR lpOutputString, ...)
+inline VOID OutputDebugStr(_In_z_ LPCSTR lpOutputString, ...) noexcept
 {
     va_list arg;
     va_start(arg, lpOutputString);
@@ -1857,7 +1869,7 @@ inline VOID OutputDebugStr(_In_z_ LPCSTR lpOutputString, ...)
 }
 
 
-inline VOID OutputDebugStr(_In_z_ LPCWSTR lpOutputString, ...)
+inline VOID OutputDebugStr(_In_z_ LPCWSTR lpOutputString, ...) noexcept
 {
     va_list arg;
     va_start(arg, lpOutputString);
@@ -1866,7 +1878,7 @@ inline VOID OutputDebugStr(_In_z_ LPCWSTR lpOutputString, ...)
 }
 
 
-template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate)
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate) noexcept
 {
     int iResult = GetDateFormatA(Locale, dwFlags, lpDate, lpFormat, NULL, 0);
     if (iResult) {
@@ -1881,7 +1893,7 @@ template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) in
 }
 
 
-template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCWSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate)
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCWSTR lpFormat, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sDate) noexcept
 {
     int iResult = GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, NULL, 0);
     if (iResult) {
@@ -1897,7 +1909,7 @@ template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) in
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline _Success_(return != 0) BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse)
+inline _Success_(return != 0) BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse) noexcept
 {
     assert(0); // TODO: Test this code.
 
@@ -1932,7 +1944,7 @@ inline _Success_(return != 0) BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemN
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse)
+inline _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<_Elem, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse) noexcept
 {
     assert(0); // TODO: Test this code.
 
@@ -1967,7 +1979,7 @@ inline _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystem
 
 
 template<class _Ty>
-inline _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, _In_ TOKEN_INFORMATION_CLASS TokenInformationClass, _Out_ std::unique_ptr<_Ty> &TokenInformation)
+inline _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, _In_ TOKEN_INFORMATION_CLASS TokenInformationClass, _Out_ std::unique_ptr<_Ty> &TokenInformation) noexcept
 {
     BYTE szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(BYTE)];
     DWORD dwSize;
