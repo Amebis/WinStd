@@ -132,7 +132,7 @@ namespace winstd
         /// \sa [IUnknown::QueryInterface method](https://msdn.microsoft.com/en-us/library/windows/desktop/ms682521.aspx)
         ///
         template <class _Other>
-        inline com_obj(_Out_ _Other **other)
+        inline com_obj(_In_ _Other *other)
         {
             assert(other);
             other->QueryInterface(__uuidof(T), (void**)&m_h);
@@ -145,9 +145,8 @@ namespace winstd
         /// \sa [IUnknown::QueryInterface method](https://msdn.microsoft.com/en-us/library/windows/desktop/ms682521.aspx)
         ///
         template <class _Other>
-        inline com_obj(_Out_ com_obj<_Other> &other)
+        inline com_obj(_In_ com_obj<_Other> &other)
         {
-            assert(other);
             other->QueryInterface(__uuidof(T), (void**)&m_h);
         }
 
