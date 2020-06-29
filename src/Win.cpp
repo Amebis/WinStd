@@ -346,6 +346,43 @@ winstd::reg_key::~reg_key()
 }
 
 
+bool winstd::reg_key::delete_subkey(_In_z_ LPCTSTR szSubkey)
+{
+    LSTATUS s;
+
+    s = RegDeleteKey(m_h, szSubkey);
+    if (s == ERROR_SUCCESS || s == ERROR_FILE_NOT_FOUND)
+        return true;
+
+    {
+        reg_key k;
+        if (!k.open(m_h, szSubkey, 0, KEY_ENUMERATE_SUB_KEYS))
+            return false;
+        for (;;) {
+            TCHAR szName[MAX_PATH];
+            DWORD dwSize = _countof(szName);
+            s = RegEnumKeyEx(k, 0, szName, &dwSize, NULL, NULL, NULL, NULL);
+            if (s == ERROR_SUCCESS)
+                k.delete_subkey(szName);
+            else if (s == ERROR_NO_MORE_ITEMS)
+                break;
+            else {
+                SetLastError(s);
+                return false;
+            }
+        }
+    }
+
+    s = RegDeleteKey(m_h, szSubkey);
+    if (s == ERROR_SUCCESS)
+        return true;
+    else {
+        SetLastError(s);
+        return false;
+    }
+}
+
+
 void winstd::reg_key::free_internal() noexcept
 {
     RegCloseKey(m_h);

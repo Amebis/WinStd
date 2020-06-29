@@ -1069,6 +1069,17 @@ namespace winstd
             }
         }
 
+        ///
+        /// Deletes the specified registry subkey.
+        ///
+        /// \param[in] szSubkey  Name of the subkey to delete
+        ///
+        /// \return
+        /// - true when creation succeeds;
+        /// - false when creation fails. For extended error information, call `GetLastError()`.
+        ///
+        bool delete_subkey(_In_z_ LPCTSTR szSubkey);
+
     protected:
         ///
         /// Closes a handle to the registry key.
