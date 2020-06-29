@@ -1151,13 +1151,13 @@ inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_strin
 {
     assert(0); // TODO: Test this code.
 
-    _Elem szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
 
     // Try with stack buffer first.
-    DWORD dwResult = ::GetModuleFileNameA(hModule, szBuffer, _countof(szBuffer));
-    if (dwResult < _countof(szBuffer)) {
+    DWORD dwResult = ::GetModuleFileNameA(hModule, szStackBuffer, _countof(szStackBuffer));
+    if (dwResult < _countof(szStackBuffer)) {
         // Copy from stack.
-        sValue.assign(szBuffer, dwResult);
+        sValue.assign(szStackBuffer, dwResult);
         return dwResult;
     } else {
         for (DWORD dwCapacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem);; dwCapacity *= 2) {
@@ -1176,13 +1176,13 @@ inline DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_strin
 template<class _Elem, class _Traits, class _Ax>
 inline DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sValue) noexcept
 {
-    _Elem szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
 
     // Try with stack buffer first.
-    DWORD dwResult = ::GetModuleFileNameW(hModule, szBuffer, _countof(szBuffer));
-    if (dwResult < _countof(szBuffer)) {
+    DWORD dwResult = ::GetModuleFileNameW(hModule, szStackBuffer, _countof(szStackBuffer));
+    if (dwResult < _countof(szStackBuffer)) {
         // Copy from stack.
-        sValue.assign(szBuffer, dwResult);
+        sValue.assign(szStackBuffer, dwResult);
         return dwResult;
     } else {
         for (DWORD dwCapacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem);; dwCapacity *= 2) {
