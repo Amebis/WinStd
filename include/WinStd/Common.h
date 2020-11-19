@@ -188,7 +188,7 @@ private:
 
 
 #ifndef _FormatMessage_format_string_
-#define _FormatMessage_format_string_
+#define _FormatMessage_format_string_ _In_z_
 #endif
 
 
