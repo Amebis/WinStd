@@ -292,6 +292,22 @@ template<class _Ax> inline _Success_(return != 0) int SecureMultiByteToWideChar(
 ///
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2> inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr) noexcept;
 
+///
+/// Normalizes characters of a text string according to Unicode 4.0 TR#15.
+///
+/// \sa [NormalizeString function](https://docs.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-normalizestring)
+///
+template<class _Traits, class _Ax>
+inline _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ LPCWSTR lpSrcString, _In_ int cwSrcLength, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sDstString) noexcept;
+
+///
+/// Normalizes characters of a text string according to Unicode 4.0 TR#15.
+///
+/// \sa [NormalizeString function](https://docs.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-normalizestring)
+///
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
+inline _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ const std::basic_string<wchar_t, _Traits1, _Ax1> &sSrcString, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sDstString) noexcept;
+
 /// @copydoc LoadStringW
 template<class _Traits, class _Ax> inline _Success_(return != 0) int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer) noexcept;
 
@@ -1822,6 +1838,84 @@ inline _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, 
     }
 
     SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
+
+    return cch;
+}
+
+
+template<class _Traits, class _Ax>
+inline _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ LPCWSTR lpSrcString, _In_ int cwSrcLength, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sDstString) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::NormalizeString(NormForm, lpSrcString, cwSrcLength, szStackBuffer, _countof(szStackBuffer));
+    if (cch > 0) {
+        // Copy from stack.
+        sDstString.assign(szStackBuffer, cwSrcLength != -1 ? wcsnlen(szStackBuffer, cch) : (size_t)cch - 1);
+    } else {
+        switch (::GetLastError()) {
+            case ERROR_INSUFFICIENT_BUFFER:
+                for (int i = 10; i--;) {
+                    // Allocate buffer. Then convert again.
+                    cch = -cch;
+                    std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
+                    cch = ::NormalizeString(NormForm, lpSrcString, cwSrcLength, szBuffer.get(), cch);
+                    if (cch > 0) {
+                        sDstString.assign(szBuffer.get(), cwSrcLength != -1 ? wcsnlen(szStackBuffer, cch) : (size_t)cch - 1);
+                        break;
+                    }
+                    if (::GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
+                        sDstString.clear();
+                        break;
+                    }
+                }
+                break;
+
+            case ERROR_SUCCESS:
+                sDstString.clear();
+                break;
+        }
+    }
+
+    return cch;
+}
+
+
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
+inline _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ const std::basic_string<wchar_t, _Traits1, _Ax1> &sSrcString, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sDstString) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::NormalizeString(NormForm, sSrcString.c_str(), (int)sSrcString.length(), szStackBuffer, _countof(szStackBuffer));
+    if (cch > 0) {
+        // Copy from stack.
+        sDstString.assign(szStackBuffer, cch);
+    } else {
+        switch (::GetLastError()) {
+            case ERROR_INSUFFICIENT_BUFFER:
+                for (int i = 10; i--;) {
+                    // Allocate buffer. Then convert again.
+                    cch = -cch;
+                    std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
+                    cch = ::NormalizeString(NormForm, sSrcString.c_str(), (int)sSrcString.length(), szBuffer.get(), cch);
+                    if (cch > 0) {
+                        sDstString.assign(szBuffer.get(), cch);
+                        break;
+                    }
+                    if (::GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
+                        sDstString.clear();
+                        break;
+                    }
+                }
+                break;
+
+            case ERROR_SUCCESS:
+                sDstString.clear();
+                break;
+        }
+    }
 
     return cch;
 }
