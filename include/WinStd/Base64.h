@@ -30,8 +30,8 @@
 
 namespace winstd
 {
-    class WINSTD_API base64_enc;
-    class WINSTD_API base64_dec;
+    class base64_enc;
+    class base64_dec;
 }
 
 #pragma once
@@ -45,7 +45,7 @@ namespace winstd
     ///
     /// Base64 encoding session
     ///
-    class WINSTD_API base64_enc
+    class base64_enc
     {
     public:
         ///
@@ -176,7 +176,7 @@ namespace winstd
     ///
     /// Base64 decoding session
     ///
-    class WINSTD_API base64_dec
+    class base64_dec
     {
     public:
         ///

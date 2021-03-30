@@ -27,8 +27,8 @@
 
 namespace winstd
 {
-    class WINSTD_API setup_device_info_list;
-    class WINSTD_API setup_driver_info_list_builder;
+    class setup_device_info_list;
+    class setup_driver_info_list_builder;
 }
 
 
@@ -45,7 +45,7 @@ namespace winstd
     ///
     /// HDEVINFO wrapper class
     ///
-    class WINSTD_API setup_device_info_list : public handle<HDEVINFO, INVALID_HANDLE_VALUE>
+    class setup_device_info_list : public handle<HDEVINFO, INVALID_HANDLE_VALUE>
     {
         HANDLE_IMPL(setup_device_info_list, INVALID_HANDLE_VALUE)
 
@@ -119,7 +119,7 @@ namespace winstd
     ///
     /// Builds a list of drivers in constructor and deletes it in destructor
     ///
-    class WINSTD_API setup_driver_info_list_builder
+    class setup_driver_info_list_builder
     {
         WINSTD_NONCOPYABLE(setup_driver_info_list_builder)
         WINSTD_NONMOVABLE(setup_driver_info_list_builder)

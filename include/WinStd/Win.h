@@ -32,21 +32,21 @@
 
 namespace winstd
 {
-    template<HANDLE INVALID> class WINSTD_API win_handle;
-    class WINSTD_API library;
-    class WINSTD_API process;
-    class WINSTD_API file;
-    class WINSTD_API event;
-    class WINSTD_API critical_section;
-    class WINSTD_API heap;
+    template<HANDLE INVALID> class win_handle;
+    class library;
+    class process;
+    class file;
+    class event;
+    class critical_section;
+    class heap;
     template <class _Ty> class heap_allocator;
-    class WINSTD_API actctx_activator;
-    class WINSTD_API user_impersonator;
-    class WINSTD_API console_ctrl_handler;
-    class WINSTD_API vmemory;
-    class WINSTD_API reg_key;
-    class WINSTD_API security_id;
-    class WINSTD_API process_information;
+    class actctx_activator;
+    class user_impersonator;
+    class console_ctrl_handler;
+    class vmemory;
+    class reg_key;
+    class security_id;
+    class process_information;
 }
 
 
@@ -111,7 +111,7 @@ template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringW(_In_ L
 #endif
 
 /// @copydoc StringToGuidW()
-_Success_(return) BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd = NULL) noexcept;
+_Success_(return) BOOL StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd = NULL) noexcept;
 
 ///
 /// Parses string with GUID and stores it to GUID
@@ -124,7 +124,7 @@ _Success_(return) BOOL WINSTD_API StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LP
 /// - `TRUE` if GUID successfuly parsed;
 /// - `FALSE` otherwise.
 ///
-_Success_(return) BOOL WINSTD_API StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd = NULL) noexcept;
+_Success_(return) BOOL StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd = NULL) noexcept;
 /// @copydoc StringToGuidW()
 #ifdef _UNICODE
 #define StringToGuid StringToGuidW
@@ -387,7 +387,7 @@ namespace winstd
     /// Windows HANDLE wrapper class
     ///
     template<HANDLE INVALID>
-    class WINSTD_API win_handle : public handle<HANDLE, INVALID>
+    class win_handle : public handle<HANDLE, INVALID>
     {
         HANDLE_IMPL(win_handle, INVALID)
 
@@ -419,7 +419,7 @@ namespace winstd
     ///
     /// Module handle wrapper
     ///
-    class WINSTD_API library : public handle<HMODULE, NULL>
+    class library : public handle<HMODULE, NULL>
     {
         HANDLE_IMPL(library, NULL)
 
@@ -463,7 +463,7 @@ namespace winstd
     ///
     /// Process handle wrapper
     ///
-    class WINSTD_API process : public win_handle<NULL>
+    class process : public win_handle<NULL>
     {
     public:
         ///
@@ -490,7 +490,7 @@ namespace winstd
     ///
     /// File handle wrapper
     ///
-    class WINSTD_API file : public win_handle<INVALID_HANDLE_VALUE>
+    class file : public win_handle<INVALID_HANDLE_VALUE>
     {
     public:
         ///
@@ -517,7 +517,7 @@ namespace winstd
     ///
     /// Event handle wrapper
     ///
-    class WINSTD_API event : public win_handle<NULL>
+    class event : public win_handle<NULL>
     {
     public:
         ///
@@ -563,7 +563,7 @@ namespace winstd
     ///
     /// Critical section wrapper
     ///
-    class WINSTD_API critical_section
+    class critical_section
     {
         WINSTD_NONCOPYABLE(critical_section)
         WINSTD_NONMOVABLE(critical_section)
@@ -601,7 +601,7 @@ namespace winstd
     ///
     /// Find-file handle wrapper
     ///
-    class WINSTD_API find_file : public handle<HANDLE, INVALID_HANDLE_VALUE>
+    class find_file : public handle<HANDLE, INVALID_HANDLE_VALUE>
     {
         HANDLE_IMPL(find_file, INVALID_HANDLE_VALUE)
 
@@ -645,7 +645,7 @@ namespace winstd
     ///
     /// Heap handle wrapper
     ///
-    class WINSTD_API heap : public handle<HANDLE, NULL>
+    class heap : public handle<HANDLE, NULL>
     {
         HANDLE_IMPL(heap, NULL)
 
@@ -815,7 +815,7 @@ namespace winstd
     ///
     /// Activates given activation context in constructor and deactivates it in destructor
     ///
-    class WINSTD_API actctx_activator
+    class actctx_activator
     {
         WINSTD_NONCOPYABLE(actctx_activator)
         WINSTD_NONMOVABLE(actctx_activator)
@@ -845,7 +845,7 @@ namespace winstd
     ///
     /// Lets the calling thread impersonate the security context of a logged-on user
     ///
-    class WINSTD_API user_impersonator
+    class user_impersonator
     {
         WINSTD_NONCOPYABLE(user_impersonator)
         WINSTD_NONMOVABLE(user_impersonator)
@@ -875,7 +875,7 @@ namespace winstd
     ///
     /// Console control handler stack management
     ///
-    class WINSTD_API console_ctrl_handler
+    class console_ctrl_handler
     {
         WINSTD_NONCOPYABLE(console_ctrl_handler)
         WINSTD_NONMOVABLE(console_ctrl_handler)
@@ -906,7 +906,7 @@ namespace winstd
     ///
     /// Memory in virtual address space of a process handle wrapper
     ///
-    class WINSTD_API vmemory : public handle<LPVOID, NULL>
+    class vmemory : public handle<LPVOID, NULL>
     {
         WINSTD_NONCOPYABLE(vmemory)
 
@@ -1018,7 +1018,7 @@ namespace winstd
     ///
     /// Registry wrapper class
     ///
-    class WINSTD_API reg_key : public handle<HKEY, NULL>
+    class reg_key : public handle<HKEY, NULL>
     {
         HANDLE_IMPL(reg_key, NULL)
 
@@ -1109,7 +1109,7 @@ namespace winstd
     ///
     /// SID wrapper class
     ///
-    class WINSTD_API security_id : public handle<PSID, NULL>
+    class security_id : public handle<PSID, NULL>
     {
         HANDLE_IMPL(security_id, NULL)
 
@@ -1134,7 +1134,7 @@ namespace winstd
     ///
     /// PROCESS_INFORMATION struct wrapper
     ///
-    class WINSTD_API process_information : public PROCESS_INFORMATION
+    class process_information : public PROCESS_INFORMATION
     {
         WINSTD_NONCOPYABLE(process_information)
         WINSTD_NONMOVABLE(process_information)

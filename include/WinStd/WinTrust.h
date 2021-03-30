@@ -31,7 +31,7 @@
 
 namespace winstd
 {
-    class WINSTD_API wintrust;
+    class wintrust;
 }
 
 #pragma once
@@ -45,7 +45,7 @@ namespace winstd
     ///
     /// WinTrust engine wrapper class
     ///
-    class WINSTD_API wintrust
+    class wintrust
     {
         WINSTD_NONCOPYABLE(wintrust)
         WINSTD_NONMOVABLE(wintrust)

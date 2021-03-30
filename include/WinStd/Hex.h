@@ -30,8 +30,8 @@
 
 namespace winstd
 {
-    class WINSTD_API hex_enc;
-    class WINSTD_API hex_dec;
+    class hex_enc;
+    class hex_dec;
 }
 
 #pragma once
@@ -45,7 +45,7 @@ namespace winstd
     ///
     /// Hexadecimal encoding session
     ///
-    class WINSTD_API hex_enc
+    class hex_enc
     {
     public:
         ///
@@ -101,7 +101,7 @@ namespace winstd
     ///
     /// Hexadecimal decoding session
     ///
-    class WINSTD_API hex_dec
+    class hex_dec
     {
     public:
         ///

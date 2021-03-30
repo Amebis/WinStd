@@ -34,15 +34,15 @@
 namespace winstd
 {
     enum class eap_type_t : unsigned char;
-    struct WINSTD_API EapHostPeerFreeMemory_delete;
-    struct WINSTD_API EapHostPeerFreeRuntimeMemory_delete;
-    struct WINSTD_API EapHostPeerFreeErrorMemory_delete;
-    struct WINSTD_API EapHostPeerFreeEapError_delete;
-    class WINSTD_API WINSTD_NOVTABLE eap_attr;
-    class WINSTD_API WINSTD_NOVTABLE eap_method_prop;
-    class WINSTD_API eap_packet;
-    class WINSTD_API WINSTD_NOVTABLE eap_method_info_array;
-    class WINSTD_API eap_runtime_error;
+    struct EapHostPeerFreeMemory_delete;
+    struct EapHostPeerFreeRuntimeMemory_delete;
+    struct EapHostPeerFreeErrorMemory_delete;
+    struct EapHostPeerFreeEapError_delete;
+    class __declspec(novtable) eap_attr;
+    class __declspec(novtable) eap_method_prop;
+    class eap_packet;
+    class __declspec(novtable) eap_method_info_array;
+    class eap_runtime_error;
 
     /// \addtogroup WinStdEAPAPI
     /// @{
@@ -50,22 +50,22 @@ namespace winstd
     ///
     /// EapHost BLOB wrapper class
     ///
-    typedef std::unique_ptr<BYTE[], EapHostPeerFreeMemory_delete> WINSTD_API eap_blob;
+    typedef std::unique_ptr<BYTE[], EapHostPeerFreeMemory_delete> eap_blob;
 
     ///
     /// EapHost BLOB wrapper class
     ///
-    typedef std::unique_ptr<BYTE[], EapHostPeerFreeRuntimeMemory_delete> WINSTD_API eap_blob_runtime;
+    typedef std::unique_ptr<BYTE[], EapHostPeerFreeRuntimeMemory_delete> eap_blob_runtime;
 
     ///
     /// EAP_ERROR wrapper class
     ///
-    typedef std::unique_ptr<EAP_ERROR, EapHostPeerFreeErrorMemory_delete> WINSTD_API eap_error;
+    typedef std::unique_ptr<EAP_ERROR, EapHostPeerFreeErrorMemory_delete> eap_error;
 
     ///
     /// EAP_ERROR wrapper class
     ///
-    typedef std::unique_ptr<EAP_ERROR, EapHostPeerFreeEapError_delete> WINSTD_API eap_error_runtime;
+    typedef std::unique_ptr<EAP_ERROR, EapHostPeerFreeEapError_delete> eap_error_runtime;
 
     /// @}
 }
@@ -150,7 +150,7 @@ namespace winstd
     ///
     /// Deleter for unique_ptr using EapHostPeerFreeMemory
     ///
-    struct WINSTD_API EapHostPeerFreeMemory_delete
+    struct EapHostPeerFreeMemory_delete
     {
         ///
         /// Default constructor
@@ -173,7 +173,7 @@ namespace winstd
     ///
     /// Deleter for unique_ptr using EapHostPeerFreeRuntimeMemory
     ///
-    struct WINSTD_API EapHostPeerFreeRuntimeMemory_delete
+    struct EapHostPeerFreeRuntimeMemory_delete
     {
         ///
         /// Default constructor
@@ -194,7 +194,7 @@ namespace winstd
     ///
     /// Deleter for unique_ptr to EAP_ERROR using EapHostPeerFreeErrorMemory
     ///
-    struct WINSTD_API EapHostPeerFreeErrorMemory_delete
+    struct EapHostPeerFreeErrorMemory_delete
     {
         ///
         /// Default constructor
@@ -216,7 +216,7 @@ namespace winstd
     ///
     /// Deleter for unique_ptr to EAP_ERROR using EapHostPeerFreeEapError
     ///
-    struct WINSTD_API EapHostPeerFreeEapError_delete
+    struct EapHostPeerFreeEapError_delete
     {
         ///
         /// Default constructor
@@ -240,7 +240,7 @@ namespace winstd
     ///
     #pragma warning(push)
     #pragma warning(disable: 26432) // Copy constructor and assignment operator are also present, but not detected by code analysis as they are using base type source object reference.
-    class WINSTD_API WINSTD_NOVTABLE eap_attr : public EAP_ATTRIBUTE
+    class __declspec(novtable) eap_attr : public EAP_ATTRIBUTE
     {
     public:
         ///
@@ -349,7 +349,7 @@ namespace winstd
     ///
     /// EAP_METHOD_PROPERTY wrapper class
     ///
-    class WINSTD_API WINSTD_NOVTABLE eap_method_prop : public EAP_METHOD_PROPERTY
+    class __declspec(novtable) eap_method_prop : public EAP_METHOD_PROPERTY
     {
     public:
         ///
@@ -401,7 +401,7 @@ namespace winstd
     ///
     /// EapPacket wrapper class
     ///
-    class WINSTD_API eap_packet : public dplhandle<EapPacket*, NULL>
+    class eap_packet : public dplhandle<EapPacket*, NULL>
     {
         DPLHANDLE_IMPL(eap_packet, NULL)
 
@@ -469,7 +469,7 @@ namespace winstd
     ///
     /// EAP_METHOD_INFO_ARRAY wrapper class
     ///
-    class WINSTD_API WINSTD_NOVTABLE eap_method_info_array : public EAP_METHOD_INFO_ARRAY
+    class __declspec(novtable) eap_method_info_array : public EAP_METHOD_INFO_ARRAY
     {
         WINSTD_NONCOPYABLE(eap_method_info_array)
 
@@ -539,7 +539,7 @@ namespace winstd
     ///
     /// \sa [EAP_ERROR structure](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363699.aspx)
     ///
-    class WINSTD_API eap_runtime_error : public win_runtime_error
+    class eap_runtime_error : public win_runtime_error
     {
     public:
         ///

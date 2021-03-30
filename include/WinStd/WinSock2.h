@@ -27,9 +27,9 @@
 
 namespace winstd
 {
-    class WINSTD_API ws2_runtime_error;
+    class ws2_runtime_error;
 #if (NTDDI_VERSION >= NTDDI_WINXPSP2) || (_WIN32_WINNT >= 0x0502)
-    class WINSTD_API addrinfo;
+    class addrinfo;
 #endif
 }
 
@@ -48,7 +48,7 @@ namespace winstd
     ///
     /// WinSock2 runtime error
     ///
-    class WINSTD_API ws2_runtime_error : public num_runtime_error<int>
+    class ws2_runtime_error : public num_runtime_error<int>
     {
     public:
         ///
@@ -121,7 +121,7 @@ namespace winstd
     ///
     /// SID wrapper class
     ///
-    class WINSTD_API addrinfo : public handle<PADDRINFOT, NULL>
+    class addrinfo : public handle<PADDRINFOT, NULL>
     {
         HANDLE_IMPL(addrinfo, NULL)
 

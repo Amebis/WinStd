@@ -36,7 +36,7 @@ extern DWORD (WINAPI *pfnWlanReasonCodeToString)(__in DWORD dwReasonCode, __in D
 namespace winstd {
     template <class _Ty> struct WlanFreeMemory_delete;
     template <class _Ty> struct WlanFreeMemory_delete<_Ty[]>;
-    class WINSTD_API wlan_handle;
+    class wlan_handle;
 }
 
 /// \addtogroup WinStdWLANAPI
@@ -124,7 +124,7 @@ namespace winstd
     ///
     /// WLAN handle wrapper
     ///
-    class WINSTD_API wlan_handle : public handle<HANDLE, NULL>
+    class wlan_handle : public handle<HANDLE, NULL>
     {
         HANDLE_IMPL(wlan_handle, NULL)
 

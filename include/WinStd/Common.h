@@ -55,28 +55,6 @@
 /// @{
 
 ///
-/// Public function calling convention
-///
-#ifndef WINSTD_API
-#if defined(WINSTD_DLL)
-#define WINSTD_API      __declspec(dllexport)
-#elif defined(WINSTD_DLLIMP)
-#define WINSTD_API      __declspec(dllimport)
-#else
-#define WINSTD_API
-#endif
-#endif
-
-///
-/// Class/struct with no virtual table declaration
-///
-/// Use for storing flat data.
-///
-/// This macro bypasses Doxygen limitation to parse class/struct declarations with parentheses.
-///
-#define WINSTD_NOVTABLE __declspec(novtable)
-
-///
 /// "L" stringizing macro
 ///
 #ifndef __L
@@ -222,7 +200,7 @@ namespace winstd
     template <class T, T INVAL> class dplhandle;
     template <class T> class vector_queue;
     template <typename _Tn> class num_runtime_error;
-    class WINSTD_API win_runtime_error;
+    class win_runtime_error;
 
     /// \addtogroup WinStdGeneral
     /// @{
@@ -296,8 +274,8 @@ namespace winstd
 
     template<class _Elem, class _Traits = std::char_traits<_Elem>, class _Ax = std::allocator<_Elem> > class basic_string_guid;
 
-    class WINSTD_API string_guid;
-    class WINSTD_API wstring_guid;
+    class string_guid;
+    class wstring_guid;
 
     ///
     /// Multi-byte / Wide-character string GUID (according to _UNICODE)
@@ -1561,7 +1539,7 @@ namespace winstd
     ///
     /// Windows runtime error
     ///
-    class WINSTD_API win_runtime_error : public num_runtime_error<DWORD>
+    class win_runtime_error : public num_runtime_error<DWORD>
     {
     public:
         ///
@@ -1839,7 +1817,7 @@ namespace winstd
     ///
     /// Single-byte character implementation of a class to support converting GUID to string
     ///
-    class WINSTD_API string_guid : public basic_string_guid<char, std::char_traits<char>, std::allocator<char> >
+    class string_guid : public basic_string_guid<char, std::char_traits<char>, std::allocator<char> >
     {
     public:
         /// \name Initializing string using template in memory
@@ -1862,7 +1840,7 @@ namespace winstd
     ///
     /// Wide character implementation of a class to support converting GUID to string
     ///
-    class WINSTD_API wstring_guid : public basic_string_guid<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> >
+    class wstring_guid : public basic_string_guid<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> >
     {
     public:
         /// \name Initializing string using template in memory

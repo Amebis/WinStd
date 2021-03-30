@@ -31,10 +31,10 @@
 
 namespace winstd
 {
-    class WINSTD_API sec_credentials;
-    class WINSTD_API sec_context;
-    class WINSTD_API sec_buffer_desc;
-    class WINSTD_API sec_runtime_error;
+    class sec_credentials;
+    class sec_context;
+    class sec_buffer_desc;
+    class sec_runtime_error;
 }
 
 /// \addtogroup WinStdSecurityAPI
@@ -63,7 +63,7 @@ namespace winstd
     ///
     /// PCredHandle wrapper class
     ///
-    class WINSTD_API sec_credentials : public handle<PCredHandle, NULL>
+    class sec_credentials : public handle<PCredHandle, NULL>
     {
         WINSTD_NONCOPYABLE(sec_credentials)
 
@@ -165,7 +165,7 @@ namespace winstd
     ///
     /// PCtxtHandle wrapper class
     ///
-    class WINSTD_API sec_context : public handle<PCtxtHandle, NULL>
+    class sec_context : public handle<PCtxtHandle, NULL>
     {
     public:
         ///
@@ -281,7 +281,7 @@ namespace winstd
     ///
     /// SecBufferDesc wrapper class
     ///
-    class WINSTD_API sec_buffer_desc : public SecBufferDesc
+    class sec_buffer_desc : public SecBufferDesc
     {
     public:
         ///
@@ -315,7 +315,7 @@ namespace winstd
     ///
     /// \note Must be defined as derived class from num_runtime_error<> to allow correct type info for dynamic typecasting and prevent folding with other derivates of num_runtime_error<>.
     ///
-    class WINSTD_API sec_runtime_error : public num_runtime_error<SECURITY_STATUS>
+    class sec_runtime_error : public num_runtime_error<SECURITY_STATUS>
     {
     public:
         ///

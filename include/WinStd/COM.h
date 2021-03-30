@@ -29,12 +29,12 @@
 
 namespace winstd
 {
-    class WINSTD_API com_runtime_error;
-    struct WINSTD_API CoTaskMemFree_delete;
+    class com_runtime_error;
+    struct CoTaskMemFree_delete;
     template <class T> class com_obj;
-    class WINSTD_API bstr;
-    class WINSTD_API variant;
-    class WINSTD_API com_initializer;
+    class bstr;
+    class variant;
+    class com_initializer;
 }
 
 #pragma once
@@ -55,7 +55,7 @@ namespace winstd
     ///
     /// \note Must be defined as derived class from num_runtime_error<> to allow correct type info for dynamic typecasting and prevent folding with other derivates of num_runtime_error<>.
     ///
-    class WINSTD_API com_runtime_error : public num_runtime_error<HRESULT>
+    class com_runtime_error : public num_runtime_error<HRESULT>
     {
     public:
         ///
@@ -87,7 +87,7 @@ namespace winstd
     ///
     /// Deleter for unique_ptr using CoTaskMemFree
     ///
-    struct WINSTD_API CoTaskMemFree_delete
+    struct CoTaskMemFree_delete
     {
         ///
         /// Default constructor
@@ -238,7 +238,7 @@ namespace winstd
     ///
     /// BSTR string wrapper
     ///
-    class WINSTD_API bstr : public dplhandle<BSTR, NULL>
+    class bstr : public dplhandle<BSTR, NULL>
     {
         DPLHANDLE_IMPL(bstr, NULL)
 
@@ -311,7 +311,7 @@ namespace winstd
     ///
     #pragma warning(push)
     #pragma warning(disable: 26432) // Copy constructor and assignment operator are also present, but not detected by code analysis as they are using base type source object reference.
-    class WINSTD_API variant : public VARIANT
+    class variant : public VARIANT
     {
     public:
         ///
@@ -1062,7 +1062,7 @@ namespace winstd
     ///
     /// Context scope automatic COM (un)initialization
     ///
-    class WINSTD_API com_initializer
+    class com_initializer
     {
         WINSTD_NONCOPYABLE(com_initializer)
         WINSTD_NONMOVABLE(com_initializer)

@@ -37,13 +37,13 @@
 
 namespace winstd
 {
-    class WINSTD_API WINSTD_NOVTABLE event_data;
-    class WINSTD_API WINSTD_NOVTABLE event_rec;
-    class WINSTD_API event_provider;
-    class WINSTD_API event_session;
-    class WINSTD_API event_trace;
-    class WINSTD_API event_trace_enabler;
-    class WINSTD_API event_fn_auto;
+    class __declspec(novtable) event_data;
+    class __declspec(novtable) event_rec;
+    class event_provider;
+    class event_session;
+    class event_trace;
+    class event_trace_enabler;
+    class event_fn_auto;
     template<class T> class event_fn_auto_ret;
 }
 
@@ -84,7 +84,7 @@ namespace winstd
     ///
     /// EVENT_DATA_DESCRIPTOR wrapper
     ///
-    class WINSTD_API WINSTD_NOVTABLE event_data : public EVENT_DATA_DESCRIPTOR
+    class __declspec(novtable) event_data : public EVENT_DATA_DESCRIPTOR
     {
     public:
         ///
@@ -276,7 +276,7 @@ namespace winstd
     ///
     /// EVENT_RECORD wrapper
     ///
-    class WINSTD_API WINSTD_NOVTABLE event_rec : public EVENT_RECORD
+    class __declspec(novtable) event_rec : public EVENT_RECORD
     {
     public:
         ///
@@ -418,7 +418,7 @@ namespace winstd
     ///
     /// ETW event provider
     ///
-    class WINSTD_API event_provider : public handle<REGHANDLE, NULL>
+    class event_provider : public handle<REGHANDLE, NULL>
     {
         HANDLE_IMPL(event_provider, NULL)
 
@@ -636,7 +636,7 @@ namespace winstd
     ///
     /// ETW session
     ///
-    class WINSTD_API event_session : public handle<TRACEHANDLE, 0>
+    class event_session : public handle<TRACEHANDLE, 0>
     {
         WINSTD_NONCOPYABLE(event_session)
 
@@ -823,7 +823,7 @@ namespace winstd
     ///
     /// ETW trace
     ///
-    class WINSTD_API event_trace : public handle<TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE>
+    class event_trace : public handle<TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE>
     {
         HANDLE_IMPL(event_trace, INVALID_PROCESSTRACE_HANDLE)
 
@@ -868,7 +868,7 @@ namespace winstd
     ///
     /// Helper class to enable event provider in constructor and disables it in destructor
     ///
-    class WINSTD_API event_trace_enabler
+    class event_trace_enabler
     {
     public:
         ///
@@ -978,7 +978,7 @@ namespace winstd
     ///
     /// It writes one string event at creation and another at destruction.
     ///
-    class WINSTD_API event_fn_auto
+    class event_fn_auto
     {
     public:
         ///

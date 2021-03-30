@@ -32,13 +32,13 @@
 
 namespace winstd
 {
-    class WINSTD_API cert_context;
-    class WINSTD_API cert_chain_context;
-    class WINSTD_API cert_store;
-    class WINSTD_API crypt_prov;
-    class WINSTD_API crypt_hash;
-    class WINSTD_API crypt_key;
-    class WINSTD_API data_blob;
+    class cert_context;
+    class cert_chain_context;
+    class cert_store;
+    class crypt_prov;
+    class crypt_hash;
+    class crypt_key;
+    class data_blob;
 }
 
 /// \addtogroup WinStdCryptoAPI
@@ -120,7 +120,7 @@ namespace winstd
     ///
     /// PCCERT_CONTEXT wrapper class
     ///
-    class WINSTD_API cert_context : public dplhandle<PCCERT_CONTEXT, NULL>
+    class cert_context : public dplhandle<PCCERT_CONTEXT, NULL>
     {
         DPLHANDLE_IMPL(cert_context, NULL)
 
@@ -260,7 +260,7 @@ namespace winstd
     ///
     /// PCCERT_CHAIN_CONTEXT wrapper class
     ///
-    class WINSTD_API cert_chain_context : public dplhandle<PCCERT_CHAIN_CONTEXT, NULL>
+    class cert_chain_context : public dplhandle<PCCERT_CHAIN_CONTEXT, NULL>
     {
         DPLHANDLE_IMPL(cert_chain_context, NULL)
 
@@ -315,7 +315,7 @@ namespace winstd
     ///
     /// HCERTSTORE wrapper class
     ///
-    class WINSTD_API cert_store : public handle<HCERTSTORE, NULL>
+    class cert_store : public handle<HCERTSTORE, NULL>
     {
         HANDLE_IMPL(cert_store, NULL)
 
@@ -378,7 +378,7 @@ namespace winstd
     ///
     /// HCRYPTPROV wrapper class
     ///
-    class WINSTD_API crypt_prov : public handle<HCRYPTPROV, NULL>
+    class crypt_prov : public handle<HCRYPTPROV, NULL>
     {
         HANDLE_IMPL(crypt_prov, NULL)
 
@@ -422,7 +422,7 @@ namespace winstd
     ///
     /// HCRYPTHASH wrapper class
     ///
-    class WINSTD_API crypt_hash : public dplhandle<HCRYPTHASH, NULL>
+    class crypt_hash : public dplhandle<HCRYPTHASH, NULL>
     {
         DPLHANDLE_IMPL(crypt_hash, NULL)
 
@@ -477,7 +477,7 @@ namespace winstd
     ///
     /// HCRYPTKEY wrapper class
     ///
-    class WINSTD_API crypt_key : public dplhandle<HCRYPTKEY, NULL>
+    class crypt_key : public dplhandle<HCRYPTKEY, NULL>
     {
         DPLHANDLE_IMPL(crypt_key, NULL)
 
@@ -584,7 +584,7 @@ namespace winstd
     ///
     #pragma warning(push)
     #pragma warning(disable: 26432) // Copy constructor and assignment operator are also present, but not detected by code analysis as they are using base type source object reference.
-    class WINSTD_API data_blob : public DATA_BLOB
+    class data_blob : public DATA_BLOB
     {
     public:
         ///
