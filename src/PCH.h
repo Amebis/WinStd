@@ -30,6 +30,7 @@
 #if _WIN32_WINNT >= _WIN32_WINNT_VISTA
 #include "../include/WinStd/ETW.h"
 #endif
+#include "../include/WinStd/GDI.h"
 #include "../include/WinStd/Hex.h"
 #include "../include/WinStd/MSI.h"
 #if defined(SECURITY_WIN32) || defined(SECURITY_KERNEL) || defined(SECURITY_MAC)

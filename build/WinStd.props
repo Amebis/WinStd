@@ -26,6 +26,7 @@
     <ClCompile Include="..\src\Crypt.cpp" />
     <ClCompile Include="..\src\EAP.cpp" />
     <ClCompile Include="..\src\ETW.cpp" />
+    <ClCompile Include="..\src\GDI.cpp" />
     <ClCompile Include="..\src\Sec.cpp" />
     <ClCompile Include="..\src\SetupAPI.cpp" />
     <ClCompile Include="..\src\PCH.cpp">
@@ -39,11 +40,12 @@
   <ItemGroup>
     <ClInclude Include="..\include\WinStd\Base64.h" />
     <ClInclude Include="..\include\WinStd\COM.h" />
+    <ClInclude Include="..\include\WinStd\Common.h" />
     <ClInclude Include="..\include\WinStd\Cred.h" />
     <ClInclude Include="..\include\WinStd\Crypt.h" />
     <ClInclude Include="..\include\WinStd\EAP.h" />
-    <ClInclude Include="..\include\WinStd\Common.h" />
     <ClInclude Include="..\include\WinStd\ETW.h" />
+    <ClInclude Include="..\include\WinStd\GDI.h" />
     <ClInclude Include="..\include\WinStd\Hex.h" />
     <ClInclude Include="..\include\WinStd\MSI.h" />
     <ClInclude Include="..\include\WinStd\Sec.h" />
