@@ -42,6 +42,7 @@
 /// Sanitizes memory before dismissed
 ///
 
+#define _WINSOCKAPI_    // Prevent inclusion of winsock.h in windows.h.
 #include <Windows.h>
 
 #include <stdarg.h>

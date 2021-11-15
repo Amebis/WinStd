@@ -25,9 +25,8 @@
 
 #include "Common.h"
 
-#include <Windows.h>
 #include <eaphostpeerconfigapis.h>
-#include <eaptypes.h> // Must include after <Windows.h>
+#include <eaptypes.h>
 
 #include <memory>
 

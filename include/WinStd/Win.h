@@ -25,8 +25,6 @@
 
 #include "Common.h"
 
-#include <Windows.h>
-
 #include <string>
 #include <vector>
 

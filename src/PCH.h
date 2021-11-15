@@ -20,8 +20,6 @@
 
 #pragma once
 
-#define _WINSOCKAPI_    // Prevent inclusion of winsock.h in windows.h.
-
 #include "../include/WinStd/Base64.h"
 #include "../include/WinStd/COM.h"
 #include "../include/WinStd/Cred.h"

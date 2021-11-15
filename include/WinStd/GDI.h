@@ -24,8 +24,6 @@
 
 #include "Common.h"
 
-#include <Windows.h>
-
 namespace winstd
 {
     template<class T> class gdi_handle;
