@@ -37,10 +37,10 @@ namespace winstd
     struct EapHostPeerFreeRuntimeMemory_delete;
     struct EapHostPeerFreeErrorMemory_delete;
     struct EapHostPeerFreeEapError_delete;
-    class __declspec(novtable) eap_attr;
-    class __declspec(novtable) eap_method_prop;
+    class eap_attr;
+    class eap_method_prop;
     class eap_packet;
-    class __declspec(novtable) eap_method_info_array;
+    class eap_method_info_array;
     class eap_runtime_error;
 
     /// \addtogroup WinStdEAPAPI
@@ -239,7 +239,7 @@ namespace winstd
     ///
     #pragma warning(push)
     #pragma warning(disable: 26432) // Copy constructor and assignment operator are also present, but not detected by code analysis as they are using base type source object reference.
-    class __declspec(novtable) eap_attr : public EAP_ATTRIBUTE
+    class eap_attr : public EAP_ATTRIBUTE
     {
     public:
         ///
@@ -348,7 +348,7 @@ namespace winstd
     ///
     /// EAP_METHOD_PROPERTY wrapper class
     ///
-    class __declspec(novtable) eap_method_prop : public EAP_METHOD_PROPERTY
+    class eap_method_prop : public EAP_METHOD_PROPERTY
     {
     public:
         ///
@@ -468,7 +468,7 @@ namespace winstd
     ///
     /// EAP_METHOD_INFO_ARRAY wrapper class
     ///
-    class __declspec(novtable) eap_method_info_array : public EAP_METHOD_INFO_ARRAY
+    class eap_method_info_array : public EAP_METHOD_INFO_ARRAY
     {
         WINSTD_NONCOPYABLE(eap_method_info_array)
 

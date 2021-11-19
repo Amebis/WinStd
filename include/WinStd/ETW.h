@@ -37,8 +37,8 @@
 
 namespace winstd
 {
-    class __declspec(novtable) event_data;
-    class __declspec(novtable) event_rec;
+    class event_data;
+    class event_rec;
     class event_provider;
     class event_session;
     class event_trace;
@@ -84,7 +84,7 @@ namespace winstd
     ///
     /// EVENT_DATA_DESCRIPTOR wrapper
     ///
-    class __declspec(novtable) event_data : public EVENT_DATA_DESCRIPTOR
+    class event_data : public EVENT_DATA_DESCRIPTOR
     {
     public:
         ///
@@ -276,7 +276,7 @@ namespace winstd
     ///
     /// EVENT_RECORD wrapper
     ///
-    class __declspec(novtable) event_rec : public EVENT_RECORD
+    class event_rec : public EVENT_RECORD
     {
     public:
         ///

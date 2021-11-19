@@ -293,7 +293,7 @@ namespace winstd
     /// @{
 
     template<class _Ty> class sanitizing_allocator;
-    template<size_t N> class __declspec(novtable) sanitizing_blob;
+    template<size_t N> class sanitizing_blob;
 
 
     ///
@@ -1934,7 +1934,7 @@ namespace winstd
     /// Sanitizing BLOB
     ///
     template<size_t N>
-    class __declspec(novtable) sanitizing_blob
+    class sanitizing_blob
     {
     public:
         ///
