@@ -29,40 +29,21 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{47399D91-7EB9-41DE-B521-514BA5DB0C43}</ProjectGuid>
     <RootNamespace>WinStd</RootNamespace>
-    <Keyword>Win32Proj</Keyword>
     <ProjectName>WinStd</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+  <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)'=='Debug'">
+    <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)'=='Release'">
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
-    <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+  <PropertyGroup Label="Configuration" Condition="'$(Platform)'=='ARM64'">
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -70,18 +51,53 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="WinStd.props" />
+    <Import Project="..\..\..\include\$(Platform).props" Condition="exists('..\..\..\include\$(Platform).props')" />
+    <Import Project="..\..\..\include\$(Configuration).props" Condition="exists('..\..\..\include\$(Configuration).props')" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" />
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" />
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup>
-    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
-  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Base64.cpp" />
+    <ClCompile Include="..\src\COM.cpp" />
+    <ClCompile Include="..\src\Crypt.cpp" />
+    <ClCompile Include="..\src\EAP.cpp" />
+    <ClCompile Include="..\src\ETW.cpp" />
+    <ClCompile Include="..\src\GDI.cpp" />
+    <ClCompile Include="..\src\Sec.cpp" />
+    <ClCompile Include="..\src\SetupAPI.cpp" />
+    <ClCompile Include="..\src\PCH.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\src\Win.cpp" />
+    <ClCompile Include="..\src\WinSock2.cpp" />
+    <ClCompile Include="..\src\WinTrust.cpp" />
+    <ClCompile Include="..\src\WLAN.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\WinStd\Base64.h" />
+    <ClInclude Include="..\include\WinStd\COM.h" />
+    <ClInclude Include="..\include\WinStd\Common.h" />
+    <ClInclude Include="..\include\WinStd\Cred.h" />
+    <ClInclude Include="..\include\WinStd\Crypt.h" />
+    <ClInclude Include="..\include\WinStd\EAP.h" />
+    <ClInclude Include="..\include\WinStd\ETW.h" />
+    <ClInclude Include="..\include\WinStd\GDI.h" />
+    <ClInclude Include="..\include\WinStd\Hex.h" />
+    <ClInclude Include="..\include\WinStd\MSI.h" />
+    <ClInclude Include="..\include\WinStd\Sec.h" />
+    <ClInclude Include="..\include\WinStd\SetupAPI.h" />
+    <ClInclude Include="..\include\WinStd\Shell.h" />
+    <ClInclude Include="..\include\WinStd\Win.h" />
+    <ClInclude Include="..\include\WinStd\WinSock2.h" />
+    <ClInclude Include="..\include\WinStd\WinTrust.h" />
+    <ClInclude Include="..\include\WinStd\WLAN.h" />
+    <ClInclude Include="..\src\PCH.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
