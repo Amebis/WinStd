@@ -357,6 +357,20 @@ template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) BO
 ///
 template<class _Ty> inline _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, _In_ TOKEN_INFORMATION_CLASS TokenInformationClass, _Out_ std::unique_ptr<_Ty> &TokenInformation) noexcept;
 
+///
+/// Retrieves the full name of the executable image for the specified process.
+///
+/// \sa [QueryFullProcessImageNameA function](https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-queryfullprocessimagenamea)
+///
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) BOOL QueryFullProcessImageNameA(_In_ HANDLE hProcess, _In_ DWORD dwFlags, _Inout_ std::basic_string<_Elem, _Traits, _Ax>& sExeName);
+
+///
+/// Retrieves the full name of the executable image for the specified process.
+///
+/// \sa [QueryFullProcessImageNameW function](https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-queryfullprocessimagenamew)
+///
+template<class _Elem, class _Traits, class _Ax> inline _Success_(return != 0) BOOL QueryFullProcessImageNameW(_In_ HANDLE hProcess, _In_ DWORD dwFlags, _Inout_ std::basic_string<_Elem, _Traits, _Ax>& sExeName);
+
 /// @}
 
 #pragma once
@@ -2092,4 +2106,56 @@ inline _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, 
         return GetTokenInformation(TokenHandle, TokenInformationClass, TokenInformation.get(), dwSize, &dwSize);
     } else
         return FALSE;
+}
+
+
+template<class _Elem, class _Traits, class _Ax>
+inline _Success_(return != 0) BOOL
+QueryFullProcessImageNameA(_In_ HANDLE hProcess, _In_ DWORD dwFlags, _Inout_ std::basic_string<_Elem, _Traits, _Ax>& sExeName)
+{
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(_Elem)];
+    DWORD dwSize = _countof(szStackBuffer);
+
+    // Try with stack buffer first.
+    if (::QueryFullProcessImageNameA(hProcess, dwFlags, szStackBuffer, &dwSize)) {
+        // Copy from stack.
+        sExeName.assign(szStackBuffer, dwSize);
+        return TRUE;
+    }
+    for (DWORD dwCapacity = 2 * WINSTD_STACK_BUFFER_BYTES / sizeof(_Elem); GetLastError() == ERROR_INSUFFICIENT_BUFFER; dwCapacity *= 2) {
+        // Allocate on heap and retry.
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[dwCapacity]);
+        dwSize = dwCapacity;
+        if (::QueryFullProcessImageNameA(hProcess, dwFlags, szBuffer.get(), &dwSize)) {
+            sExeName.assign(szBuffer.get(), dwSize);
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+
+template<class _Elem, class _Traits, class _Ax>
+inline _Success_(return != 0) BOOL
+QueryFullProcessImageNameW(_In_ HANDLE hProcess, _In_ DWORD dwFlags, _Inout_ std::basic_string<_Elem, _Traits, _Ax>& sExeName)
+{
+    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(_Elem)];
+    DWORD dwSize = _countof(szStackBuffer);
+
+    // Try with stack buffer first.
+    if (::QueryFullProcessImageNameW(hProcess, dwFlags, szStackBuffer, &dwSize)) {
+        // Copy from stack.
+        sExeName.assign(szStackBuffer, dwSize);
+        return TRUE;
+    }
+    for (DWORD dwCapacity = 2 * WINSTD_STACK_BUFFER_BYTES / sizeof(_Elem); GetLastError() == ERROR_INSUFFICIENT_BUFFER; dwCapacity *= 2) {
+        // Allocate on heap and retry.
+        std::unique_ptr<_Elem[]> szBuffer(new _Elem[dwCapacity]);
+        dwSize = dwCapacity;
+        if (::QueryFullProcessImageNameW(hProcess, dwFlags, szBuffer.get(), &dwSize)) {
+            sExeName.assign(szBuffer.get(), dwSize);
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
