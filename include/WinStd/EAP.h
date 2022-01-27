@@ -388,7 +388,7 @@ namespace winstd
     ///
     class eap_packet : public dplhandle<EapPacket*, NULL>
     {
-        DPLHANDLE_IMPL(eap_packet, NULL)
+        WINSTD_DPLHANDLE_IMPL(eap_packet, NULL)
 
     public:
         ///

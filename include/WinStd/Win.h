@@ -87,6 +87,7 @@ template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringA(_In_ L
 /// \param[out] str     String to store the result to
 ///
 template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _Traits, _Ax> &str) noexcept;
+
 /// @copydoc GuidToStringW()
 #ifdef _UNICODE
 #define GuidToString GuidToStringW
@@ -109,6 +110,7 @@ _Success_(return) BOOL StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid
 /// - `FALSE` otherwise.
 ///
 _Success_(return) BOOL StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd = NULL) noexcept;
+
 /// @copydoc StringToGuidW()
 #ifdef _UNICODE
 #define StringToGuid StringToGuidW
@@ -387,7 +389,7 @@ namespace winstd
     template<HANDLE INVALID>
     class win_handle : public handle<HANDLE, INVALID>
     {
-        HANDLE_IMPL(win_handle, INVALID)
+        WINSTD_HANDLE_IMPL(win_handle, INVALID)
 
     public:
         ///
@@ -419,7 +421,7 @@ namespace winstd
     ///
     class library : public handle<HMODULE, NULL>
     {
-        HANDLE_IMPL(library, NULL)
+        WINSTD_HANDLE_IMPL(library, NULL)
 
     public:
         ///
@@ -601,7 +603,7 @@ namespace winstd
     ///
     class find_file : public handle<HANDLE, INVALID_HANDLE_VALUE>
     {
-        HANDLE_IMPL(find_file, INVALID_HANDLE_VALUE)
+        WINSTD_HANDLE_IMPL(find_file, INVALID_HANDLE_VALUE)
 
     public:
         ///
@@ -645,7 +647,7 @@ namespace winstd
     ///
     class heap : public handle<HANDLE, NULL>
     {
-        HANDLE_IMPL(heap, NULL)
+        WINSTD_HANDLE_IMPL(heap, NULL)
 
     public:
         ///
@@ -1018,7 +1020,7 @@ namespace winstd
     ///
     class reg_key : public handle<HKEY, NULL>
     {
-        HANDLE_IMPL(reg_key, NULL)
+        WINSTD_HANDLE_IMPL(reg_key, NULL)
 
     public:
         ///
@@ -1109,7 +1111,7 @@ namespace winstd
     ///
     class security_id : public handle<PSID, NULL>
     {
-        HANDLE_IMPL(security_id, NULL)
+        WINSTD_HANDLE_IMPL(security_id, NULL)
 
     public:
         ///

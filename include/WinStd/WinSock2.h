@@ -109,7 +109,7 @@ namespace winstd
     ///
     class addrinfo : public handle<PADDRINFOT, NULL>
     {
-        HANDLE_IMPL(addrinfo, NULL)
+        WINSTD_HANDLE_IMPL(addrinfo, NULL)
 
     public:
         ///

@@ -33,7 +33,7 @@ namespace winstd
     template<class T>
     class gdi_handle : public handle<T, NULL>
     {
-        HANDLE_IMPL(gdi_handle, NULL)
+        WINSTD_HANDLE_IMPL(gdi_handle, NULL)
 
     public:
         ///
@@ -65,7 +65,7 @@ namespace winstd
     ///
     class dc : public handle<HDC, NULL>
     {
-        HANDLE_IMPL(dc, NULL)
+        WINSTD_HANDLE_IMPL(dc, NULL)
 
     public:
         ///

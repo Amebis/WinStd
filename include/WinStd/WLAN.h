@@ -112,7 +112,7 @@ namespace winstd
     ///
     class wlan_handle : public handle<HANDLE, NULL>
     {
-        HANDLE_IMPL(wlan_handle, NULL)
+        WINSTD_HANDLE_IMPL(wlan_handle, NULL)
 
     public:
         ///

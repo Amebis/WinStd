@@ -58,12 +58,12 @@
 ///
 /// Stringizing macro helper
 ///
-#define STRING_IMPL(x)  #x
+#define WINSTD_STRING_IMPL(x)  #x
 
 ///
 /// Stringizing macro
 ///
-#define STRING(x)       STRING_IMPL(x)
+#define WINSTD_STRING(x)       WINSTD_STRING_IMPL(x)
 
 ///
 /// Declares a class as non-copyable
@@ -126,7 +126,7 @@ private: \
 ///
 /// Implements default constructors and operators to prevent their auto-generation by compiler.
 ///
-#define HANDLE_IMPL(C, INVAL) \
+#define WINSTD_HANDLE_IMPL(C, INVAL) \
 public: \
     inline    C        (                        ) noexcept                                            {                                                                    } \
     inline    C        (_In_opt_ handle_type   h) noexcept : handle<handle_type, INVAL>(          h ) {                                                                    } \
@@ -138,7 +138,7 @@ WINSTD_NONCOPYABLE(C)
 ///
 /// Implements default constructors and operators to prevent their auto-generation by compiler.
 ///
-#define DPLHANDLE_IMPL(C, INVAL) \
+#define WINSTD_DPLHANDLE_IMPL(C, INVAL) \
 public: \
     inline    C        (                              ) noexcept                                                            {                                                                       } \
     inline    C        (_In_opt_       handle_type   h) noexcept : dplhandle<handle_type, INVAL>(                   h     ) {                                                                       } \
