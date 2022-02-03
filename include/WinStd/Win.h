@@ -1537,6 +1537,7 @@ inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _T
 }
 
 
+#pragma warning(suppress: 4505)
 _Success_(return) static BOOL StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd) noexcept
 {
     GUID g;
@@ -1600,6 +1601,7 @@ _Success_(return) static BOOL StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID
 }
 
 
+#pragma warning(suppress: 4505)
 _Success_(return) static BOOL StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd) noexcept
 {
     GUID g;
