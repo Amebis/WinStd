@@ -18,9 +18,10 @@ The classes provide unified create methods and free destructors. They are like _
 
 ```C++
 // Load and set icon.
-winstd::library lib_shell32;
-if (lib_shell32.load(_T("shell32.dll"), NULL, LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_IMAGE_RESOURCE))
-    m_note_icon->SetIcon(wxLoadIconFromResource(lib_shell32, MAKEINTRESOURCE(48)));
+winstd::library lib_shell32(LoadLibraryEx(_T("shell32.dll"), NULL, LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_IMAGE_RESOURCE));
+if (!lib_shell32)
+    throw winstd::win_runtime_error("LoadLibraryEx failed");
+m_note_icon->SetIcon(wxLoadIconFromResource(lib_shell32, MAKEINTRESOURCE(48)));
 ```
 
 ### Functions and Templates
@@ -65,11 +66,13 @@ if (dwMaxSendPacketSize < sizeof(EapPacket))
 #include <string>
 #include <iostream>
 
+using namespace std;
+
 void main()
 {
-  std::wstring path;
-  PathCanonicalize(path, _T("C:\\Windows\\Temp\\test\\.."));
-  std::cout << path.c_str() << std::endl;
+    wstring path;
+    PathCanonicalizeW(path, L"C:\\Windows\\Temp\\test\\..");
+    wcout << path.c_str() << endl;
 }
 ```
 
