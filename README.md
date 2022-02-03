@@ -1,4 +1,4 @@
-﻿# WinStd [![Build status](https://ci.appveyor.com/api/projects/status/1e8868i88s10cp59?svg=true)](https://ci.appveyor.com/project/Amebis/winstd)
+﻿# WinStd
 
 Provides additional templates and function helpers for Windows API using Standard C++ in Microsoft Visual C++ 2017-2019
 
