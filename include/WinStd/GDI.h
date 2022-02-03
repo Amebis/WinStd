@@ -1,5 +1,5 @@
 ﻿/*
-    ​SPDX-License-Identifier: GPL-3.0-or-later
+    ​SPDX-License-Identifier: MIT
     Copyright © 1991-2022 Amebis
 */
 
