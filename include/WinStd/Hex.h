@@ -37,7 +37,7 @@ namespace winstd
         ///
         /// Constructs blank encoding session
         ///
-        inline hex_enc() noexcept
+        hex_enc() noexcept
         {
         }
 
@@ -50,7 +50,7 @@ namespace winstd
         /// \param[in ] size  Length of `data` in bytes
         ///
         template<class _Elem, class _Traits, class _Ax>
-        inline void encode(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &out, _In_bytecount_(size) const void *data, _In_ size_t size)
+        void encode(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &out, _In_bytecount_(size) const void *data, _In_ size_t size)
         {
             assert(data || !size);
 
@@ -77,7 +77,7 @@ namespace winstd
         ///
         /// \returns Maximum number of bytes for the encoded data of `size` length
         ///
-        inline size_t enc_size(size_t size) const noexcept
+        size_t enc_size(size_t size) const noexcept
         {
             return size*2;
         }
@@ -93,7 +93,7 @@ namespace winstd
         ///
         /// Constructs blank decoding session
         ///
-        inline hex_dec() noexcept :
+        hex_dec() noexcept :
             buf(0),
             num(0)
         {
@@ -109,7 +109,7 @@ namespace winstd
         /// \param[in   ] size     Length of `data` in bytes
         ///
         template<class _Ty, class _Ax, class _Tchr>
-        inline void decode(_Inout_ std::vector<_Ty, _Ax> &out, _Out_ bool &is_last, _In_z_count_(size) const _Tchr *data, _In_ size_t size)
+        void decode(_Inout_ std::vector<_Ty, _Ax> &out, _Out_ bool &is_last, _In_z_count_(size) const _Tchr *data, _In_ size_t size)
         {
             is_last = false;
 
@@ -150,7 +150,7 @@ namespace winstd
         ///
         /// Resets decoding session
         ///
-        inline void clear() noexcept
+        void clear() noexcept
         {
             num = 0;
         }
@@ -163,7 +163,7 @@ namespace winstd
         ///
         /// \returns Maximum number of bytes for the decoded data of `size` length
         ///
-        inline size_t dec_size(size_t size) const noexcept
+        size_t dec_size(size_t size) const noexcept
         {
             return (size + 1)/2;
         }

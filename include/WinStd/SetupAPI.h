@@ -56,7 +56,7 @@ namespace winstd
         ///
         /// \sa [SetupDiCreateDeviceInfoList function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdicreatedeviceinfolist)
         ///
-        inline bool create(
+        bool create(
             _In_opt_ const GUID * ClassGuid,
             _In_opt_ HWND         hwndParent) noexcept
         {
@@ -78,7 +78,7 @@ namespace winstd
         ///
         /// \sa [SetupDiGetClassDevsExW function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetclassdevsexw)
         ///
-        inline bool create(
+        bool create(
             _In_opt_   const GUID * ClassGuid,
             _In_opt_   PCTSTR       Enumerator,
             _In_opt_   HWND         hwndParent,
@@ -123,7 +123,7 @@ namespace winstd
         ///
         /// \sa [SetupDiBuildDriverInfoList function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdibuilddriverinfolist)
         ///
-        inline setup_driver_info_list_builder(
+        setup_driver_info_list_builder(
             _In_        HDEVINFO         DeviceInfoSet,
             _Inout_opt_ PSP_DEVINFO_DATA DeviceInfoData,
             _In_        DWORD            DriverType) noexcept :
@@ -151,7 +151,7 @@ namespace winstd
         ///
         /// \sa [SetupDiBuildDriverInfoList function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdibuilddriverinfolist)
         ///
-        inline BOOL status() const noexcept
+        BOOL status() const noexcept
         {
             return m_result;
         }

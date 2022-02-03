@@ -23,18 +23,24 @@ namespace winstd
     class sec_runtime_error;
 }
 
+#if defined(SECURITY_WIN32) || defined(SECURITY_KERNEL)
+
 /// \addtogroup WinStdSecurityAPI
 /// @{
 
 /// @copydoc GetUserNameExW()
-template<class _Elem, class _Traits, class _Ax> BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName);
+template<class _Elem, class _Traits, class _Ax>
+static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName);
 
 ///
 /// Retrieves the name of the user or other security principal associated with the calling thread and stores it in a std::wstring string.
 ///
 /// \sa [GetUserNameEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724435.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName);
+template<class _Elem, class _Traits, class _Ax>
+static BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName);
+
+#endif
 
 /// @}
 
@@ -57,7 +63,7 @@ namespace winstd
         ///
         /// Initializes a new class instance with the object handle set to NULL.
         ///
-        inline sec_credentials()
+        sec_credentials()
         {
             m_expires.QuadPart = -1;
         }
@@ -68,7 +74,7 @@ namespace winstd
         /// \param[in] h        Initial class handle value
         /// \param[in] expires  Credentials expiration
         ///
-        inline sec_credentials(_In_opt_ handle_type h, _In_ const TimeStamp expires) :
+        sec_credentials(_In_opt_ handle_type h, _In_ const TimeStamp expires) :
             m_expires(expires),
             handle(h)
         {
@@ -79,7 +85,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline sec_credentials(_Inout_ sec_credentials &&h) noexcept :
+        sec_credentials(_Inout_ sec_credentials &&h) noexcept :
             m_expires(std::move(h.m_expires)),
             handle<PCredHandle, NULL>(std::move(h))
         {
@@ -121,7 +127,7 @@ namespace winstd
         ///
         /// \sa [AcquireCredentialsHandle (General) function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374712.aspx)
         ///
-        inline SECURITY_STATUS acquire(
+        SECURITY_STATUS acquire(
             _In_opt_ LPTSTR         pszPrincipal,
             _In_     LPTSTR         pszPackage,
             _In_     unsigned long  fCredentialUse,
@@ -167,7 +173,7 @@ namespace winstd
         ///
         /// Initializes a new class instance with the object handle set to NULL.
         ///
-        inline sec_context() :
+        sec_context() :
             m_attrib(0),
             handle<PCtxtHandle, NULL>()
         {
@@ -179,7 +185,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline sec_context(_Inout_ sec_context &&h) noexcept :
+        sec_context(_Inout_ sec_context &&h) noexcept :
             m_attrib (std::move(h.m_attrib )),
             m_expires(std::move(h.m_expires)),
             handle<PCtxtHandle, NULL>(std::move(h))
@@ -223,7 +229,7 @@ namespace winstd
         ///
         /// \sa [InitializeSecurityContext (General) function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375506.aspx)
         ///
-        inline SECURITY_STATUS initialize(
+        SECURITY_STATUS initialize(
             _In_opt_    PCredHandle    phCredential,
             _In_opt_z_  LPCTSTR        pszTargetName,
             _In_        ULONG          fContextReq,
@@ -255,7 +261,7 @@ namespace winstd
         ///
         /// \sa [InitializeSecurityContext (General) function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375506.aspx)
         ///
-        inline SECURITY_STATUS process(
+        SECURITY_STATUS process(
             _In_opt_    PCredHandle    phCredential,
             _In_opt_z_  LPCTSTR        pszTargetName,
             _In_        ULONG          fContextReq,
@@ -293,7 +299,7 @@ namespace winstd
         ///
         /// Initializes security buffer descriptor.
         ///
-        inline sec_buffer_desc(_Inout_count_(count) PSecBuffer buf, ULONG count, _In_ ULONG version = SECBUFFER_VERSION)
+        sec_buffer_desc(_Inout_count_(count) PSecBuffer buf, ULONG count, _In_ ULONG version = SECBUFFER_VERSION)
         {
             ulVersion = version;
             cBuffers  = count;
@@ -336,7 +342,7 @@ namespace winstd
         /// \param[in] num  Security provider error code
         /// \param[in] msg  Error message
         ///
-        inline sec_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<SECURITY_STATUS>(num, msg)
+        sec_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<SECURITY_STATUS>(num, msg)
         {
         }
 
@@ -347,7 +353,7 @@ namespace winstd
         /// \param[in] num  Security provider error code
         /// \param[in] msg  Error message
         ///
-        inline sec_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<SECURITY_STATUS>(num, msg)
+        sec_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<SECURITY_STATUS>(num, msg)
         {
         }
 
@@ -357,7 +363,7 @@ namespace winstd
         ///
         /// \param[in] other  Exception to copy from
         ///
-        inline sec_runtime_error(const sec_runtime_error &other) : num_runtime_error<SECURITY_STATUS>(other)
+        sec_runtime_error(const sec_runtime_error &other) : num_runtime_error<SECURITY_STATUS>(other)
         {
         }
     };
@@ -366,8 +372,10 @@ namespace winstd
 }
 
 
+#if defined(SECURITY_WIN32) || defined(SECURITY_KERNEL)
+
 template<class _Elem, class _Traits, class _Ax>
-BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName)
+static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName)
 {
     assert(0); // TODO: Test this code.
 
@@ -395,7 +403,7 @@ BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_
 
 
 template<class _Elem, class _Traits, class _Ax>
-BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName)
+static BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName)
 {
     assert(0); // TODO: Test this code.
 
@@ -420,3 +428,5 @@ BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_
 
     return FALSE;
 }
+
+#endif

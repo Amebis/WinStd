@@ -98,21 +98,21 @@ namespace winstd
     class window_dc : public handle<HDC, NULL>
     {
     public:
-        inline window_dc() noexcept :
+        window_dc() noexcept :
             m_hwnd(NULL)
         {}
 
-        inline window_dc(_In_opt_ handle_type h, _In_opt_ HWND hwnd) noexcept :
+        window_dc(_In_opt_ handle_type h, _In_opt_ HWND hwnd) noexcept :
             handle<handle_type, NULL>(h),
             m_hwnd(hwnd)
         {}
 
-        inline window_dc(_Inout_ window_dc &&h) noexcept :
+        window_dc(_Inout_ window_dc &&h) noexcept :
             handle<handle_type, NULL>(std::move(h)),
             m_hwnd(h.m_hwnd)
         {}
 
-        inline window_dc& operator=(_Inout_ window_dc &&h) noexcept
+        window_dc& operator=(_Inout_ window_dc &&h) noexcept
         {
             handle<handle_type, NULL>::operator=(std::move(h));
             m_hwnd = h.m_hwnd;
@@ -163,7 +163,7 @@ namespace winstd
         ///
         /// \sa [SelectObject function](https://docs.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-selectobject)
         ///
-        inline dc_selector(_In_ HDC hdc, _In_ HGDIOBJ h) noexcept :
+        dc_selector(_In_ HDC hdc, _In_ HGDIOBJ h) noexcept :
             m_hdc(hdc),
             m_orig(SelectObject(hdc, h))
         {
@@ -187,7 +187,7 @@ namespace winstd
         ///
         /// \sa [SelectObject function](https://docs.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-selectobject)
         ///
-        inline HGDIOBJ status() const noexcept
+        HGDIOBJ status() const noexcept
         {
             return m_orig;
         }

@@ -31,63 +31,72 @@ namespace winstd
 /// @{
 
 /// @copydoc CertGetNameStringW()
-template<class _Elem, class _Traits, class _Ax> inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
+template<class _Elem, class _Traits, class _Ax>
+static DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
 
 ///
 /// Obtains the subject or issuer name from a certificate [CERT_CONTEXT](https://msdn.microsoft.com/en-us/library/windows/desktop/aa377189.aspx) structure and stores it in a std::wstring string.
 ///
 /// \sa [CertGetNameString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376086.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
+template<class _Elem, class _Traits, class _Ax>
+static DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
 
 ///
 /// Retrieves the information contained in an extended property of a certificate context.
 ///
 /// \sa [CertGetCertificateContextProperty function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376079.aspx)
 ///
-template<class _Ty, class _Ax> inline _Success_(return != 0) BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Out_ std::vector<_Ty, _Ax> &aData);
+template<class _Ty, class _Ax>
+static _Success_(return != 0) BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Out_ std::vector<_Ty, _Ax> &aData);
 
 ///
 /// Retrieves data that governs the operations of a hash object. The actual hash value can be retrieved by using this function.
 ///
 /// \sa [CryptGetHashParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379947.aspx)
 ///
-template<class _Ty, class _Ax> inline _Success_(return != 0) BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
+template<class _Ty, class _Ax>
+static _Success_(return != 0) BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
 
 ///
 /// Retrieves data that governs the operations of a key.
 ///
 /// \sa [CryptGetKeyParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379949.aspx)
 ///
-template<class _Ty, class _Ax> inline _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
+template<class _Ty, class _Ax>
+static _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
 
 ///
 /// Retrieves data that governs the operations of a key.
 ///
 /// \sa [CryptGetKeyParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379949.aspx)
 ///
-template<class T> inline _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags);
+template<class T>
+static _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags);
 
 ///
 /// Exports a cryptographic key or a key pair from a cryptographic service provider (CSP) in a secure manner.
 ///
 /// \sa [CryptExportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379931.aspx)
 ///
-template<class _Ty, class _Ax> inline _Success_(return != 0) BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData);
+template<class _Ty, class _Ax>
+static _Success_(return != 0) BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData);
 
 ///
 /// Encrypts data.
 ///
 /// \sa [CryptEncrypt function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379924.aspx)
 ///
-template<class _Ty, class _Ax> inline _Success_(return != 0) BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData);
+template<class _Ty, class _Ax>
+static _Success_(return != 0) BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData);
 
 ///
 /// Decrypts data previously encrypted by using the CryptEncrypt function.
 ///
 /// \sa [CryptDecrypt function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379913.aspx)
 ///
-template<class _Ty, class _Ax> inline _Success_(return != 0) BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData);
+template<class _Ty, class _Ax>
+static _Success_(return != 0) BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData);
 
 /// @}
 
@@ -131,7 +140,7 @@ namespace winstd
         ///
         /// \sa [CertCreateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376033.aspx)
         ///
-        inline bool create(_In_  DWORD dwCertEncodingType, _In_  LPCBYTE pbCertEncoded, _In_  DWORD cbCertEncoded) noexcept
+        bool create(_In_  DWORD dwCertEncodingType, _In_  LPCBYTE pbCertEncoded, _In_  DWORD cbCertEncoded) noexcept
         {
             handle_type h = CertCreateCertificateContext(dwCertEncodingType, pbCertEncoded, cbCertEncoded);
             if (h != invalid) {
@@ -149,7 +158,7 @@ namespace winstd
         /// - Non zero when certificate is equal to \p other;
         /// - Zero otherwise.
         ///
-        inline bool operator==(_In_ const handle_type &other) const noexcept
+        bool operator==(_In_ const handle_type &other) const noexcept
         {
             // TODO: [Crypto] Make constant time.
             return
@@ -165,7 +174,7 @@ namespace winstd
         /// - Non zero when certificate is not equal to \p other;
         /// - Zero otherwise.
         ///
-        inline bool operator!=(_In_ const handle_type &other) const noexcept
+        bool operator!=(_In_ const handle_type &other) const noexcept
         {
             return !operator==(other);
         }
@@ -178,7 +187,7 @@ namespace winstd
         /// - Non zero when certificate is less than \p other;
         /// - Zero otherwise.
         ///
-        inline bool operator<(_In_ const handle_type &other) const noexcept
+        bool operator<(_In_ const handle_type &other) const noexcept
         {
             // TODO: [Crypto] Make constant time.
             const int r = memcmp(m_h->pbCertEncoded, other->pbCertEncoded, std::min<DWORD>(m_h->cbCertEncoded, other->cbCertEncoded));
@@ -193,7 +202,7 @@ namespace winstd
         /// - Non zero when certificate is greater than \p other;
         /// - Zero otherwise.
         ///
-        inline bool operator>(_In_ const handle_type &other) const noexcept
+        bool operator>(_In_ const handle_type &other) const noexcept
         {
             // TODO: [Crypto] Make constant time.
             const int r = memcmp(m_h->pbCertEncoded, other->pbCertEncoded, std::min<DWORD>(m_h->cbCertEncoded, other->cbCertEncoded));
@@ -208,7 +217,7 @@ namespace winstd
         /// - Non zero when certificate is less than \p other;
         /// - Zero otherwise.
         ///
-        inline bool operator<=(_In_ const handle_type &other) const noexcept
+        bool operator<=(_In_ const handle_type &other) const noexcept
         {
             return !operator>(other);
         }
@@ -221,7 +230,7 @@ namespace winstd
         /// - Non zero when certificate is greater than \p other;
         /// - Zero otherwise.
         ///
-        inline bool operator>=(_In_ const handle_type &other) const noexcept
+        bool operator>=(_In_ const handle_type &other) const noexcept
         {
             return !operator<(other);
         }
@@ -281,7 +290,7 @@ namespace winstd
         ///
         /// \sa [CertGetCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376078.aspx)
         ///
-        inline bool create(_In_opt_ HCERTCHAINENGINE hChainEngine, _In_ PCCERT_CONTEXT pCertContext, _In_opt_ LPFILETIME pTime, _In_opt_ HCERTSTORE hAdditionalStore, _In_ PCERT_CHAIN_PARA pChainPara, _In_ DWORD dwFlags, __reserved LPVOID pvReserved = NULL) noexcept
+        bool create(_In_opt_ HCERTCHAINENGINE hChainEngine, _In_ PCCERT_CONTEXT pCertContext, _In_opt_ LPFILETIME pTime, _In_opt_ HCERTSTORE hAdditionalStore, _In_ PCERT_CHAIN_PARA pChainPara, _In_ DWORD dwFlags, __reserved LPVOID pvReserved = NULL) noexcept
         {
             handle_type h;
             if (CertGetCertificateChain(hChainEngine, pCertContext, pTime, hAdditionalStore, pChainPara, dwFlags, pvReserved, &h)) {
@@ -346,7 +355,7 @@ namespace winstd
         ///
         /// \sa [CertOpenStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376559.aspx)
         ///
-        inline bool create(_In_ LPCSTR lpszStoreProvider, _In_ DWORD dwEncodingType, _In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ DWORD dwFlags, _In_opt_ const void *pvPara) noexcept
+        bool create(_In_ LPCSTR lpszStoreProvider, _In_ DWORD dwEncodingType, _In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ DWORD dwFlags, _In_opt_ const void *pvPara) noexcept
         {
             handle_type h = CertOpenStore(lpszStoreProvider, dwEncodingType, hCryptProv, dwFlags, pvPara);
             if (h != invalid) {
@@ -365,7 +374,7 @@ namespace winstd
         ///
         /// \sa [CertOpenSystemStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376560.aspx)
         ///
-        inline bool create(_In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_z_ LPCTSTR szSubsystemProtocol) noexcept
+        bool create(_In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_z_ LPCTSTR szSubsystemProtocol) noexcept
         {
             handle_type h = CertOpenSystemStore(hCryptProv, szSubsystemProtocol);
             if (h != invalid) {
@@ -416,7 +425,7 @@ namespace winstd
         ///
         /// \sa [CryptAcquireContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379886.aspx)
         ///
-        inline bool create(_In_opt_z_ LPCTSTR szContainer, _In_opt_z_ LPCTSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags = 0) noexcept
+        bool create(_In_opt_z_ LPCTSTR szContainer, _In_opt_z_ LPCTSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags = 0) noexcept
         {
             handle_type h;
             if (CryptAcquireContext(&h, szContainer, szProvider, dwProvType, dwFlags)) {
@@ -467,7 +476,7 @@ namespace winstd
         ///
         /// \sa [CryptCreateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379908.aspx)
         ///
-        inline bool create(_In_ HCRYPTPROV  hProv, _In_ ALG_ID Algid, _In_opt_ HCRYPTKEY hKey = NULL, _In_opt_ DWORD dwFlags = 0) noexcept
+        bool create(_In_ HCRYPTPROV  hProv, _In_ ALG_ID Algid, _In_opt_ HCRYPTKEY hKey = NULL, _In_opt_ DWORD dwFlags = 0) noexcept
         {
             handle_type h;
             if (CryptCreateHash(hProv, Algid, hKey, dwFlags, &h)) {
@@ -529,7 +538,7 @@ namespace winstd
         ///
         /// \sa [CryptGenKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379941.aspx)
         ///
-        inline bool generate(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ DWORD dwFlags) noexcept
+        bool generate(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ DWORD dwFlags) noexcept
         {
             handle_type h;
             if (CryptGenKey(hProv, Algid, dwFlags, &h)) {
@@ -544,7 +553,7 @@ namespace winstd
         ///
         /// \sa [CryptImportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380207.aspx)
         ///
-        inline bool import(_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) LPCBYTE pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags) noexcept
+        bool import(_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) LPCBYTE pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags) noexcept
         {
             handle_type h;
             if (CryptImportKey(hProv, pbData, dwDataLen, hPubKey, dwFlags, &h)) {
@@ -559,7 +568,7 @@ namespace winstd
         ///
         /// \sa [CryptImportPublicKeyInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380209.aspx)
         ///
-        inline bool import_public(_In_ HCRYPTPROV hCryptProv, _In_ DWORD dwCertEncodingType, _In_ PCERT_PUBLIC_KEY_INFO pInfo) noexcept
+        bool import_public(_In_ HCRYPTPROV hCryptProv, _In_ DWORD dwCertEncodingType, _In_ PCERT_PUBLIC_KEY_INFO pInfo) noexcept
         {
             handle_type h;
             if (CryptImportPublicKeyInfo(hCryptProv, dwCertEncodingType, pInfo, &h)) {
@@ -574,7 +583,7 @@ namespace winstd
         ///
         /// \sa [CryptDeriveKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379916.aspx)
         ///
-        inline bool derive(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ HCRYPTHASH hBaseData, _In_ DWORD dwFlags) noexcept
+        bool derive(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ HCRYPTHASH hBaseData, _In_ DWORD dwFlags) noexcept
         {
             handle_type h;
             if (CryptDeriveKey(hProv, Algid, hBaseData, dwFlags, &h)) {
@@ -692,7 +701,7 @@ namespace winstd
         ///
         /// Initializes an empty BLOB.
         ///
-        inline data_blob() noexcept
+        data_blob() noexcept
         {
             cbData = 0;
             pbData = NULL;
@@ -701,7 +710,7 @@ namespace winstd
         ///
         /// Initializes a BLOB from existing data.
         ///
-        inline data_blob(_In_count_(size) BYTE *data, _In_ DWORD size) noexcept
+        data_blob(_In_count_(size) BYTE *data, _In_ DWORD size) noexcept
         {
             cbData = size;
             pbData = data;
@@ -710,7 +719,7 @@ namespace winstd
         ///
         /// Duplicate an existing BLOB.
         ///
-        inline data_blob(_In_ const DATA_BLOB &other)
+        data_blob(_In_ const DATA_BLOB &other)
         {
             cbData = other.cbData;
             if (cbData) {
@@ -724,7 +733,7 @@ namespace winstd
         ///
         /// Move an existing BLOB.
         ///
-        inline data_blob(_Inout_ data_blob &&other) noexcept
+        data_blob(_Inout_ data_blob &&other) noexcept
         {
             cbData = other.cbData;
             pbData = other.pbData;
@@ -744,7 +753,7 @@ namespace winstd
         ///
         /// Copy an existing BLOB.
         ///
-        inline data_blob& operator=(_In_ const DATA_BLOB &other)
+        data_blob& operator=(_In_ const DATA_BLOB &other)
         {
             if (this != &other) {
                 cbData = other.cbData;
@@ -764,7 +773,7 @@ namespace winstd
         ///
         /// Move an existing BLOB.
         ///
-        inline data_blob& operator=(_Inout_ data_blob &&other) noexcept
+        data_blob& operator=(_Inout_ data_blob &&other) noexcept
         {
             if (this != &other) {
                 cbData = other.cbData;
@@ -781,7 +790,7 @@ namespace winstd
         ///
         /// Get BLOB size.
         ///
-        inline DWORD size() const noexcept
+        DWORD size() const noexcept
         {
             return cbData;
         }
@@ -789,7 +798,7 @@ namespace winstd
         ///
         /// Get BLOB buffer.
         ///
-        inline const BYTE* data() const noexcept
+        const BYTE* data() const noexcept
         {
             return pbData;
         }
@@ -797,7 +806,7 @@ namespace winstd
         ///
         /// Get BLOB buffer.
         ///
-        inline BYTE* data() noexcept
+        BYTE* data() noexcept
         {
             return pbData;
         }
@@ -809,7 +818,7 @@ namespace winstd
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
+static DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
 {
     // Query the final string length first.
     DWORD dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
@@ -823,7 +832,7 @@ inline DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
+static DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
 {
     // Query the final string length first.
     DWORD dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
@@ -837,7 +846,7 @@ inline DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
 
 
 template<class _Ty, class _Ax>
-inline _Success_(return != 0) BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Out_ std::vector<_Ty, _Ax> &aData)
+static _Success_(return != 0) BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Out_ std::vector<_Ty, _Ax> &aData)
 {
     BYTE buf[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = WINSTD_STACK_BUFFER_BYTES;
@@ -858,7 +867,7 @@ inline _Success_(return != 0) BOOL WINAPI CertGetCertificateContextProperty(_In_
 
 
 template<class _Ty, class _Ax>
-inline _Success_(return != 0) BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
+static _Success_(return != 0) BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
 {
     BYTE buf[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = WINSTD_STACK_BUFFER_BYTES;
@@ -879,7 +888,7 @@ inline _Success_(return != 0) BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_
 
 
 template<class T>
-inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags)
+static BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags)
 {
     DWORD dwSize = sizeof(T);
     return CryptGetHashParam(hHash, dwParam, (BYTE*)&data, &dwSize, dwFlags);
@@ -887,7 +896,7 @@ inline BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ T
 
 
 template<class _Ty, class _Ax>
-inline _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
+static _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
 {
     BYTE buf[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = WINSTD_STACK_BUFFER_BYTES;
@@ -908,7 +917,7 @@ inline _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DW
 
 
 template<class T>
-inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags)
+static BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags)
 {
     DWORD dwSize = sizeof(T);
     return CryptGetKeyParam(hKey, dwParam, (BYTE*)&data, &dwSize, dwFlags);
@@ -916,7 +925,7 @@ inline BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &d
 
 
 template<class _Ty, class _Ax>
-inline _Success_(return != 0) BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData)
+static _Success_(return != 0) BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData)
 {
     DWORD dwKeyBLOBSize = 0;
 
@@ -931,7 +940,7 @@ inline _Success_(return != 0) BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRY
 
 
 template<class _Ty, class _Ax>
-inline _Success_(return != 0) BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
+static _Success_(return != 0) BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
 {
     DWORD
         dwDataLen = (DWORD)(aData.size()     * sizeof(_Ty)),
@@ -977,7 +986,7 @@ inline _Success_(return != 0) BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HC
 
 
 template<class _Ty, class _Ax>
-inline _Success_(return != 0) BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
+static _Success_(return != 0) BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
 {
     DWORD dwDataLen = (DWORD)(aData.size() * sizeof(_Ty));
 

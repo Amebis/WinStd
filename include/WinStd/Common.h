@@ -70,16 +70,16 @@
 ///
 #define WINSTD_NONCOPYABLE(C) \
 private: \
-    inline    C        (_In_ const C &h) noexcept; \
-    inline C& operator=(_In_ const C &h) noexcept;
+       C        (_In_ const C &h) noexcept; \
+    C& operator=(_In_ const C &h) noexcept;
 
 ///
 /// Declares a class as non-movable
 ///
 #define WINSTD_NONMOVABLE(C) \
 private: \
-    inline    C        (_Inout_ C &&h) noexcept; \
-    inline C& operator=(_Inout_ C &&h) noexcept;
+       C        (_Inout_ C &&h) noexcept; \
+    C& operator=(_Inout_ C &&h) noexcept;
 
 /// @}
 
@@ -128,11 +128,11 @@ private: \
 ///
 #define WINSTD_HANDLE_IMPL(C, INVAL) \
 public: \
-    inline    C        (                        ) noexcept                                            {                                                                    } \
-    inline    C        (_In_opt_ handle_type   h) noexcept : handle<handle_type, INVAL>(          h ) {                                                                    } \
-    inline    C        (_Inout_  C           &&h) noexcept : handle<handle_type, INVAL>(std::move(h)) {                                                                    } \
-    inline C& operator=(_In_opt_ handle_type   h) noexcept                                            { handle<handle_type, INVAL>::operator=(          h ); return *this; } \
-    inline C& operator=(_Inout_  C           &&h) noexcept                                            { handle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
+       C        (                        ) noexcept                                            {                                                                    } \
+       C        (_In_opt_ handle_type   h) noexcept : handle<handle_type, INVAL>(          h ) {                                                                    } \
+       C        (_Inout_  C           &&h) noexcept : handle<handle_type, INVAL>(std::move(h)) {                                                                    } \
+    C& operator=(_In_opt_ handle_type   h) noexcept                                            { handle<handle_type, INVAL>::operator=(          h ); return *this; } \
+    C& operator=(_Inout_  C           &&h) noexcept                                            { handle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
 WINSTD_NONCOPYABLE(C)
 
 ///
@@ -140,13 +140,13 @@ WINSTD_NONCOPYABLE(C)
 ///
 #define WINSTD_DPLHANDLE_IMPL(C, INVAL) \
 public: \
-    inline    C        (                              ) noexcept                                                            {                                                                       } \
-    inline    C        (_In_opt_       handle_type   h) noexcept : dplhandle<handle_type, INVAL>(                   h     ) {                                                                       } \
-    inline    C        (_In_     const C            &h) noexcept : dplhandle<handle_type, INVAL>(duplicate_internal(h.m_h)) {                                                                       } \
-    inline    C        (_Inout_        C           &&h) noexcept : dplhandle<handle_type, INVAL>(std::move         (h    )) {                                                                       } \
-    inline C& operator=(_In_opt_       handle_type   h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
-    inline C& operator=(_In_     const C            &h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
-    inline C& operator=(_Inout_        C           &&h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
+       C        (                              ) noexcept                                                            {                                                                       } \
+       C        (_In_opt_       handle_type   h) noexcept : dplhandle<handle_type, INVAL>(                   h     ) {                                                                       } \
+       C        (_In_     const C            &h) noexcept : dplhandle<handle_type, INVAL>(duplicate_internal(h.m_h)) {                                                                       } \
+       C        (_Inout_        C           &&h) noexcept : dplhandle<handle_type, INVAL>(std::move         (h    )) {                                                                       } \
+    C& operator=(_In_opt_       handle_type   h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
+    C& operator=(_In_     const C            &h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
+    C& operator=(_Inout_        C           &&h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
 private:
 
 /// @}
@@ -199,7 +199,7 @@ namespace winstd
     ///
     /// \returns A helper wrapper class to handle returning a reference to the pointer
     ///
-    template<class _Ty, class _Dx> inline ref_unique_ptr<_Ty, _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty, _Dx> &owner) noexcept;
+    template<class _Ty, class _Dx> ref_unique_ptr<_Ty, _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty, _Dx> &owner) noexcept;
 
     ///
     /// Helper function template for returning pointers to std::unique_ptr
@@ -209,7 +209,7 @@ namespace winstd
     ///
     /// \returns A helper wrapper class to handle returning a reference to the pointer
     ///
-    template<class _Ty, class _Dx> inline ref_unique_ptr<_Ty[], _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept;
+    template<class _Ty, class _Dx> ref_unique_ptr<_Ty[], _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept;
 
     /// @}
 
@@ -326,7 +326,7 @@ namespace winstd
 /// \returns Number of characters in result.
 ///
 #if _MSC_VER <= 1600
-inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg);
+static int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg);
 #endif
 
 ///
@@ -339,7 +339,7 @@ inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_
 ///
 /// \returns Number of characters in result.
 ///
-inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg) noexcept;
+static int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg) noexcept;
 
 ///
 /// Formats string using `printf()`.
@@ -350,7 +350,8 @@ inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _
 ///
 /// \returns Number of characters in result.
 ///
-template<class _Elem, class _Traits, class _Ax> inline int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg);
+template<class _Elem, class _Traits, class _Ax>
+static int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg);
 
 ///
 /// Formats string using `printf()`.
@@ -360,21 +361,24 @@ template<class _Elem, class _Traits, class _Ax> inline int vsprintf(_Inout_ std:
 ///
 /// \returns Number of characters in result.
 ///
-template<class _Elem, class _Traits, class _Ax> inline int sprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...);
+template<class _Elem, class _Traits, class _Ax>
+static int sprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...);
 
 ///
 /// Formats a message string.
 ///
 /// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
 ///
-template<class _Traits, class _Ax> inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Inout_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments);
+template<class _Traits, class _Ax>
+static DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Inout_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments);
 
 ///
 /// Formats a message string.
 ///
 /// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
 ///
-template<class _Traits, class _Ax> inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments);
+template<class _Traits, class _Ax>
+static DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments);
 
 /// @}
 
@@ -491,7 +495,7 @@ namespace winstd
         ///
         /// \param[inout] owner  Object to attach helper to
         ///
-        inline ref_unique_ptr(_Inout_ std::unique_ptr<_Ty, _Dx> &owner) :
+        ref_unique_ptr(_Inout_ std::unique_ptr<_Ty, _Dx> &owner) :
             m_own(owner),
             m_ptr(owner.release())
         {}
@@ -501,7 +505,7 @@ namespace winstd
         ///
         /// \param[inout] other  Source object
         ///
-        inline ref_unique_ptr(_Inout_ ref_unique_ptr<_Ty, _Dx> &&other) :
+        ref_unique_ptr(_Inout_ ref_unique_ptr<_Ty, _Dx> &&other) :
             m_own(other.m_own),
             m_ptr(other.m_ptr)
         {
@@ -511,7 +515,7 @@ namespace winstd
         ///
         /// Returns ownership of the pointer
         ///
-        inline ~ref_unique_ptr()
+        ~ref_unique_ptr()
         {
             if (m_ptr != nullptr)
                 m_own.reset(m_ptr);
@@ -522,7 +526,7 @@ namespace winstd
         ///
         /// \return Pointer to the pointer
         ///
-        inline operator typename _Ty**()
+        operator typename _Ty**()
         {
             return &m_ptr;
         }
@@ -532,7 +536,7 @@ namespace winstd
         ///
         /// \return Reference to the pointer
         ///
-        inline operator typename _Ty*&()
+        operator typename _Ty*&()
         {
             return m_ptr;
         }
@@ -558,7 +562,7 @@ namespace winstd
         ///
         /// \param[inout] owner  Object to attach helper to
         ///
-        inline ref_unique_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept :
+        ref_unique_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept :
             m_own(owner),
             m_ptr(owner.release())
         {}
@@ -570,7 +574,7 @@ namespace winstd
         ///
         /// \returns Reference to this object
         ///
-        inline ref_unique_ptr& operator=(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept
+        ref_unique_ptr& operator=(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept
         {
             if (this != &other) {
                 m_own = owner;
@@ -585,7 +589,7 @@ namespace winstd
         ///
         /// \param[inout] other  Source object
         ///
-        inline ref_unique_ptr(_Inout_ ref_unique_ptr<_Ty[], _Dx> &&other) :
+        ref_unique_ptr(_Inout_ ref_unique_ptr<_Ty[], _Dx> &&other) :
             m_own(other.m_own),
             m_ptr(other.m_ptr)
         {
@@ -599,7 +603,7 @@ namespace winstd
         ///
         /// \returns Reference to this object
         ///
-        inline ref_unique_ptr& operator=(_Inout_ ref_unique_ptr<_Ty[], _Dx> &&other)
+        ref_unique_ptr& operator=(_Inout_ ref_unique_ptr<_Ty[], _Dx> &&other)
         {
             if (this != &other) {
                 m_own = other.m_own;
@@ -624,7 +628,7 @@ namespace winstd
         ///
         /// \return Pointer to the pointer
         ///
-        inline operator typename _Ty**() noexcept
+        operator typename _Ty**() noexcept
         {
             return &m_ptr;
         }
@@ -634,7 +638,7 @@ namespace winstd
         ///
         /// \return Reference to the pointer
         ///
-        inline operator typename _Ty*&()
+        operator typename _Ty*&()
         {
             return m_ptr;
         }
@@ -646,13 +650,13 @@ namespace winstd
     #pragma warning(pop)
 
     template<class _Ty, class _Dx>
-    inline ref_unique_ptr<_Ty, _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty, _Dx> &owner) noexcept
+    ref_unique_ptr<_Ty, _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty, _Dx> &owner) noexcept
     {
         return ref_unique_ptr<_Ty, _Dx>(owner);
     }
 
     template<class _Ty, class _Dx>
-    inline ref_unique_ptr<_Ty[], _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept
+    ref_unique_ptr<_Ty[], _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept
     {
         return ref_unique_ptr<_Ty[], _Dx>(owner);
     }
@@ -685,7 +689,7 @@ namespace winstd
         ///
         /// Initializes a new class instance with the object handle set to INVAL.
         ///
-        inline handle() noexcept : m_h(invalid)
+        handle() noexcept : m_h(invalid)
         {
         }
 
@@ -694,7 +698,7 @@ namespace winstd
         ///
         /// \param[in] h  Initial object handle value
         ///
-        inline handle(_In_opt_ handle_type h) noexcept : m_h(h)
+        handle(_In_opt_ handle_type h) noexcept : m_h(h)
         {
         }
 
@@ -703,7 +707,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline handle(_Inout_ handle<handle_type, INVAL> &&h) noexcept
+        handle(_Inout_ handle<handle_type, INVAL> &&h) noexcept
         {
             // Transfer handle.
             m_h   = h.m_h;
@@ -712,8 +716,8 @@ namespace winstd
 
     private:
         // This class is noncopyable.
-        inline handle(_In_ const handle<handle_type, INVAL> &h) noexcept {};
-        inline handle<handle_type, INVAL>& operator=(_In_ const handle<handle_type, INVAL> &h) noexcept {};
+        handle(_In_ const handle<handle_type, INVAL> &h) noexcept {};
+        handle<handle_type, INVAL>& operator=(_In_ const handle<handle_type, INVAL> &h) noexcept {};
 
     public:
         ///
@@ -721,7 +725,7 @@ namespace winstd
         ///
         /// \param[in] h  Object handle value
         ///
-        inline handle<handle_type, INVAL>& operator=(_In_opt_ handle_type h) noexcept
+        handle<handle_type, INVAL>& operator=(_In_opt_ handle_type h) noexcept
         {
             attach(h);
             return *this;
@@ -733,7 +737,7 @@ namespace winstd
         /// \param[inout] h  A rvalue reference of another object
         ///
         #pragma warning(suppress: 26432) // Move constructor is also present, but not detected by code analysis somehow.
-        inline handle<handle_type, INVAL>& operator=(_Inout_ handle<handle_type, INVAL> &&h) noexcept
+        handle<handle_type, INVAL>& operator=(_Inout_ handle<handle_type, INVAL> &&h) noexcept
         {
             if (this != std::addressof(h)) {
                 // Transfer handle.
@@ -750,7 +754,7 @@ namespace winstd
         ///
         /// \return Object handle
         ///
-        inline operator handle_type() const
+        operator handle_type() const
         {
             return m_h;
         }
@@ -760,7 +764,7 @@ namespace winstd
         ///
         /// \return Object handle value
         ///
-        inline handle_type*& operator*() const
+        handle_type*& operator*() const
         {
             assert(m_h != invalid);
             return *m_h;
@@ -770,7 +774,7 @@ namespace winstd
         /// Returns the object handle reference.
         /// \return Object handle reference
         ///
-        inline handle_type* operator&()
+        handle_type* operator&()
         {
             assert(m_h == invalid);
             return &m_h;
@@ -781,7 +785,7 @@ namespace winstd
         ///
         /// \return Object handle
         ///
-        inline handle_type operator->() const
+        handle_type operator->() const
         {
             assert(m_h != invalid);
             return m_h;
@@ -794,7 +798,7 @@ namespace winstd
         /// - Non zero when object handle is INVAL;
         /// - Zero otherwise.
         ///
-        inline bool operator!() const
+        bool operator!() const
         {
             return m_h == invalid;
         }
@@ -807,7 +811,7 @@ namespace winstd
         /// - Non zero when object handle is less than h;
         /// - Zero otherwise.
         ///
-        inline bool operator<(_In_opt_ handle_type h) const
+        bool operator<(_In_opt_ handle_type h) const
         {
             return m_h < h;
         }
@@ -820,7 +824,7 @@ namespace winstd
         /// - Non zero when object handle is less than or equal to h;
         /// - Zero otherwise.
         ///
-        inline bool operator<=(_In_opt_ handle_type h) const
+        bool operator<=(_In_opt_ handle_type h) const
         {
             return !operator>(h);
         }
@@ -833,7 +837,7 @@ namespace winstd
         /// - Non zero when object handle is greater than or equal to h;
         /// - Zero otherwise.
         ///
-        inline bool operator>=(_In_opt_ handle_type h) const
+        bool operator>=(_In_opt_ handle_type h) const
         {
             return !operator<(h);
         }
@@ -846,7 +850,7 @@ namespace winstd
         /// - Non zero when object handle is greater than h;
         /// - Zero otherwise.
         ///
-        inline bool operator>(_In_opt_ handle_type h) const
+        bool operator>(_In_opt_ handle_type h) const
         {
             return h < m_h;
         }
@@ -859,7 +863,7 @@ namespace winstd
         /// - Non zero when object handle is not equal to h;
         /// - Zero otherwise.
         ///
-        inline bool operator!=(_In_opt_ handle_type h) const
+        bool operator!=(_In_opt_ handle_type h) const
         {
             return !operator==(h);
         }
@@ -872,7 +876,7 @@ namespace winstd
         /// - Non zero when object handle is equal to h;
         /// - Zero otherwise.
         ///
-        inline bool operator==(_In_opt_ handle_type h) const
+        bool operator==(_In_opt_ handle_type h) const
         {
             return m_h == h;
         }
@@ -884,7 +888,7 @@ namespace winstd
         ///
         /// \param[in] h  New object handle
         ///
-        inline void attach(_In_opt_ handle_type h) noexcept
+        void attach(_In_opt_ handle_type h) noexcept
         {
             if (m_h != invalid)
                 free_internal();
@@ -896,7 +900,7 @@ namespace winstd
         ///
         /// \return Object handle
         ///
-        inline handle_type detach()
+        handle_type detach()
         {
             handle_type h = m_h;
             m_h = invalid;
@@ -906,7 +910,7 @@ namespace winstd
         ///
         /// Destroys the object
         ///
-        inline void free()
+        void free()
         {
             if (m_h != invalid) {
                 free_internal();
@@ -941,7 +945,7 @@ namespace winstd
         ///
         /// Initializes a new class instance with the object handle set to INVAL.
         ///
-        inline dplhandle() noexcept
+        dplhandle() noexcept
         {
         }
 
@@ -950,7 +954,7 @@ namespace winstd
         ///
         /// \param[in] h  Initial object handle value
         ///
-        inline dplhandle(_In_opt_ handle_type h) noexcept : handle<handle_type, INVAL>(h)
+        dplhandle(_In_opt_ handle_type h) noexcept : handle<handle_type, INVAL>(h)
         {
         }
 
@@ -959,7 +963,7 @@ namespace winstd
         ///
         /// \param[inout] h  A reference of another object
         ///
-        inline dplhandle<handle_type, INVAL>(_In_ const dplhandle<handle_type, INVAL> &h) noexcept : handle<handle_type, INVAL>(duplicate_internal(h.m_h))
+        dplhandle<handle_type, INVAL>(_In_ const dplhandle<handle_type, INVAL> &h) noexcept : handle<handle_type, INVAL>(duplicate_internal(h.m_h))
         {
         }
 
@@ -968,7 +972,7 @@ namespace winstd
         ///
         /// \param[inout] h  A rvalue reference of another object
         ///
-        inline dplhandle<handle_type, INVAL>(_Inout_ dplhandle<handle_type, INVAL> &&h) noexcept : handle<handle_type, INVAL>(std::move(h))
+        dplhandle<handle_type, INVAL>(_Inout_ dplhandle<handle_type, INVAL> &&h) noexcept : handle<handle_type, INVAL>(std::move(h))
         {
         }
 
@@ -977,7 +981,7 @@ namespace winstd
         ///
         /// \param[in] h  Object handle value
         ///
-        inline dplhandle<handle_type, INVAL>& operator=(_In_opt_ handle_type h) noexcept
+        dplhandle<handle_type, INVAL>& operator=(_In_opt_ handle_type h) noexcept
         {
             handle<handle_type, INVAL>::operator=(h);
             return *this;
@@ -988,7 +992,7 @@ namespace winstd
         ///
         /// \param[in] h  Object
         ///
-        inline dplhandle<handle_type, INVAL>& operator=(_In_ const dplhandle<handle_type, INVAL> &h) noexcept
+        dplhandle<handle_type, INVAL>& operator=(_In_ const dplhandle<handle_type, INVAL> &h) noexcept
         {
             if (this != std::addressof(h)) {
                 if (h.m_h != invalid) {
@@ -1016,7 +1020,7 @@ namespace winstd
         /// \param[inout] h  A rvalue reference of another object
         ///
         #pragma warning(disable: 26432) // Move constructor is also present, but not detected by code analysis somehow.
-        inline dplhandle<handle_type, INVAL>& operator=(_Inout_ dplhandle<handle_type, INVAL> &&h) noexcept
+        dplhandle<handle_type, INVAL>& operator=(_Inout_ dplhandle<handle_type, INVAL> &&h) noexcept
         {
             handle<handle_type, INVAL>::operator=(std::move(h));
             return *this;
@@ -1027,7 +1031,7 @@ namespace winstd
         ///
         /// \return Duplicated object handle
         ///
-        inline handle_type duplicate() const
+        handle_type duplicate() const
         {
             return m_h != invalid ? duplicate_internal(m_h) : invalid;
         }
@@ -1041,7 +1045,7 @@ namespace winstd
         /// - true when duplication succeeds;
         /// - false when duplication fails. In case of failure obtaining the extended error information is object type specific (for example: `GetLastError()`).
         ///
-        inline bool attach_duplicated(_In_opt_ handle_type h)
+        bool attach_duplicated(_In_opt_ handle_type h)
         {
             if (m_h != invalid)
                 free_internal();
@@ -1108,7 +1112,7 @@ namespace winstd
         ///
         /// \param[in] size_max  Maximum number of elements. Please note this cannot be changed later.
         ///
-        inline vector_queue(_In_ size_type size_max) :
+        vector_queue(_In_ size_type size_max) :
             m_data(new value_type[size_max]),
             m_head(0),
             m_count(0),
@@ -1121,7 +1125,7 @@ namespace winstd
         ///
         /// \param[in] other  Queue to copy from
         ///
-        inline vector_queue(_In_ const vector_queue<value_type> &other) :
+        vector_queue(_In_ const vector_queue<value_type> &other) :
             m_data(new value_type[other.m_size_max]),
             m_head(other.m_head),
             m_count(other.m_count),
@@ -1147,7 +1151,7 @@ namespace winstd
         ///
         /// \param[inout] other  Queue to move
         ///
-        inline vector_queue(_Inout_ vector_queue<value_type> &&other) :
+        vector_queue(_Inout_ vector_queue<value_type> &&other) :
             m_data    (std::move(other.m_data    )),
             m_head    (std::move(other.m_head    )),
             m_count   (std::move(other.m_count   )),
@@ -1165,7 +1169,7 @@ namespace winstd
         ///
         /// \param[in] other  Queue to copy from
         ///
-        inline vector_queue<value_type>& operator=(_In_ const vector_queue<value_type> &other)
+        vector_queue<value_type>& operator=(_In_ const vector_queue<value_type> &other)
         {
             if (this != std::addressof(other)) {
                 m_head     = other.m_head;
@@ -1189,7 +1193,7 @@ namespace winstd
         ///
         /// \param[inout] other  Queue to move
         ///
-        inline vector_queue<value_type>& operator=(_Inout_ vector_queue<value_type> &&other)
+        vector_queue<value_type>& operator=(_Inout_ vector_queue<value_type> &&other)
         {
             if (this != std::addressof(other)) {
                 m_data     = std::move(other.m_data    );
@@ -1210,7 +1214,7 @@ namespace winstd
         ///
         /// Returns the number of elements in the vector.
         ///
-        inline size_type size() const
+        size_type size() const
         {
             return m_count;
         }
@@ -1218,7 +1222,7 @@ namespace winstd
         ///
         /// Returns the number of elements that the queue can contain before overwriting head ones.
         ///
-        inline size_type capacity() const
+        size_type capacity() const
         {
             return m_size_max;
         }
@@ -1226,7 +1230,7 @@ namespace winstd
         ///
         /// Erases the elements of the queue.
         ///
-        inline void clear()
+        void clear()
         {
             m_count = 0;
         }
@@ -1234,7 +1238,7 @@ namespace winstd
         ///
         /// Tests if the queue is empty.
         ///
-        inline bool empty() const
+        bool empty() const
         {
             return m_count == 0;
         }
@@ -1244,7 +1248,7 @@ namespace winstd
         ///
         /// \param[in] pos  The subscript or position number of the element to reference in the queue.
         ///
-        inline reference at(_In_ size_type pos)
+        reference at(_In_ size_type pos)
         {
             if (pos >= m_count) throw std::invalid_argument("Invalid subscript");
             return m_data[abs(pos)];
@@ -1255,7 +1259,7 @@ namespace winstd
         ///
         /// \param[in] pos  The subscript or position number of the element to reference in the queue.
         ///
-        inline reference operator[](_In_ size_type pos)
+        reference operator[](_In_ size_type pos)
         {
             if (pos >= m_count) throw std::invalid_argument("Invalid subscript");
             return m_data[abs(pos)];
@@ -1266,7 +1270,7 @@ namespace winstd
         ///
         /// \param[in] pos  The subscript or position number of the element to reference in the queue.
         ///
-        inline const_reference at(_In_ size_type pos) const
+        const_reference at(_In_ size_type pos) const
         {
             if (pos >= m_count) throw std::invalid_argument("Invalid subscript");
             return m_data[abs(pos)];
@@ -1277,7 +1281,7 @@ namespace winstd
         ///
         /// \param[in] pos  The subscript or position number of the element to reference in the queue.
         ///
-        inline const_reference operator[](_In_ size_type pos) const
+        const_reference operator[](_In_ size_type pos) const
         {
             if (pos >= m_count) throw std::invalid_argument("Invalid subscript");
             return m_data[abs(pos)];
@@ -1290,7 +1294,7 @@ namespace winstd
         ///
         /// \param[in] pos  The absolute subscript or position number of the element to reference in the queue.
         ///
-        inline reference at_abs(_In_ size_type pos)
+        reference at_abs(_In_ size_type pos)
         {
             if (pos >= m_size_max) throw std::invalid_argument("Invalid subscript");
             return m_data[pos];
@@ -1303,7 +1307,7 @@ namespace winstd
         ///
         /// \param[in] pos  The absolute subscript or position number of the element to reference in the queue.
         ///
-        inline const_reference at_abs(_In_ size_type pos) const
+        const_reference at_abs(_In_ size_type pos) const
         {
             if (pos >= m_size_max) throw std::invalid_argument("Invalid subscript");
             return m_data[pos];
@@ -1316,7 +1320,7 @@ namespace winstd
         ///
         /// \returns The absolute subscript or position number the element was copied to.
         ///
-        inline size_type push_back(_In_ const value_type &v)
+        size_type push_back(_In_ const value_type &v)
         {
             if (m_count < m_size_max) {
                 size_type pos = abs(m_count);
@@ -1338,7 +1342,7 @@ namespace winstd
         ///
         /// \returns The absolute subscript or position number the element was moved to.
         ///
-        inline size_type push_back(_Inout_ value_type&&v)
+        size_type push_back(_Inout_ value_type&&v)
         {
             if (m_count < m_size_max) {
                 size_type pos = abs(m_count);
@@ -1356,7 +1360,7 @@ namespace winstd
         ///
         /// Removes (dequeues) the last element of the queue.
         ///
-        inline void pop_back()
+        void pop_back()
         {
             if (!m_count) throw std::invalid_argument("Empty storage");
             m_count--;
@@ -1369,7 +1373,7 @@ namespace winstd
         ///
         /// \returns The absolute subscript or position number the element was copied to.
         ///
-        inline size_type push_front(_In_ const value_type &v)
+        size_type push_front(_In_ const value_type &v)
         {
             m_head = abs(-1);
             if (m_count < m_size_max)
@@ -1385,7 +1389,7 @@ namespace winstd
         ///
         /// \returns The absolute subscript or position number the element was moved to.
         ///
-        inline size_type push_front(_Inout_ value_type&&v)
+        size_type push_front(_Inout_ value_type&&v)
         {
             m_head = abs(-1);
             if (m_count < m_size_max)
@@ -1397,7 +1401,7 @@ namespace winstd
         ///
         /// Removes (dequeues) the head element of the queue.
         ///
-        inline void pop_front()
+        void pop_front()
         {
             if (!m_count) throw std::invalid_argument("Empty storage");
             m_head = abs(1);
@@ -1407,7 +1411,7 @@ namespace winstd
         ///
         /// Returns a reference to the head element in the queue.
         ///
-        inline reference front()
+        reference front()
         {
             if (!m_count) throw std::invalid_argument("Empty storage");
             return m_data[m_head];
@@ -1416,7 +1420,7 @@ namespace winstd
         ///
         /// Returns a constant reference to the head element in the queue.
         ///
-        inline const_reference front() const
+        const_reference front() const
         {
             if (!m_count) throw std::invalid_argument("Empty storage");
             return m_data[m_head];
@@ -1425,7 +1429,7 @@ namespace winstd
         ///
         /// Returns a reference to the last element in the queue.
         ///
-        inline reference back()
+        reference back()
         {
             return m_data[tail()];
         }
@@ -1433,7 +1437,7 @@ namespace winstd
         ///
         /// Returns a constant reference to the last element in the queue.
         ///
-        inline const_reference back() const
+        const_reference back() const
         {
             return m_data[tail()];
         }
@@ -1441,7 +1445,7 @@ namespace winstd
         ///
         /// Returns absolute subscript or position number of the head element in the queue. The element does not need to exist.
         ///
-        inline size_type head() const
+        size_type head() const
         {
             return m_head;
         }
@@ -1449,7 +1453,7 @@ namespace winstd
         ///
         /// Returns absolute subscript or position number of the last element in the queue. The element must exist.
         ///
-        inline size_type tail() const
+        size_type tail() const
         {
             if (!m_count) throw std::invalid_argument("Empty storage");
             return abs(m_count - 1);
@@ -1457,7 +1461,7 @@ namespace winstd
 
         ///
         /// Returns absolute subscript or position number of the given element in the queue.
-        inline size_type abs(_In_ size_type pos) const
+        size_type abs(_In_ size_type pos) const
         {
             return (m_head + pos) % m_size_max;
         }
@@ -1490,7 +1494,7 @@ namespace winstd
         /// \param[in] num  Numeric error code
         /// \param[in] msg  Error message
         ///
-        inline num_runtime_error(_In_ error_type num, _In_ const std::string& msg) :
+        num_runtime_error(_In_ error_type num, _In_ const std::string& msg) :
             m_num(num),
             runtime_error(msg)
         {
@@ -1503,7 +1507,7 @@ namespace winstd
         /// \param[in] num  Numeric error code
         /// \param[in] msg  Error message
         ///
-        inline num_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) :
+        num_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) :
             m_num(num),
             runtime_error(msg)
         {
@@ -1513,7 +1517,7 @@ namespace winstd
         ///
         /// Returns the Windows error number
         ///
-        inline error_type number() const
+        error_type number() const
         {
             return m_num;
         }
@@ -1535,7 +1539,7 @@ namespace winstd
         /// \param[in] num Windows error code
         /// \param[in] msg Error message
         ///
-        inline win_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<DWORD>(num, msg)
+        win_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<DWORD>(num, msg)
         {
         }
 
@@ -1546,7 +1550,7 @@ namespace winstd
         /// \param[in] num  Windows error code
         /// \param[in] msg  Error message
         ///
-        inline win_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<DWORD>(num, msg)
+        win_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<DWORD>(num, msg)
         {
         }
 
@@ -1556,7 +1560,7 @@ namespace winstd
         ///
         /// \param[in] msg  Error message
         ///
-        inline win_runtime_error(_In_ const std::string& msg) : num_runtime_error<DWORD>(GetLastError(), msg)
+        win_runtime_error(_In_ const std::string& msg) : num_runtime_error<DWORD>(GetLastError(), msg)
         {
         }
 
@@ -1566,7 +1570,7 @@ namespace winstd
         ///
         /// \param[in] msg  Error message
         ///
-        inline win_runtime_error(_In_opt_z_ const char *msg = nullptr) : num_runtime_error<DWORD>(GetLastError(), msg)
+        win_runtime_error(_In_opt_z_ const char *msg = nullptr) : num_runtime_error<DWORD>(GetLastError(), msg)
         {
         }
 
@@ -1576,7 +1580,7 @@ namespace winstd
         ///
         /// \sa [FormatMessage function](https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-formatmessage)
         ///
-        inline tstring msg(_In_opt_ DWORD dwLanguageId = 0) const
+        tstring msg(_In_opt_ DWORD dwLanguageId = 0) const
         {
             tstring str;
             if (FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, 0, m_num, dwLanguageId, str, NULL)) {
@@ -1608,7 +1612,7 @@ namespace winstd
         ///
         /// \param[in] format  String template using `printf()` style
         ///
-        inline basic_string_printf(_In_z_ _Printf_format_string_ const _Elem *format, ...)
+        basic_string_printf(_In_z_ _Printf_format_string_ const _Elem *format, ...)
         {
             va_list arg;
             va_start(arg, format);
@@ -1627,7 +1631,7 @@ namespace winstd
         /// \param[in] hInstance  Resource module handle
         /// \param[in] nFormatID  Resource ID of the string template using `printf()` style
         ///
-        inline basic_string_printf(_In_ HINSTANCE hInstance, _In_ UINT nFormatID, ...)
+        basic_string_printf(_In_ HINSTANCE hInstance, _In_ UINT nFormatID, ...)
         {
             _Myt format;
             ATLENSURE(format.LoadString(hInstance, nFormatID));
@@ -1645,7 +1649,7 @@ namespace winstd
         /// \param[in] wLanguageID  Resource language
         /// \param[in] nFormatID    Resource ID of the string template using `printf()` style
         ///
-        inline basic_string_printf(_In_ HINSTANCE hInstance, _In_ WORD wLanguageID, _In_ UINT nFormatID, ...)
+        basic_string_printf(_In_ HINSTANCE hInstance, _In_ WORD wLanguageID, _In_ UINT nFormatID, ...)
         {
             _Myt format;
             ATLENSURE(format.LoadString(hInstance, nFormatID, wLanguageID));
@@ -1675,7 +1679,7 @@ namespace winstd
         ///
         /// \param[in] format  String template using `FormatMessage()` style
         ///
-        inline basic_string_msg(_In_z_ _FormatMessage_format_string_ const _Elem *format, ...)
+        basic_string_msg(_In_z_ _FormatMessage_format_string_ const _Elem *format, ...)
         {
             va_list arg;
             va_start(arg, format);
@@ -1694,7 +1698,7 @@ namespace winstd
         /// \param[in] hInstance  Resource module handle
         /// \param[in] nFormatID  Resource ID of the string template using `FormatMessage()` style
         ///
-        inline basic_string_msg(_In_ HINSTANCE hInstance, _In_ UINT nFormatID, ...)
+        basic_string_msg(_In_ HINSTANCE hInstance, _In_ UINT nFormatID, ...)
         {
             _Myt format(GetManager());
             ATLENSURE(format.LoadString(hInstance, nFormatID));
@@ -1712,7 +1716,7 @@ namespace winstd
         /// \param[in] wLanguageID  Resource language
         /// \param[in] nFormatID    Resource ID of the string template using `FormatMessage()` style
         ///
-        inline basic_string_msg(_In_ HINSTANCE hInstance, _In_ WORD wLanguageID, _In_ UINT nFormatID, ...)
+        basic_string_msg(_In_ HINSTANCE hInstance, _In_ WORD wLanguageID, _In_ UINT nFormatID, ...)
         {
             _Myt format(GetManager());
             ATLENSURE(format.LoadString(hInstance, nFormatID, wLanguageID));
@@ -1731,7 +1735,7 @@ namespace winstd
         ///
         /// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
         ///
-        inline basic_string_msg(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _In_opt_ va_list *Arguments)
+        basic_string_msg(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _In_opt_ va_list *Arguments)
         {
             FormatMessage(dwFlags & ~FORMAT_MESSAGE_ARGUMENT_ARRAY, lpSource, dwMessageId, dwLanguageId, *this, Arguments);
         }
@@ -1742,7 +1746,7 @@ namespace winstd
         ///
         /// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
         ///
-        inline basic_string_msg(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _In_opt_ DWORD_PTR *Arguments)
+        basic_string_msg(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _In_opt_ DWORD_PTR *Arguments)
         {
             FormatMessage(dwFlags | FORMAT_MESSAGE_ARGUMENT_ARRAY, lpSource, dwMessageId, dwLanguageId, *this, (va_list*)Arguments);
         }
@@ -1753,7 +1757,7 @@ namespace winstd
         ///
         /// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
         ///
-        inline basic_string_msg(_In_ DWORD dwFlags, _In_z_ LPCTSTR pszFormat, _In_opt_ va_list *Arguments)
+        basic_string_msg(_In_ DWORD dwFlags, _In_z_ LPCTSTR pszFormat, _In_opt_ va_list *Arguments)
         {
             FormatMessage(dwFlags & ~FORMAT_MESSAGE_ARGUMENT_ARRAY | FORMAT_MESSAGE_FROM_STRING, pszFormat, 0, 0, *this, Arguments);
         }
@@ -1764,7 +1768,7 @@ namespace winstd
         ///
         /// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
         ///
-        inline basic_string_msg(_In_ DWORD dwFlags, _In_z_ LPCTSTR pszFormat, _In_opt_ DWORD_PTR *Arguments)
+        basic_string_msg(_In_ DWORD dwFlags, _In_z_ LPCTSTR pszFormat, _In_opt_ DWORD_PTR *Arguments)
         {
             FormatMessage(dwFlags | FORMAT_MESSAGE_ARGUMENT_ARRAY | FORMAT_MESSAGE_FROM_STRING, pszFormat, 0, 0, *this, (va_list*)Arguments);
         }
@@ -1787,7 +1791,7 @@ namespace winstd
         /// \param[in] guid    GUID to convert
         /// \param[in] format  A `printf()` syntax template to convert GUID to string (i.e. `"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}"`)
         ///
-        inline basic_string_guid(_In_ const GUID &guid, _In_z_ _Printf_format_string_ const _Elem *format)
+        basic_string_guid(_In_ const GUID &guid, _In_z_ _Printf_format_string_ const _Elem *format)
         {
             sprintf<_Elem, _Traits, _Ax>(*this, format,
                 guid.Data1,
@@ -1815,7 +1819,7 @@ namespace winstd
         ///
         /// \param[in] guid  GUID to convert
         ///
-        inline string_guid(_In_ const GUID &guid) :
+        string_guid(_In_ const GUID &guid) :
             basic_string_guid<char, std::char_traits<char>, std::allocator<char> >(guid, "{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}")
         {
         }
@@ -1838,7 +1842,7 @@ namespace winstd
         ///
         /// \param[in] guid  GUID to convert
         ///
-        inline wstring_guid(_In_ const GUID &guid) :
+        wstring_guid(_In_ const GUID &guid) :
             basic_string_guid<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> >(guid, L"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}")
         {
         }
@@ -1881,7 +1885,7 @@ namespace winstd
         ///
         /// Construct default allocator
         ///
-        inline sanitizing_allocator() noexcept : _Mybase()
+        sanitizing_allocator() noexcept : _Mybase()
         {
         }
 
@@ -1889,7 +1893,7 @@ namespace winstd
         ///
         /// Construct by copying
         ///
-        inline sanitizing_allocator(_In_ const sanitizing_allocator<_Ty> &_Othr) : _Mybase(_Othr)
+        sanitizing_allocator(_In_ const sanitizing_allocator<_Ty> &_Othr) : _Mybase(_Othr)
         {
         }
 
@@ -1898,7 +1902,7 @@ namespace winstd
         /// Construct from a related allocator
         ///
         template<class _Other>
-        inline sanitizing_allocator(_In_ const sanitizing_allocator<_Other> &_Othr) noexcept : _Mybase(_Othr)
+        sanitizing_allocator(_In_ const sanitizing_allocator<_Other> &_Othr) noexcept : _Mybase(_Othr)
         {
         }
 
@@ -1926,7 +1930,7 @@ namespace winstd
         ///
         /// Constructs uninitialized BLOB
         ///
-        inline sanitizing_blob()
+        sanitizing_blob()
         {
             ZeroMemory(m_data, N);
         }
@@ -1934,7 +1938,7 @@ namespace winstd
         ///
         /// Sanitizes BLOB
         ///
-        inline ~sanitizing_blob()
+        ~sanitizing_blob()
         {
             SecureZeroMemory(m_data, N);
         }
@@ -1947,15 +1951,16 @@ namespace winstd
 }
 
 
+#pragma warning(push)
 // Do not use _vsnprintf_s/_vsnwprintf_s(), since it terminates string by force even when we explicitly want to write unterminated string.
 // Threfore turn off compiler warning instead. ;)
-#pragma warning(push)
 #pragma warning(disable: 4995)
 #pragma warning(disable: 4996)
+#pragma warning(disable: 4505) // Don't warn on unused code
 
 #if _MSC_VER <= 1600
 
-inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg)
+static int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg)
 {
     return _vsnprintf(str, capacity, format, arg);
 }
@@ -1963,14 +1968,14 @@ inline int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_
 #endif
 
 
-inline int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg) noexcept
+static int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg) noexcept
 {
     return _vsnwprintf(str, capacity, format, arg);
 }
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg)
+static int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg)
 {
     _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
 
@@ -1994,11 +1999,9 @@ inline int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ 
     return count;
 }
 
-#pragma warning(pop)
-
 
 template<class _Elem, class _Traits, class _Ax>
-inline int sprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...)
+static int sprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, ...)
 {
     va_list arg;
     va_start(arg, format);
@@ -2009,7 +2012,7 @@ inline int sprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _
 
 
 template<class _Traits, class _Ax>
-inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Inout_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
+static DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Inout_ std::basic_string<char, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
 {
     std::unique_ptr<CHAR[], winstd::LocalFree_delete<CHAR[]> > lpBuffer;
     DWORD dwResult = FormatMessageA(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, reinterpret_cast<LPSTR>((LPSTR*)get_ptr(lpBuffer)), 0, Arguments);
@@ -2020,7 +2023,7 @@ inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ D
 
 
 template<class _Traits, class _Ax>
-inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
+static DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ DWORD dwMessageId, _In_ DWORD dwLanguageId, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_opt_ va_list *Arguments)
 {
     std::unique_ptr<WCHAR[], winstd::LocalFree_delete<WCHAR[]> > lpBuffer;
     DWORD dwResult = FormatMessageW(dwFlags | FORMAT_MESSAGE_ALLOCATE_BUFFER, lpSource, dwMessageId, dwLanguageId, reinterpret_cast<LPWSTR>((LPWSTR*)get_ptr(lpBuffer)), 0, Arguments);
@@ -2028,3 +2031,5 @@ inline DWORD FormatMessage(_In_ DWORD dwFlags, _In_opt_ LPCVOID lpSource, _In_ D
         str.assign(lpBuffer.get(), dwResult);
     return dwResult;
 }
+
+#pragma warning(pop)

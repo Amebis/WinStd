@@ -43,7 +43,7 @@ namespace winstd
         /// \param[in] num  WinSock2 error code
         /// \param[in] msg  Error message
         ///
-        inline ws2_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<int>(num, msg)
+        ws2_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<int>(num, msg)
         {
         }
 
@@ -54,7 +54,7 @@ namespace winstd
         /// \param[in] num  WinSock2 error code
         /// \param[in] msg  Error message
         ///
-        inline ws2_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<int>(num, msg)
+        ws2_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<int>(num, msg)
         {
         }
 
@@ -64,7 +64,7 @@ namespace winstd
         ///
         /// \param[in] msg  Error message
         ///
-        inline ws2_runtime_error(_In_ const std::string& msg) : num_runtime_error<int>(WSAGetLastError(), msg)
+        ws2_runtime_error(_In_ const std::string& msg) : num_runtime_error<int>(WSAGetLastError(), msg)
         {
         }
 
@@ -74,7 +74,7 @@ namespace winstd
         ///
         /// \param[in] msg  Error message
         ///
-        inline ws2_runtime_error(_In_opt_z_ const char *msg = nullptr) : num_runtime_error<int>(WSAGetLastError(), msg)
+        ws2_runtime_error(_In_opt_z_ const char *msg = nullptr) : num_runtime_error<int>(WSAGetLastError(), msg)
         {
         }
 
@@ -84,7 +84,7 @@ namespace winstd
         ///
         /// \sa [FormatMessage function](https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-formatmessage)
         ///
-        inline tstring msg(_In_opt_ DWORD dwLanguageId = 0) const
+        tstring msg(_In_opt_ DWORD dwLanguageId = 0) const
         {
             tstring str;
             if (FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, 0, m_num, dwLanguageId, str, NULL)) {
@@ -117,7 +117,7 @@ namespace winstd
         ///
         /// \sa [GetAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-getaddrinfow)
         ///
-        inline bool get(
+        bool get(
             _In_opt_ PCTSTR          pNodeName,
             _In_opt_ PCTSTR          pServiceName,
             _In_opt_ const ADDRINFOT *pHints)

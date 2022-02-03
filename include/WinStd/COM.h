@@ -50,7 +50,7 @@ namespace winstd
         /// \param[in] num  COM error code
         /// \param[in] msg  Error message
         ///
-        inline com_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<HRESULT>(num, msg)
+        com_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<HRESULT>(num, msg)
         {
         }
 
@@ -61,7 +61,7 @@ namespace winstd
         /// \param[in] num  COM error code
         /// \param[in] msg  Error message
         ///
-        inline com_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<HRESULT>(num, msg)
+        com_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<HRESULT>(num, msg)
         {
         }
     };
@@ -106,7 +106,7 @@ namespace winstd
         ///
         /// \sa [CoCreateInstance function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms686615.aspx)
         ///
-        inline com_obj(_In_ REFCLSID rclsid, _In_opt_ LPUNKNOWN pUnkOuter = NULL, DWORD dwClsContext = CLSCTX_ALL)
+        com_obj(_In_ REFCLSID rclsid, _In_opt_ LPUNKNOWN pUnkOuter = NULL, DWORD dwClsContext = CLSCTX_ALL)
         {
             CoCreateInstance(rclsid, pUnkOuter, dwClsContext, __uuidof(T), (LPVOID*)&m_h);
         }
@@ -118,7 +118,7 @@ namespace winstd
         /// \sa [IUnknown::QueryInterface method](https://msdn.microsoft.com/en-us/library/windows/desktop/ms682521.aspx)
         ///
         template <class _Other>
-        inline com_obj(_In_ _Other *other)
+        com_obj(_In_ _Other *other)
         {
             assert(other);
             other->QueryInterface(__uuidof(T), (void**)&m_h);
@@ -131,7 +131,7 @@ namespace winstd
         /// \sa [IUnknown::QueryInterface method](https://msdn.microsoft.com/en-us/library/windows/desktop/ms682521.aspx)
         ///
         template <class _Other>
-        inline com_obj(_In_ com_obj<_Other> &other)
+        com_obj(_In_ com_obj<_Other> &other)
         {
             other->QueryInterface(__uuidof(T), (void**)&m_h);
         }
@@ -152,7 +152,7 @@ namespace winstd
         ///
         /// \sa [CoCreateInstance function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms686615.aspx)
         ///
-        inline HRESULT create(_In_ REFCLSID rclsid, _In_opt_ LPUNKNOWN pUnkOuter = NULL, _In_ DWORD dwClsContext = CLSCTX_ALL)
+        HRESULT create(_In_ REFCLSID rclsid, _In_opt_ LPUNKNOWN pUnkOuter = NULL, _In_ DWORD dwClsContext = CLSCTX_ALL)
         {
             handle_type h;
             HRESULT hr = CoCreateInstance(rclsid, pUnkOuter, dwClsContext, __uuidof(T), (void**)&h);
@@ -232,7 +232,7 @@ namespace winstd
         ///
         /// Constructs BSTR from OLE string
         ///
-        inline bstr(_In_ LPCOLESTR src) noexcept
+        bstr(_In_ LPCOLESTR src) noexcept
         {
             m_h = SysAllocString(src);
         }
@@ -240,7 +240,7 @@ namespace winstd
         ///
         /// Constructs BSTR from OLE string with length
         ///
-        inline bstr(_In_ LPCOLESTR src, _In_ UINT len) noexcept
+        bstr(_In_ LPCOLESTR src, _In_ UINT len) noexcept
         {
             m_h = SysAllocStringLen(src, len);
         }
@@ -249,7 +249,7 @@ namespace winstd
         /// Constructs BSTR from std::basic_string
         ///
         template<class _Traits, class _Ax>
-        inline bstr(_In_ const std::basic_string<wchar_t, _Traits, _Ax> &src) noexcept
+        bstr(_In_ const std::basic_string<wchar_t, _Traits, _Ax> &src) noexcept
         {
             m_h = SysAllocStringLen(src.c_str(), (UINT)src.length());
         }
@@ -270,7 +270,7 @@ namespace winstd
         ///
         /// \sa [SysStringLen function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms221240.aspx)
         ///
-        inline UINT length() const noexcept
+        UINT length() const noexcept
         {
             return SysStringLen(m_h);
         }
@@ -313,7 +313,7 @@ namespace winstd
         ///
         /// Constructs blank VARIANT
         ///
-        inline variant() noexcept
+        variant() noexcept
         {
             VariantInit(this);
         }
@@ -321,7 +321,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from another
         ///
-        inline variant(_In_ const VARIANT& varSrc)
+        variant(_In_ const VARIANT& varSrc)
         {
             vt = VT_EMPTY;
             const HRESULT hr = VariantCopy(this, &varSrc);
@@ -333,7 +333,7 @@ namespace winstd
         /// Moves VARIANT from another
         ///
         #pragma warning(suppress: 26495) // vt member is initialized as a result of memcpy()
-        inline variant(_Inout_ VARIANT&& varSrc) noexcept
+        variant(_Inout_ VARIANT&& varSrc) noexcept
         {
             memcpy(this, &varSrc, sizeof(VARIANT));
             varSrc.vt = VT_EMPTY;
@@ -342,7 +342,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from bool
         ///
-        inline variant(_In_ bool bSrc) noexcept
+        variant(_In_ bool bSrc) noexcept
         {
             vt = VT_BOOL;
             boolVal = bSrc ? VARIANT_TRUE : VARIANT_FALSE;
@@ -351,7 +351,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from character
         ///
-        inline variant(_In_ char cSrc) noexcept
+        variant(_In_ char cSrc) noexcept
         {
             vt = VT_I1;
             cVal = cSrc;
@@ -360,7 +360,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from byte
         ///
-        inline variant(_In_ unsigned char nSrc) noexcept
+        variant(_In_ unsigned char nSrc) noexcept
         {
             vt = VT_UI1;
             bVal = nSrc;
@@ -369,7 +369,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from short
         ///
-        inline variant(_In_ short nSrc) noexcept
+        variant(_In_ short nSrc) noexcept
         {
             vt = VT_I2;
             iVal = nSrc;
@@ -378,7 +378,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from unsigned short
         ///
-        inline variant(_In_ unsigned short nSrc) noexcept
+        variant(_In_ unsigned short nSrc) noexcept
         {
             vt = VT_UI2;
             uiVal = nSrc;
@@ -387,7 +387,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from integer
         ///
-        inline variant(_In_ int nSrc, _In_ VARTYPE vtSrc = VT_I4) noexcept
+        variant(_In_ int nSrc, _In_ VARTYPE vtSrc = VT_I4) noexcept
         {
             assert(vtSrc == VT_I4 || vtSrc == VT_INT);
             vt = vtSrc;
@@ -397,7 +397,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from unsigned integer
         ///
-        inline variant(_In_ unsigned int nSrc, _In_ VARTYPE vtSrc = VT_UI4) noexcept
+        variant(_In_ unsigned int nSrc, _In_ VARTYPE vtSrc = VT_UI4) noexcept
         {
             assert(vtSrc == VT_UI4 || vtSrc == VT_UINT);
             vt = vtSrc;
@@ -407,7 +407,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from long
         ///
-        inline variant(_In_ long nSrc, _In_ VARTYPE vtSrc = VT_I4) noexcept
+        variant(_In_ long nSrc, _In_ VARTYPE vtSrc = VT_I4) noexcept
         {
             assert(vtSrc == VT_I4 || vtSrc == VT_ERROR);
             vt = vtSrc;
@@ -417,7 +417,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from unsigned long
         ///
-        inline variant(_In_ unsigned long nSrc) noexcept
+        variant(_In_ unsigned long nSrc) noexcept
         {
             vt = VT_UI4;
             ulVal = nSrc;
@@ -426,7 +426,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from float
         ///
-        inline variant(_In_ float fltSrc) noexcept
+        variant(_In_ float fltSrc) noexcept
         {
             vt = VT_R4;
             fltVal = fltSrc;
@@ -435,7 +435,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from double or variant date
         ///
-        inline variant(_In_ double dblSrc, _In_ VARTYPE vtSrc = VT_R8) noexcept
+        variant(_In_ double dblSrc, _In_ VARTYPE vtSrc = VT_R8) noexcept
         {
             assert(vtSrc == VT_R8 || vtSrc == VT_DATE);
             vt = vtSrc;
@@ -445,7 +445,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from 64-bit integer
         ///
-        inline variant(_In_ long long nSrc) noexcept
+        variant(_In_ long long nSrc) noexcept
         {
             vt = VT_I8;
             llVal = nSrc;
@@ -454,7 +454,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from unsigned integer
         ///
-        inline variant(_In_ unsigned long long nSrc) noexcept
+        variant(_In_ unsigned long long nSrc) noexcept
         {
             vt = VT_UI8;
             ullVal = nSrc;
@@ -463,7 +463,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from CY (64-bit integer)
         ///
-        inline variant(_In_ CY cySrc) noexcept
+        variant(_In_ CY cySrc) noexcept
         {
             vt = VT_CY;
             cyVal.Hi = cySrc.Hi;
@@ -473,7 +473,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from OLE string
         ///
-        inline variant(_In_z_ LPCOLESTR lpszSrc) noexcept
+        variant(_In_z_ LPCOLESTR lpszSrc) noexcept
         {
             vt = VT_EMPTY;
             *this = lpszSrc;
@@ -482,7 +482,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from BSTR
         ///
-        inline variant(_In_z_ BSTR bstr) noexcept
+        variant(_In_z_ BSTR bstr) noexcept
         {
             vt = VT_EMPTY;
             *this = bstr;
@@ -491,7 +491,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from IDispatch
         ///
-        inline variant(_In_opt_ IDispatch* pSrc)
+        variant(_In_opt_ IDispatch* pSrc)
         {
             vt = VT_DISPATCH;
             pdispVal = pSrc;
@@ -503,7 +503,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from IUnknown
         ///
-        inline variant(_In_opt_ IUnknown* pSrc)
+        variant(_In_opt_ IUnknown* pSrc)
         {
             vt = VT_UNKNOWN;
             punkVal = pSrc;
@@ -515,7 +515,7 @@ namespace winstd
         ///
         /// Constructs VARIANT from SAFEARRAY
         ///
-        inline variant(_In_ const SAFEARRAY *pSrc)
+        variant(_In_ const SAFEARRAY *pSrc)
         {
             assert(pSrc != NULL);
 
@@ -540,7 +540,7 @@ namespace winstd
         ///
         /// Copy from another VARIANT
         ///
-        inline variant& operator=(_In_ const VARIANT& varSrc)
+        variant& operator=(_In_ const VARIANT& varSrc)
         {
             if (this != &varSrc) {
                 const HRESULT hr = VariantCopy(this, &varSrc);
@@ -553,7 +553,7 @@ namespace winstd
         ///
         /// Moves from another VARIANT
         ///
-        inline variant& operator=(_Inout_ VARIANT&& varSrc) noexcept
+        variant& operator=(_Inout_ VARIANT&& varSrc) noexcept
         {
             if (this != &varSrc) {
                 VariantClear(this);
@@ -566,7 +566,7 @@ namespace winstd
         ///
         /// Copy from bool value
         ///
-        inline variant& operator=(_In_ bool bSrc) noexcept
+        variant& operator=(_In_ bool bSrc) noexcept
         {
             if (vt != VT_BOOL) {
                 VariantClear(this);
@@ -579,7 +579,7 @@ namespace winstd
         ///
         /// Copy from char value
         ///
-        inline variant& operator=(_In_ char cSrc) noexcept
+        variant& operator=(_In_ char cSrc) noexcept
         {
             if (vt != VT_I1) {
                 VariantClear(this);
@@ -592,7 +592,7 @@ namespace winstd
         ///
         /// Copy from unsigned char value
         ///
-        inline variant& operator=(_In_ unsigned char nSrc) noexcept
+        variant& operator=(_In_ unsigned char nSrc) noexcept
         {
             if (vt != VT_UI1) {
                 VariantClear(this);
@@ -605,7 +605,7 @@ namespace winstd
         ///
         /// Copy from short value
         ///
-        inline variant& operator=(_In_ short nSrc) noexcept
+        variant& operator=(_In_ short nSrc) noexcept
         {
             if (vt != VT_I2) {
                 VariantClear(this);
@@ -618,7 +618,7 @@ namespace winstd
         ///
         /// Copy from unsigned short value
         ///
-        inline variant& operator=(_In_ unsigned short nSrc) noexcept
+        variant& operator=(_In_ unsigned short nSrc) noexcept
         {
             if (vt != VT_UI2) {
                 VariantClear(this);
@@ -631,7 +631,7 @@ namespace winstd
         ///
         /// Copy from int value
         ///
-        inline variant& operator=(_In_ int nSrc) noexcept
+        variant& operator=(_In_ int nSrc) noexcept
         {
             if (vt != VT_I4) {
                 VariantClear(this);
@@ -644,7 +644,7 @@ namespace winstd
         ///
         /// Copy from unsigned int value
         ///
-        inline variant& operator=(_In_ unsigned int nSrc) noexcept
+        variant& operator=(_In_ unsigned int nSrc) noexcept
         {
             if (vt != VT_UI4) {
                 VariantClear(this);
@@ -657,7 +657,7 @@ namespace winstd
         ///
         /// Copy from long value
         ///
-        inline variant& operator=(_In_ long nSrc) noexcept
+        variant& operator=(_In_ long nSrc) noexcept
         {
             if (vt != VT_I4) {
                 VariantClear(this);
@@ -670,7 +670,7 @@ namespace winstd
         ///
         /// Copy from unsigned long value
         ///
-        inline variant& operator=(_In_ unsigned long nSrc) noexcept
+        variant& operator=(_In_ unsigned long nSrc) noexcept
         {
             if (vt != VT_UI4) {
                 VariantClear(this);
@@ -684,7 +684,7 @@ namespace winstd
         ///
         /// Copy from long long value
         ///
-        inline variant& operator=(_In_ long long nSrc) noexcept
+        variant& operator=(_In_ long long nSrc) noexcept
         {
             if (vt != VT_I8) {
                 VariantClear(this);
@@ -697,7 +697,7 @@ namespace winstd
         ///
         /// Copy from unsigned long long value
         ///
-        inline variant& operator=(_In_ unsigned long long nSrc) noexcept
+        variant& operator=(_In_ unsigned long long nSrc) noexcept
         {
             if (vt != VT_UI8) {
                 VariantClear(this);
@@ -711,7 +711,7 @@ namespace winstd
         ///
         /// Copy from float value
         ///
-        inline variant& operator=(_In_ float fltSrc) noexcept
+        variant& operator=(_In_ float fltSrc) noexcept
         {
             if (vt != VT_R4) {
                 VariantClear(this);
@@ -724,7 +724,7 @@ namespace winstd
         ///
         /// Copy from double value
         ///
-        inline variant& operator=(_In_ double dblSrc) noexcept
+        variant& operator=(_In_ double dblSrc) noexcept
         {
             if (vt != VT_R8) {
                 VariantClear(this);
@@ -737,7 +737,7 @@ namespace winstd
         ///
         /// Copy from CY value
         ///
-        inline variant& operator=(_In_ CY cySrc) noexcept
+        variant& operator=(_In_ CY cySrc) noexcept
         {
             if (vt != VT_CY) {
                 VariantClear(this);
@@ -751,7 +751,7 @@ namespace winstd
         ///
         /// Copy from OLE string value
         ///
-        inline variant& operator=(_In_z_ LPCOLESTR lpszSrc) noexcept
+        variant& operator=(_In_z_ LPCOLESTR lpszSrc) noexcept
         {
             VariantClear(this);
             vt = VT_BSTR;
@@ -762,7 +762,7 @@ namespace winstd
         ///
         /// Copy from IDispatch
         ///
-        inline variant& operator=(_Inout_opt_ IDispatch* pSrc)
+        variant& operator=(_Inout_opt_ IDispatch* pSrc)
         {
             VariantClear(this);
             vt = VT_DISPATCH;
@@ -775,7 +775,7 @@ namespace winstd
         ///
         /// Copy from IUnknown
         ///
-        inline variant& operator=(_Inout_opt_ IUnknown* pSrc)
+        variant& operator=(_Inout_opt_ IUnknown* pSrc)
         {
             VariantClear(this);
             vt = VT_UNKNOWN;
@@ -788,7 +788,7 @@ namespace winstd
         ///
         /// Copy from unsigned char reference
         ///
-        inline variant& operator=(_In_ unsigned char* pbSrc) noexcept
+        variant& operator=(_In_ unsigned char* pbSrc) noexcept
         {
             if (vt != (VT_UI1|VT_BYREF)) {
                 VariantClear(this);
@@ -801,7 +801,7 @@ namespace winstd
         ///
         /// Copy from short reference
         ///
-        inline variant& operator=(_In_ short* pnSrc) noexcept
+        variant& operator=(_In_ short* pnSrc) noexcept
         {
             if (vt != (VT_I2|VT_BYREF)) {
                 VariantClear(this);
@@ -814,7 +814,7 @@ namespace winstd
         ///
         /// Copy from unsigned short reference
         ///
-        inline variant& operator=(_In_ unsigned short* pnSrc) noexcept
+        variant& operator=(_In_ unsigned short* pnSrc) noexcept
         {
             if (vt != (VT_UI2|VT_BYREF)) {
                 VariantClear(this);
@@ -827,7 +827,7 @@ namespace winstd
         ///
         /// Copy from int reference
         ///
-        inline variant& operator=(_In_ int* pnSrc) noexcept
+        variant& operator=(_In_ int* pnSrc) noexcept
         {
             if (vt != (VT_I4|VT_BYREF)) {
                 VariantClear(this);
@@ -840,7 +840,7 @@ namespace winstd
         ///
         /// Copy from unsigned int reference
         ///
-        inline variant& operator=(_In_ unsigned int* pnSrc) noexcept
+        variant& operator=(_In_ unsigned int* pnSrc) noexcept
         {
             if (vt != (VT_UI4|VT_BYREF)) {
                 VariantClear(this);
@@ -853,7 +853,7 @@ namespace winstd
         ///
         /// Copy from long reference
         ///
-        inline variant& operator=(_In_ long* pnSrc) noexcept
+        variant& operator=(_In_ long* pnSrc) noexcept
         {
             if (vt != (VT_I4|VT_BYREF)) {
                 VariantClear(this);
@@ -866,7 +866,7 @@ namespace winstd
         ///
         /// Copy from unsigned long reference
         ///
-        inline variant& operator=(_In_ unsigned long* pnSrc) noexcept
+        variant& operator=(_In_ unsigned long* pnSrc) noexcept
         {
             if (vt != (VT_UI4|VT_BYREF)) {
                 VariantClear(this);
@@ -879,7 +879,7 @@ namespace winstd
         ///
         /// Copy from long long reference
         ///
-        inline variant& operator=(_In_ long long* pnSrc) noexcept
+        variant& operator=(_In_ long long* pnSrc) noexcept
         {
             if (vt != (VT_I8|VT_BYREF)) {
                 VariantClear(this);
@@ -892,7 +892,7 @@ namespace winstd
         ///
         /// Copy from unsigned long long reference
         ///
-        inline variant& operator=(_In_ unsigned long long* pnSrc) noexcept
+        variant& operator=(_In_ unsigned long long* pnSrc) noexcept
         {
             if (vt != (VT_UI8|VT_BYREF)) {
                 VariantClear(this);
@@ -905,7 +905,7 @@ namespace winstd
         ///
         /// Copy from float reference
         ///
-        inline variant& operator=(_In_ float* pfSrc) noexcept
+        variant& operator=(_In_ float* pfSrc) noexcept
         {
             if (vt != (VT_R4|VT_BYREF)) {
                 VariantClear(this);
@@ -918,7 +918,7 @@ namespace winstd
         ///
         /// Copy from double reference
         ///
-        inline variant& operator=(_In_ double* pfSrc) noexcept
+        variant& operator=(_In_ double* pfSrc) noexcept
         {
             if (vt != (VT_R8|VT_BYREF)) {
                 VariantClear(this);
@@ -931,7 +931,7 @@ namespace winstd
         ///
         /// Copy from SAFEARRAY
         ///
-        inline variant& operator=(_In_ const SAFEARRAY *pSrc) noexcept
+        variant& operator=(_In_ const SAFEARRAY *pSrc) noexcept
         {
             assert(pSrc != NULL);
             VariantClear(this);
@@ -957,7 +957,7 @@ namespace winstd
         /// - Non zero when variant is equal to \p varSrc;
         /// - Zero otherwise.
         ///
-        inline bool operator==(_In_ const VARIANT& varSrc) const noexcept
+        bool operator==(_In_ const VARIANT& varSrc) const noexcept
         {
             if (vt == VT_NULL && varSrc.vt == VT_NULL) return true;
             if (vt != varSrc.vt) return false;
@@ -972,7 +972,7 @@ namespace winstd
         /// - Non zero when variant is not equal to \p varSrc;
         /// - Zero otherwise.
         ///
-        inline bool operator!=(_In_ const VARIANT& varSrc) const noexcept
+        bool operator!=(_In_ const VARIANT& varSrc) const noexcept
         {
             return !operator==(varSrc);
         }
@@ -985,7 +985,7 @@ namespace winstd
         /// - Non zero when variant is less than \p varSrc;
         /// - Zero otherwise.
         ///
-        inline bool operator<(_In_ const VARIANT& varSrc) const noexcept
+        bool operator<(_In_ const VARIANT& varSrc) const noexcept
         {
             if (vt == VT_NULL && varSrc.vt == VT_NULL) return false;
             return compare(static_cast<const VARIANT&>(*this), varSrc, LOCALE_USER_DEFAULT, 0)== static_cast<HRESULT>(VARCMP_LT);
@@ -999,7 +999,7 @@ namespace winstd
         /// - Non zero when variant is greater than \p varSrc;
         /// - Zero otherwise.
         ///
-        inline bool operator>(_In_ const VARIANT& varSrc) const noexcept
+        bool operator>(_In_ const VARIANT& varSrc) const noexcept
         {
             if (vt == VT_NULL && varSrc.vt == VT_NULL) return false;
             return compare(static_cast<const VARIANT&>(*this), varSrc, LOCALE_USER_DEFAULT, 0)== static_cast<HRESULT>(VARCMP_GT);
@@ -1013,7 +1013,7 @@ namespace winstd
         /// - Non zero when variant is less than or equal to \p varSrc;
         /// - Zero otherwise.
         ///
-        inline bool operator<=(_In_ const VARIANT& varSrc) const noexcept
+        bool operator<=(_In_ const VARIANT& varSrc) const noexcept
         {
             return !operator>(varSrc);
         }
@@ -1026,7 +1026,7 @@ namespace winstd
         /// - Non zero when variant is greater than or equal to \p varSrc;
         /// - Zero otherwise.
         ///
-        inline bool operator>=(_In_ const VARIANT& varSrc) const noexcept
+        bool operator>=(_In_ const VARIANT& varSrc) const noexcept
         {
             return !operator<(varSrc);
         }
@@ -1036,14 +1036,14 @@ namespace winstd
         ///
         /// \sa [VariantChangeType function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms221258.aspx)
         ///
-        inline HRESULT change_type(_In_ VARTYPE _vt, _In_opt_ USHORT wFlags = 0) noexcept
+        HRESULT change_type(_In_ VARTYPE _vt, _In_opt_ USHORT wFlags = 0) noexcept
         {
             return VariantChangeType(this, this, wFlags, _vt);
         }
 
     private:
         /// \cond internal
-        inline HRESULT compare(_In_ const VARIANT &varLeft, _In_ const VARIANT &varRight, _In_ LCID lcid, _In_ ULONG dwFlags) const noexcept
+        HRESULT compare(_In_ const VARIANT &varLeft, _In_ const VARIANT &varRight, _In_ LCID lcid, _In_ ULONG dwFlags) const noexcept
         {
             switch(vt) {
                 case VT_I1:  return varLeft.cVal    == varRight.cVal    ? VARCMP_EQ : varLeft.cVal    > varRight.cVal    ? VARCMP_GT : VARCMP_LT;
@@ -1072,7 +1072,7 @@ namespace winstd
         ///
         /// \sa [CoInitialize function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms678543.aspx)
         ///
-        inline com_initializer(_In_opt_ LPVOID pvReserved) noexcept
+        com_initializer(_In_opt_ LPVOID pvReserved) noexcept
         {
             m_result = CoInitialize(pvReserved);
         }
@@ -1083,7 +1083,7 @@ namespace winstd
         ///
         /// \sa [CoInitializeEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms695279.aspx)
         ///
-        inline com_initializer(_In_opt_ LPVOID pvReserved, _In_ DWORD dwCoInit) noexcept
+        com_initializer(_In_opt_ LPVOID pvReserved, _In_ DWORD dwCoInit) noexcept
         {
             m_result = CoInitializeEx(pvReserved, dwCoInit);
         }
@@ -1106,7 +1106,7 @@ namespace winstd
         ///
         /// \sa [CoInitialize function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms678543.aspx)
         ///
-        inline HRESULT status() const noexcept
+        HRESULT status() const noexcept
         {
             return m_result;
         }

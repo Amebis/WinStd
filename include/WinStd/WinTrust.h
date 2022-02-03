@@ -40,7 +40,7 @@ namespace winstd
         ///
         /// Initializes a new class instance.
         ///
-        inline wintrust(_In_opt_ HWND hwnd, _In_ const GUID &action, _Inout_ WINTRUST_DATA &wtd) :
+        wintrust(_In_opt_ HWND hwnd, _In_ const GUID &action, _Inout_ WINTRUST_DATA &wtd) :
             m_hwnd(hwnd),
             m_action(action),
             m_wtd(wtd)

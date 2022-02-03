@@ -18,14 +18,16 @@
 /// @{
 
 /// @copydoc PathCanonicalizeW()
-template<class _Elem, class _Traits, class _Ax> inline BOOL PathCanonicalizeA(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, _In_ LPCSTR pszPath);
+template<class _Elem, class _Traits, class _Ax>
+static BOOL PathCanonicalizeA(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, _In_ LPCSTR pszPath);
 
 ///
 /// Simplifies a path by removing navigation elements such as "." and ".." to produce a direct, well-formed path, and stores it in a std::wstring string.
 ///
 /// \sa [PathCanonicalize function](https://msdn.microsoft.com/en-us/library/windows/desktop/bb773569.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> inline BOOL PathCanonicalizeW(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, _In_ LPCWSTR pszPath);
+template<class _Elem, class _Traits, class _Ax>
+static BOOL PathCanonicalizeW(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, _In_ LPCWSTR pszPath);
 
 /// @}
 
@@ -33,7 +35,7 @@ template<class _Elem, class _Traits, class _Ax> inline BOOL PathCanonicalizeW(_I
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline BOOL PathCanonicalizeA(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, _In_ LPCSTR pszPath)
+static BOOL PathCanonicalizeA(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, _In_ LPCSTR pszPath)
 {
     assert(0); // TODO: Test this code.
 
@@ -46,7 +48,7 @@ inline BOOL PathCanonicalizeA(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &sV
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline BOOL PathCanonicalizeW(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, _In_ LPCWSTR pszPath)
+static BOOL PathCanonicalizeW(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, _In_ LPCWSTR pszPath)
 {
     assert(0); // TODO: Test this code.
 

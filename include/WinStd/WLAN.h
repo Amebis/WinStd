@@ -37,7 +37,8 @@ namespace winstd {
 /// Since Wlanapi.dll is not always present, the `pfnWlanReasonCodeToString` pointer to `WlanReasonCodeToString()`
 /// function must be loaded dynamically.
 ///
-template<class _Elem, class _Traits, class _Ax> inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved);
+template<class _Elem, class _Traits, class _Ax>
+static DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved);
 
 /// @}
 
@@ -135,7 +136,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
-        inline bool open(_In_ DWORD dwClientVersion, _Out_ PDWORD pdwNegotiatedVersion) noexcept
+        bool open(_In_ DWORD dwClientVersion, _Out_ PDWORD pdwNegotiatedVersion) noexcept
         {
             handle_type h;
             const DWORD dwResult = WlanOpenHandle(dwClientVersion, 0, pdwNegotiatedVersion, &h);
@@ -165,7 +166,7 @@ namespace winstd
 
 
 template<class _Elem, class _Traits, class _Ax>
-inline DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved)
+static DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved)
 {
     DWORD dwSize = 0;
 
