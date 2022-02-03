@@ -52,7 +52,8 @@ static UINT MsiFormatRecordA(_In_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord, _I
 ///
 /// \sa [MsiFormatRecord function](https://msdn.microsoft.com/en-us/library/aa370109.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax> UINT MsiFormatRecordW(_In_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
+template<class _Elem, class _Traits, class _Ax>
+static UINT MsiFormatRecordW(_In_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue);
 
 ///
 /// Reads bytes from a record stream field into a std::vector buffer.
