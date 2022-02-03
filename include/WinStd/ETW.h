@@ -250,15 +250,12 @@ namespace winstd
         {
             EventDataDescCreate(this, data, size);
         }
-
-
-        ///
-        /// Blank event data used as terminator.
-        ///
-        static const event_data blank;
     };
 
-    const event_data event_data::blank;
+    ///
+    /// Blank event data used as terminator.
+    ///
+    static const event_data blank_event_data;
 
 
     ///
@@ -540,7 +537,7 @@ namespace winstd
         ///
         /// Writes an event with one or more parameter.
         ///
-        /// \note The list must be terminated with `winstd::event_data::blank`.
+        /// \note The list must be terminated with `winstd::blank_event_data`.
         ///
         /// \return
         /// - `ERROR_SUCCESS` when write succeeds;
@@ -553,9 +550,9 @@ namespace winstd
             assert(m_h != invalid);
 
             // The first argument (param1) is outside of varadic argument list.
-            if (param1.Ptr      == winstd::event_data::blank.Ptr      &&
-                param1.Size     == winstd::event_data::blank.Size     &&
-                param1.Reserved == winstd::event_data::blank.Reserved)
+            if (param1.Ptr      == winstd::blank_event_data.Ptr      &&
+                param1.Size     == winstd::blank_event_data.Size     &&
+                param1.Reserved == winstd::blank_event_data.Reserved)
                 return EventWrite(m_h, EventDescriptor, 0, NULL);
 
             va_list arg;
@@ -567,9 +564,9 @@ namespace winstd
             // Preallocate array.
             for (param_count = 1; param_count < MAX_EVENT_DATA_DESCRIPTORS; param_count++) {
                 const EVENT_DATA_DESCRIPTOR &p = va_arg(arg, const EVENT_DATA_DESCRIPTOR);
-                if (p.Ptr      == winstd::event_data::blank.Ptr      &&
-                    p.Size     == winstd::event_data::blank.Size     &&
-                    p.Reserved == winstd::event_data::blank.Reserved) break;
+                if (p.Ptr      == winstd::blank_event_data.Ptr      &&
+                    p.Size     == winstd::blank_event_data.Size     &&
+                    p.Reserved == winstd::blank_event_data.Reserved) break;
             }
             params.reserve(param_count);
 
@@ -578,9 +575,9 @@ namespace winstd
             params.push_back(param1);
             for (;;) {
                 const EVENT_DATA_DESCRIPTOR &p = va_arg(arg, const EVENT_DATA_DESCRIPTOR);
-                if (p.Ptr      == winstd::event_data::blank.Ptr      &&
-                    p.Size     == winstd::event_data::blank.Size     &&
-                    p.Reserved == winstd::event_data::blank.Reserved) break;
+                if (p.Ptr      == winstd::blank_event_data.Ptr      &&
+                    p.Size     == winstd::blank_event_data.Size     &&
+                    p.Reserved == winstd::blank_event_data.Reserved) break;
                 params.push_back(p);
             }
 
@@ -595,7 +592,7 @@ namespace winstd
         ///
         /// Writes an event with variable number of parameters.
         ///
-        /// \note The list must be terminated with `winstd::event_data::blank`.
+        /// \note The list must be terminated with `winstd::blank_event_data`.
         ///
         /// \return
         /// - `ERROR_SUCCESS` when write succeeds;
@@ -614,9 +611,9 @@ namespace winstd
             // Preallocate array.
             for (param_count = 0; param_count < MAX_EVENT_DATA_DESCRIPTORS; param_count++) {
                 const EVENT_DATA_DESCRIPTOR &p = va_arg(arg, const EVENT_DATA_DESCRIPTOR);
-                if (p.Ptr      == winstd::event_data::blank.Ptr      &&
-                    p.Size     == winstd::event_data::blank.Size     &&
-                    p.Reserved == winstd::event_data::blank.Reserved) break;
+                if (p.Ptr      == winstd::blank_event_data.Ptr      &&
+                    p.Size     == winstd::blank_event_data.Size     &&
+                    p.Reserved == winstd::blank_event_data.Reserved) break;
             }
             params.reserve(param_count);
 
@@ -624,9 +621,9 @@ namespace winstd
             arg = arg_start;
             for (;;) {
                 const EVENT_DATA_DESCRIPTOR &p = va_arg(arg, const EVENT_DATA_DESCRIPTOR);
-                if (p.Ptr      == winstd::event_data::blank.Ptr      &&
-                    p.Size     == winstd::event_data::blank.Size     &&
-                    p.Reserved == winstd::event_data::blank.Reserved) break;
+                if (p.Ptr      == winstd::blank_event_data.Ptr      &&
+                    p.Size     == winstd::blank_event_data.Size     &&
+                    p.Reserved == winstd::blank_event_data.Reserved) break;
                 params.push_back(p);
             }
 

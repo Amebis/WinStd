@@ -111,10 +111,10 @@ namespace winstd
         template<class _Elem, class _Traits, class _Ax>
         inline void encode(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &out)
         {
-            out += lookup[                  buf[0] >> 2         ];
-            out += lookup[((buf[0] << 4) | (buf[1] >> 4)) & 0x3f];
-            out += lookup[((buf[1] << 2) | (buf[2] >> 6)) & 0x3f];
-            out += lookup[                  buf[2]        & 0x3f];
+            out += base64_enc_lookup[                  buf[0] >> 2         ];
+            out += base64_enc_lookup[((buf[0] << 4) | (buf[1] >> 4)) & 0x3f];
+            out += base64_enc_lookup[((buf[1] << 2) | (buf[2] >> 6)) & 0x3f];
+            out += base64_enc_lookup[                  buf[2]        & 0x3f];
         }
 
 
@@ -125,18 +125,18 @@ namespace winstd
         inline void encode(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &out, _In_ size_t size)
         {
             if (size > 0) {
-                out += lookup[buf[0] >> 2];
+                out += base64_enc_lookup[buf[0] >> 2];
                 if (size > 1) {
-                    out += lookup[((buf[0] << 4) | (buf[1] >> 4)) & 0x3f];
+                    out += base64_enc_lookup[((buf[0] << 4) | (buf[1] >> 4)) & 0x3f];
                     if (size > 2) {
-                        out += lookup[((buf[1] << 2) | (buf[2] >> 6)) & 0x3f];
-                        out += lookup[buf[2] & 0x3f];
+                        out += base64_enc_lookup[((buf[1] << 2) | (buf[2] >> 6)) & 0x3f];
+                        out += base64_enc_lookup[buf[2] & 0x3f];
                     } else {
-                        out += lookup[(buf[1] << 2) & 0x3f];
+                        out += base64_enc_lookup[(buf[1] << 2) & 0x3f];
                         out += '=';
                     }
                 } else {
-                    out += lookup[(buf[0] << 4) & 0x3f];
+                    out += base64_enc_lookup[(buf[0] << 4) & 0x3f];
                     out += '=';
                     out += '=';
                 }
@@ -152,15 +152,11 @@ namespace winstd
     protected:
         unsigned char buf[3];           ///< Internal buffer
         size_t num;                     ///< Number of bytes used in `buf`
-
-        /// \cond internal
-        static const char lookup[64];
-        /// \endcond
     };
 
 
     /// \cond internal
-    const char base64_enc::lookup[64] = {
+    static const char base64_enc_lookup[64] = {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
         'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
         'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
@@ -222,7 +218,7 @@ namespace winstd
                     break;
 
                 int x = data[i];
-                if ((buf[num] = x < _countof(lookup) ? lookup[x] : 255) != 255)
+                if ((buf[num] = x < _countof(base64_dec_lookup) ? base64_dec_lookup[x] : 255) != 255)
                     num++;
             }
         }
@@ -273,15 +269,11 @@ namespace winstd
     protected:
         unsigned char buf[4];                   ///< Internal buffer
         size_t num;                             ///< Number of bytes used in `buf`
-
-        /// \cond internal
-        static const unsigned char lookup[256];
-        /// \endcond
     };
 
 
     /// \cond internal
-    const unsigned char base64_dec::lookup[256] = {
+    static const unsigned char base64_dec_lookup[256] = {
     /*           0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F  */
     /* 0 */    255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
     /* 1 */    255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,

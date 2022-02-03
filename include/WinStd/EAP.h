@@ -363,13 +363,13 @@ namespace winstd
             dwLength = dwLengthNew;
             pValue   = p;
         }
-
-    public:
-        static const EAP_ATTRIBUTE blank;   ///< Blank EAP attribute
     };
     #pragma warning(pop)
 
-    const EAP_ATTRIBUTE eap_attr::blank = {};
+    ///
+    /// Blank EAP attribute
+    ///
+    static const EAP_ATTRIBUTE blank_eap_attr = {};
 
 
     ///
