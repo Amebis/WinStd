@@ -135,7 +135,12 @@ namespace winstd
         ///
         /// \sa [FreeAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-freeaddrinfow)
         ///
-        virtual ~addrinfo();
+        virtual ~addrinfo()
+        {
+            if (m_h != invalid)
+                FreeAddrInfo(m_h);
+        }
+
 
     protected:
         ///
@@ -143,7 +148,10 @@ namespace winstd
         ///
         /// \sa [FreeAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-freeaddrinfow)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            FreeAddrInfo(m_h);
+        }
     };
 
 #endif

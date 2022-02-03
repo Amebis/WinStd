@@ -120,7 +120,11 @@ namespace winstd
         ///
         /// \sa [WlanCloseHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms706610(v=vs.85).aspx)
         ///
-        virtual ~wlan_handle();
+        virtual ~wlan_handle()
+        {
+            if (m_h != invalid)
+                WlanCloseHandle(m_h, NULL);
+        }
 
         ///
         /// Opens a connection to the server.
@@ -150,7 +154,10 @@ namespace winstd
         ///
         /// \sa [WlanCloseHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms706610(v=vs.85).aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            WlanCloseHandle(m_h, NULL);
+        }
     };
 
     /// @}

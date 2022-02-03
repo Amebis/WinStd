@@ -96,7 +96,7 @@ template<class _Elem, class _Traits, class _Ax> inline VOID GuidToStringW(_In_ L
 #endif
 
 /// @copydoc StringToGuidW()
-_Success_(return) BOOL StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd = NULL) noexcept;
+_Success_(return) static BOOL StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd = NULL) noexcept;
 
 ///
 /// Parses string with GUID and stores it to GUID
@@ -109,7 +109,7 @@ _Success_(return) BOOL StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid
 /// - `TRUE` if GUID successfuly parsed;
 /// - `FALSE` otherwise.
 ///
-_Success_(return) BOOL StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd = NULL) noexcept;
+_Success_(return) static BOOL StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd = NULL) noexcept;
 
 /// @copydoc StringToGuidW()
 #ifdef _UNICODE
@@ -429,7 +429,11 @@ namespace winstd
         ///
         /// \sa [FreeLibrary function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms683152.aspx)
         ///
-        virtual ~library();
+        virtual ~library()
+        {
+            if (m_h != invalid)
+                FreeLibrary(m_h);
+        }
 
         ///
         /// Loads the specified module into the address space of the calling process.
@@ -456,7 +460,10 @@ namespace winstd
         ///
         /// \sa [FreeLibrary function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms683152.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            FreeLibrary(m_h);
+        }
     };
 
 
@@ -574,14 +581,24 @@ namespace winstd
         ///
         /// \sa [InitializeCriticalSection function](https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-initializecriticalsection)
         ///
-        critical_section();
+        critical_section()
+        {
+            __try {
+                InitializeCriticalSection(&m_data);
+            } __except(EXCEPTION_EXECUTE_HANDLER) {
+                throw std::runtime_error("InitializeCriticalSection failed");
+            }
+        }
 
         ///
         /// Releases all resources used by an unowned critical section object.
         ///
         /// \sa [DeleteCriticalSection function](https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-deletecriticalsection)
         ///
-        virtual ~critical_section();
+        virtual ~critical_section()
+        {
+            DeleteCriticalSection(&m_data);
+        }
 
         ///
         /// Auto-typecasting operator
@@ -611,7 +628,12 @@ namespace winstd
         ///
         /// \sa [FindClose function](https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-findclose)
         ///
-        virtual ~find_file();
+        virtual ~find_file()
+        {
+            if (m_h != invalid) {
+                FindClose(m_h);
+            }
+        }
 
         ///
         /// Searches a directory for a file or subdirectory with a name that matches a specific name (or partial name if wildcards are used).
@@ -638,7 +660,10 @@ namespace winstd
         ///
         /// \sa [FindClose function](https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-findclose)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            FindClose(m_h);
+        }
     };
 
 
@@ -655,7 +680,13 @@ namespace winstd
         ///
         /// \sa [HeapDestroy function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366700.aspx)
         ///
-        virtual ~heap();
+        virtual ~heap()
+        {
+            if (m_h != invalid) {
+                enumerate();
+                HeapDestroy(m_h);
+            }
+        }
 
         ///
         /// Creates the heap.
@@ -683,7 +714,43 @@ namespace winstd
         /// - `true` if any blocks found;
         /// - `false` otherwise.
         ///
-        bool enumerate() noexcept;
+        bool enumerate() noexcept
+        {
+            assert(m_h != invalid);
+
+            bool found = false;
+
+            // Lock the heap for exclusive access.
+            HeapLock(m_h);
+
+            PROCESS_HEAP_ENTRY e;
+            e.lpData = NULL;
+            while (HeapWalk(m_h, &e) != FALSE) {
+                if ((e.wFlags & PROCESS_HEAP_ENTRY_BUSY) != 0) {
+                    OutputDebugStr(
+                        _T("Allocated block%s%s\n")
+                        _T("  Data portion begins at: %#p\n  Size: %d bytes\n")
+                        _T("  Overhead: %d bytes\n  Region index: %d\n"),
+                            (e.wFlags & PROCESS_HEAP_ENTRY_MOVEABLE) != 0 ? tstring_printf(_T(", movable with HANDLE %#p"), e.Block.hMem).c_str() : _T(""),
+                            (e.wFlags & PROCESS_HEAP_ENTRY_DDESHARE) != 0 ? _T(", DDESHARE") : _T(""),
+                             e.lpData,
+                             e.cbData,
+                             e.cbOverhead,
+                             e.iRegionIndex);
+
+                    found = true;
+                }
+            }
+
+            const DWORD dwResult = GetLastError();
+            if (dwResult != ERROR_NO_MORE_ITEMS)
+                OutputDebugStr(_T("HeapWalk failed (error %u).\n"), dwResult);
+
+            // Unlock the heap.
+            HeapUnlock(m_h);
+
+            return found;
+        }
 
     protected:
         ///
@@ -691,7 +758,11 @@ namespace winstd
         ///
         /// \sa [HeapDestroy function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366700.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            enumerate();
+            HeapDestroy(m_h);
+        }
     };
 
 
@@ -828,14 +899,22 @@ namespace winstd
         ///
         /// \sa [ActivateActCtx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374151.aspx)
         ///
-        actctx_activator(_In_ HANDLE hActCtx) noexcept;
+        actctx_activator(_In_ HANDLE hActCtx) noexcept
+        {
+            if (!ActivateActCtx(hActCtx, &m_cookie))
+                m_cookie = 0;
+        }
 
         ///
         /// Deactivates activation context and destructs the activator
         ///
         /// \sa [DeactivateActCtx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375140.aspx)
         ///
-        virtual ~actctx_activator();
+        virtual ~actctx_activator()
+        {
+            if (m_cookie)
+                DeactivateActCtx(0, m_cookie);
+        }
 
     protected:
         ULONG_PTR m_cookie; ///< Cookie for context deactivation
@@ -858,14 +937,21 @@ namespace winstd
         ///
         /// \sa [ImpersonateLoggedOnUser function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa378612.aspx)
         ///
-        user_impersonator(_In_opt_ HANDLE hToken) noexcept;
+        user_impersonator(_In_opt_ HANDLE hToken) noexcept
+        {
+            m_cookie = hToken && ImpersonateLoggedOnUser(hToken);
+        }
 
         ///
         /// Reverts to current user and destructs the impersonator
         ///
         /// \sa [RevertToSelf function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379317.aspx)
         ///
-        virtual ~user_impersonator();
+        virtual ~user_impersonator()
+        {
+            if (m_cookie)
+                RevertToSelf();
+        }
 
     protected:
         BOOL m_cookie; ///< Did impersonation succeed?
@@ -888,14 +974,21 @@ namespace winstd
         ///
         /// \sa [SetConsoleCtrlHandler function](https://docs.microsoft.com/en-us/windows/console/setconsolectrlhandler)
         ///
-        console_ctrl_handler(_In_opt_ PHANDLER_ROUTINE HandlerRoutine) noexcept;
+        console_ctrl_handler(_In_opt_ PHANDLER_ROUTINE HandlerRoutine) noexcept : m_handler(HandlerRoutine)
+        {
+            m_cookie = SetConsoleCtrlHandler(m_handler, TRUE);
+        }
 
         ///
         /// Pops console control handler from the console control handler stack
         ///
         /// \sa [SetConsoleCtrlHandler function](https://docs.microsoft.com/en-us/windows/console/setconsolectrlhandler)
         ///
-        virtual ~console_ctrl_handler();
+        virtual ~console_ctrl_handler()
+        {
+            if (m_cookie)
+                SetConsoleCtrlHandler(m_handler, FALSE);
+        }
 
     protected:
         BOOL m_cookie;              ///< Did pushing the console control handler succeed?
@@ -946,7 +1039,11 @@ namespace winstd
         ///
         /// \sa [VirtualFreeEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366894.aspx)
         ///
-        virtual ~vmemory();
+        virtual ~vmemory()
+        {
+            if (m_h != invalid)
+                VirtualFreeEx(m_proc, m_h, 0, MEM_RELEASE);
+        }
 
         ///
         /// Move assignment
@@ -1008,7 +1105,10 @@ namespace winstd
         ///
         /// \sa [VirtualFreeEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366894.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            VirtualFreeEx(m_proc, m_h, 0, MEM_RELEASE);
+        }
 
     protected:
         HANDLE m_proc;  ///< Handle of memory's process
@@ -1028,7 +1128,11 @@ namespace winstd
         ///
         /// \sa [RegCloseKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724837.aspx)
         ///
-        virtual ~reg_key();
+        virtual ~reg_key()
+        {
+            if (m_h != invalid)
+                RegCloseKey(m_h);
+        }
 
         ///
         /// Creates the specified registry key. If the key already exists, the function opens it.
@@ -1094,7 +1198,41 @@ namespace winstd
         /// - true when creation succeeds;
         /// - false when creation fails. For extended error information, call `GetLastError()`.
         ///
-        bool delete_subkey(_In_z_ LPCTSTR szSubkey);
+        bool delete_subkey(_In_z_ LPCTSTR szSubkey)
+        {
+            LSTATUS s;
+
+            s = RegDeleteKey(m_h, szSubkey);
+            if (s == ERROR_SUCCESS || s == ERROR_FILE_NOT_FOUND)
+                return true;
+
+            {
+                reg_key k;
+                if (!k.open(m_h, szSubkey, 0, KEY_ENUMERATE_SUB_KEYS))
+                    return false;
+                for (;;) {
+                    TCHAR szName[MAX_PATH];
+                    DWORD dwSize = _countof(szName);
+                    s = RegEnumKeyEx(k, 0, szName, &dwSize, NULL, NULL, NULL, NULL);
+                    if (s == ERROR_SUCCESS)
+                        k.delete_subkey(szName);
+                    else if (s == ERROR_NO_MORE_ITEMS)
+                        break;
+                    else {
+                        SetLastError(s);
+                        return false;
+                    }
+                }
+            }
+
+            s = RegDeleteKey(m_h, szSubkey);
+            if (s == ERROR_SUCCESS)
+                return true;
+            else {
+                SetLastError(s);
+                return false;
+            }
+        }
 
     protected:
         ///
@@ -1102,7 +1240,10 @@ namespace winstd
         ///
         /// \sa [RegCloseKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724837.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            RegCloseKey(m_h);
+        }
     };
 
 
@@ -1119,7 +1260,11 @@ namespace winstd
         ///
         /// \sa [FreeSid function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa446631.aspx)
         ///
-        virtual ~security_id();
+        virtual ~security_id()
+        {
+            if (m_h != invalid)
+                FreeSid(m_h);
+        }
 
     protected:
         ///
@@ -1127,7 +1272,10 @@ namespace winstd
         ///
         /// \sa [FreeSid function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa446631.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            FreeSid(m_h);
+        }
     };
 
 
@@ -1386,6 +1534,132 @@ inline VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<_Elem, _T
         lpGuid->Data3,
         lpGuid->Data4[0], lpGuid->Data4[1],
         lpGuid->Data4[2], lpGuid->Data4[3], lpGuid->Data4[4], lpGuid->Data4[5], lpGuid->Data4[6], lpGuid->Data4[7]);
+}
+
+
+_Success_(return) static BOOL StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd) noexcept
+{
+    GUID g;
+    LPSTR lpszEnd;
+    unsigned long ulTmp;
+    unsigned long long ullTmp;
+
+    if (!lpszGuid || !lpGuid || *lpszGuid != '{') return FALSE;
+    lpszGuid++;
+
+    g.Data1 = strtoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE) return FALSE;
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data2 = static_cast<unsigned short>(ulTmp);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data3 = static_cast<unsigned short>(ulTmp);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data4[0] = static_cast<unsigned char>((ulTmp >> 8) & 0xff);
+    g.Data4[1] = static_cast<unsigned char>( ulTmp       & 0xff);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ullTmp = _strtoui64(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ullTmp > 0xFFFFFFFFFFFF) return FALSE;
+    g.Data4[2] = static_cast<unsigned char>((ullTmp >> 40) & 0xff);
+    g.Data4[3] = static_cast<unsigned char>((ullTmp >> 32) & 0xff);
+    g.Data4[4] = static_cast<unsigned char>((ullTmp >> 24) & 0xff);
+    g.Data4[5] = static_cast<unsigned char>((ullTmp >> 16) & 0xff);
+    g.Data4[6] = static_cast<unsigned char>((ullTmp >>  8) & 0xff);
+    g.Data4[7] = static_cast<unsigned char>( ullTmp        & 0xff);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '}') return FALSE;
+    lpszGuid++;
+
+    if (lpszGuidEnd)
+        *lpszGuidEnd = lpszGuid;
+
+    *lpGuid = g;
+    return TRUE;
+}
+
+
+_Success_(return) static BOOL StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd) noexcept
+{
+    GUID g;
+    LPWSTR lpszEnd;
+    unsigned long ulTmp;
+    unsigned long long ullTmp;
+
+    if (!lpszGuid || !lpGuid || *lpszGuid != '{') return FALSE;
+    lpszGuid++;
+
+    g.Data1 = wcstoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE) return FALSE;
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data2 = static_cast<unsigned short>(ulTmp);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data3 = static_cast<unsigned short>(ulTmp);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data4[0] = static_cast<unsigned char>((ulTmp >> 8) & 0xff);
+    g.Data4[1] = static_cast<unsigned char>( ulTmp       & 0xff);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ullTmp = _wcstoui64(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ullTmp > 0xFFFFFFFFFFFF) return FALSE;
+    g.Data4[2] = static_cast<unsigned char>((ullTmp >> 40) & 0xff);
+    g.Data4[3] = static_cast<unsigned char>((ullTmp >> 32) & 0xff);
+    g.Data4[4] = static_cast<unsigned char>((ullTmp >> 24) & 0xff);
+    g.Data4[5] = static_cast<unsigned char>((ullTmp >> 16) & 0xff);
+    g.Data4[6] = static_cast<unsigned char>((ullTmp >>  8) & 0xff);
+    g.Data4[7] = static_cast<unsigned char>( ullTmp        & 0xff);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '}') return FALSE;
+    lpszGuid++;
+
+    if (lpszGuidEnd)
+        *lpszGuidEnd = lpszGuid;
+
+    *lpGuid = g;
+    return TRUE;
 }
 
 

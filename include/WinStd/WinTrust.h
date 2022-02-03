@@ -53,7 +53,11 @@ namespace winstd
         ///
         /// Destroys the WinTrust context.
         ///
-        virtual ~wintrust();
+        virtual ~wintrust()
+        {
+            m_wtd.dwStateAction = WTD_STATEACTION_CLOSE;
+            WinVerifyTrust(m_hwnd, &m_action, &m_wtd);
+        }
 
     protected:
         HWND          m_hwnd;

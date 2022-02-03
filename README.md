@@ -1,8 +1,12 @@
 ﻿# WinStd [![Build status](https://ci.appveyor.com/api/projects/status/1e8868i88s10cp59?svg=true)](https://ci.appveyor.com/project/Amebis/winstd)
 
-Provides additional templates and function helpers for Windows API using Standard C++
+Provides additional templates and function helpers for Windows API using Standard C++ in Microsoft Visual C++ 2017-2019
 
 ## Features
+
+### Portable
+
+This project does not require building. Just `#include` individual files from this repository into your source code and get started.
 
 ### Lightweight Classes
 
@@ -51,24 +55,11 @@ if (dwMaxSendPacketSize < sizeof(EapPacket))
             dwMaxSendPacketSize));
 ```
 
-## Building
-
-Requires:
-- Microsoft Visual Studio 2017-2019
-- `..\..\include` folder with the following files to customize building process for individual applications (optional):
-  - `Debug.props`
-  - `Release.props`
-  - `ARM64.props`
-  - `x64.props`
-  - `Win32.props`
-
 ## Usage
 
 1. Clone the repository into your solution folder.
-2. Add the appropriate `build\WinStd-<version>.vcxproj` to your solution.
-3. Add WinStd's `include` folder to _Additional Include Directories_ in your project's C/C++ settings.
-4. Add a new reference to WinStd project from your project's common properties.
-5. Include `.h` files from WinStd as needed:
+2. Add WinStd's `include` folder to _Additional Include Directories_ in your project's C/C++ settings.
+3. Include `.h` files from WinStd as needed:
 ```C++
 #include <WinStd/Shell.h>
 #include <string>

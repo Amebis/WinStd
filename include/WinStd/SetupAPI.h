@@ -41,7 +41,11 @@ namespace winstd
         ///
         /// \sa [SetupDiDestroyDeviceInfoList function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdidestroydeviceinfolist)
         ///
-        virtual ~setup_device_info_list();
+        virtual ~setup_device_info_list()
+        {
+            if (m_h != invalid)
+                SetupDiDestroyDeviceInfoList(m_h);
+        }
 
         ///
         /// Creates an empty device information set and optionally associates the set with a device setup class and a top-level window.
@@ -98,7 +102,10 @@ namespace winstd
         ///
         /// \sa [SetupDiDestroyDeviceInfoList function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdidestroydeviceinfolist)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            SetupDiDestroyDeviceInfoList(m_h);
+        }
     };
 
 
@@ -132,7 +139,11 @@ namespace winstd
         ///
         /// \sa [SetupDiDestroyDriverInfoList function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdidestroydriverinfolist)
         ///
-        virtual ~setup_driver_info_list_builder();
+        virtual ~setup_driver_info_list_builder()
+        {
+            if (m_result)
+                SetupDiDestroyDriverInfoList(m_DeviceInfoSet, m_DeviceInfoData, m_DriverType);
+        }
 
 
         ///

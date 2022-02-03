@@ -116,7 +116,11 @@ namespace winstd
         ///
         /// \sa [CertFreeCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376075.aspx)
         ///
-        virtual ~cert_context();
+        virtual ~cert_context()
+        {
+            if (m_h != invalid)
+                CertFreeCertificateContext(m_h);
+        }
 
         ///
         /// Creates the certificate context.
@@ -228,7 +232,10 @@ namespace winstd
         ///
         /// \sa [CertFreeCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376075.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            CertFreeCertificateContext(m_h);
+        }
 
         ///
         /// Duplicates the certificate context.
@@ -239,7 +246,10 @@ namespace winstd
         ///
         /// \sa [CertDuplicateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376045.aspx)
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const noexcept override;
+        handle_type duplicate_internal(_In_ handle_type h) const noexcept override
+        {
+            return CertDuplicateCertificateContext(h);
+        }
     };
 
 
@@ -256,7 +266,11 @@ namespace winstd
         ///
         /// \sa [CertFreeCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376073.aspx)
         ///
-        virtual ~cert_chain_context();
+        virtual ~cert_chain_context()
+        {
+            if (m_h != invalid)
+                CertFreeCertificateChain(m_h);
+        }
 
         ///
         /// Creates the certificate chain context.
@@ -283,7 +297,10 @@ namespace winstd
         ///
         /// \sa [CertFreeCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376073.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            CertFreeCertificateChain(m_h);
+        }
 
         ///
         /// Duplicates the certificate chain context.
@@ -294,7 +311,10 @@ namespace winstd
         ///
         /// \sa [CertDuplicateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376045.aspx)
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const noexcept override;
+        handle_type duplicate_internal(_In_ handle_type h) const noexcept override
+        {
+            return CertDuplicateCertificateChain(h);
+        }
     };
 
 
@@ -311,7 +331,11 @@ namespace winstd
         ///
         /// \sa [CertCloseStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376026.aspx)
         ///
-        virtual ~cert_store();
+        virtual ~cert_store()
+        {
+            if (m_h != invalid)
+                CertCloseStore(m_h, 0);
+        }
 
         ///
         /// Opens the certificate store.
@@ -357,7 +381,10 @@ namespace winstd
         ///
         /// \sa [CertCloseStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376026.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            CertCloseStore(m_h, 0);
+        }
     };
 
 
@@ -374,7 +401,11 @@ namespace winstd
         ///
         /// \sa [CryptReleaseContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380268.aspx)
         ///
-        virtual ~crypt_prov();
+        virtual ~crypt_prov()
+        {
+            if (m_h != invalid)
+                CryptReleaseContext(m_h, 0);
+        }
 
         ///
         /// Acquires the cryptographic context.
@@ -401,7 +432,10 @@ namespace winstd
         ///
         /// \sa [CryptReleaseContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380268.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            CryptReleaseContext(m_h, 0);
+        }
     };
 
 
@@ -418,7 +452,11 @@ namespace winstd
         ///
         /// \sa [CryptDestroyHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379917.aspx)
         ///
-        virtual ~crypt_hash();
+        virtual ~crypt_hash()
+        {
+            if (m_h != invalid)
+                CryptDestroyHash(m_h);
+        }
 
         ///
         /// Creates the hash context.
@@ -445,7 +483,10 @@ namespace winstd
         ///
         /// \sa [CryptDestroyHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379917.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            CryptDestroyHash(m_h);
+        }
 
         ///
         /// Duplicates the hash context.
@@ -456,7 +497,11 @@ namespace winstd
         ///
         /// \sa [CryptDuplicateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379919.aspx)
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const noexcept override;
+        handle_type duplicate_internal(_In_ handle_type h) const noexcept override
+        {
+            handle_type hNew = invalid;
+            return CryptDuplicateHash(h, NULL, 0, &hNew) ? hNew : invalid;
+        }
     };
 
 
@@ -473,7 +518,11 @@ namespace winstd
         ///
         /// \sa [CryptDestroyKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379918.aspx)
         ///
-        virtual ~crypt_key();
+        virtual ~crypt_key()
+        {
+            if (m_h != invalid)
+                CryptDestroyKey(m_h);
+        }
 
         ///
         /// Generates the key.
@@ -543,7 +592,67 @@ namespace winstd
         /// \param[in] hProv      Handle of cryptographics provider to use
         /// \param[in] dwKeySpec  Key specification (`AT_KEYEXCHANGE` or `AT_SIGNATURE`)
         ///
-        bool create_exp1(_In_ HCRYPTPROV hProv, _In_ DWORD dwKeySpec);
+        bool create_exp1(_In_ HCRYPTPROV hProv, _In_ DWORD dwKeySpec)
+        {
+            if (dwKeySpec != AT_KEYEXCHANGE && dwKeySpec != AT_SIGNATURE) {
+                SetLastError(ERROR_INVALID_PARAMETER);
+                return false;
+            }
+
+            // Generate the private key.
+            handle_type h;
+            if (CryptGenKey(hProv, dwKeySpec, CRYPT_EXPORTABLE, &h)) {
+                // Export the private key, we'll convert it to a private exponent of one key.
+                std::vector<BYTE, sanitizing_allocator<BYTE>> key_blob;
+                if (CryptExportKey(h, 0, PRIVATEKEYBLOB, 0, key_blob)) {
+                    CryptDestroyKey(h);
+
+                    // Get the byte length of the key.
+                    size_t
+                        size_key   = *reinterpret_cast<DWORD*>(&key_blob[12])/8,
+                        size_prime = size_key/2;
+
+                    // Modify the Exponent in Key BLOB format
+                    // Key BLOB format is documented in SDK
+
+                    // Convert pubexp in rsapubkey to 1
+                    LPBYTE ptr = &key_blob[16];
+                    *reinterpret_cast<DWORD*>(ptr) = 1;
+                    ptr += sizeof(DWORD);
+
+                    // Skip modulus, prime1, prime2
+                    ptr += size_key;
+                    ptr += size_prime;
+                    ptr += size_prime;
+
+                    // Convert exponent1 to 1
+                    ptr[0] = 1;
+                    memset(ptr + 1, 0, size_prime - 1);
+                    ptr += size_prime;
+
+                    // Convert exponent2 to 1
+                    ptr[0] = 1;
+                    memset(ptr + 1, 0, size_prime - 1);
+                    ptr += size_prime;
+
+                    // Skip coefficient
+                    ptr += size_prime;
+
+                    // Convert privateExponent to 1
+                    ptr[0] = 1;
+                    memset(ptr + 1, 0, size_key - 1);
+
+                    // Import the exponent-of-one private key.
+                    if (CryptImportKey(hProv, key_blob.data(), static_cast<DWORD>(key_blob.size()), 0, 0, &h)) {
+                        attach(h);
+                        return true;
+                    }
+                } else
+                    CryptDestroyKey(h);
+            }
+
+            return false;
+        }
 
     protected:
         ///
@@ -551,7 +660,10 @@ namespace winstd
         ///
         /// \sa [CryptDestroyKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379918.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            CryptDestroyKey(m_h);
+        }
 
         ///
         /// Duplicates the key.
@@ -562,7 +674,11 @@ namespace winstd
         ///
         /// \sa [CryptDuplicateKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379920.aspx)
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const noexcept override;
+        handle_type duplicate_internal(_In_ handle_type h) const noexcept override
+        {
+            handle_type hNew = invalid;
+            return CryptDuplicateKey(h, NULL, 0, &hNew) ? hNew : invalid;
+        }
     };
 
     ///
@@ -619,7 +735,11 @@ namespace winstd
         ///
         /// Destroys the BLOB.
         ///
-        virtual ~data_blob();
+        virtual ~data_blob()
+        {
+            if (pbData != NULL)
+                LocalFree(pbData);
+        }
 
         ///
         /// Copy an existing BLOB.

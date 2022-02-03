@@ -271,7 +271,11 @@ namespace winstd
         ///
         /// Destroys the EAP attribute.
         ///
-        ~eap_attr();
+        ~eap_attr()
+        {
+            if (pValue)
+                delete [] pValue;
+        }
 
         ///
         /// Copies an existing EAP attribute.
@@ -323,12 +327,49 @@ namespace winstd
         /// \sa [MS-MPPE-Send-Key](https://tools.ietf.org/html/rfc2548#section-2.4.2)
         /// \sa [MS-MPPE-Recv-Key](https://tools.ietf.org/html/rfc2548#section-2.4.3)
         ///
-        void create_ms_mppe_key(_In_ BYTE bVendorType, _In_count_(nKeySize) LPCBYTE pbKey, _In_ BYTE nKeySize);
+        void create_ms_mppe_key(_In_ BYTE bVendorType, _In_count_(nKeySize) LPCBYTE pbKey, _In_ BYTE nKeySize)
+        {
+            const BYTE nPaddingLength = static_cast<BYTE>((16 - (1 + static_cast<DWORD>(nKeySize))) % 16);
+            const DWORD dwLengthNew =
+                4              + // Vendor-Id
+                1              + // Vendor type
+                1              + // Vendor length
+                2              + // Salt
+                1              + // Key-Length
+                nKeySize       + // Key
+                nPaddingLength;  // Padding
+
+        #pragma warning(push)
+        #pragma warning(disable: 6386)
+            LPBYTE p = new BYTE[dwLengthNew];
+            p[0] = 0x00;                                    // Vendor-Id (0x137 = 311 = Microsoft)
+            p[1] = 0x00;                                    // --|
+            p[2] = 0x01;                                    // --|
+            p[3] = 0x37;                                    // --^
+            p[4] = bVendorType;                             // Vendor type
+            p[5] = static_cast<BYTE>(dwLengthNew - 4);      // Vendor length
+            p[6] = 0x00;                                    // Salt
+            p[7] = 0x00;                                    // --^
+            p[8] = nKeySize;                                // Key-Length
+        #pragma warning(pop)
+            memcpy(p + 9, pbKey, nKeySize);                 // Key
+            memset(p + 9 + nKeySize, 0, nPaddingLength);    // Padding
+
+            if (pValue)
+                delete [] pValue;
+
+            #pragma warning(suppress: 26812) // EAP_ATTRIBUTE_TYPE is unscoped.
+            eaType   = eatVendorSpecific;
+            dwLength = dwLengthNew;
+            pValue   = p;
+        }
 
     public:
         static const EAP_ATTRIBUTE blank;   ///< Blank EAP attribute
     };
     #pragma warning(pop)
+
+    const EAP_ATTRIBUTE eap_attr::blank = {};
 
 
     ///
@@ -394,7 +435,11 @@ namespace winstd
         ///
         /// Destroys the EAP packet.
         ///
-        virtual ~eap_packet();
+        virtual ~eap_packet()
+        {
+            if (m_h != invalid)
+                HeapFree(GetProcessHeap(), 0, m_h);
+        }
 
 
         ///
@@ -442,12 +487,25 @@ namespace winstd
         ///
         /// Destroys the EAP packet.
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            HeapFree(GetProcessHeap(), 0, m_h);
+        }
 
         ///
         /// Duplicates the EAP packet.
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const noexcept override;
+        handle_type duplicate_internal(_In_ handle_type h) const noexcept override
+        {
+            const WORD n = ntohs(*reinterpret_cast<WORD*>(h->Length));
+            handle_type h2 = static_cast<handle_type>(HeapAlloc(GetProcessHeap(), 0, n));
+            if (h2 == NULL) {
+                SetLastError(ERROR_OUTOFMEMORY);
+                return NULL;
+            }
+            memcpy(h2, h, n);
+            return h2;
+        }
     };
 
 
@@ -484,7 +542,11 @@ namespace winstd
         ///
         /// Destructor
         ///
-        ~eap_method_info_array();
+        ~eap_method_info_array()
+        {
+            if (pEapMethods)
+                free_internal();
+        }
 
         ///
         /// Move assignment
@@ -506,8 +568,24 @@ namespace winstd
 
     protected:
         /// \cond internal
-        void free_internal() noexcept;
-        static void free_internal(_In_ EAP_METHOD_INFO *pMethodInfo) noexcept;
+
+        void free_internal() noexcept
+        {
+            for (DWORD i = 0; i < dwNumberOfMethods; i++)
+                free_internal(pEapMethods + i);
+
+            EapHostPeerFreeMemory(reinterpret_cast<BYTE*>(pEapMethods));
+        }
+
+        static void free_internal(_In_ EAP_METHOD_INFO *pMethodInfo) noexcept
+        {
+            if (pMethodInfo->pInnerMethodInfo)
+                free_internal(pMethodInfo->pInnerMethodInfo);
+
+            EapHostPeerFreeMemory(reinterpret_cast<BYTE*>(pMethodInfo->pwszAuthorName));
+            EapHostPeerFreeMemory(reinterpret_cast<BYTE*>(pMethodInfo->pwszFriendlyName));
+        }
+
         /// \endcond
     };
 

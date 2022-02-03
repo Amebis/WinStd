@@ -73,7 +73,11 @@ namespace winstd
         ///
         /// \sa [DeleteDC function](https://docs.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-deletedc)
         ///
-        virtual ~dc();
+        virtual ~dc()
+        {
+            if (m_h != invalid)
+                DeleteDC(m_h);
+        }
 
     protected:
         ///
@@ -81,7 +85,10 @@ namespace winstd
         ///
         /// \sa [DeleteDC function](https://docs.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-deletedc)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            DeleteDC(m_h);
+        }
     };
 
 
@@ -120,7 +127,11 @@ namespace winstd
         ///
         /// \sa [ReleaseDC function](https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-releasedc)
         ///
-        virtual ~window_dc();
+        virtual ~window_dc()
+        {
+            if (m_h != invalid)
+                ReleaseDC(m_hwnd, m_h);
+        }
 
     protected:
         ///
@@ -128,7 +139,10 @@ namespace winstd
         ///
         /// \sa [ReleaseDC function](https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-releasedc)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            ReleaseDC(m_hwnd, m_h);
+        }
 
     protected:
         HWND m_hwnd;    ///< Window handle
@@ -161,7 +175,11 @@ namespace winstd
         ///
         /// \sa [SelectObject function](https://docs.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-selectobject)
         ///
-        virtual ~dc_selector();
+        virtual ~dc_selector()
+        {
+            if (m_orig)
+                SelectObject(m_hdc, m_orig);
+        }
 
 
         ///

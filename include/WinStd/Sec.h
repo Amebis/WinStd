@@ -90,7 +90,13 @@ namespace winstd
         ///
         /// \sa [FreeCredentialsHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375417.aspx)
         ///
-        virtual ~sec_credentials();
+        virtual ~sec_credentials()
+        {
+            if (m_h != invalid) {
+                FreeCredentialsHandle(m_h);
+                delete m_h;
+            }
+        }
 
         ///
         /// Move assignment
@@ -141,7 +147,11 @@ namespace winstd
         ///
         /// \sa [FreeCredentialsHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375417.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            FreeCredentialsHandle(m_h);
+            delete m_h;
+        }
 
     public:
         TimeStamp m_expires;    ///< Credentials expiration time
@@ -181,7 +191,13 @@ namespace winstd
         ///
         /// \sa [DeleteSecurityContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375354.aspx)
         ///
-        virtual ~sec_context();
+        virtual ~sec_context()
+        {
+            if (m_h != invalid) {
+                DeleteSecurityContext(m_h);
+                delete m_h;
+            }
+        }
 
         ///
         /// Move assignment
@@ -256,7 +272,11 @@ namespace winstd
         ///
         /// \sa [DeleteSecurityContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375354.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            DeleteSecurityContext(m_h);
+            delete m_h;
+        }
 
     public:
         ULONG     m_attrib;     ///< Context attributes
@@ -285,7 +305,13 @@ namespace winstd
         ///
         /// \sa [FreeContextBuffer function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375416.aspx)
         ///
-        virtual ~sec_buffer_desc();
+        virtual ~sec_buffer_desc()
+        {
+            for (ULONG i = 0; i < cBuffers; i++) {
+                if (pBuffers[i].pvBuffer)
+                    FreeContextBuffer(pBuffers[i].pvBuffer);
+            }
+        }
     };
 
     /// @}

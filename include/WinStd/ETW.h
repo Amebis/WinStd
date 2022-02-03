@@ -258,6 +258,8 @@ namespace winstd
         static const event_data blank;
     };
 
+    const event_data event_data::blank;
+
 
     ///
     /// EVENT_RECORD wrapper
@@ -312,7 +314,14 @@ namespace winstd
         ///
         /// Destroys event record data and frees the allocated memory.
         ///
-        ~event_rec();
+        ~event_rec()
+        {
+            if (ExtendedData)
+                delete reinterpret_cast<unsigned char*>(ExtendedData);
+
+            if (UserData)
+                delete reinterpret_cast<unsigned char*>(UserData);
+        }
 
 
         ///
@@ -371,7 +380,13 @@ namespace winstd
         /// \param[in] count  \p data size (in number of elements)
         /// \param[in] data   Record extended data
         ///
-        void set_extended_data(_In_ USHORT count, _In_count_(count) const EVENT_HEADER_EXTENDED_DATA_ITEM *data);
+        void set_extended_data(_In_ USHORT count, _In_count_(count) const EVENT_HEADER_EXTENDED_DATA_ITEM *data)
+        {
+            if (ExtendedData)
+                delete reinterpret_cast<unsigned char*>(ExtendedData);
+
+            set_extended_data_internal(count, data);
+        }
 
 
         ///
@@ -380,7 +395,13 @@ namespace winstd
         /// \param[in] size  \p data size (in bytes)
         /// \param[in] data  Record user data
         ///
-        void set_user_data(_In_ USHORT size, _In_bytecount_(size) LPCVOID data);
+        void set_user_data(_In_ USHORT size, _In_bytecount_(size) LPCVOID data)
+        {
+            if (UserData)
+                delete reinterpret_cast<unsigned char*>(UserData);
+
+            set_user_data_internal(size, data);
+        }
 
     protected:
         ///
@@ -389,7 +410,37 @@ namespace winstd
         /// \param[in] count  \p data size (in number of elements)
         /// \param[in] data   Record extended data
         ///
-        void set_extended_data_internal(_In_ USHORT count, _In_count_(count) const EVENT_HEADER_EXTENDED_DATA_ITEM *data);
+        void set_extended_data_internal(_In_ USHORT count, _In_count_(count) const EVENT_HEADER_EXTENDED_DATA_ITEM *data)
+        {
+            if (count) {
+                assert(data);
+
+                // Count the total required memory.
+                size_t data_size = 0;
+                for (size_t i = 0; i < count; i++)
+                    data_size += data[i].DataSize;
+
+                // Allocate memory for extended data.
+                ExtendedData = reinterpret_cast<EVENT_HEADER_EXTENDED_DATA_ITEM*>(new unsigned char[sizeof(EVENT_HEADER_EXTENDED_DATA_ITEM)*count + data_size]);
+
+                // Bulk-copy extended data descriptors.
+                memcpy(ExtendedData, data, sizeof(EVENT_HEADER_EXTENDED_DATA_ITEM) * count);
+
+                // Copy the data.
+                unsigned char *ptr = reinterpret_cast<unsigned char*>(ExtendedData + count);
+                for (size_t i = 0; i < count; i++) {
+                    if (data[i].DataSize) {
+                        memcpy(ptr, (void*)(data[i].DataPtr), data[i].DataSize);
+                        ExtendedData[i].DataPtr = (ULONGLONG)ptr;
+                        ptr += data[i].DataSize;
+                    } else
+                        ExtendedData[i].DataPtr = NULL;
+                }
+            } else
+                ExtendedData = NULL;
+
+            ExtendedDataCount = count;
+        }
 
         ///
         /// Sets event record user data.
@@ -397,7 +448,21 @@ namespace winstd
         /// \param[in] size  \p data size (in bytes)
         /// \param[in] data  Record user data
         ///
-        void set_user_data_internal(_In_ USHORT size, _In_bytecount_(size) LPCVOID data);
+        void set_user_data_internal(_In_ USHORT size, _In_bytecount_(size) LPCVOID data)
+        {
+            if (size) {
+                assert(data);
+
+                // Allocate memory for user data.
+                UserData = new unsigned char[size];
+
+                // Copy user data.
+                memcpy(UserData, data, size);
+            } else
+                UserData = NULL;
+
+            UserDataLength = size;
+        }
     };
 
 
@@ -414,7 +479,11 @@ namespace winstd
         ///
         /// \sa [EventUnregister function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363749.aspx)
         ///
-        virtual ~event_provider();
+        virtual ~event_provider()
+        {
+            if (m_h != invalid)
+                EventUnregister(m_h);
+        }
 
 
         ///
@@ -599,7 +668,10 @@ namespace winstd
         ///
         /// \sa [EventUnregister function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363749.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            EventUnregister(m_h);
+        }
 
 
         ///
@@ -607,7 +679,15 @@ namespace winstd
         ///
         /// \sa [EnableCallback callback function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363707.aspx)
         ///
-        virtual void enable_callback(_In_ LPCGUID SourceId, _In_ ULONG IsEnabled, _In_ UCHAR Level, _In_ ULONGLONG MatchAnyKeyword, _In_ ULONGLONG MatchAllKeyword, _In_opt_ PEVENT_FILTER_DESCRIPTOR FilterData);
+        virtual void enable_callback(_In_ LPCGUID SourceId, _In_ ULONG IsEnabled, _In_ UCHAR Level, _In_ ULONGLONG MatchAnyKeyword, _In_ ULONGLONG MatchAllKeyword, _In_opt_ PEVENT_FILTER_DESCRIPTOR FilterData)
+        {
+            UNREFERENCED_PARAMETER(SourceId);
+            UNREFERENCED_PARAMETER(IsEnabled);
+            UNREFERENCED_PARAMETER(Level);
+            UNREFERENCED_PARAMETER(MatchAnyKeyword);
+            UNREFERENCED_PARAMETER(MatchAllKeyword);
+            UNREFERENCED_PARAMETER(FilterData);
+        }
 
 
         ///
@@ -615,7 +695,13 @@ namespace winstd
         ///
         /// \sa [EnableCallback callback function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363707.aspx)
         ///
-        static VOID NTAPI enable_callback(_In_ LPCGUID SourceId, _In_ ULONG IsEnabled, _In_ UCHAR Level, _In_ ULONGLONG MatchAnyKeyword, _In_ ULONGLONG MatchAllKeyword, _In_opt_ PEVENT_FILTER_DESCRIPTOR FilterData, _Inout_opt_ PVOID CallbackContext);
+        static VOID NTAPI enable_callback(_In_ LPCGUID SourceId, _In_ ULONG IsEnabled, _In_ UCHAR Level, _In_ ULONGLONG MatchAnyKeyword, _In_ ULONGLONG MatchAllKeyword, _In_opt_ PEVENT_FILTER_DESCRIPTOR FilterData, _Inout_opt_ PVOID CallbackContext)
+        {
+            if (CallbackContext)
+                static_cast<event_provider*>(CallbackContext)->enable_callback(SourceId, IsEnabled, Level, MatchAnyKeyword, MatchAllKeyword, FilterData);
+            else
+                assert(0); // Where did the "this" pointer get lost?
+        }
     };
 
 
@@ -666,7 +752,11 @@ namespace winstd
         ///
         /// \sa [ControlTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363696.aspx)
         ///
-        virtual ~event_session();
+        virtual ~event_session()
+        {
+            if (m_h != invalid)
+                ControlTrace(m_h, name(), m_prop.get(), EVENT_TRACE_CONTROL_STOP);
+        }
 
 
         ///
@@ -799,7 +889,10 @@ namespace winstd
         ///
         /// \sa [ControlTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363696.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            ControlTrace(m_h, name(), m_prop.get(), EVENT_TRACE_CONTROL_STOP);
+        }
 
     protected:
         std::unique_ptr<EVENT_TRACE_PROPERTIES> m_prop; ///< Session properties
@@ -819,7 +912,11 @@ namespace winstd
         ///
         /// \sa [CloseTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363686.aspx)
         ///
-        virtual ~event_trace();
+        virtual ~event_trace()
+        {
+            if (m_h != invalid)
+                CloseTrace(m_h);
+        }
 
 
         ///
@@ -847,7 +944,10 @@ namespace winstd
         ///
         /// \sa [CloseTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363686.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            CloseTrace(m_h);
+        }
     };
 
 
@@ -944,7 +1044,20 @@ namespace winstd
         ///
         /// \sa [EnableTraceEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363711.aspx)
         ///
-        virtual ~event_trace_enabler();
+        virtual ~event_trace_enabler()
+        {
+            if (m_status == ERROR_SUCCESS)
+                EnableTraceEx(
+                    m_provider_id,
+                    m_source_id,
+                    m_trace_handle,
+                    EVENT_CONTROL_CODE_DISABLE_PROVIDER,
+                    m_level,
+                    m_match_any_keyword,
+                    m_match_all_keyword,
+                    m_enable_property,
+                    m_enable_filter_desc);
+        }
 
     protected:
         ULONG m_status;                                 ///< Result of EnableTraceEx call

@@ -259,7 +259,11 @@ namespace winstd
         ///
         /// \sa [SysFreeString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms221481.aspx)
         ///
-        virtual ~bstr();
+        virtual ~bstr()
+        {
+            if (m_h != invalid)
+                SysFreeString(m_h);
+        }
 
         ///
         /// Returns the length of the string
@@ -277,7 +281,10 @@ namespace winstd
         ///
         /// \sa [SysFreeString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms221481.aspx)
         ///
-        void free_internal() noexcept override;
+        void free_internal() noexcept override
+        {
+            SysFreeString(m_h);
+        }
 
         ///
         /// Duplicates the string
@@ -288,7 +295,10 @@ namespace winstd
         ///
         /// \sa [SysAllocString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms221458.aspx)
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const noexcept override;
+        handle_type duplicate_internal(_In_ handle_type h) const noexcept override
+        {
+            return SysAllocStringLen(h, SysStringLen(h));
+        }
     };
 
 
@@ -522,7 +532,10 @@ namespace winstd
         ///
         /// Destroys VARIANT
         ///
-        virtual ~variant();
+        virtual ~variant()
+        {
+            VariantClear(this);
+        }
 
         ///
         /// Copy from another VARIANT
@@ -1081,7 +1094,11 @@ namespace winstd
         ///
         /// \sa [CoUninitialize function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms688715.aspx)
         ///
-        virtual ~com_initializer();
+        virtual ~com_initializer()
+        {
+            if (SUCCEEDED(m_result))
+                CoUninitialize();
+        }
 
 
         ///
