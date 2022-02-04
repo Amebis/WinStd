@@ -124,7 +124,7 @@ namespace winstd
         virtual ~wlan_handle()
         {
             if (m_h != invalid)
-                WlanCloseHandle(m_h, NULL);
+                free_internal();
         }
 
         ///

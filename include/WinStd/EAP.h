@@ -438,7 +438,7 @@ namespace winstd
         virtual ~eap_packet()
         {
             if (m_h != invalid)
-                HeapFree(GetProcessHeap(), 0, m_h);
+                free_internal();
         }
 
 

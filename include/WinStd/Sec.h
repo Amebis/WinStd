@@ -98,10 +98,8 @@ namespace winstd
         ///
         virtual ~sec_credentials()
         {
-            if (m_h != invalid) {
-                FreeCredentialsHandle(m_h);
-                delete m_h;
-            }
+            if (m_h != invalid)
+                free_internal();
         }
 
         ///
@@ -199,10 +197,8 @@ namespace winstd
         ///
         virtual ~sec_context()
         {
-            if (m_h != invalid) {
-                DeleteSecurityContext(m_h);
-                delete m_h;
-            }
+            if (m_h != invalid)
+                free_internal();
         }
 
         ///

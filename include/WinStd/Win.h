@@ -437,7 +437,7 @@ namespace winstd
         virtual ~win_handle()
         {
             if (m_h != invalid)
-                CloseHandle(m_h);
+                free_internal();
         }
 
     protected:
@@ -469,7 +469,7 @@ namespace winstd
         virtual ~library()
         {
             if (m_h != invalid)
-                FreeLibrary(m_h);
+                free_internal();
         }
 
         ///
@@ -667,9 +667,8 @@ namespace winstd
         ///
         virtual ~find_file()
         {
-            if (m_h != invalid) {
-                FindClose(m_h);
-            }
+            if (m_h != invalid)
+                free_internal();
         }
 
         ///
@@ -719,10 +718,8 @@ namespace winstd
         ///
         virtual ~heap()
         {
-            if (m_h != invalid) {
-                enumerate();
-                HeapDestroy(m_h);
-            }
+            if (m_h != invalid)
+                free_internal();
         }
 
         ///
@@ -1168,7 +1165,7 @@ namespace winstd
         virtual ~reg_key()
         {
             if (m_h != invalid)
-                RegCloseKey(m_h);
+                free_internal();
         }
 
         ///
@@ -1300,7 +1297,7 @@ namespace winstd
         virtual ~security_id()
         {
             if (m_h != invalid)
-                FreeSid(m_h);
+                free_internal();
         }
 
     protected:

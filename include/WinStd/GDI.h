@@ -44,7 +44,7 @@ namespace winstd
         virtual ~gdi_handle()
         {
             if (m_h != invalid)
-                DeleteObject(m_h);
+                free_internal();
         }
 
     protected:
@@ -76,7 +76,7 @@ namespace winstd
         virtual ~dc()
         {
             if (m_h != invalid)
-                DeleteDC(m_h);
+                free_internal();
         }
 
     protected:
@@ -130,7 +130,7 @@ namespace winstd
         virtual ~window_dc()
         {
             if (m_h != invalid)
-                ReleaseDC(m_hwnd, m_h);
+                free_internal();
         }
 
     protected:

@@ -143,7 +143,7 @@ namespace winstd
         virtual ~com_obj()
         {
             if (m_h != invalid)
-                m_h->Release();
+                free_internal();
         }
 
 
@@ -262,7 +262,7 @@ namespace winstd
         virtual ~bstr()
         {
             if (m_h != invalid)
-                SysFreeString(m_h);
+                free_internal();
         }
 
         ///

@@ -44,7 +44,7 @@ namespace winstd
         virtual ~setup_device_info_list()
         {
             if (m_h != invalid)
-                SetupDiDestroyDeviceInfoList(m_h);
+                free_internal();
         }
 
         ///

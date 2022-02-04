@@ -128,7 +128,7 @@ namespace winstd
         virtual ~cert_context()
         {
             if (m_h != invalid)
-                CertFreeCertificateContext(m_h);
+                free_internal();
         }
 
         ///
@@ -278,7 +278,7 @@ namespace winstd
         virtual ~cert_chain_context()
         {
             if (m_h != invalid)
-                CertFreeCertificateChain(m_h);
+                free_internal();
         }
 
         ///
@@ -343,7 +343,7 @@ namespace winstd
         virtual ~cert_store()
         {
             if (m_h != invalid)
-                CertCloseStore(m_h, 0);
+                free_internal();
         }
 
         ///
@@ -413,7 +413,7 @@ namespace winstd
         virtual ~crypt_prov()
         {
             if (m_h != invalid)
-                CryptReleaseContext(m_h, 0);
+                free_internal();
         }
 
         ///
@@ -464,7 +464,7 @@ namespace winstd
         virtual ~crypt_hash()
         {
             if (m_h != invalid)
-                CryptDestroyHash(m_h);
+                free_internal();
         }
 
         ///
@@ -530,7 +530,7 @@ namespace winstd
         virtual ~crypt_key()
         {
             if (m_h != invalid)
-                CryptDestroyKey(m_h);
+                free_internal();
         }
 
         ///

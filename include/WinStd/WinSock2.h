@@ -138,7 +138,7 @@ namespace winstd
         virtual ~addrinfo()
         {
             if (m_h != invalid)
-                FreeAddrInfo(m_h);
+                free_internal();
         }
 
 

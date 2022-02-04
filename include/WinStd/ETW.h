@@ -480,7 +480,7 @@ namespace winstd
         virtual ~event_provider()
         {
             if (m_h != invalid)
-                EventUnregister(m_h);
+                free_internal();
         }
 
 
@@ -753,7 +753,7 @@ namespace winstd
         virtual ~event_session()
         {
             if (m_h != invalid)
-                ControlTrace(m_h, name(), m_prop.get(), EVENT_TRACE_CONTROL_STOP);
+                free_internal();
         }
 
 
@@ -913,7 +913,7 @@ namespace winstd
         virtual ~event_trace()
         {
             if (m_h != invalid)
-                CloseTrace(m_h);
+                free_internal();
         }
 
 
