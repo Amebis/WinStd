@@ -82,12 +82,12 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a574c01df16c4b42391299222733790ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event__trace__enabler.html#a574c01df16c4b42391299222733790ec">event_trace_enabler</a> (1 LPCGUID SourceId, 1 TRACEHANDLE TraceHandle, 1 LPCGUID ProviderId, 1 UCHAR Level, 1 ULONGLONG MatchAnyKeyword=0, 1 ULONGLONG MatchAllKeyword=0, 1 ULONG EnableProperty=0, 1 PEVENT_FILTER_DESCRIPTOR EnableFilterDesc=NULL)</td></tr>
-<tr class="memdesc:a574c01df16c4b42391299222733790ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables event trace.  <a href="classwinstd_1_1event__trace__enabler.html#a574c01df16c4b42391299222733790ec">More...</a><br /></td></tr>
-<tr class="separator:a574c01df16c4b42391299222733790ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b430e2cb00c529d2c2dc1286e7de898"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event__trace__enabler.html#a8b430e2cb00c529d2c2dc1286e7de898">event_trace_enabler</a> (1 const <a class="el" href="classwinstd_1_1event__session.html">event_session</a> &amp;session, 1 LPCGUID ProviderId, 1 UCHAR Level, 1 ULONGLONG MatchAnyKeyword=0, 1 ULONGLONG MatchAllKeyword=0, 1 ULONG EnableProperty=0, 1 PEVENT_FILTER_DESCRIPTOR EnableFilterDesc=NULL)</td></tr>
-<tr class="memdesc:a8b430e2cb00c529d2c2dc1286e7de898"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables event trace.  <a href="classwinstd_1_1event__trace__enabler.html#a8b430e2cb00c529d2c2dc1286e7de898">More...</a><br /></td></tr>
-<tr class="separator:a8b430e2cb00c529d2c2dc1286e7de898"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50ce2e4286dbfc133c7f4a4762b65a05"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event__trace__enabler.html#a50ce2e4286dbfc133c7f4a4762b65a05">event_trace_enabler</a> (LPCGUID SourceId, TRACEHANDLE TraceHandle, LPCGUID ProviderId, UCHAR Level, ULONGLONG MatchAnyKeyword=0, ULONGLONG MatchAllKeyword=0, ULONG EnableProperty=0, PEVENT_FILTER_DESCRIPTOR EnableFilterDesc=NULL)</td></tr>
+<tr class="memdesc:a50ce2e4286dbfc133c7f4a4762b65a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables event trace.  <a href="classwinstd_1_1event__trace__enabler.html#a50ce2e4286dbfc133c7f4a4762b65a05">More...</a><br /></td></tr>
+<tr class="separator:a50ce2e4286dbfc133c7f4a4762b65a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8666ba08639a65fa01eb64c4855d68a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event__trace__enabler.html#a8666ba08639a65fa01eb64c4855d68a3">event_trace_enabler</a> (const <a class="el" href="classwinstd_1_1event__session.html">event_session</a> &amp;session, LPCGUID ProviderId, UCHAR Level, ULONGLONG MatchAnyKeyword=0, ULONGLONG MatchAllKeyword=0, ULONG EnableProperty=0, PEVENT_FILTER_DESCRIPTOR EnableFilterDesc=NULL)</td></tr>
+<tr class="memdesc:a8666ba08639a65fa01eb64c4855d68a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables event trace.  <a href="classwinstd_1_1event__trace__enabler.html#a8666ba08639a65fa01eb64c4855d68a3">More...</a><br /></td></tr>
+<tr class="separator:a8666ba08639a65fa01eb64c4855d68a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a726b84e91002da1243d512c37a060293"><td class="memItemLeft" align="right" valign="top">ULONG&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event__trace__enabler.html#a726b84e91002da1243d512c37a060293">status</a> () const</td></tr>
 <tr class="memdesc:a726b84e91002da1243d512c37a060293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return result of <code>EnableTraceEx()</code> call.  <a href="classwinstd_1_1event__trace__enabler.html#a726b84e91002da1243d512c37a060293">More...</a><br /></td></tr>
 <tr class="separator:a726b84e91002da1243d512c37a060293"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,8 +137,8 @@ PEVENT_FILTER_DESCRIPTOR&#160;</td><td class="memItemRight" valign="bottom"><b>m
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Helper class to enable event provider in constructor and disables it in destructor. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a574c01df16c4b42391299222733790ec" name="a574c01df16c4b42391299222733790ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a574c01df16c4b42391299222733790ec">&#9670;&nbsp;</a></span>event_trace_enabler() <span class="overload">[1/2]</span></h2>
+<a id="a50ce2e4286dbfc133c7f4a4762b65a05" name="a50ce2e4286dbfc133c7f4a4762b65a05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50ce2e4286dbfc133c7f4a4762b65a05">&#9670;&nbsp;</a></span>event_trace_enabler() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -149,49 +149,49 @@ PEVENT_FILTER_DESCRIPTOR&#160;</td><td class="memItemRight" valign="bottom"><b>m
         <tr>
           <td class="memname">winstd::event_trace_enabler::event_trace_enabler </td>
           <td>(</td>
-          <td class="paramtype">1 LPCGUID&#160;</td>
+          <td class="paramtype">LPCGUID&#160;</td>
           <td class="paramname"><em>SourceId</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">1 TRACEHANDLE&#160;</td>
+          <td class="paramtype">TRACEHANDLE&#160;</td>
           <td class="paramname"><em>TraceHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">1 LPCGUID&#160;</td>
+          <td class="paramtype">LPCGUID&#160;</td>
           <td class="paramname"><em>ProviderId</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">1 UCHAR&#160;</td>
+          <td class="paramtype">UCHAR&#160;</td>
           <td class="paramname"><em>Level</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">1 ULONGLONG&#160;</td>
+          <td class="paramtype">ULONGLONG&#160;</td>
           <td class="paramname"><em>MatchAnyKeyword</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">1 ULONGLONG&#160;</td>
+          <td class="paramtype">ULONGLONG&#160;</td>
           <td class="paramname"><em>MatchAllKeyword</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">1 ULONG&#160;</td>
+          <td class="paramtype">ULONG&#160;</td>
           <td class="paramname"><em>EnableProperty</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">1 PEVENT_FILTER_DESCRIPTOR&#160;</td>
+          <td class="paramtype">PEVENT_FILTER_DESCRIPTOR&#160;</td>
           <td class="paramname"><em>EnableFilterDesc</em> = <code>NULL</code>&#160;</td>
         </tr>
         <tr>
@@ -212,8 +212,8 @@ PEVENT_FILTER_DESCRIPTOR&#160;</td><td class="memItemRight" valign="bottom"><b>m
 
 </div>
 </div>
-<a id="a8b430e2cb00c529d2c2dc1286e7de898" name="a8b430e2cb00c529d2c2dc1286e7de898"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b430e2cb00c529d2c2dc1286e7de898">&#9670;&nbsp;</a></span>event_trace_enabler() <span class="overload">[2/2]</span></h2>
+<a id="a8666ba08639a65fa01eb64c4855d68a3" name="a8666ba08639a65fa01eb64c4855d68a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8666ba08639a65fa01eb64c4855d68a3">&#9670;&nbsp;</a></span>event_trace_enabler() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -224,43 +224,43 @@ PEVENT_FILTER_DESCRIPTOR&#160;</td><td class="memItemRight" valign="bottom"><b>m
         <tr>
           <td class="memname">winstd::event_trace_enabler::event_trace_enabler </td>
           <td>(</td>
-          <td class="paramtype">1 const <a class="el" href="classwinstd_1_1event__session.html">event_session</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classwinstd_1_1event__session.html">event_session</a> &amp;&#160;</td>
           <td class="paramname"><em>session</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">1 LPCGUID&#160;</td>
+          <td class="paramtype">LPCGUID&#160;</td>
           <td class="paramname"><em>ProviderId</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">1 UCHAR&#160;</td>
+          <td class="paramtype">UCHAR&#160;</td>
           <td class="paramname"><em>Level</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">1 ULONGLONG&#160;</td>
+          <td class="paramtype">ULONGLONG&#160;</td>
           <td class="paramname"><em>MatchAnyKeyword</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">1 ULONGLONG&#160;</td>
+          <td class="paramtype">ULONGLONG&#160;</td>
           <td class="paramname"><em>MatchAllKeyword</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">1 ULONG&#160;</td>
+          <td class="paramtype">ULONG&#160;</td>
           <td class="paramname"><em>EnableProperty</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">1 PEVENT_FILTER_DESCRIPTOR&#160;</td>
+          <td class="paramtype">PEVENT_FILTER_DESCRIPTOR&#160;</td>
           <td class="paramname"><em>EnableFilterDesc</em> = <code>NULL</code>&#160;</td>
         </tr>
         <tr>
@@ -344,7 +344,7 @@ PEVENT_FILTER_DESCRIPTOR&#160;</td><td class="memItemRight" valign="bottom"><b>m
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Feb 4 2022 13:33:08 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Fri Feb 4 2022 13:37:36 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

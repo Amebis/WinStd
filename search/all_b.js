@@ -41,5 +41,5 @@ var searchData=
   ['microsoft_20installer_20api_38',['Microsoft Installer API',['../group___win_std_m_s_i_a_p_i.html',1,'']]],
   ['ms_5fauth_5ftlv_39',['ms_auth_tlv',['../group___win_std_e_a_p_a_p_i.html#gga50f5584ca708165f43cec42c42243315ae19141eb8aa04ffb76d616409efcdf03',1,'winstd']]],
   ['mschapv2_40',['mschapv2',['../group___win_std_e_a_p_a_p_i.html#gga50f5584ca708165f43cec42c42243315af579ec4460aed7126de9ed539845a0f4',1,'winstd']]],
-  ['msg_41',['msg',['../classwinstd_1_1win__runtime__error.html#a5c1ce5da22b84b541a8908339e694c56',1,'winstd::win_runtime_error::msg()'],['../classwinstd_1_1ws2__runtime__error.html#a8c06632e0216067f44bbd6aeaffd17c7',1,'winstd::ws2_runtime_error::msg()']]]
+  ['msg_41',['msg',['../classwinstd_1_1win__runtime__error.html#a868231adfa74636792a474a6362aeea7',1,'winstd::win_runtime_error::msg()'],['../classwinstd_1_1ws2__runtime__error.html#af6984de4ac18e732a6844f379d67c52f',1,'winstd::ws2_runtime_error::msg()']]]
 ];
