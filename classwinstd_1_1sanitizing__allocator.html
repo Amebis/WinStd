@@ -79,7 +79,7 @@ $(function() {
 <p>An allocator template that sanitizes each memory block before it is destroyed or reallocated.  
  <a href="classwinstd_1_1sanitizing__allocator.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_common_8h_source.html">Common.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_common_8h_source.html">WinStd/Common.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for winstd::sanitizing_allocator&lt; _Ty &gt;:</div>
 <div class="dyncontent">
@@ -106,19 +106,19 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>sanitizing_allocator</b> () noexcept</td></tr>
 <tr class="memdesc:af89279ba111029e2880c2a43189b4d4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct default allocator. <br /></td></tr>
 <tr class="separator:af89279ba111029e2880c2a43189b4d4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a894a7e05b01fdc0adccedc2abdadb066"><td class="memItemLeft" align="right" valign="top"><a id="a894a7e05b01fdc0adccedc2abdadb066" name="a894a7e05b01fdc0adccedc2abdadb066"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>sanitizing_allocator</b> (_In_ const <a class="el" href="classwinstd_1_1sanitizing__allocator.html">sanitizing_allocator</a>&lt; _Ty &gt; &amp;_Othr)</td></tr>
-<tr class="memdesc:a894a7e05b01fdc0adccedc2abdadb066"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct by copying. <br /></td></tr>
-<tr class="separator:a894a7e05b01fdc0adccedc2abdadb066"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee5365a5f25c2682dd5c5a2f8c9ac9c2"><td class="memTemplParams" colspan="2"><a id="aee5365a5f25c2682dd5c5a2f8c9ac9c2" name="aee5365a5f25c2682dd5c5a2f8c9ac9c2"></a>
+<tr class="memitem:a06fdb355f632625a220375d8b4a212b0"><td class="memItemLeft" align="right" valign="top"><a id="a06fdb355f632625a220375d8b4a212b0" name="a06fdb355f632625a220375d8b4a212b0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>sanitizing_allocator</b> (1 const <a class="el" href="classwinstd_1_1sanitizing__allocator.html">sanitizing_allocator</a>&lt; _Ty &gt; &amp;_Othr)</td></tr>
+<tr class="memdesc:a06fdb355f632625a220375d8b4a212b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct by copying. <br /></td></tr>
+<tr class="separator:a06fdb355f632625a220375d8b4a212b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abad88f18c0430a12c481126abe93e290"><td class="memTemplParams" colspan="2"><a id="abad88f18c0430a12c481126abe93e290" name="abad88f18c0430a12c481126abe93e290"></a>
 template&lt;class _Other &gt; </td></tr>
-<tr class="memitem:aee5365a5f25c2682dd5c5a2f8c9ac9c2"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sanitizing_allocator</b> (_In_ const <a class="el" href="classwinstd_1_1sanitizing__allocator.html">sanitizing_allocator</a>&lt; _Other &gt; &amp;_Othr) noexcept</td></tr>
-<tr class="memdesc:aee5365a5f25c2682dd5c5a2f8c9ac9c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from a related allocator. <br /></td></tr>
-<tr class="separator:aee5365a5f25c2682dd5c5a2f8c9ac9c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34e2f08aa05e8075fdee38963b6e8283"><td class="memItemLeft" align="right" valign="top"><a id="a34e2f08aa05e8075fdee38963b6e8283" name="a34e2f08aa05e8075fdee38963b6e8283"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>deallocate</b> (_In_ pointer _Ptr, _In_ size_type _Size)</td></tr>
-<tr class="memdesc:a34e2f08aa05e8075fdee38963b6e8283"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deallocate object at _Ptr sanitizing its content first. <br /></td></tr>
-<tr class="separator:a34e2f08aa05e8075fdee38963b6e8283"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abad88f18c0430a12c481126abe93e290"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sanitizing_allocator</b> (1 const <a class="el" href="classwinstd_1_1sanitizing__allocator.html">sanitizing_allocator</a>&lt; _Other &gt; &amp;_Othr) noexcept</td></tr>
+<tr class="memdesc:abad88f18c0430a12c481126abe93e290"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from a related allocator. <br /></td></tr>
+<tr class="separator:abad88f18c0430a12c481126abe93e290"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dfb8bc5af4a4a93b95c7a9774314f33"><td class="memItemLeft" align="right" valign="top"><a id="a5dfb8bc5af4a4a93b95c7a9774314f33" name="a5dfb8bc5af4a4a93b95c7a9774314f33"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>deallocate</b> (1 pointer _Ptr, 1 size_type _Size)</td></tr>
+<tr class="memdesc:a5dfb8bc5af4a4a93b95c7a9774314f33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deallocate object at _Ptr sanitizing its content first. <br /></td></tr>
+<tr class="separator:a5dfb8bc5af4a4a93b95c7a9774314f33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;class _Ty&gt;<br />
@@ -130,7 +130,7 @@ class winstd::sanitizing_allocator&lt; _Ty &gt;</div><p >An allocator template t
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Feb 4 2022 12:49:44 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Fri Feb 4 2022 13:28:45 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

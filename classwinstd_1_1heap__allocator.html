@@ -80,7 +80,7 @@ $(function() {
 <p>HeapAlloc allocator.  
  <a href="classwinstd_1_1heap__allocator.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_win_8h_source.html">Win.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_win_8h_source.html">WinStd/Win.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -121,28 +121,28 @@ typedef ptrdiff_t&#160;</td><td class="memItemRight" valign="bottom"><b>differen
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac5f30e886e7bfff4c18470b990eba118"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#ac5f30e886e7bfff4c18470b990eba118">heap_allocator</a> (_In_ HANDLE <a class="el" href="classwinstd_1_1heap.html">heap</a>)</td></tr>
-<tr class="memdesc:ac5f30e886e7bfff4c18470b990eba118"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs allocator.  <a href="classwinstd_1_1heap__allocator.html#ac5f30e886e7bfff4c18470b990eba118">More...</a><br /></td></tr>
-<tr class="separator:ac5f30e886e7bfff4c18470b990eba118"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaed5a79d60e4d9ae77d251c900ccd78b"><td class="memTemplParams" colspan="2">template&lt;class _Other &gt; </td></tr>
-<tr class="memitem:aaed5a79d60e4d9ae77d251c900ccd78b"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#aaed5a79d60e4d9ae77d251c900ccd78b">heap_allocator</a> (_In_ const <a class="el" href="classwinstd_1_1heap__allocator.html">heap_allocator</a>&lt; _Other &gt; &amp;other)</td></tr>
-<tr class="memdesc:aaed5a79d60e4d9ae77d251c900ccd78b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs allocator from another type.  <a href="classwinstd_1_1heap__allocator.html#aaed5a79d60e4d9ae77d251c900ccd78b">More...</a><br /></td></tr>
-<tr class="separator:aaed5a79d60e4d9ae77d251c900ccd78b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9caa7c3f603225c8aa1f4c8aaf7bb81e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#a9caa7c3f603225c8aa1f4c8aaf7bb81e">allocate</a> (_In_ <a class="el" href="classwinstd_1_1heap__allocator.html#a01815f4f9097b1447c7ddaa2de868f59">size_type</a> count)</td></tr>
-<tr class="memdesc:a9caa7c3f603225c8aa1f4c8aaf7bb81e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new memory block.  <a href="classwinstd_1_1heap__allocator.html#a9caa7c3f603225c8aa1f4c8aaf7bb81e">More...</a><br /></td></tr>
-<tr class="separator:a9caa7c3f603225c8aa1f4c8aaf7bb81e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a216a8b605486846660c4c7fd03282ae7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#a216a8b605486846660c4c7fd03282ae7">deallocate</a> (_In_ <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a> ptr, _In_ <a class="el" href="classwinstd_1_1heap__allocator.html#a01815f4f9097b1447c7ddaa2de868f59">size_type</a> size)</td></tr>
-<tr class="memdesc:a216a8b605486846660c4c7fd03282ae7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees memory block.  <a href="classwinstd_1_1heap__allocator.html#a216a8b605486846660c4c7fd03282ae7">More...</a><br /></td></tr>
-<tr class="separator:a216a8b605486846660c4c7fd03282ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fef7b864c8da18f75960f20aea29e1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#a2fef7b864c8da18f75960f20aea29e1a">construct</a> (_Inout_ <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a> ptr, _In_ const _Ty &amp;val)</td></tr>
-<tr class="memdesc:a2fef7b864c8da18f75960f20aea29e1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls copying constructor for the element.  <a href="classwinstd_1_1heap__allocator.html#a2fef7b864c8da18f75960f20aea29e1a">More...</a><br /></td></tr>
-<tr class="separator:a2fef7b864c8da18f75960f20aea29e1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9f07c2c98cd2168614e03cdf6730c77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#ac9f07c2c98cd2168614e03cdf6730c77">construct</a> (_Inout_ <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a> ptr, _Inout_ _Ty &amp;&amp;val)</td></tr>
-<tr class="memdesc:ac9f07c2c98cd2168614e03cdf6730c77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls moving constructor for the element.  <a href="classwinstd_1_1heap__allocator.html#ac9f07c2c98cd2168614e03cdf6730c77">More...</a><br /></td></tr>
-<tr class="separator:ac9f07c2c98cd2168614e03cdf6730c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae22bc5ee2aad749c334a96d623c73f3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#ae22bc5ee2aad749c334a96d623c73f3c">destroy</a> (_Inout_ <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a> ptr)</td></tr>
-<tr class="memdesc:ae22bc5ee2aad749c334a96d623c73f3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls destructor for the element.  <a href="classwinstd_1_1heap__allocator.html#ae22bc5ee2aad749c334a96d623c73f3c">More...</a><br /></td></tr>
-<tr class="separator:ae22bc5ee2aad749c334a96d623c73f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a321bb5f5462bead5703c82d67b11bb6a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#a321bb5f5462bead5703c82d67b11bb6a">heap_allocator</a> (1 HANDLE <a class="el" href="classwinstd_1_1heap.html">heap</a>)</td></tr>
+<tr class="memdesc:a321bb5f5462bead5703c82d67b11bb6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs allocator.  <a href="classwinstd_1_1heap__allocator.html#a321bb5f5462bead5703c82d67b11bb6a">More...</a><br /></td></tr>
+<tr class="separator:a321bb5f5462bead5703c82d67b11bb6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af04ca9c615a3a87c05a98f922e50d412"><td class="memTemplParams" colspan="2">template&lt;class _Other &gt; </td></tr>
+<tr class="memitem:af04ca9c615a3a87c05a98f922e50d412"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#af04ca9c615a3a87c05a98f922e50d412">heap_allocator</a> (1 const <a class="el" href="classwinstd_1_1heap__allocator.html">heap_allocator</a>&lt; _Other &gt; &amp;other)</td></tr>
+<tr class="memdesc:af04ca9c615a3a87c05a98f922e50d412"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs allocator from another type.  <a href="classwinstd_1_1heap__allocator.html#af04ca9c615a3a87c05a98f922e50d412">More...</a><br /></td></tr>
+<tr class="separator:af04ca9c615a3a87c05a98f922e50d412"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc38b748db1bcfed85f01ee76dd6056a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#acc38b748db1bcfed85f01ee76dd6056a">allocate</a> (1 <a class="el" href="classwinstd_1_1heap__allocator.html#a01815f4f9097b1447c7ddaa2de868f59">size_type</a> count)</td></tr>
+<tr class="memdesc:acc38b748db1bcfed85f01ee76dd6056a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new memory block.  <a href="classwinstd_1_1heap__allocator.html#acc38b748db1bcfed85f01ee76dd6056a">More...</a><br /></td></tr>
+<tr class="separator:acc38b748db1bcfed85f01ee76dd6056a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a790350f6d3d40d936417e07ba0e54343"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#a790350f6d3d40d936417e07ba0e54343">deallocate</a> (1 <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a> ptr, 1 <a class="el" href="classwinstd_1_1heap__allocator.html#a01815f4f9097b1447c7ddaa2de868f59">size_type</a> size)</td></tr>
+<tr class="memdesc:a790350f6d3d40d936417e07ba0e54343"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees memory block.  <a href="classwinstd_1_1heap__allocator.html#a790350f6d3d40d936417e07ba0e54343">More...</a><br /></td></tr>
+<tr class="separator:a790350f6d3d40d936417e07ba0e54343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9638b1d0a5d1562574868b6b20bd8683"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#a9638b1d0a5d1562574868b6b20bd8683">construct</a> (1 <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a> ptr, 1 const _Ty &amp;val)</td></tr>
+<tr class="memdesc:a9638b1d0a5d1562574868b6b20bd8683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls copying constructor for the element.  <a href="classwinstd_1_1heap__allocator.html#a9638b1d0a5d1562574868b6b20bd8683">More...</a><br /></td></tr>
+<tr class="separator:a9638b1d0a5d1562574868b6b20bd8683"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dc6db1dce1fe9d9d07ee1074fcdc595"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#a3dc6db1dce1fe9d9d07ee1074fcdc595">construct</a> (1 <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a> ptr, 1 _Ty &amp;&amp;val)</td></tr>
+<tr class="memdesc:a3dc6db1dce1fe9d9d07ee1074fcdc595"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls moving constructor for the element.  <a href="classwinstd_1_1heap__allocator.html#a3dc6db1dce1fe9d9d07ee1074fcdc595">More...</a><br /></td></tr>
+<tr class="separator:a3dc6db1dce1fe9d9d07ee1074fcdc595"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5020277387142da670e2e4289177ba5a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap__allocator.html#a5020277387142da670e2e4289177ba5a">destroy</a> (1 <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a> ptr)</td></tr>
+<tr class="memdesc:a5020277387142da670e2e4289177ba5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls destructor for the element.  <a href="classwinstd_1_1heap__allocator.html#a5020277387142da670e2e4289177ba5a">More...</a><br /></td></tr>
+<tr class="separator:a5020277387142da670e2e4289177ba5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2018e74ee3bc84eb3841fae8bc71b01"><td class="memItemLeft" align="right" valign="top"><a id="ab2018e74ee3bc84eb3841fae8bc71b01" name="ab2018e74ee3bc84eb3841fae8bc71b01"></a>
 <a class="el" href="classwinstd_1_1heap__allocator.html#a01815f4f9097b1447c7ddaa2de868f59">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>max_size</b> () const</td></tr>
 <tr class="memdesc:ab2018e74ee3bc84eb3841fae8bc71b01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns maximum memory block size. <br /></td></tr>
@@ -159,8 +159,8 @@ HANDLE&#160;</td><td class="memItemRight" valign="bottom"><b>m_heap</b></td></tr
 <div class="textblock"><div class="compoundTemplParams">template&lt;class _Ty&gt;<br />
 class winstd::heap_allocator&lt; _Ty &gt;</div><p >HeapAlloc allocator. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac5f30e886e7bfff4c18470b990eba118" name="ac5f30e886e7bfff4c18470b990eba118"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5f30e886e7bfff4c18470b990eba118">&#9670;&nbsp;</a></span>heap_allocator() <span class="overload">[1/2]</span></h2>
+<a id="a321bb5f5462bead5703c82d67b11bb6a" name="a321bb5f5462bead5703c82d67b11bb6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a321bb5f5462bead5703c82d67b11bb6a">&#9670;&nbsp;</a></span>heap_allocator() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -173,7 +173,7 @@ template&lt;class _Ty &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classwinstd_1_1heap__allocator.html">winstd::heap_allocator</a>&lt; _Ty &gt;::heap_allocator </td>
           <td>(</td>
-          <td class="paramtype">_In_ HANDLE&#160;</td>
+          <td class="paramtype">1 HANDLE&#160;</td>
           <td class="paramname"><em>heap</em></td><td>)</td>
           <td></td>
         </tr>
@@ -195,8 +195,8 @@ template&lt;class _Ty &gt; </div>
 
 </div>
 </div>
-<a id="aaed5a79d60e4d9ae77d251c900ccd78b" name="aaed5a79d60e4d9ae77d251c900ccd78b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaed5a79d60e4d9ae77d251c900ccd78b">&#9670;&nbsp;</a></span>heap_allocator() <span class="overload">[2/2]</span></h2>
+<a id="af04ca9c615a3a87c05a98f922e50d412" name="af04ca9c615a3a87c05a98f922e50d412"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af04ca9c615a3a87c05a98f922e50d412">&#9670;&nbsp;</a></span>heap_allocator() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -211,7 +211,7 @@ template&lt;class _Other &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classwinstd_1_1heap__allocator.html">winstd::heap_allocator</a>&lt; _Ty &gt;::heap_allocator </td>
           <td>(</td>
-          <td class="paramtype">_In_ const <a class="el" href="classwinstd_1_1heap__allocator.html">heap_allocator</a>&lt; _Other &gt; &amp;&#160;</td>
+          <td class="paramtype">1 const <a class="el" href="classwinstd_1_1heap__allocator.html">heap_allocator</a>&lt; _Other &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
           <td></td>
         </tr>
@@ -234,8 +234,8 @@ template&lt;class _Other &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a9caa7c3f603225c8aa1f4c8aaf7bb81e" name="a9caa7c3f603225c8aa1f4c8aaf7bb81e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9caa7c3f603225c8aa1f4c8aaf7bb81e">&#9670;&nbsp;</a></span>allocate()</h2>
+<a id="acc38b748db1bcfed85f01ee76dd6056a" name="acc38b748db1bcfed85f01ee76dd6056a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc38b748db1bcfed85f01ee76dd6056a">&#9670;&nbsp;</a></span>allocate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -248,7 +248,7 @@ template&lt;class _Ty &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a> <a class="el" href="classwinstd_1_1heap__allocator.html">winstd::heap_allocator</a>&lt; _Ty &gt;::allocate </td>
           <td>(</td>
-          <td class="paramtype">_In_ <a class="el" href="classwinstd_1_1heap__allocator.html#a01815f4f9097b1447c7ddaa2de868f59">size_type</a>&#160;</td>
+          <td class="paramtype">1 <a class="el" href="classwinstd_1_1heap__allocator.html#a01815f4f9097b1447c7ddaa2de868f59">size_type</a>&#160;</td>
           <td class="paramname"><em>count</em></td><td>)</td>
           <td></td>
         </tr>
@@ -271,8 +271,8 @@ template&lt;class _Ty &gt; </div>
 
 </div>
 </div>
-<a id="a2fef7b864c8da18f75960f20aea29e1a" name="a2fef7b864c8da18f75960f20aea29e1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2fef7b864c8da18f75960f20aea29e1a">&#9670;&nbsp;</a></span>construct() <span class="overload">[1/2]</span></h2>
+<a id="a3dc6db1dce1fe9d9d07ee1074fcdc595" name="a3dc6db1dce1fe9d9d07ee1074fcdc595"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3dc6db1dce1fe9d9d07ee1074fcdc595">&#9670;&nbsp;</a></span>construct() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -285,60 +285,13 @@ template&lt;class _Ty &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classwinstd_1_1heap__allocator.html">winstd::heap_allocator</a>&lt; _Ty &gt;::construct </td>
           <td>(</td>
-          <td class="paramtype">_Inout_ <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a>&#160;</td>
+          <td class="paramtype">1 <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a>&#160;</td>
           <td class="paramname"><em>ptr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">_In_ const _Ty &amp;&#160;</td>
-          <td class="paramname"><em>val</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Calls copying constructor for the element. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptr</td><td>Pointer to memory block </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>Source element </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ac9f07c2c98cd2168614e03cdf6730c77" name="ac9f07c2c98cd2168614e03cdf6730c77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac9f07c2c98cd2168614e03cdf6730c77">&#9670;&nbsp;</a></span>construct() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class _Ty &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classwinstd_1_1heap__allocator.html">winstd::heap_allocator</a>&lt; _Ty &gt;::construct </td>
-          <td>(</td>
-          <td class="paramtype">_Inout_ <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a>&#160;</td>
-          <td class="paramname"><em>ptr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_Inout_ _Ty &amp;&amp;&#160;</td>
+          <td class="paramtype">1 _Ty &amp;&amp;&#160;</td>
           <td class="paramname"><em>val</em>&#160;</td>
         </tr>
         <tr>
@@ -365,8 +318,55 @@ template&lt;class _Ty &gt; </div>
 
 </div>
 </div>
-<a id="a216a8b605486846660c4c7fd03282ae7" name="a216a8b605486846660c4c7fd03282ae7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a216a8b605486846660c4c7fd03282ae7">&#9670;&nbsp;</a></span>deallocate()</h2>
+<a id="a9638b1d0a5d1562574868b6b20bd8683" name="a9638b1d0a5d1562574868b6b20bd8683"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9638b1d0a5d1562574868b6b20bd8683">&#9670;&nbsp;</a></span>construct() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Ty &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classwinstd_1_1heap__allocator.html">winstd::heap_allocator</a>&lt; _Ty &gt;::construct </td>
+          <td>(</td>
+          <td class="paramtype">1 <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a>&#160;</td>
+          <td class="paramname"><em>ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">1 const _Ty &amp;&#160;</td>
+          <td class="paramname"><em>val</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calls copying constructor for the element. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptr</td><td>Pointer to memory block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>Source element </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a790350f6d3d40d936417e07ba0e54343" name="a790350f6d3d40d936417e07ba0e54343"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a790350f6d3d40d936417e07ba0e54343">&#9670;&nbsp;</a></span>deallocate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -379,13 +379,13 @@ template&lt;class _Ty &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classwinstd_1_1heap__allocator.html">winstd::heap_allocator</a>&lt; _Ty &gt;::deallocate </td>
           <td>(</td>
-          <td class="paramtype">_In_ <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a>&#160;</td>
+          <td class="paramtype">1 <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a>&#160;</td>
           <td class="paramname"><em>ptr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">_In_ <a class="el" href="classwinstd_1_1heap__allocator.html#a01815f4f9097b1447c7ddaa2de868f59">size_type</a>&#160;</td>
+          <td class="paramtype">1 <a class="el" href="classwinstd_1_1heap__allocator.html#a01815f4f9097b1447c7ddaa2de868f59">size_type</a>&#160;</td>
           <td class="paramname"><em>size</em>&#160;</td>
         </tr>
         <tr>
@@ -412,8 +412,8 @@ template&lt;class _Ty &gt; </div>
 
 </div>
 </div>
-<a id="ae22bc5ee2aad749c334a96d623c73f3c" name="ae22bc5ee2aad749c334a96d623c73f3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae22bc5ee2aad749c334a96d623c73f3c">&#9670;&nbsp;</a></span>destroy()</h2>
+<a id="a5020277387142da670e2e4289177ba5a" name="a5020277387142da670e2e4289177ba5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5020277387142da670e2e4289177ba5a">&#9670;&nbsp;</a></span>destroy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -426,7 +426,7 @@ template&lt;class _Ty &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classwinstd_1_1heap__allocator.html">winstd::heap_allocator</a>&lt; _Ty &gt;::destroy </td>
           <td>(</td>
-          <td class="paramtype">_Inout_ <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a>&#160;</td>
+          <td class="paramtype">1 <a class="el" href="classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd">pointer</a>&#160;</td>
           <td class="paramname"><em>ptr</em></td><td>)</td>
           <td></td>
         </tr>
@@ -454,7 +454,7 @@ template&lt;class _Ty &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Feb 4 2022 12:49:44 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Fri Feb 4 2022 13:28:45 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

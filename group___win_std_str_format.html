@@ -102,17 +102,20 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PRINTF_LPOLESTR</b>&#160;&#160;&#160;&quot;ls&quot;</td></tr>
 <tr class="memdesc:ga1bb2b564655d7b0dee3ec63a0fda2eb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPOLESTR printf/scanf format specifier. <br /></td></tr>
 <tr class="separator:ga1bb2b564655d7b0dee3ec63a0fda2eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd052e867c5d82d180924da9d0e16798"><td class="memItemLeft" align="right" valign="top"><a id="gadd052e867c5d82d180924da9d0e16798" name="gadd052e867c5d82d180924da9d0e16798"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>_tcin</b>&#160;&#160;&#160;(std::cin )</td></tr>
+<tr class="memitem:gadd052e867c5d82d180924da9d0e16798"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_str_format.html#gadd052e867c5d82d180924da9d0e16798">_tcin</a>&#160;&#160;&#160;(std::cin )</td></tr>
+<tr class="memdesc:gadd052e867c5d82d180924da9d0e16798"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard input stream for TCHAR strings.  <a href="group___win_std_str_format.html#gadd052e867c5d82d180924da9d0e16798">More...</a><br /></td></tr>
 <tr class="separator:gadd052e867c5d82d180924da9d0e16798"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4b7f5dbc77bb5d56afbb217a8dcc8544"><td class="memItemLeft" align="right" valign="top"><a id="ga4b7f5dbc77bb5d56afbb217a8dcc8544" name="ga4b7f5dbc77bb5d56afbb217a8dcc8544"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>_tcout</b>&#160;&#160;&#160;(std::cout)</td></tr>
+<tr class="memdesc:ga4b7f5dbc77bb5d56afbb217a8dcc8544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard output stream for TCHAR strings. <br /></td></tr>
 <tr class="separator:ga4b7f5dbc77bb5d56afbb217a8dcc8544"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad92c7b3354a4cc35a5b9ddd16841a9c0"><td class="memItemLeft" align="right" valign="top"><a id="gad92c7b3354a4cc35a5b9ddd16841a9c0" name="gad92c7b3354a4cc35a5b9ddd16841a9c0"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>_tcerr</b>&#160;&#160;&#160;(std::cerr)</td></tr>
+<tr class="memdesc:gad92c7b3354a4cc35a5b9ddd16841a9c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard error stream for TCHAR strings. <br /></td></tr>
 <tr class="separator:gad92c7b3354a4cc35a5b9ddd16841a9c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga51ea87c84320a64b846a002ab52ac1b8"><td class="memItemLeft" align="right" valign="top"><a id="ga51ea87c84320a64b846a002ab52ac1b8" name="ga51ea87c84320a64b846a002ab52ac1b8"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>_tclog</b>&#160;&#160;&#160;(std::clog)</td></tr>
+<tr class="memdesc:ga51ea87c84320a64b846a002ab52ac1b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard logging stream for TCHAR strings. <br /></td></tr>
 <tr class="separator:ga51ea87c84320a64b846a002ab52ac1b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
@@ -151,12 +154,30 @@ typedef <a class="el" href="classwinstd_1_1string__guid.html">string_guid</a>&#1
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="comment">// Please note the PCSTR typecasting invokes an operator to return</span></div>
 <div class="line"><span class="comment">// pointer to formatted buffer rather than class reference itself.</span></div>
 <div class="line">cout &lt;&lt; (PCSTR)(<a class="code hl_class" href="classwinstd_1_1basic__string__printf.html">winstd::string_printf</a>(<span class="stringliteral">&quot;%i is less than %i.\n&quot;</span>, 1, 5));</div>
-<div class="ttc" id="aclasswinstd_1_1basic__string__printf_html"><div class="ttname"><a href="classwinstd_1_1basic__string__printf.html">winstd::basic_string_printf</a></div><div class="ttdoc">Base template class to support string formatting using printf() style templates.</div><div class="ttdef"><b>Definition:</b> Common.h:1093</div></div>
+<div class="ttc" id="aclasswinstd_1_1basic__string__printf_html"><div class="ttname"><a href="classwinstd_1_1basic__string__printf.html">winstd::basic_string_printf</a></div><div class="ttdoc">Base template class to support string formatting using printf() style templates.</div><div class="ttdef"><b>Definition:</b> Common.h:1115</div></div>
 </div><!-- fragment --> </dd></dl>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="gadd052e867c5d82d180924da9d0e16798" name="gadd052e867c5d82d180924da9d0e16798"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadd052e867c5d82d180924da9d0e16798">&#9670;&nbsp;</a></span>_tcin</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _tcin&#160;&#160;&#160;(std::cin )</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Standard input stream for TCHAR strings. </p>
+<p >Standard input stream for TCHAR strings </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Feb 4 2022 12:49:43 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Fri Feb 4 2022 13:28:44 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

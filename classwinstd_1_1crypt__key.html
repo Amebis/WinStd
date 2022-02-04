@@ -78,7 +78,7 @@ $(function() {
 <p>HCRYPTKEY wrapper class.  
  <a href="classwinstd_1_1crypt__key.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_crypt_8h_source.html">Crypt.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_crypt_8h_source.html">WinStd/Crypt.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for winstd::crypt_key:</div>
 <div class="dyncontent">
@@ -95,67 +95,67 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a396a4af75fd99c896757679a890e6e29"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a396a4af75fd99c896757679a890e6e29">~crypt_key</a> ()</td></tr>
 <tr class="memdesc:a396a4af75fd99c896757679a890e6e29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the key.  <a href="classwinstd_1_1crypt__key.html#a396a4af75fd99c896757679a890e6e29">More...</a><br /></td></tr>
 <tr class="separator:a396a4af75fd99c896757679a890e6e29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29bd17cc076234a9ed86bec0f808e920"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a29bd17cc076234a9ed86bec0f808e920">generate</a> (_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ DWORD dwFlags) noexcept</td></tr>
-<tr class="memdesc:a29bd17cc076234a9ed86bec0f808e920"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the key.  <a href="classwinstd_1_1crypt__key.html#a29bd17cc076234a9ed86bec0f808e920">More...</a><br /></td></tr>
-<tr class="separator:a29bd17cc076234a9ed86bec0f808e920"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a838eb6fc602988725a1e0c9747de5e76"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a838eb6fc602988725a1e0c9747de5e76">import</a> (_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) LPCBYTE pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags) noexcept</td></tr>
-<tr class="memdesc:a838eb6fc602988725a1e0c9747de5e76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imports the key.  <a href="classwinstd_1_1crypt__key.html#a838eb6fc602988725a1e0c9747de5e76">More...</a><br /></td></tr>
-<tr class="separator:a838eb6fc602988725a1e0c9747de5e76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad8c23f4cc013bba01347ee482c931a6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#aad8c23f4cc013bba01347ee482c931a6">import_public</a> (_In_ HCRYPTPROV hCryptProv, _In_ DWORD dwCertEncodingType, _In_ PCERT_PUBLIC_KEY_INFO pInfo) noexcept</td></tr>
-<tr class="memdesc:aad8c23f4cc013bba01347ee482c931a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imports the public key.  <a href="classwinstd_1_1crypt__key.html#aad8c23f4cc013bba01347ee482c931a6">More...</a><br /></td></tr>
-<tr class="separator:aad8c23f4cc013bba01347ee482c931a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31e237167b5831c663370902705b243d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a31e237167b5831c663370902705b243d">derive</a> (_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ HCRYPTHASH hBaseData, _In_ DWORD dwFlags) noexcept</td></tr>
-<tr class="memdesc:a31e237167b5831c663370902705b243d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates cryptographic session keys derived from a base data value.  <a href="classwinstd_1_1crypt__key.html#a31e237167b5831c663370902705b243d">More...</a><br /></td></tr>
-<tr class="separator:a31e237167b5831c663370902705b243d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36bfe476dc4785ac005e4e4305aa360e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a36bfe476dc4785ac005e4e4305aa360e">create_exp1</a> (_In_ HCRYPTPROV hProv, _In_ DWORD dwKeySpec)</td></tr>
-<tr class="memdesc:a36bfe476dc4785ac005e4e4305aa360e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates Exponent-of-one key.  <a href="classwinstd_1_1crypt__key.html#a36bfe476dc4785ac005e4e4305aa360e">More...</a><br /></td></tr>
-<tr class="separator:a36bfe476dc4785ac005e4e4305aa360e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab89d1f2e33e40215333fa20df6aa5c95"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#ab89d1f2e33e40215333fa20df6aa5c95">generate</a> (1 HCRYPTPROV hProv, 1 ALG_ID Algid, 1 DWORD dwFlags) noexcept</td></tr>
+<tr class="memdesc:ab89d1f2e33e40215333fa20df6aa5c95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the key.  <a href="classwinstd_1_1crypt__key.html#ab89d1f2e33e40215333fa20df6aa5c95">More...</a><br /></td></tr>
+<tr class="separator:ab89d1f2e33e40215333fa20df6aa5c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a154a461d0a2c0df51e687135738f7a62"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a154a461d0a2c0df51e687135738f7a62">import</a> (1 HCRYPTPROV hProv, __in_bcount(dwDataLen) LPCBYTE pbData, 1 DWORD dwDataLen, 1 HCRYPTKEY hPubKey, 1 DWORD dwFlags) noexcept</td></tr>
+<tr class="memdesc:a154a461d0a2c0df51e687135738f7a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imports the key.  <a href="classwinstd_1_1crypt__key.html#a154a461d0a2c0df51e687135738f7a62">More...</a><br /></td></tr>
+<tr class="separator:a154a461d0a2c0df51e687135738f7a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c83843177f364754faf9c459a4f1a04"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a0c83843177f364754faf9c459a4f1a04">import_public</a> (1 HCRYPTPROV hCryptProv, 1 DWORD dwCertEncodingType, 1 PCERT_PUBLIC_KEY_INFO pInfo) noexcept</td></tr>
+<tr class="memdesc:a0c83843177f364754faf9c459a4f1a04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imports the public key.  <a href="classwinstd_1_1crypt__key.html#a0c83843177f364754faf9c459a4f1a04">More...</a><br /></td></tr>
+<tr class="separator:a0c83843177f364754faf9c459a4f1a04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21394ea8772d336a5a8112e4ae266e55"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a21394ea8772d336a5a8112e4ae266e55">derive</a> (1 HCRYPTPROV hProv, 1 ALG_ID Algid, 1 HCRYPTHASH hBaseData, 1 DWORD dwFlags) noexcept</td></tr>
+<tr class="memdesc:a21394ea8772d336a5a8112e4ae266e55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates cryptographic session keys derived from a base data value.  <a href="classwinstd_1_1crypt__key.html#a21394ea8772d336a5a8112e4ae266e55">More...</a><br /></td></tr>
+<tr class="separator:a21394ea8772d336a5a8112e4ae266e55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfef98f63cedc9c6f19cd301b48f9002"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#acfef98f63cedc9c6f19cd301b48f9002">create_exp1</a> (1 HCRYPTPROV hProv, 1 DWORD dwKeySpec)</td></tr>
+<tr class="memdesc:acfef98f63cedc9c6f19cd301b48f9002"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates Exponent-of-one key.  <a href="classwinstd_1_1crypt__key.html#acfef98f63cedc9c6f19cd301b48f9002">More...</a><br /></td></tr>
+<tr class="separator:acfef98f63cedc9c6f19cd301b48f9002"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classwinstd_1_1dplhandle"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classwinstd_1_1dplhandle')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classwinstd_1_1dplhandle.html">winstd::dplhandle&lt; HCRYPTKEY, NULL &gt;</a></td></tr>
 <tr class="memitem:ac95cbfb481c0d5e6c60d130f3c270b59 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top"><a id="ac95cbfb481c0d5e6c60d130f3c270b59" name="ac95cbfb481c0d5e6c60d130f3c270b59"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>dplhandle</b> () noexcept</td></tr>
 <tr class="memdesc:ac95cbfb481c0d5e6c60d130f3c270b59 inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new class instance with the object handle set to INVAL. <br /></td></tr>
 <tr class="separator:ac95cbfb481c0d5e6c60d130f3c270b59 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb2b52f07f8e9f85905fb968c8bfbd62 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#abb2b52f07f8e9f85905fb968c8bfbd62">dplhandle</a> (_In_opt_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) noexcept</td></tr>
-<tr class="memdesc:abb2b52f07f8e9f85905fb968c8bfbd62 inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new class instance with an already available object handle.  <a href="classwinstd_1_1dplhandle.html#abb2b52f07f8e9f85905fb968c8bfbd62">More...</a><br /></td></tr>
-<tr class="separator:abb2b52f07f8e9f85905fb968c8bfbd62 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3acfebc61ea283e7520dc6b5ec6b5af4 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#a3acfebc61ea283e7520dc6b5ec6b5af4">dplhandle</a> (_In_ const <a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;h) noexcept</td></tr>
-<tr class="memdesc:a3acfebc61ea283e7520dc6b5ec6b5af4 inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="classwinstd_1_1dplhandle.html#a3acfebc61ea283e7520dc6b5ec6b5af4">More...</a><br /></td></tr>
-<tr class="separator:a3acfebc61ea283e7520dc6b5ec6b5af4 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69802162f59013066dc30fcfc8089738 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#a69802162f59013066dc30fcfc8089738">dplhandle</a> (_Inout_ <a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&amp;h) noexcept</td></tr>
-<tr class="memdesc:a69802162f59013066dc30fcfc8089738 inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor.  <a href="classwinstd_1_1dplhandle.html#a69802162f59013066dc30fcfc8089738">More...</a><br /></td></tr>
-<tr class="separator:a69802162f59013066dc30fcfc8089738 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6211e58546daef11a28b0c9a8563e063 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#a6211e58546daef11a28b0c9a8563e063">operator=</a> (_In_opt_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) noexcept</td></tr>
-<tr class="memdesc:a6211e58546daef11a28b0c9a8563e063 inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attaches already available object handle.  <a href="classwinstd_1_1dplhandle.html#a6211e58546daef11a28b0c9a8563e063">More...</a><br /></td></tr>
-<tr class="separator:a6211e58546daef11a28b0c9a8563e063 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ad67897459bc81536481a6a1321b302 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#a9ad67897459bc81536481a6a1321b302">operator=</a> (_In_ const <a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;h) noexcept</td></tr>
-<tr class="memdesc:a9ad67897459bc81536481a6a1321b302 inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicates the object.  <a href="classwinstd_1_1dplhandle.html#a9ad67897459bc81536481a6a1321b302">More...</a><br /></td></tr>
-<tr class="separator:a9ad67897459bc81536481a6a1321b302 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfba6b3dca0d5b8511085741d8d32eb6 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#abfba6b3dca0d5b8511085741d8d32eb6">operator=</a> (_Inout_ <a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&amp;h) noexcept</td></tr>
-<tr class="memdesc:abfba6b3dca0d5b8511085741d8d32eb6 inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the object.  <a href="classwinstd_1_1dplhandle.html#abfba6b3dca0d5b8511085741d8d32eb6">More...</a><br /></td></tr>
-<tr class="separator:abfba6b3dca0d5b8511085741d8d32eb6 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f2130c865d37fca76108dbbd20ab17a inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#a0f2130c865d37fca76108dbbd20ab17a">dplhandle</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) noexcept</td></tr>
+<tr class="memdesc:a0f2130c865d37fca76108dbbd20ab17a inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new class instance with an already available object handle.  <a href="classwinstd_1_1dplhandle.html#a0f2130c865d37fca76108dbbd20ab17a">More...</a><br /></td></tr>
+<tr class="separator:a0f2130c865d37fca76108dbbd20ab17a inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acac5db2f50f63d6722c426bcb3dc4cda inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#acac5db2f50f63d6722c426bcb3dc4cda">dplhandle</a> (1 const <a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;h) noexcept</td></tr>
+<tr class="memdesc:acac5db2f50f63d6722c426bcb3dc4cda inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="classwinstd_1_1dplhandle.html#acac5db2f50f63d6722c426bcb3dc4cda">More...</a><br /></td></tr>
+<tr class="separator:acac5db2f50f63d6722c426bcb3dc4cda inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a636a6bee87049b5f502bf93c9b86eb inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#a0a636a6bee87049b5f502bf93c9b86eb">dplhandle</a> (1 <a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&amp;h) noexcept</td></tr>
+<tr class="memdesc:a0a636a6bee87049b5f502bf93c9b86eb inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor.  <a href="classwinstd_1_1dplhandle.html#a0a636a6bee87049b5f502bf93c9b86eb">More...</a><br /></td></tr>
+<tr class="separator:a0a636a6bee87049b5f502bf93c9b86eb inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5d13e70adec2c6f3ca4aaaefc94f8bf inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#af5d13e70adec2c6f3ca4aaaefc94f8bf">operator=</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) noexcept</td></tr>
+<tr class="memdesc:af5d13e70adec2c6f3ca4aaaefc94f8bf inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attaches already available object handle.  <a href="classwinstd_1_1dplhandle.html#af5d13e70adec2c6f3ca4aaaefc94f8bf">More...</a><br /></td></tr>
+<tr class="separator:af5d13e70adec2c6f3ca4aaaefc94f8bf inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a407b519c6511f7a6cfdd582fdbdeaf76 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#a407b519c6511f7a6cfdd582fdbdeaf76">operator=</a> (1 const <a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;h) noexcept</td></tr>
+<tr class="memdesc:a407b519c6511f7a6cfdd582fdbdeaf76 inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicates the object.  <a href="classwinstd_1_1dplhandle.html#a407b519c6511f7a6cfdd582fdbdeaf76">More...</a><br /></td></tr>
+<tr class="separator:a407b519c6511f7a6cfdd582fdbdeaf76 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ab2b44aba9a977d6809d68a262a18b9 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#a7ab2b44aba9a977d6809d68a262a18b9">operator=</a> (1 <a class="el" href="classwinstd_1_1dplhandle.html">dplhandle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&amp;h) noexcept</td></tr>
+<tr class="memdesc:a7ab2b44aba9a977d6809d68a262a18b9 inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the object.  <a href="classwinstd_1_1dplhandle.html#a7ab2b44aba9a977d6809d68a262a18b9">More...</a><br /></td></tr>
+<tr class="separator:a7ab2b44aba9a977d6809d68a262a18b9 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48e66c8979560019e339867de944a265 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#a48e66c8979560019e339867de944a265">duplicate</a> () const</td></tr>
 <tr class="memdesc:a48e66c8979560019e339867de944a265 inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicates and returns a new object handle.  <a href="classwinstd_1_1dplhandle.html#a48e66c8979560019e339867de944a265">More...</a><br /></td></tr>
 <tr class="separator:a48e66c8979560019e339867de944a265 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4812d286ff9f34df62933f77d2c8b659 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#a4812d286ff9f34df62933f77d2c8b659">attach_duplicated</a> (_In_opt_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h)</td></tr>
-<tr class="memdesc:a4812d286ff9f34df62933f77d2c8b659 inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicates an object handle and sets a new object handle.  <a href="classwinstd_1_1dplhandle.html#a4812d286ff9f34df62933f77d2c8b659">More...</a><br /></td></tr>
-<tr class="separator:a4812d286ff9f34df62933f77d2c8b659 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1ff2ba0e390908720e6cd8383d1e3d4 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#ae1ff2ba0e390908720e6cd8383d1e3d4">attach_duplicated</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h)</td></tr>
+<tr class="memdesc:ae1ff2ba0e390908720e6cd8383d1e3d4 inherit pub_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicates an object handle and sets a new object handle.  <a href="classwinstd_1_1dplhandle.html#ae1ff2ba0e390908720e6cd8383d1e3d4">More...</a><br /></td></tr>
+<tr class="separator:ae1ff2ba0e390908720e6cd8383d1e3d4 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classwinstd_1_1handle"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classwinstd_1_1handle')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classwinstd_1_1handle.html">winstd::handle&lt; HCRYPTKEY, INVAL &gt;</a></td></tr>
 <tr class="memitem:a1b9c4f9529c9efa7d16dec8bab3b00e4 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top"><a id="a1b9c4f9529c9efa7d16dec8bab3b00e4" name="a1b9c4f9529c9efa7d16dec8bab3b00e4"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>handle</b> () noexcept</td></tr>
 <tr class="memdesc:a1b9c4f9529c9efa7d16dec8bab3b00e4 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new class instance with the object handle set to INVAL. <br /></td></tr>
 <tr class="separator:a1b9c4f9529c9efa7d16dec8bab3b00e4 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a200e93ad6b773e634094f5321705ebec inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a200e93ad6b773e634094f5321705ebec">handle</a> (_In_opt_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) noexcept</td></tr>
-<tr class="memdesc:a200e93ad6b773e634094f5321705ebec inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new class instance with an already available object handle.  <a href="classwinstd_1_1handle.html#a200e93ad6b773e634094f5321705ebec">More...</a><br /></td></tr>
-<tr class="separator:a200e93ad6b773e634094f5321705ebec inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54141e1a6c82fcdd15f6fa3a813baab0 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a54141e1a6c82fcdd15f6fa3a813baab0">handle</a> (_Inout_ <a class="el" href="classwinstd_1_1handle.html">handle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&amp;h) noexcept</td></tr>
-<tr class="memdesc:a54141e1a6c82fcdd15f6fa3a813baab0 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor.  <a href="classwinstd_1_1handle.html#a54141e1a6c82fcdd15f6fa3a813baab0">More...</a><br /></td></tr>
-<tr class="separator:a54141e1a6c82fcdd15f6fa3a813baab0 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8928de8288f8dc990fc903dee85803e7 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1handle.html">handle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a8928de8288f8dc990fc903dee85803e7">operator=</a> (_In_opt_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) noexcept</td></tr>
-<tr class="memdesc:a8928de8288f8dc990fc903dee85803e7 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attaches already available object handle.  <a href="classwinstd_1_1handle.html#a8928de8288f8dc990fc903dee85803e7">More...</a><br /></td></tr>
-<tr class="separator:a8928de8288f8dc990fc903dee85803e7 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96a1bcf085561569ed51ab23968d1308 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1handle.html">handle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a96a1bcf085561569ed51ab23968d1308">operator=</a> (_Inout_ <a class="el" href="classwinstd_1_1handle.html">handle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&amp;h) noexcept</td></tr>
-<tr class="memdesc:a96a1bcf085561569ed51ab23968d1308 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment.  <a href="classwinstd_1_1handle.html#a96a1bcf085561569ed51ab23968d1308">More...</a><br /></td></tr>
-<tr class="separator:a96a1bcf085561569ed51ab23968d1308 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91f3f6d80650f3cbb1857b879c060e7b inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a91f3f6d80650f3cbb1857b879c060e7b">handle</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) noexcept</td></tr>
+<tr class="memdesc:a91f3f6d80650f3cbb1857b879c060e7b inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new class instance with an already available object handle.  <a href="classwinstd_1_1handle.html#a91f3f6d80650f3cbb1857b879c060e7b">More...</a><br /></td></tr>
+<tr class="separator:a91f3f6d80650f3cbb1857b879c060e7b inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6a984b1373bcec59e5342f035cebefc inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#ad6a984b1373bcec59e5342f035cebefc">handle</a> (1 <a class="el" href="classwinstd_1_1handle.html">handle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&amp;h) noexcept</td></tr>
+<tr class="memdesc:ad6a984b1373bcec59e5342f035cebefc inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor.  <a href="classwinstd_1_1handle.html#ad6a984b1373bcec59e5342f035cebefc">More...</a><br /></td></tr>
+<tr class="separator:ad6a984b1373bcec59e5342f035cebefc inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae58ca3031e921aba1319e55159473ea9 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1handle.html">handle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#ae58ca3031e921aba1319e55159473ea9">operator=</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) noexcept</td></tr>
+<tr class="memdesc:ae58ca3031e921aba1319e55159473ea9 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attaches already available object handle.  <a href="classwinstd_1_1handle.html#ae58ca3031e921aba1319e55159473ea9">More...</a><br /></td></tr>
+<tr class="separator:ae58ca3031e921aba1319e55159473ea9 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcb7f966e387a00f71268cf092295665 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1handle.html">handle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#abcb7f966e387a00f71268cf092295665">operator=</a> (1 <a class="el" href="classwinstd_1_1handle.html">handle</a>&lt; <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>, INVAL &gt; &amp;&amp;h) noexcept</td></tr>
+<tr class="memdesc:abcb7f966e387a00f71268cf092295665 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment.  <a href="classwinstd_1_1handle.html#abcb7f966e387a00f71268cf092295665">More...</a><br /></td></tr>
+<tr class="separator:abcb7f966e387a00f71268cf092295665 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86114637674c82d6fd96d7b3eae39ac8 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a86114637674c82d6fd96d7b3eae39ac8">operator handle_type</a> () const</td></tr>
 <tr class="memdesc:a86114637674c82d6fd96d7b3eae39ac8 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Auto-typecasting operator.  <a href="classwinstd_1_1handle.html#a86114637674c82d6fd96d7b3eae39ac8">More...</a><br /></td></tr>
 <tr class="separator:a86114637674c82d6fd96d7b3eae39ac8 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,27 +171,27 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5df08ecb32b9040bf7342479aee2286c inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a5df08ecb32b9040bf7342479aee2286c">operator!</a> () const</td></tr>
 <tr class="memdesc:a5df08ecb32b9040bf7342479aee2286c inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests if the object handle is INVAL.  <a href="classwinstd_1_1handle.html#a5df08ecb32b9040bf7342479aee2286c">More...</a><br /></td></tr>
 <tr class="separator:a5df08ecb32b9040bf7342479aee2286c inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77b518be4199e6562520ccbcdcec5d07 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a77b518be4199e6562520ccbcdcec5d07">operator&lt;</a> (_In_opt_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const</td></tr>
-<tr class="memdesc:a77b518be4199e6562520ccbcdcec5d07 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is handle less than?  <a href="classwinstd_1_1handle.html#a77b518be4199e6562520ccbcdcec5d07">More...</a><br /></td></tr>
-<tr class="separator:a77b518be4199e6562520ccbcdcec5d07 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16b52280c04b4cb9f8bd65f76cb2f48d inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a16b52280c04b4cb9f8bd65f76cb2f48d">operator&lt;=</a> (_In_opt_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const</td></tr>
-<tr class="memdesc:a16b52280c04b4cb9f8bd65f76cb2f48d inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is handle less than or equal to?  <a href="classwinstd_1_1handle.html#a16b52280c04b4cb9f8bd65f76cb2f48d">More...</a><br /></td></tr>
-<tr class="separator:a16b52280c04b4cb9f8bd65f76cb2f48d inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a728f743b87f4bf56e184e45950154a2b inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a728f743b87f4bf56e184e45950154a2b">operator&gt;=</a> (_In_opt_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const</td></tr>
-<tr class="memdesc:a728f743b87f4bf56e184e45950154a2b inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is handle greater than or equal to?  <a href="classwinstd_1_1handle.html#a728f743b87f4bf56e184e45950154a2b">More...</a><br /></td></tr>
-<tr class="separator:a728f743b87f4bf56e184e45950154a2b inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7db4bb5c15f7de56600ba02497c12eb inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#aa7db4bb5c15f7de56600ba02497c12eb">operator&gt;</a> (_In_opt_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const</td></tr>
-<tr class="memdesc:aa7db4bb5c15f7de56600ba02497c12eb inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is handle greater than?  <a href="classwinstd_1_1handle.html#aa7db4bb5c15f7de56600ba02497c12eb">More...</a><br /></td></tr>
-<tr class="separator:aa7db4bb5c15f7de56600ba02497c12eb inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c9e218fe1c13a2ffa0a81d829e72fee inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a2c9e218fe1c13a2ffa0a81d829e72fee">operator!=</a> (_In_opt_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const</td></tr>
-<tr class="memdesc:a2c9e218fe1c13a2ffa0a81d829e72fee inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is handle not equal to?  <a href="classwinstd_1_1handle.html#a2c9e218fe1c13a2ffa0a81d829e72fee">More...</a><br /></td></tr>
-<tr class="separator:a2c9e218fe1c13a2ffa0a81d829e72fee inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a308281d8c28014cc205e72f17f01635f inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a308281d8c28014cc205e72f17f01635f">operator==</a> (_In_opt_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const</td></tr>
-<tr class="memdesc:a308281d8c28014cc205e72f17f01635f inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is handle equal to?  <a href="classwinstd_1_1handle.html#a308281d8c28014cc205e72f17f01635f">More...</a><br /></td></tr>
-<tr class="separator:a308281d8c28014cc205e72f17f01635f inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98d09f9c2970890a5c83a0c2aedd3a30 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a98d09f9c2970890a5c83a0c2aedd3a30">attach</a> (_In_opt_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) noexcept</td></tr>
-<tr class="memdesc:a98d09f9c2970890a5c83a0c2aedd3a30 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a new object handle for the class.  <a href="classwinstd_1_1handle.html#a98d09f9c2970890a5c83a0c2aedd3a30">More...</a><br /></td></tr>
-<tr class="separator:a98d09f9c2970890a5c83a0c2aedd3a30 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35646c66bd8939c8feb525878e51773e inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a35646c66bd8939c8feb525878e51773e">operator&lt;</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const</td></tr>
+<tr class="memdesc:a35646c66bd8939c8feb525878e51773e inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is handle less than?  <a href="classwinstd_1_1handle.html#a35646c66bd8939c8feb525878e51773e">More...</a><br /></td></tr>
+<tr class="separator:a35646c66bd8939c8feb525878e51773e inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe61cdc3ca53194bb55d3a6cabcc3c68 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#abe61cdc3ca53194bb55d3a6cabcc3c68">operator&lt;=</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const</td></tr>
+<tr class="memdesc:abe61cdc3ca53194bb55d3a6cabcc3c68 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is handle less than or equal to?  <a href="classwinstd_1_1handle.html#abe61cdc3ca53194bb55d3a6cabcc3c68">More...</a><br /></td></tr>
+<tr class="separator:abe61cdc3ca53194bb55d3a6cabcc3c68 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a602527ac20da6859ba53cc4ee2dc2399 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a602527ac20da6859ba53cc4ee2dc2399">operator&gt;=</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const</td></tr>
+<tr class="memdesc:a602527ac20da6859ba53cc4ee2dc2399 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is handle greater than or equal to?  <a href="classwinstd_1_1handle.html#a602527ac20da6859ba53cc4ee2dc2399">More...</a><br /></td></tr>
+<tr class="separator:a602527ac20da6859ba53cc4ee2dc2399 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17cab850d12bf22e82392cd75b4b1482 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a17cab850d12bf22e82392cd75b4b1482">operator&gt;</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const</td></tr>
+<tr class="memdesc:a17cab850d12bf22e82392cd75b4b1482 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is handle greater than?  <a href="classwinstd_1_1handle.html#a17cab850d12bf22e82392cd75b4b1482">More...</a><br /></td></tr>
+<tr class="separator:a17cab850d12bf22e82392cd75b4b1482 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7eaa8c309897e38c2e2e44db53694b9 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#ae7eaa8c309897e38c2e2e44db53694b9">operator!=</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const</td></tr>
+<tr class="memdesc:ae7eaa8c309897e38c2e2e44db53694b9 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is handle not equal to?  <a href="classwinstd_1_1handle.html#ae7eaa8c309897e38c2e2e44db53694b9">More...</a><br /></td></tr>
+<tr class="separator:ae7eaa8c309897e38c2e2e44db53694b9 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93994c0a04251d37f377495c15dbe10c inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a93994c0a04251d37f377495c15dbe10c">operator==</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const</td></tr>
+<tr class="memdesc:a93994c0a04251d37f377495c15dbe10c inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is handle equal to?  <a href="classwinstd_1_1handle.html#a93994c0a04251d37f377495c15dbe10c">More...</a><br /></td></tr>
+<tr class="separator:a93994c0a04251d37f377495c15dbe10c inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f8dc89f77c86714e65f9783a06ec208 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a6f8dc89f77c86714e65f9783a06ec208">attach</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) noexcept</td></tr>
+<tr class="memdesc:a6f8dc89f77c86714e65f9783a06ec208 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a new object handle for the class.  <a href="classwinstd_1_1handle.html#a6f8dc89f77c86714e65f9783a06ec208">More...</a><br /></td></tr>
+<tr class="separator:a6f8dc89f77c86714e65f9783a06ec208 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5acf6ce53e092b8d4d53f909cf321f9 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#ad5acf6ce53e092b8d4d53f909cf321f9">detach</a> ()</td></tr>
 <tr class="memdesc:ad5acf6ce53e092b8d4d53f909cf321f9 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dismisses the object handle from this class.  <a href="classwinstd_1_1handle.html#ad5acf6ce53e092b8d4d53f909cf321f9">More...</a><br /></td></tr>
 <tr class="separator:ad5acf6ce53e092b8d4d53f909cf321f9 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,12 +205,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:acf2f2ad35dd7602adcdeef17f605e391"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#acf2f2ad35dd7602adcdeef17f605e391">free_internal</a> () noexcept override</td></tr>
 <tr class="memdesc:acf2f2ad35dd7602adcdeef17f605e391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the key.  <a href="classwinstd_1_1crypt__key.html#acf2f2ad35dd7602adcdeef17f605e391">More...</a><br /></td></tr>
 <tr class="separator:acf2f2ad35dd7602adcdeef17f605e391"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3babcd9f0cf2fca9922437e47f644d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#ac3babcd9f0cf2fca9922437e47f644d7">duplicate_internal</a> (_In_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const noexcept override</td></tr>
-<tr class="memdesc:ac3babcd9f0cf2fca9922437e47f644d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicates the key.  <a href="classwinstd_1_1crypt__key.html#ac3babcd9f0cf2fca9922437e47f644d7">More...</a><br /></td></tr>
-<tr class="separator:ac3babcd9f0cf2fca9922437e47f644d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0094309e30d7780908b261c53e5a07d"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#aa0094309e30d7780908b261c53e5a07d">duplicate_internal</a> (_In_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const noexcept=0</td></tr>
-<tr class="memdesc:aa0094309e30d7780908b261c53e5a07d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract member function that must be implemented by child classes to do the actual object handle duplication.  <a href="classwinstd_1_1dplhandle.html#aa0094309e30d7780908b261c53e5a07d">More...</a><br /></td></tr>
-<tr class="separator:aa0094309e30d7780908b261c53e5a07d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37c069565ac211fa6411a7eee94800a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a37c069565ac211fa6411a7eee94800a1">duplicate_internal</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const noexcept override</td></tr>
+<tr class="memdesc:a37c069565ac211fa6411a7eee94800a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicates the key.  <a href="classwinstd_1_1crypt__key.html#a37c069565ac211fa6411a7eee94800a1">More...</a><br /></td></tr>
+<tr class="separator:a37c069565ac211fa6411a7eee94800a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae39d1b6bcfc0d7cf17ccdca93d26fb13"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#ae39d1b6bcfc0d7cf17ccdca93d26fb13">duplicate_internal</a> (1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const noexcept=0</td></tr>
+<tr class="memdesc:ae39d1b6bcfc0d7cf17ccdca93d26fb13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract member function that must be implemented by child classes to do the actual object handle duplication.  <a href="classwinstd_1_1dplhandle.html#ae39d1b6bcfc0d7cf17ccdca93d26fb13">More...</a><br /></td></tr>
+<tr class="separator:ae39d1b6bcfc0d7cf17ccdca93d26fb13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a137560600851eb4c3e4b80e25d4da629"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a137560600851eb4c3e4b80e25d4da629">free_internal</a> () noexcept=0</td></tr>
 <tr class="memdesc:a137560600851eb4c3e4b80e25d4da629"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract member function that must be implemented by child classes to do the actual object destruction.  <a href="classwinstd_1_1handle.html#a137560600851eb4c3e4b80e25d4da629">More...</a><br /></td></tr>
 <tr class="separator:a137560600851eb4c3e4b80e25d4da629"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -265,8 +265,8 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a36bfe476dc4785ac005e4e4305aa360e" name="a36bfe476dc4785ac005e4e4305aa360e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36bfe476dc4785ac005e4e4305aa360e">&#9670;&nbsp;</a></span>create_exp1()</h2>
+<a id="acfef98f63cedc9c6f19cd301b48f9002" name="acfef98f63cedc9c6f19cd301b48f9002"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfef98f63cedc9c6f19cd301b48f9002">&#9670;&nbsp;</a></span>create_exp1()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -277,13 +277,13 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
         <tr>
           <td class="memname">bool winstd::crypt_key::create_exp1 </td>
           <td>(</td>
-          <td class="paramtype">_In_ HCRYPTPROV&#160;</td>
+          <td class="paramtype">1 HCRYPTPROV&#160;</td>
           <td class="paramname"><em>hProv</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">_In_ DWORD&#160;</td>
+          <td class="paramtype">1 DWORD&#160;</td>
           <td class="paramname"><em>dwKeySpec</em>&#160;</td>
         </tr>
         <tr>
@@ -311,8 +311,8 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
 
 </div>
 </div>
-<a id="a31e237167b5831c663370902705b243d" name="a31e237167b5831c663370902705b243d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31e237167b5831c663370902705b243d">&#9670;&nbsp;</a></span>derive()</h2>
+<a id="a21394ea8772d336a5a8112e4ae266e55" name="a21394ea8772d336a5a8112e4ae266e55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21394ea8772d336a5a8112e4ae266e55">&#9670;&nbsp;</a></span>derive()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -323,25 +323,25 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
         <tr>
           <td class="memname">bool winstd::crypt_key::derive </td>
           <td>(</td>
-          <td class="paramtype">_In_ HCRYPTPROV&#160;</td>
+          <td class="paramtype">1 HCRYPTPROV&#160;</td>
           <td class="paramname"><em>hProv</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">_In_ ALG_ID&#160;</td>
+          <td class="paramtype">1 ALG_ID&#160;</td>
           <td class="paramname"><em>Algid</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">_In_ HCRYPTHASH&#160;</td>
+          <td class="paramtype">1 HCRYPTHASH&#160;</td>
           <td class="paramname"><em>hBaseData</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">_In_ DWORD&#160;</td>
+          <td class="paramtype">1 DWORD&#160;</td>
           <td class="paramname"><em>dwFlags</em>&#160;</td>
         </tr>
         <tr>
@@ -362,8 +362,8 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
 
 </div>
 </div>
-<a id="ac3babcd9f0cf2fca9922437e47f644d7" name="ac3babcd9f0cf2fca9922437e47f644d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3babcd9f0cf2fca9922437e47f644d7">&#9670;&nbsp;</a></span>duplicate_internal()</h2>
+<a id="a37c069565ac211fa6411a7eee94800a1" name="a37c069565ac211fa6411a7eee94800a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37c069565ac211fa6411a7eee94800a1">&#9670;&nbsp;</a></span>duplicate_internal()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -374,7 +374,7 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
         <tr>
           <td class="memname"><a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> winstd::crypt_key::duplicate_internal </td>
           <td>(</td>
-          <td class="paramtype">_In_ <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td>
+          <td class="paramtype">1 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td>
           <td class="paramname"><em>h</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -396,7 +396,7 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
 <dl class="section return"><dt>Returns</dt><dd>Duplicated key handle</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa379920.aspx">CryptDuplicateKey function</a> </dd></dl>
 
-<p>Implements <a class="el" href="classwinstd_1_1dplhandle.html#aa0094309e30d7780908b261c53e5a07d">winstd::dplhandle&lt; HCRYPTKEY, NULL &gt;</a>.</p>
+<p>Implements <a class="el" href="classwinstd_1_1dplhandle.html#ae39d1b6bcfc0d7cf17ccdca93d26fb13">winstd::dplhandle&lt; HCRYPTKEY, NULL &gt;</a>.</p>
 
 </div>
 </div>
@@ -430,8 +430,8 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
 
 </div>
 </div>
-<a id="a29bd17cc076234a9ed86bec0f808e920" name="a29bd17cc076234a9ed86bec0f808e920"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29bd17cc076234a9ed86bec0f808e920">&#9670;&nbsp;</a></span>generate()</h2>
+<a id="ab89d1f2e33e40215333fa20df6aa5c95" name="ab89d1f2e33e40215333fa20df6aa5c95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab89d1f2e33e40215333fa20df6aa5c95">&#9670;&nbsp;</a></span>generate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -442,19 +442,19 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
         <tr>
           <td class="memname">bool winstd::crypt_key::generate </td>
           <td>(</td>
-          <td class="paramtype">_In_ HCRYPTPROV&#160;</td>
+          <td class="paramtype">1 HCRYPTPROV&#160;</td>
           <td class="paramname"><em>hProv</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">_In_ ALG_ID&#160;</td>
+          <td class="paramtype">1 ALG_ID&#160;</td>
           <td class="paramname"><em>Algid</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">_In_ DWORD&#160;</td>
+          <td class="paramtype">1 DWORD&#160;</td>
           <td class="paramname"><em>dwFlags</em>&#160;</td>
         </tr>
         <tr>
@@ -475,8 +475,8 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
 
 </div>
 </div>
-<a id="a838eb6fc602988725a1e0c9747de5e76" name="a838eb6fc602988725a1e0c9747de5e76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a838eb6fc602988725a1e0c9747de5e76">&#9670;&nbsp;</a></span>import()</h2>
+<a id="a154a461d0a2c0df51e687135738f7a62" name="a154a461d0a2c0df51e687135738f7a62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a154a461d0a2c0df51e687135738f7a62">&#9670;&nbsp;</a></span>import()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -487,7 +487,7 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
         <tr>
           <td class="memname">bool winstd::crypt_key::import </td>
           <td>(</td>
-          <td class="paramtype">_In_ HCRYPTPROV&#160;</td>
+          <td class="paramtype">1 HCRYPTPROV&#160;</td>
           <td class="paramname"><em>hProv</em>, </td>
         </tr>
         <tr>
@@ -499,19 +499,19 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">_In_ DWORD&#160;</td>
+          <td class="paramtype">1 DWORD&#160;</td>
           <td class="paramname"><em>dwDataLen</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">_In_ HCRYPTKEY&#160;</td>
+          <td class="paramtype">1 HCRYPTKEY&#160;</td>
           <td class="paramname"><em>hPubKey</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">_In_ DWORD&#160;</td>
+          <td class="paramtype">1 DWORD&#160;</td>
           <td class="paramname"><em>dwFlags</em>&#160;</td>
         </tr>
         <tr>
@@ -532,8 +532,8 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
 
 </div>
 </div>
-<a id="aad8c23f4cc013bba01347ee482c931a6" name="aad8c23f4cc013bba01347ee482c931a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad8c23f4cc013bba01347ee482c931a6">&#9670;&nbsp;</a></span>import_public()</h2>
+<a id="a0c83843177f364754faf9c459a4f1a04" name="a0c83843177f364754faf9c459a4f1a04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c83843177f364754faf9c459a4f1a04">&#9670;&nbsp;</a></span>import_public()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -544,19 +544,19 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
         <tr>
           <td class="memname">bool winstd::crypt_key::import_public </td>
           <td>(</td>
-          <td class="paramtype">_In_ HCRYPTPROV&#160;</td>
+          <td class="paramtype">1 HCRYPTPROV&#160;</td>
           <td class="paramname"><em>hCryptProv</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">_In_ DWORD&#160;</td>
+          <td class="paramtype">1 DWORD&#160;</td>
           <td class="paramname"><em>dwCertEncodingType</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">_In_ PCERT_PUBLIC_KEY_INFO&#160;</td>
+          <td class="paramtype">1 PCERT_PUBLIC_KEY_INFO&#160;</td>
           <td class="paramname"><em>pInfo</em>&#160;</td>
         </tr>
         <tr>
@@ -583,7 +583,7 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Feb 4 2022 12:49:43 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Fri Feb 4 2022 13:28:45 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>
