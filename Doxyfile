@@ -2198,7 +2198,7 @@ ENABLE_PREPROCESSING   = YES
 # The default value is: NO.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-MACRO_EXPANSION        = NO
+MACRO_EXPANSION        = YES
 
 # If the EXPAND_ONLY_PREDEF and MACRO_EXPANSION tags are both set to YES then
 # the macro expansion is limited to the macros specified with the PREDEFINED and
@@ -2206,7 +2206,7 @@ MACRO_EXPANSION        = NO
 # The default value is: NO.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-EXPAND_ONLY_PREDEF     = NO
+EXPAND_ONLY_PREDEF     = YES
 
 # If the SEARCH_INCLUDES tag is set to YES, the include files in the
 # INCLUDE_PATH will be searched if a #include is found.
@@ -2238,7 +2238,28 @@ INCLUDE_FILE_PATTERNS  =
 # recursively expanded use the := operator instead of the = operator.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-PREDEFINED             =
+PREDEFINED             = \
+    _FormatMessage_format_string_= \
+    _Frees_ptr_opt_= \
+    _In_= \
+    _In_bytecount_(x)= \
+    _In_count_(x)= \
+    _In_opt_= \
+    _In_opt_count_(x)= \
+    _In_opt_z_= \
+    _In_reads_(x)= \
+    _In_reads_opt_(x)= \
+    _In_z_= \
+    _In_z_count_(x)= \
+    _Inout_= \
+    _Inout_count_(x)= \
+    _Inout_opt_= \
+    _Out_= \
+    _Out_opt_= \
+    _Out_z_cap_(x)= \
+    _Printf_format_string_= \
+    _Reserved_= \
+    _Success_(x)=
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The

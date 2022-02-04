@@ -84,20 +84,32 @@ namespace winstd
     class window_dc : public handle<HDC, NULL>
     {
     public:
+        ///
+        /// Initializes an empty device context.
+        ///
         window_dc() noexcept :
             m_hwnd(NULL)
         {}
 
+        ///
+        /// Initializes a device context from existing data.
+        ///
         window_dc(_In_opt_ handle_type h, _In_opt_ HWND hwnd) noexcept :
             handle<handle_type, NULL>(h),
             m_hwnd(hwnd)
         {}
 
+        ///
+        /// Move an existing device context.
+        ///
         window_dc(_Inout_ window_dc &&h) noexcept :
             handle<handle_type, NULL>(std::move(h)),
             m_hwnd(h.m_hwnd)
         {}
 
+        ///
+        /// Copy an existing device context.
+        ///
         window_dc& operator=(_Inout_ window_dc &&h) noexcept
         {
             handle<handle_type, NULL>::operator=(std::move(h));

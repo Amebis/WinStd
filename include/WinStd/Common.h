@@ -112,15 +112,39 @@ private: \
 #define PRINTF_LPOLESTR  "ls"
 #endif
 
+///
+/// Standard input stream for TCHAR strings
+///
 #ifdef _UNICODE
 #define _tcin   (std::wcin )
+#else
+#define _tcin   (std::cin ) ///< Standard input stream for TCHAR strings
+#endif
+
+///
+/// Standard output stream for TCHAR strings
+///
+#ifdef _UNICODE
 #define _tcout  (std::wcout)
+#else
+#define _tcout  (std::cout)
+#endif
+
+///
+/// Standard error stream for TCHAR strings
+///
+#ifdef _UNICODE
 #define _tcerr  (std::wcerr)
+#else
+#define _tcerr  (std::cerr)
+#endif
+
+///
+/// Standard logging stream for TCHAR strings
+///
+#ifdef _UNICODE
 #define _tclog  (std::wclog)
 #else
-#define _tcin   (std::cin )
-#define _tcout  (std::cout)
-#define _tcerr  (std::cerr)
 #define _tclog  (std::clog)
 #endif
 
@@ -820,8 +844,6 @@ namespace winstd
                 m_h = invalid;
             }
         }
-
-        /// @}
 
     protected:
         ///

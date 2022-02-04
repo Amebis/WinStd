@@ -49,9 +49,11 @@ namespace winstd
         }
 
     protected:
+        /// \cond internal
         HWND          m_hwnd;
         GUID          m_action;
         WINTRUST_DATA &m_wtd;
+        /// \endcond
     };
 
     /// @}

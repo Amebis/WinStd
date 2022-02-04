@@ -144,10 +144,12 @@ namespace winstd
         }
 
     protected:
+        /// \cond internal
         HDEVINFO         m_DeviceInfoSet;
         PSP_DEVINFO_DATA m_DeviceInfoData;
         DWORD            m_DriverType;
-        BOOL             m_result;          ///< Did building succeed?
+        BOOL             m_result;
+        /// \endcond
     };
 
     /// @}
