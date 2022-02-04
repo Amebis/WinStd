@@ -4,28 +4,17 @@
     Copyright © 2016 GÉANT
 */
 
- ///
- /// \defgroup SetupAPI Setup API
- /// Integrates WinStd classes with Microsoft Setup API
- ///
-
-#include "Common.h"
-
-namespace winstd
-{
-    class setup_device_info_list;
-    class setup_driver_info_list_builder;
-}
-
-
 #pragma once
 
+#include "Common.h"
 #include <SetupAPI.h>
-
 
 namespace winstd
 {
-    /// \addtogroup SetupAPI
+    ///
+    /// \defgroup SetupAPI Setup API
+    /// Integrates WinStd classes with Microsoft Setup API
+    ///
     /// @{
 
     ///
@@ -108,7 +97,6 @@ namespace winstd
         }
     };
 
-
     ///
     /// Builds a list of drivers in constructor and deletes it in destructor
     ///
@@ -144,7 +132,6 @@ namespace winstd
             if (m_result)
                 SetupDiDestroyDriverInfoList(m_DeviceInfoSet, m_DeviceInfoData, m_DriverType);
         }
-
 
         ///
         /// Return result of `SetupDiBuildDriverInfoList()` call.

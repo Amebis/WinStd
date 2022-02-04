@@ -4,59 +4,27 @@
     Copyright © 2016 GÉANT
 */
 
+#pragma once
+
+#include "Common.h"
+#include <eaphostpeerconfigapis.h>
+#include <eaptypes.h>
+#include <EapHostPeerTypes.h>
+#include <eapmethodtypes.h>
+#include <eappapis.h>
+#include <WinSock2.h>
+#include <memory>
+
+#pragma warning(push)
+#pragma warning(disable: 26812) // Windows EAP API is using unscoped enums
+
+#pragma warning(push)
+#pragma warning(disable: 4505) // Don't warn on unused code
+
 ///
 /// \defgroup WinStdEAPAPI Extensible Authentication Protocol API
 /// Integrates WinStd classes with Microsoft EAP API
 ///
-
-#include "Common.h"
-
-#include <eaphostpeerconfigapis.h>
-#include <eaptypes.h>
-
-#include <memory>
-
-namespace winstd
-{
-    enum class eap_type_t : unsigned char;
-    struct EapHostPeerFreeMemory_delete;
-    struct EapHostPeerFreeRuntimeMemory_delete;
-    struct EapHostPeerFreeErrorMemory_delete;
-    struct EapHostPeerFreeEapError_delete;
-    class eap_attr;
-    class eap_method_prop;
-    class eap_packet;
-    class eap_method_info_array;
-    class eap_runtime_error;
-
-    /// \addtogroup WinStdEAPAPI
-    /// @{
-
-    ///
-    /// EapHost BLOB wrapper class
-    ///
-    typedef std::unique_ptr<BYTE[], EapHostPeerFreeMemory_delete> eap_blob;
-
-    ///
-    /// EapHost BLOB wrapper class
-    ///
-    typedef std::unique_ptr<BYTE[], EapHostPeerFreeRuntimeMemory_delete> eap_blob_runtime;
-
-    ///
-    /// EAP_ERROR wrapper class
-    ///
-    typedef std::unique_ptr<EAP_ERROR, EapHostPeerFreeErrorMemory_delete> eap_error;
-
-    ///
-    /// EAP_ERROR wrapper class
-    ///
-    typedef std::unique_ptr<EAP_ERROR, EapHostPeerFreeEapError_delete> eap_error_runtime;
-
-    /// @}
-}
-
-
-/// \addtogroup WinStdEAPAPI
 /// @{
 
 ///
@@ -69,7 +37,14 @@ namespace winstd
 /// - Non zero when \p a is equal to \p b;
 /// - Zero otherwise.
 ///
-static bool operator==(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b) noexcept;
+static bool operator==(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b) noexcept
+{
+    return
+        a.eapType.type         == b.eapType.type         &&
+        a.eapType.dwVendorId   == b.eapType.dwVendorId   &&
+        a.eapType.dwVendorType == b.eapType.dwVendorType &&
+        a.dwAuthorId           == a.dwAuthorId;
+}
 
 ///
 /// Are EAP method types non-equal?
@@ -81,19 +56,14 @@ static bool operator==(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE
 /// - Non zero when \p a is not equal to \p b;
 /// - Zero otherwise.
 ///
-static bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b) noexcept;
+static bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b) noexcept
+{
+    return !operator==(a, b);
+}
 
 /// @}
 
-#pragma once
-
-#include <EapHostPeerTypes.h>
-#include <eapmethodtypes.h>
-#include <eappapis.h>
-#include <WinSock2.h>
-
-#pragma warning(push)
-#pragma warning(disable: 26812) // Windows EAP API is using unscoped enums
+#pragma warning(pop)
 
 namespace winstd
 {
@@ -131,7 +101,6 @@ namespace winstd
         noneap_end      = 254,          ///< End of non-EAP methods (non-inclusive)
     };
 
-
     ///
     /// Deleter for unique_ptr using EapHostPeerFreeMemory
     ///
@@ -154,6 +123,10 @@ namespace winstd
         }
     };
 
+    ///
+    /// EapHost BLOB wrapper class
+    ///
+    typedef std::unique_ptr<BYTE[], EapHostPeerFreeMemory_delete> eap_blob;
 
     ///
     /// Deleter for unique_ptr using EapHostPeerFreeRuntimeMemory
@@ -175,6 +148,10 @@ namespace winstd
         }
     };
 
+    ///
+    /// EapHost BLOB wrapper class
+    ///
+    typedef std::unique_ptr<BYTE[], EapHostPeerFreeRuntimeMemory_delete> eap_blob_runtime;
 
     ///
     /// Deleter for unique_ptr to EAP_ERROR using EapHostPeerFreeErrorMemory
@@ -197,6 +174,10 @@ namespace winstd
         }
     };
 
+    ///
+    /// EAP_ERROR wrapper class
+    ///
+    typedef std::unique_ptr<EAP_ERROR, EapHostPeerFreeErrorMemory_delete> eap_error;
 
     ///
     /// Deleter for unique_ptr to EAP_ERROR using EapHostPeerFreeEapError
@@ -219,6 +200,10 @@ namespace winstd
         }
     };
 
+    ///
+    /// EAP_ERROR wrapper class
+    ///
+    typedef std::unique_ptr<EAP_ERROR, EapHostPeerFreeEapError_delete> eap_error_runtime;
 
     ///
     /// EAP_ATTRIBUTE wrapper class
@@ -371,7 +356,6 @@ namespace winstd
     ///
     static const EAP_ATTRIBUTE blank_eap_attr = {};
 
-
     ///
     /// EAP_METHOD_PROPERTY wrapper class
     ///
@@ -392,7 +376,6 @@ namespace winstd
             eapMethodPropertyValue.empvBool.value  = value;
         }
 
-
         ///
         /// Constructs a DWORD method property
         ///
@@ -406,7 +389,6 @@ namespace winstd
             eapMethodPropertyValue.empvDword.length = sizeof(DWORD);
             eapMethodPropertyValue.empvDword.value  = value;
         }
-
 
         ///
         /// Constructs a Unicode string method property
@@ -422,7 +404,6 @@ namespace winstd
             eapMethodPropertyValue.empvString.value  = const_cast<BYTE*>(reinterpret_cast<const BYTE*>(value));
         }
     };
-
 
     ///
     /// EapPacket wrapper class
@@ -440,7 +421,6 @@ namespace winstd
             if (m_h != invalid)
                 free_internal();
         }
-
 
         ///
         /// Create new EAP packet
@@ -473,7 +453,6 @@ namespace winstd
             }
         }
 
-
         ///
         /// Returns total EAP packet size in bytes.
         ///
@@ -481,7 +460,6 @@ namespace winstd
         {
             return m_h != NULL ? ntohs(*(WORD*)m_h->Length) : 0;
         }
-
 
     protected:
         ///
@@ -507,7 +485,6 @@ namespace winstd
             return h2;
         }
     };
-
 
     ///
     /// EAP_METHOD_INFO_ARRAY wrapper class
@@ -591,10 +568,7 @@ namespace winstd
 
     /// @}
 
-    ///
-    /// \defgroup WinStdExceptions Exceptions
-    /// Additional exceptions
-    ///
+    /// \addtogroup WinStdExceptions
     /// @{
 
     ///
@@ -623,7 +597,6 @@ namespace winstd
         {
         }
 
-
         ///
         /// Constructs an exception
         ///
@@ -642,7 +615,6 @@ namespace winstd
         {
         }
 
-
         ///
         /// Returns EAP method type
         ///
@@ -650,7 +622,6 @@ namespace winstd
         {
             return m_type;
         }
-
 
         ///
         /// Returns the reason code for error
@@ -660,7 +631,6 @@ namespace winstd
             return m_reason;
         }
 
-
         ///
         /// Returns root cause ID
         ///
@@ -668,7 +638,6 @@ namespace winstd
         {
             return m_root_cause_id;
         }
-
 
         ///
         /// Returns root cause ID
@@ -678,7 +647,6 @@ namespace winstd
             return m_root_cause_desc.c_str();
         }
 
-
         ///
         /// Returns repair ID
         ///
@@ -687,7 +655,6 @@ namespace winstd
             return m_repair_id;
         }
 
-
         ///
         /// Returns root cause ID
         ///
@@ -695,7 +662,6 @@ namespace winstd
         {
             return m_repair_desc.c_str();
         }
-
 
         ///
         /// Returns help_link ID
@@ -722,24 +688,4 @@ namespace winstd
     /// @}
 }
 
-
-#pragma warning(push)
-#pragma warning(disable: 4505) // Don't warn on unused code
-
-static bool operator==(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b) noexcept
-{
-    return
-        a.eapType.type         == b.eapType.type         &&
-        a.eapType.dwVendorId   == b.eapType.dwVendorId   &&
-        a.eapType.dwVendorType == b.eapType.dwVendorType &&
-        a.dwAuthorId           == a.dwAuthorId;
-}
-
-
-static bool operator!=(_In_ const EAP_METHOD_TYPE &a, _In_ const EAP_METHOD_TYPE &b) noexcept
-{
-    return !operator==(a, b);
-}
-
-#pragma warning(pop)
 #pragma warning(pop)

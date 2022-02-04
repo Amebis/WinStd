@@ -4,36 +4,19 @@
     Copyright © 2016 GÉANT
 */
 
+#pragma once
+
+#include "Common.h"
+#include <Shlwapi.h>
+#include <string>
+
 ///
 /// \defgroup WinStdShellWAPI Shell API
 /// Integrates WinStd classes with Microsoft Shell API
 ///
-#include "Common.h"
-
-#include <Shlwapi.h>
-
-#include <string>
-
-/// \addtogroup WinStdShellWAPI
 /// @{
 
 /// @copydoc PathCanonicalizeW()
-template<class _Traits, class _Ax>
-static BOOL PathCanonicalizeA(_Inout_ std::basic_string<char, _Traits, _Ax> &sValue, _In_ LPCSTR pszPath);
-
-///
-/// Simplifies a path by removing navigation elements such as "." and ".." to produce a direct, well-formed path, and stores it in a std::wstring string.
-///
-/// \sa [PathCanonicalize function](https://msdn.microsoft.com/en-us/library/windows/desktop/bb773569.aspx)
-///
-template<class _Traits, class _Ax>
-static BOOL PathCanonicalizeW(_Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sValue, _In_ LPCWSTR pszPath);
-
-/// @}
-
-#pragma once
-
-
 template<class _Traits, class _Ax>
 static BOOL PathCanonicalizeA(_Inout_ std::basic_string<char, _Traits, _Ax> &sValue, _In_ LPCSTR pszPath)
 {
@@ -46,7 +29,11 @@ static BOOL PathCanonicalizeA(_Inout_ std::basic_string<char, _Traits, _Ax> &sVa
     return bResult;
 }
 
-
+///
+/// Simplifies a path by removing navigation elements such as "." and ".." to produce a direct, well-formed path, and stores it in a std::wstring string.
+///
+/// \sa [PathCanonicalize function](https://msdn.microsoft.com/en-us/library/windows/desktop/bb773569.aspx)
+///
 template<class _Traits, class _Ax>
 static BOOL PathCanonicalizeW(_Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sValue, _In_ LPCWSTR pszPath)
 {
@@ -57,3 +44,5 @@ static BOOL PathCanonicalizeW(_Inout_ std::basic_string<wchar_t, _Traits, _Ax> &
     sValue.assign(szBuffer, bResult ? MAX_PATH : 0);
     return bResult;
 }
+
+/// @}

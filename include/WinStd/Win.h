@@ -4,42 +4,47 @@
     Copyright © 2016 GÉANT
 */
 
+#pragma once
+
+#include "Common.h"
+#include <string>
+#include <vector>
+
+#pragma warning(push)
+#pragma warning(disable: 4505) // Don't warn on unused code
+
 ///
 /// \defgroup WinStdWinAPI Windows API
 /// Integrates WinStd classes with Microsoft Windows API
 ///
-
-#include "Common.h"
-
-#include <string>
-#include <vector>
-
-namespace winstd
-{
-    template<HANDLE INVALID> class win_handle;
-    class library;
-    class process;
-    class file;
-    class event;
-    class critical_section;
-    class heap;
-    template <class _Ty> class heap_allocator;
-    class actctx_activator;
-    class user_impersonator;
-    class console_ctrl_handler;
-    class vmemory;
-    class reg_key;
-    class security_id;
-    class process_information;
-}
-
-
-/// \addtogroup WinStdWinAPI
 /// @{
 
 /// @copydoc GetModuleFileNameW()
 template<class _Traits, class _Ax>
-static DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept;
+static DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept
+{
+    assert(0); // TODO: Test this code.
+
+    char szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(char)];
+
+    // Try with stack buffer first.
+    DWORD dwResult = ::GetModuleFileNameA(hModule, szStackBuffer, _countof(szStackBuffer));
+    if (dwResult < _countof(szStackBuffer)) {
+        // Copy from stack.
+        sValue.assign(szStackBuffer, dwResult);
+        return dwResult;
+    } else {
+        for (DWORD dwCapacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(char);; dwCapacity *= 2) {
+            // Allocate on heap and retry.
+            std::unique_ptr<char[]> szBuffer(new char[dwCapacity]);
+            dwResult = ::GetModuleFileNameA(hModule, szBuffer.get(), dwCapacity);
+            if (dwResult < dwCapacity) {
+                sValue.assign(szBuffer.get(), dwResult);
+                return dwResult;
+            }
+        }
+    }
+}
 
 ///
 /// Retrieves the fully qualified path for the file that contains the specified module and stores it in a std::wstring string.
@@ -47,11 +52,57 @@ static DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_strin
 /// \sa [GetModuleFileName function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms683197.aspx)
 ///
 template<class _Traits, class _Ax>
-static DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue) noexcept;
+static DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue) noexcept
+{
+    wchar_t szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
+
+    // Try with stack buffer first.
+    DWORD dwResult = ::GetModuleFileNameW(hModule, szStackBuffer, _countof(szStackBuffer));
+    if (dwResult < _countof(szStackBuffer)) {
+        // Copy from stack.
+        sValue.assign(szStackBuffer, dwResult);
+        return dwResult;
+    } else {
+        for (DWORD dwCapacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t);; dwCapacity *= 2) {
+            // Allocate on heap and retry.
+            std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwCapacity]);
+            dwResult = ::GetModuleFileNameW(hModule, szBuffer.get(), dwCapacity);
+            if (dwResult < dwCapacity) {
+                sValue.assign(szBuffer.get(), dwResult);
+                return dwResult;
+            }
+        }
+    }
+}
 
 /// @copydoc GetWindowTextW()
 template<class _Traits, class _Ax>
-static _Success_(return != 0) int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept;
+static _Success_(return != 0) int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept
+{
+    assert(0); // TODO: Test this code.
+
+    int iResult;
+
+    // Query the final string length first.
+    iResult = ::GetWindowTextLengthA(hWnd);
+    if (iResult > 0) {
+        if (++iResult < WINSTD_STACK_BUFFER_BYTES/sizeof(char)) {
+            // Read string data to stack.
+            char szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(char)];
+            iResult = ::GetWindowTextA(hWnd, szBuffer, _countof(szBuffer));
+            sValue.assign(szBuffer, iResult);
+        } else {
+            // Allocate buffer on heap and read the string data into it.
+            std::unique_ptr<char[]> szBuffer(new char[++iResult]);
+            iResult = ::GetWindowTextA(hWnd, szBuffer.get(), iResult);
+            sValue.assign(szBuffer.get(), iResult);
+        }
+        return iResult;
+    }
+
+    sValue.clear();
+    return 0;
+}
 
 ///
 /// Copies the text of the specified window's title bar (if it has one) into a std::wstring string.
@@ -59,11 +110,48 @@ static _Success_(return != 0) int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basi
 /// \sa [GetWindowText function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms633520.aspx)
 ///
 template<class _Traits, class _Ax>
-static _Success_(return != 0) int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue) noexcept;
+static _Success_(return != 0) int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue) noexcept
+{
+    assert(0); // TODO: Test this code.
+
+    int iResult;
+
+    // Query the final string length first.
+    iResult = ::GetWindowTextLengthW(hWnd);
+    if (iResult > 0) {
+        if (++iResult < WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)) {
+            // Read string data to stack.
+            wchar_t szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
+            iResult = ::GetWindowTextW(hWnd, szBuffer, _countof(szBuffer));
+            sValue.assign(szBuffer, iResult);
+        } else {
+            // Allocate buffer on heap and read the string data into it.
+            std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[++iResult]);
+            iResult = ::GetWindowTextW(hWnd, szBuffer.get(), iResult);
+            sValue.assign(szBuffer.get(), iResult);
+        }
+        return iResult;
+    }
+
+    sValue.clear();
+    return 0;
+}
 
 /// @copydoc GetFileVersionInfoW()
 template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue) noexcept;
+static _Success_(return != 0) BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue) noexcept
+{
+    assert(0); // TODO: Test this code.
+
+    // Get version info size.
+    DWORD dwVerInfoSize = ::GetFileVersionInfoSizeA(lptstrFilename, &dwHandle);
+    if (dwVerInfoSize != 0) {
+        // Read version info.
+        aValue.resize((dwVerInfoSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        return ::GetFileVersionInfoA(lptstrFilename, dwHandle, dwVerInfoSize, aValue.data());
+    } else
+        return FALSE;
+}
 
 ///
 /// Retrieves version information for the specified file and stores it in a std::vector buffer.
@@ -71,11 +159,43 @@ static _Success_(return != 0) BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilen
 /// \sa [GetFileVersionInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms647003.aspx)
 ///
 template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue) noexcept;
+static _Success_(return != 0) BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue) noexcept
+{
+    assert(0); // TODO: Test this code.
+
+    // Get version info size.
+    DWORD dwVerInfoSize = ::GetFileVersionInfoSizeW(lptstrFilename, &dwHandle);
+    if (dwVerInfoSize != 0) {
+        // Read version info.
+        aValue.resize((dwVerInfoSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        return ::GetFileVersionInfoW(lptstrFilename, dwHandle, dwVerInfoSize, aValue.data());
+    } else
+        return FALSE;
+}
 
 /// @copydoc ExpandEnvironmentStringsW()
 template<class _Traits, class _Ax>
-static _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept;
+static _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept
+{
+    assert(0); // TODO: Test this code.
+
+    for (DWORD dwSizeOut = (DWORD)strlen(lpSrc) + 0x100;;) {
+        DWORD dwSizeIn = dwSizeOut;
+        std::unique_ptr<char[]> szBuffer(new char[(size_t)dwSizeIn + 2]); // Note: ANSI version requires one extra char.
+        dwSizeOut = ::ExpandEnvironmentStringsA(lpSrc, szBuffer.get(), dwSizeIn);
+        if (dwSizeOut == 0) {
+            // Error or zero-length input.
+            break;
+        } else if (dwSizeOut <= dwSizeIn) {
+            // The buffer was sufficient.
+            sValue.assign(szBuffer.get(), dwSizeOut - 1);
+            return dwSizeOut;
+        }
+    }
+
+    sValue.clear();
+    return 0;
+}
 
 ///
 /// Expands environment-variable strings, replaces them with the values defined for the current user, and stores it in a std::wstring string.
@@ -83,11 +203,39 @@ static _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSr
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
 template<class _Traits, class _Ax>
-static _Success_(return != 0) DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue) noexcept;
+static _Success_(return != 0) DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue) noexcept
+{
+    for (DWORD dwSizeOut = (DWORD)wcslen(lpSrc) + 0x100;;) {
+        DWORD dwSizeIn = dwSizeOut;
+        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[(size_t)dwSizeIn + 1]);
+        dwSizeOut = ::ExpandEnvironmentStringsW(lpSrc, szBuffer.get(), dwSizeIn);
+        if (dwSizeOut == 0) {
+            // Error or zero-length input.
+            break;
+        } else if (dwSizeOut <= dwSizeIn) {
+            // The buffer was sufficient.
+            sValue.assign(szBuffer.get(), dwSizeOut - 1);
+            return dwSizeOut;
+        }
+    }
+
+    sValue.clear();
+    return 0;
+}
 
 /// @copydoc GuidToStringW()
 template<class _Traits, class _Ax>
-static VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<char, _Traits, _Ax> &str) noexcept;
+static VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<char, _Traits, _Ax> &str) noexcept
+{
+    assert(0); // TODO: Test this code.
+
+    sprintf(str, "{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}",
+        lpGuid->Data1,
+        lpGuid->Data2,
+        lpGuid->Data3,
+        lpGuid->Data4[0], lpGuid->Data4[1],
+        lpGuid->Data4[2], lpGuid->Data4[3], lpGuid->Data4[4], lpGuid->Data4[5], lpGuid->Data4[6], lpGuid->Data4[7]);
+}
 
 ///
 /// Formats GUID and stores it in a std::wstring string.
@@ -96,7 +244,17 @@ static VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<char, _Tr
 /// \param[out] str     String to store the result to
 ///
 template<class _Traits, class _Ax>
-static VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &str) noexcept;
+static VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &str) noexcept
+{
+    assert(0); // TODO: Test this code.
+
+    sprintf(str, L"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}",
+        lpGuid->Data1,
+        lpGuid->Data2,
+        lpGuid->Data3,
+        lpGuid->Data4[0], lpGuid->Data4[1],
+        lpGuid->Data4[2], lpGuid->Data4[3], lpGuid->Data4[4], lpGuid->Data4[5], lpGuid->Data4[6], lpGuid->Data4[7]);
+}
 
 /// @copydoc GuidToStringW()
 #ifdef _UNICODE
@@ -106,7 +264,67 @@ static VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<wchar_t, 
 #endif
 
 /// @copydoc StringToGuidW()
-static _Success_(return) BOOL StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd = NULL) noexcept;
+static _Success_(return) BOOL StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd = NULL) noexcept
+{
+    GUID g;
+    LPSTR lpszEnd;
+    unsigned long ulTmp;
+    unsigned long long ullTmp;
+
+    if (!lpszGuid || !lpGuid || *lpszGuid != '{') return FALSE;
+    lpszGuid++;
+
+    g.Data1 = strtoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE) return FALSE;
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data2 = static_cast<unsigned short>(ulTmp);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data3 = static_cast<unsigned short>(ulTmp);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data4[0] = static_cast<unsigned char>((ulTmp >> 8) & 0xff);
+    g.Data4[1] = static_cast<unsigned char>( ulTmp       & 0xff);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ullTmp = _strtoui64(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ullTmp > 0xFFFFFFFFFFFF) return FALSE;
+    g.Data4[2] = static_cast<unsigned char>((ullTmp >> 40) & 0xff);
+    g.Data4[3] = static_cast<unsigned char>((ullTmp >> 32) & 0xff);
+    g.Data4[4] = static_cast<unsigned char>((ullTmp >> 24) & 0xff);
+    g.Data4[5] = static_cast<unsigned char>((ullTmp >> 16) & 0xff);
+    g.Data4[6] = static_cast<unsigned char>((ullTmp >>  8) & 0xff);
+    g.Data4[7] = static_cast<unsigned char>( ullTmp        & 0xff);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '}') return FALSE;
+    lpszGuid++;
+
+    if (lpszGuidEnd)
+        *lpszGuidEnd = lpszGuid;
+
+    *lpGuid = g;
+    return TRUE;
+}
 
 ///
 /// Parses string with GUID and stores it to GUID
@@ -119,7 +337,67 @@ static _Success_(return) BOOL StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID
 /// - `TRUE` if GUID successfuly parsed;
 /// - `FALSE` otherwise.
 ///
-static _Success_(return) BOOL StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd = NULL) noexcept;
+static _Success_(return) BOOL StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd = NULL) noexcept
+{
+    GUID g;
+    LPWSTR lpszEnd;
+    unsigned long ulTmp;
+    unsigned long long ullTmp;
+
+    if (!lpszGuid || !lpGuid || *lpszGuid != '{') return FALSE;
+    lpszGuid++;
+
+    g.Data1 = wcstoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE) return FALSE;
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data2 = static_cast<unsigned short>(ulTmp);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data3 = static_cast<unsigned short>(ulTmp);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
+    g.Data4[0] = static_cast<unsigned char>((ulTmp >> 8) & 0xff);
+    g.Data4[1] = static_cast<unsigned char>( ulTmp       & 0xff);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '-') return FALSE;
+    lpszGuid++;
+
+    ullTmp = _wcstoui64(lpszGuid, &lpszEnd, 16);
+    if (errno == ERANGE || ullTmp > 0xFFFFFFFFFFFF) return FALSE;
+    g.Data4[2] = static_cast<unsigned char>((ullTmp >> 40) & 0xff);
+    g.Data4[3] = static_cast<unsigned char>((ullTmp >> 32) & 0xff);
+    g.Data4[4] = static_cast<unsigned char>((ullTmp >> 24) & 0xff);
+    g.Data4[5] = static_cast<unsigned char>((ullTmp >> 16) & 0xff);
+    g.Data4[6] = static_cast<unsigned char>((ullTmp >>  8) & 0xff);
+    g.Data4[7] = static_cast<unsigned char>( ullTmp        & 0xff);
+    lpszGuid = lpszEnd;
+
+    if (*lpszGuid != '}') return FALSE;
+    lpszGuid++;
+
+    if (lpszGuidEnd)
+        *lpszGuidEnd = lpszGuid;
+
+    *lpGuid = g;
+    return TRUE;
+}
 
 /// @copydoc StringToGuidW()
 #ifdef _UNICODE
@@ -147,7 +425,50 @@ static _Success_(return) BOOL StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUI
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
 template<class _Traits, class _Ax>
-static LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept;
+static LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept
+{
+    LSTATUS lResult;
+    BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
+    DWORD dwSize = sizeof(aStackBuffer), dwType;
+
+    // Try with stack buffer first.
+    lResult = ::RegQueryValueExA(hReg, pszName, NULL, &dwType, aStackBuffer, &dwSize);
+    if (lResult == ERROR_SUCCESS) {
+        if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
+            // The value is REG_SZ or REG_MULTI_SZ.
+            dwSize /= sizeof(CHAR);
+            sValue.assign(reinterpret_cast<LPCSTR>(aStackBuffer), dwSize && reinterpret_cast<LPCSTR>(aStackBuffer)[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
+        } else if (dwType == REG_EXPAND_SZ) {
+            // The value is REG_EXPAND_SZ. Expand it from stack buffer.
+            if (::ExpandEnvironmentStringsA(reinterpret_cast<LPCSTR>(aStackBuffer), sValue) == 0)
+                lResult = ::GetLastError();
+        } else {
+            // The value is not a string type.
+            lResult = ERROR_INVALID_DATA;
+        }
+    } else if (lResult == ERROR_MORE_DATA) {
+        if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
+            // The value is REG_SZ or REG_MULTI_SZ. Read it now.
+            std::unique_ptr<CHAR[]> szBuffer(new CHAR[dwSize / sizeof(CHAR)]);
+            if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
+                dwSize /= sizeof(CHAR);
+                sValue.assign(szBuffer.get(), dwSize && szBuffer[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
+            }
+        } else if (dwType == REG_EXPAND_SZ) {
+            // The value is REG_EXPAND_SZ. Read it and expand environment variables.
+            std::unique_ptr<CHAR[]> szBuffer(new CHAR[dwSize / sizeof(CHAR)]);
+            if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
+                if (::ExpandEnvironmentStringsA(szBuffer.get(), sValue) == 0)
+                    lResult = ::GetLastError();
+            }
+        } else {
+            // The value is not a string type.
+            lResult = ERROR_INVALID_DATA;
+        }
+    }
+
+    return lResult;
+}
 
 ///
 /// Queries for a string value in the registry and stores it in a std::wstring string.
@@ -168,11 +489,73 @@ static LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
 template<class _Traits, class _Ax>
-static LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue) noexcept;
+static LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue) noexcept
+{
+    LSTATUS lResult;
+    BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
+    DWORD dwSize = sizeof(aStackBuffer), dwType;
+
+    // Try with stack buffer first.
+    lResult = ::RegQueryValueExW(hReg, pszName, NULL, &dwType, aStackBuffer, &dwSize);
+    if (lResult == ERROR_SUCCESS) {
+        if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
+            // The value is REG_SZ or REG_MULTI_SZ.
+            dwSize /= sizeof(WCHAR);
+            sValue.assign(reinterpret_cast<LPCWSTR>(aStackBuffer), dwSize && reinterpret_cast<LPCWSTR>(aStackBuffer)[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
+        } else if (dwType == REG_EXPAND_SZ) {
+            // The value is REG_EXPAND_SZ. Expand it from stack buffer.
+            if (::ExpandEnvironmentStringsW(reinterpret_cast<LPCWSTR>(aStackBuffer), sValue) == 0)
+                lResult = ::GetLastError();
+        } else {
+            // The value is not a string type.
+            lResult = ERROR_INVALID_DATA;
+        }
+    } else if (lResult == ERROR_MORE_DATA) {
+        if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
+            // The value is REG_SZ or REG_MULTI_SZ. Read it now.
+            std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[dwSize / sizeof(WCHAR)]);
+            if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
+                dwSize /= sizeof(WCHAR);
+                sValue.assign(szBuffer.get(), dwSize && szBuffer[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
+            }
+        } else if (dwType == REG_EXPAND_SZ) {
+            // The value is REG_EXPAND_SZ. Read it and expand environment variables.
+            std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[dwSize / sizeof(WCHAR)]);
+            if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
+                if (::ExpandEnvironmentStringsW(szBuffer.get(), sValue) == 0)
+                    lResult = ::GetLastError();
+            }
+        } else {
+            // The value is not a string type.
+            lResult = ERROR_INVALID_DATA;
+        }
+    }
+
+    return lResult;
+}
 
 /// @copydoc RegQueryValueExW()
 template<class _Ty, class _Ax>
-static LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData) noexcept;
+static LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData) noexcept
+{
+    LSTATUS lResult;
+    BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
+    DWORD dwSize = sizeof(aStackBuffer);
+
+    // Try with stack buffer first.
+    lResult = RegQueryValueExA(hKey, lpValueName, lpReserved, lpType, aStackBuffer, &dwSize);
+    if (lResult == ERROR_SUCCESS) {
+        // Copy from stack buffer.
+        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        memcpy(aData.data(), aStackBuffer, dwSize);
+    } else if (lResult == ERROR_MORE_DATA) {
+        // Allocate buffer on heap and retry.
+        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        lResult = RegQueryValueExA(hKey, lpValueName, lpReserved, NULL, aData.data(), &dwSize);
+    }
+
+    return lResult;
+}
 
 ///
 /// Retrieves the type and data for the specified value name associated with an open registry key and stores the data in a std::vector buffer.
@@ -180,13 +563,38 @@ static LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, _
 /// \sa [RegQueryValueEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx)
 ///
 template<class _Ty, class _Ax>
-static LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData) noexcept;
+static LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData) noexcept
+{
+    LSTATUS lResult;
+    BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
+    DWORD dwSize = sizeof(aStackBuffer);
+
+    // Try with stack buffer first.
+    lResult = RegQueryValueExW(hKey, lpValueName, lpReserved, lpType, aStackBuffer, &dwSize);
+    if (lResult == ERROR_SUCCESS) {
+        // Copy from stack buffer.
+        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        memcpy(aData.data(), aStackBuffer, dwSize);
+    } else if (lResult == ERROR_MORE_DATA) {
+        // Allocate buffer on heap and retry.
+        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        lResult = RegQueryValueExW(hKey, lpValueName, lpReserved, NULL, aData.data(), &dwSize);
+    }
+
+    return lResult;
+}
 
 #if _WIN32_WINNT >= _WIN32_WINNT_VISTA
 
 /// @copydoc RegLoadMUIStringW()
 template<class _Traits, class _Ax>
-static LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _Out_ std::basic_string<char, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCSTR pszDirectory) noexcept;
+static LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _Out_ std::basic_string<char, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCSTR pszDirectory) noexcept
+{
+    // According to "Remarks" section in MSDN documentation of RegLoadMUIString(),
+    // this function is defined but not implemented as ANSI variation.
+    assert(0);
+    return ERROR_CALL_NOT_IMPLEMENTED;
+}
 
 ///
 /// Loads the specified string from the specified key and subkey, and stores it in a std::wstring string.
@@ -194,7 +602,27 @@ static LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _Ou
 /// \sa [RegLoadMUIString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724890.aspx)
 ///
 template<class _Traits, class _Ax>
-static LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCWSTR pszDirectory) noexcept;
+static LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCWSTR pszDirectory) noexcept
+{
+    LSTATUS lResult;
+    wchar_t szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
+    DWORD dwSize;
+
+    Flags &= ~REG_MUI_STRING_TRUNCATE;
+
+    // Try with stack buffer first.
+    lResult = RegLoadMUIStringW(hKey, pszValue, szStackBuffer, sizeof(szStackBuffer), &dwSize, Flags, pszDirectory);
+    if (lResult == ERROR_SUCCESS) {
+        // Copy from stack buffer.
+        sOut.assign(szStackBuffer, wcsnlen(szStackBuffer, dwSize/sizeof(wchar_t)));
+    } else if (lResult == ERROR_MORE_DATA) {
+        // Allocate buffer on heap and retry.
+        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[(dwSize + sizeof(wchar_t) - 1)/sizeof(wchar_t)]);
+        sOut.assign(szBuffer.get(), (lResult = RegLoadMUIStringW(hKey, pszValue, szBuffer.get(), dwSize, &dwSize, Flags, pszDirectory)) == ERROR_SUCCESS ? wcsnlen(szBuffer.get(), dwSize/sizeof(wchar_t)) : 0);
+    }
+
+    return lResult;
+}
 
 #endif
 
@@ -204,7 +632,25 @@ static LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _O
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
 template<class _Traits, class _Ax>
-static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept;
+static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
+{
+    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
+    if (cch) {
+        // Copy from stack. Be careful not to include zero terminator.
+        sMultiByteStr.assign(szStackBuffer, cchWideChar != -1 ? strnlen(szStackBuffer, cch) : (size_t)cch - 1);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
+        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.assign(szBuffer.get(), cchWideChar != -1 ? strnlen(szBuffer.get(), cch) : (size_t)cch - 1);
+    }
+
+    return cch;
+}
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::vector. The new character vector is not necessarily from a multibyte character set.
@@ -212,7 +658,24 @@ static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ D
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
 template<class _Ax>
-static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept;
+static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
+{
+    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
+    if (cch) {
+        // Copy from stack.
+        sMultiByteStr.assign(szStackBuffer, szStackBuffer + cch);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.resize(cch);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, sMultiByteStr.data(), cch, lpDefaultChar, lpUsedDefaultChar);
+    }
+
+    return cch;
+}
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
@@ -220,7 +683,25 @@ static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ D
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _Out_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept;
+static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
+{
+    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
+    if (cch) {
+        // Copy from stack.
+        sMultiByteStr.assign(szStackBuffer, cch);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), NULL, 0, lpDefaultChar, lpUsedDefaultChar);
+        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.assign(szBuffer.get(), cch);
+    }
+
+    return cch;
+}
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
@@ -230,7 +711,28 @@ static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ D
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
 template<class _Traits, class _Ax>
-static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept;
+static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
+{
+    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
+    if (cch) {
+        // Copy from stack. Be careful not to include zero terminator.
+        sMultiByteStr.assign(szStackBuffer, cchWideChar != -1 ? strnlen(szStackBuffer, cch) : (size_t)cch - 1);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
+        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.assign(szBuffer.get(), cchWideChar != -1 ? strnlen(szBuffer.get(), cch) : (size_t)cch - 1);
+        SecureZeroMemory(szBuffer.get(), sizeof(CHAR)*cch);
+    }
+
+    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
+
+    return cch;
+}
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::vector. The new character vector is not necessarily from a multibyte character set.
@@ -240,7 +742,26 @@ static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, 
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
 template<class _Ax>
-static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept;
+static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
+{
+    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
+    if (cch) {
+        // Copy from stack.
+        sMultiByteStr.assign(szStackBuffer, szStackBuffer + cch);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.resize(cch);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, sMultiByteStr.data(), cch, lpDefaultChar, lpUsedDefaultChar);
+    }
+
+    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
+
+    return cch;
+}
 
 ///
 /// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
@@ -250,7 +771,28 @@ static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, 
 /// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
 ///
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _Out_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept;
+static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _Out_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
+{
+    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
+    if (cch) {
+        // Copy from stack.
+        sMultiByteStr.assign(szStackBuffer, cch);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), NULL, 0, lpDefaultChar, lpUsedDefaultChar);
+        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.assign(szBuffer.get(), cch);
+        SecureZeroMemory(szBuffer.get(), sizeof(CHAR)*cch);
+    }
+
+    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
+
+    return cch;
+}
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
@@ -258,7 +800,25 @@ static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, 
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
 template<class _Traits, class _Ax>
-static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr) noexcept;
+static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
+    if (cch) {
+        // Copy from stack.
+        sWideCharStr.assign(szStackBuffer, cbMultiByte != -1 ? wcsnlen(szStackBuffer, cch) : (size_t)cch - 1);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
+        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szBuffer.get(), cch);
+        sWideCharStr.assign(szBuffer.get(), cbMultiByte != -1 ? wcsnlen(szBuffer.get(), cch) : (size_t)cch - 1);
+    }
+
+    return cch;
+}
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::vector. The character vector is not necessarily from a multibyte character set.
@@ -266,7 +826,24 @@ static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ D
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
 template<class _Ax>
-static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr) noexcept;
+static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
+    if (cch) {
+        // Copy from stack.
+        sWideCharStr.assign(szStackBuffer, szStackBuffer + cch);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
+        sWideCharStr.resize(cch);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, sWideCharStr.data(), cch);
+    }
+
+    return cch;
+}
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
@@ -274,7 +851,25 @@ static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ D
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr) noexcept;
+static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szStackBuffer, _countof(szStackBuffer));
+    if (cch) {
+        // Copy from stack.
+        sWideCharStr.assign(szStackBuffer, cch);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), NULL, 0);
+        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szBuffer.get(), cch);
+        sWideCharStr.assign(szBuffer.get(), cch);
+    }
+
+    return cch;
+}
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
@@ -284,7 +879,28 @@ static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ D
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
 template<class _Traits, class _Ax>
-static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr) noexcept;
+static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
+    if (cch) {
+        // Copy from stack.
+        sWideCharStr.assign(szStackBuffer, cbMultiByte != -1 ? wcsnlen(szStackBuffer, cch) : (size_t)cch - 1);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
+        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szBuffer.get(), cch);
+        sWideCharStr.assign(szBuffer.get(), cbMultiByte != -1 ? wcsnlen(szBuffer.get(), cch) : (size_t)cch - 1);
+        SecureZeroMemory(szBuffer.get(), sizeof(WCHAR)*cch);
+    }
+
+    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
+
+    return cch;
+}
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::vector. The character vector is not necessarily from a multibyte character set.
@@ -294,7 +910,26 @@ static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, 
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
 template<class _Ax>
-static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr) noexcept;
+static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
+    if (cch) {
+        // Copy from stack.
+        sWideCharStr.assign(szStackBuffer, szStackBuffer + cch);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
+        sWideCharStr.resize(cch);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, sWideCharStr.data(), cch);
+    }
+
+    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
+
+    return cch;
+}
 
 ///
 /// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
@@ -304,7 +939,28 @@ static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, 
 /// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
 ///
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr) noexcept;
+static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szStackBuffer, _countof(szStackBuffer));
+    if (cch) {
+        // Copy from stack.
+        sWideCharStr.assign(szStackBuffer, cch);
+    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), NULL, 0);
+        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szBuffer.get(), cch);
+        sWideCharStr.assign(szBuffer.get(), cch);
+        SecureZeroMemory(szBuffer.get(), sizeof(WCHAR)*cch);
+    }
+
+    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
+
+    return cch;
+}
 
 ///
 /// Normalizes characters of a text string according to Unicode 4.0 TR#15.
@@ -312,7 +968,42 @@ static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, 
 /// \sa [NormalizeString function](https://docs.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-normalizestring)
 ///
 template<class _Traits, class _Ax>
-static _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ LPCWSTR lpSrcString, _In_ int cwSrcLength, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sDstString) noexcept;
+static _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ LPCWSTR lpSrcString, _In_ int cwSrcLength, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sDstString) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::NormalizeString(NormForm, lpSrcString, cwSrcLength, szStackBuffer, _countof(szStackBuffer));
+    if (cch > 0) {
+        // Copy from stack.
+        sDstString.assign(szStackBuffer, cwSrcLength != -1 ? wcsnlen(szStackBuffer, cch) : (size_t)cch - 1);
+    } else {
+        switch (::GetLastError()) {
+            case ERROR_INSUFFICIENT_BUFFER:
+                for (int i = 10; i--;) {
+                    // Allocate buffer. Then convert again.
+                    cch = -cch;
+                    std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
+                    cch = ::NormalizeString(NormForm, lpSrcString, cwSrcLength, szBuffer.get(), cch);
+                    if (cch > 0) {
+                        sDstString.assign(szBuffer.get(), cwSrcLength != -1 ? wcsnlen(szStackBuffer, cch) : (size_t)cch - 1);
+                        break;
+                    }
+                    if (::GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
+                        sDstString.clear();
+                        break;
+                    }
+                }
+                break;
+
+            case ERROR_SUCCESS:
+                sDstString.clear();
+                break;
+        }
+    }
+
+    return cch;
+}
 
 ///
 /// Normalizes characters of a text string according to Unicode 4.0 TR#15.
@@ -320,11 +1011,56 @@ static _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ L
 /// \sa [NormalizeString function](https://docs.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-normalizestring)
 ///
 template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-static _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ const std::basic_string<wchar_t, _Traits1, _Ax1> &sSrcString, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sDstString) noexcept;
+static _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ const std::basic_string<wchar_t, _Traits1, _Ax1> &sSrcString, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sDstString) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::NormalizeString(NormForm, sSrcString.c_str(), (int)sSrcString.length(), szStackBuffer, _countof(szStackBuffer));
+    if (cch > 0) {
+        // Copy from stack.
+        sDstString.assign(szStackBuffer, cch);
+    } else {
+        switch (::GetLastError()) {
+            case ERROR_INSUFFICIENT_BUFFER:
+                for (int i = 10; i--;) {
+                    // Allocate buffer. Then convert again.
+                    cch = -cch;
+                    std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
+                    cch = ::NormalizeString(NormForm, sSrcString.c_str(), (int)sSrcString.length(), szBuffer.get(), cch);
+                    if (cch > 0) {
+                        sDstString.assign(szBuffer.get(), cch);
+                        break;
+                    }
+                    if (::GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
+                        sDstString.clear();
+                        break;
+                    }
+                }
+                break;
+
+            case ERROR_SUCCESS:
+                sDstString.clear();
+                break;
+        }
+    }
+
+    return cch;
+}
 
 /// @copydoc LoadStringW
 template<class _Traits, class _Ax>
-static _Success_(return != 0) int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer) noexcept;
+static _Success_(return != 0) int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer) noexcept
+{
+    // Get read-only pointer to string resource.
+    LPCSTR pszStr;
+    int i = LoadStringA(hInstance, uID, reinterpret_cast<LPSTR>(&pszStr), 0);
+    if (i) {
+        sBuffer.assign(pszStr, i);
+        return i;
+    } else
+        return 0;
+}
 
 ///
 /// Loads a string resource from the executable file associated with a specified module.
@@ -332,39 +1068,83 @@ static _Success_(return != 0) int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstanc
 /// \sa [LoadString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms647486.aspx)
 ///
 template<class _Traits, class _Ax>
-static _Success_(return != 0) int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer) noexcept;
+static _Success_(return != 0) int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer) noexcept
+{
+    // Get read-only pointer to string resource.
+    LPCWSTR pszStr;
+    int i = LoadStringW(hInstance, uID, reinterpret_cast<LPWSTR>(&pszStr), 0);
+    if (i) {
+        sBuffer.assign(pszStr, i);
+        return i;
+    } else
+        return 0;
+}
 
 ///
 /// Formats and sends a string to the debugger for display.
 ///
 /// \sa [OutputDebugString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx)
 ///
-static VOID OutputDebugStrV(_In_z_ LPCSTR lpOutputString, _In_ va_list arg) noexcept;
+static VOID OutputDebugStrV(_In_z_ LPCSTR lpOutputString, _In_ va_list arg) noexcept
+{
+    std::string str;
+    try { vsprintf(str, lpOutputString, arg); } catch (...) { return; }
+    OutputDebugStringA(str.c_str());
+}
 
 ///
 /// Formats and sends a string to the debugger for display.
 ///
 /// \sa [OutputDebugString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx)
 ///
-static VOID OutputDebugStrV(_In_z_ LPCWSTR lpOutputString, _In_ va_list arg) noexcept;
+static VOID OutputDebugStrV(_In_z_ LPCWSTR lpOutputString, _In_ va_list arg) noexcept
+{
+    std::wstring str;
+    try { vsprintf(str, lpOutputString, arg); } catch (...) { return; }
+    OutputDebugStringW(str.c_str());
+}
 
 ///
 /// Formats and sends a string to the debugger for display.
 ///
 /// \sa [OutputDebugString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx)
 ///
-static VOID OutputDebugStr(_In_z_ LPCSTR lpOutputString, ...) noexcept;
+static VOID OutputDebugStr(_In_z_ LPCSTR lpOutputString, ...) noexcept
+{
+    va_list arg;
+    va_start(arg, lpOutputString);
+    OutputDebugStrV(lpOutputString, arg);
+    va_end(arg);
+}
 
 ///
 /// Formats and sends a string to the debugger for display.
 ///
 /// \sa [OutputDebugString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx)
 ///
-static VOID OutputDebugStr(_In_z_ LPCWSTR lpOutputString, ...) noexcept;
+static VOID OutputDebugStr(_In_z_ LPCWSTR lpOutputString, ...) noexcept
+{
+    va_list arg;
+    va_start(arg, lpOutputString);
+    OutputDebugStrV(lpOutputString, arg);
+    va_end(arg);
+}
 
 /// @copydoc GetDateFormatW()
 template<class _Traits, class _Ax>
-static _Success_(return != 0) int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCSTR lpFormat, _Out_ std::basic_string<char, _Traits, _Ax> &sDate) noexcept;
+static _Success_(return != 0) int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCSTR lpFormat, _Out_ std::basic_string<char, _Traits, _Ax> &sDate) noexcept
+{
+    int iResult = GetDateFormatA(Locale, dwFlags, lpDate, lpFormat, NULL, 0);
+    if (iResult) {
+        // Allocate buffer on heap and retry.
+        std::unique_ptr<char[]> szBuffer(new char[iResult]);
+        iResult = GetDateFormatA(Locale, dwFlags, lpDate, lpFormat, szBuffer.get(), iResult);
+        sDate.assign(szBuffer.get(), iResult ? iResult - 1 : 0);
+        return iResult;
+    }
+
+    return iResult;
+}
 
 ///
 /// Formats a date as a date string for a locale specified by the locale identifier. The function formats either a specified date or the local system date. 
@@ -372,11 +1152,54 @@ static _Success_(return != 0) int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dw
 /// \sa [GetDateFormat function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd318086.aspx)
 ///
 template<class _Traits, class _Ax>
-static _Success_(return != 0) int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCWSTR lpFormat, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sDate) noexcept;
+static _Success_(return != 0) int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCWSTR lpFormat, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sDate) noexcept
+{
+    int iResult = GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, NULL, 0);
+    if (iResult) {
+        // Allocate buffer on heap and retry.
+        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[iResult]);
+        iResult = GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, szBuffer.get(), iResult);
+        sDate.assign(szBuffer.get(), iResult ? iResult - 1 : 0);
+        return iResult;
+    }
+
+    return iResult;
+}
 
 /// @copydoc LookupAccountSidW()
 template<class _Traits, class _Ax>
-static _Success_(return != 0) BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<char, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<char, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse) noexcept;
+static _Success_(return != 0) BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<char, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<char, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse) noexcept
+{
+    assert(0); // TODO: Test this code.
+
+    DWORD dwNameLen = 0, dwRefDomainLen = 0;
+
+    if (LookupAccountSidA(lpSystemName, lpSid,
+        NULL, &dwNameLen     ,
+        NULL, &dwRefDomainLen,
+        peUse))
+    {
+        // Name and domain is blank.
+        if (sName                ) sName                ->clear();
+        if (sReferencedDomainName) sReferencedDomainName->clear();
+        return TRUE;
+    } else if (GetLastError() == ERROR_MORE_DATA) {
+        // Allocate on heap and retry.
+        std::unique_ptr<char[]> bufName     (new char[dwNameLen     ]);
+        std::unique_ptr<char[]> bufRefDomain(new char[dwRefDomainLen]);
+        if (LookupAccountSidA(lpSystemName, lpSid,
+            bufName     .get(), &dwNameLen     ,
+            bufRefDomain.get(), &dwRefDomainLen,
+            peUse))
+        {
+            if (sName                ) sName                ->assign(bufName     .get(), dwNameLen      - 1);
+            if (sReferencedDomainName) sReferencedDomainName->assign(bufRefDomain.get(), dwRefDomainLen - 1);
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
 
 ///
 /// Retrieves the name of the account for this SID and the name of the first domain on which this SID is found.
@@ -384,7 +1207,38 @@ static _Success_(return != 0) BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemN
 /// \sa [LookupAccountSid function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379166.aspx)
 ///
 template<class _Traits, class _Ax>
-static _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<wchar_t, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<wchar_t, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse) noexcept;
+static _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<wchar_t, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<wchar_t, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse) noexcept
+{
+    assert(0); // TODO: Test this code.
+
+    DWORD dwNameLen = 0, dwRefDomainLen = 0;
+
+    if (LookupAccountSidW(lpSystemName, lpSid,
+        NULL, &dwNameLen     ,
+        NULL, &dwRefDomainLen,
+        peUse))
+    {
+        // Name and domain is blank.
+        if (sName                ) sName                ->clear();
+        if (sReferencedDomainName) sReferencedDomainName->clear();
+        return TRUE;
+    } else if (GetLastError() == ERROR_MORE_DATA) {
+        // Allocate on heap and retry.
+        std::unique_ptr<wchar_t[]> bufName     (new wchar_t[dwNameLen     ]);
+        std::unique_ptr<wchar_t[]> bufRefDomain(new wchar_t[dwRefDomainLen]);
+        if (LookupAccountSidW(lpSystemName, lpSid,
+            bufName     .get(), &dwNameLen     ,
+            bufRefDomain.get(), &dwRefDomainLen,
+            peUse))
+        {
+            if (sName                ) sName                ->assign(bufName     .get(), dwNameLen      - 1);
+            if (sReferencedDomainName) sReferencedDomainName->assign(bufRefDomain.get(), dwRefDomainLen - 1);
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
 
 ///
 /// Retrieves a specified type of information about an access token. The calling process must have appropriate access rights to obtain the information.
@@ -392,7 +1246,31 @@ static _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystem
 /// \sa [GetTokenInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa446671.aspx)
 ///
 template<class _Ty>
-static _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, _In_ TOKEN_INFORMATION_CLASS TokenInformationClass, _Out_ std::unique_ptr<_Ty> &TokenInformation) noexcept;
+static _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, _In_ TOKEN_INFORMATION_CLASS TokenInformationClass, _Out_ std::unique_ptr<_Ty> &TokenInformation) noexcept
+{
+    BYTE szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(BYTE)];
+    DWORD dwSize;
+
+    if (GetTokenInformation(TokenHandle, TokenInformationClass, szStackBuffer, sizeof(szStackBuffer), &dwSize)) {
+        // The stack buffer was big enough to retrieve complete data. Alloc and copy.
+        TokenInformation.reset((_Ty*)(new BYTE[dwSize / sizeof(BYTE)]));
+        if (!TokenInformation) {
+            SetLastError(ERROR_OUTOFMEMORY);
+            return FALSE;
+        }
+        memcpy(TokenInformation.get(), szStackBuffer, dwSize);
+        return TRUE;
+    } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // The stack buffer was too small to retrieve complete data. Alloc and retry.
+        TokenInformation.reset((_Ty*)(new BYTE[dwSize / sizeof(BYTE)]));
+        if (!TokenInformation) {
+            SetLastError(ERROR_OUTOFMEMORY);
+            return FALSE;
+        }
+        return GetTokenInformation(TokenHandle, TokenInformationClass, TokenInformation.get(), dwSize, &dwSize);
+    } else
+        return FALSE;
+}
 
 ///
 /// Retrieves the full name of the executable image for the specified process.
@@ -400,7 +1278,28 @@ static _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, 
 /// \sa [QueryFullProcessImageNameA function](https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-queryfullprocessimagenamea)
 ///
 template<class _Traits, class _Ax>
-static _Success_(return != 0) BOOL QueryFullProcessImageNameA(_In_ HANDLE hProcess, _In_ DWORD dwFlags, _Inout_ std::basic_string<char, _Traits, _Ax>& sExeName);
+static _Success_(return != 0) BOOL QueryFullProcessImageNameA(_In_ HANDLE hProcess, _In_ DWORD dwFlags, _Inout_ std::basic_string<char, _Traits, _Ax>& sExeName)
+{
+    char szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(char)];
+    DWORD dwSize = _countof(szStackBuffer);
+
+    // Try with stack buffer first.
+    if (::QueryFullProcessImageNameA(hProcess, dwFlags, szStackBuffer, &dwSize)) {
+        // Copy from stack.
+        sExeName.assign(szStackBuffer, dwSize);
+        return TRUE;
+    }
+    for (DWORD dwCapacity = 2 * WINSTD_STACK_BUFFER_BYTES / sizeof(char); GetLastError() == ERROR_INSUFFICIENT_BUFFER; dwCapacity *= 2) {
+        // Allocate on heap and retry.
+        std::unique_ptr<char[]> szBuffer(new char[dwCapacity]);
+        dwSize = dwCapacity;
+        if (::QueryFullProcessImageNameA(hProcess, dwFlags, szBuffer.get(), &dwSize)) {
+            sExeName.assign(szBuffer.get(), dwSize);
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
 
 ///
 /// Retrieves the full name of the executable image for the specified process.
@@ -408,12 +1307,32 @@ static _Success_(return != 0) BOOL QueryFullProcessImageNameA(_In_ HANDLE hProce
 /// \sa [QueryFullProcessImageNameW function](https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-queryfullprocessimagenamew)
 ///
 template<class _Traits, class _Ax>
-static _Success_(return != 0) BOOL QueryFullProcessImageNameW(_In_ HANDLE hProcess, _In_ DWORD dwFlags, _Inout_ std::basic_string<wchar_t, _Traits, _Ax>& sExeName);
+static _Success_(return != 0) BOOL QueryFullProcessImageNameW(_In_ HANDLE hProcess, _In_ DWORD dwFlags, _Inout_ std::basic_string<wchar_t, _Traits, _Ax>& sExeName)
+{
+    wchar_t szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(wchar_t)];
+    DWORD dwSize = _countof(szStackBuffer);
+
+    // Try with stack buffer first.
+    if (::QueryFullProcessImageNameW(hProcess, dwFlags, szStackBuffer, &dwSize)) {
+        // Copy from stack.
+        sExeName.assign(szStackBuffer, dwSize);
+        return TRUE;
+    }
+    for (DWORD dwCapacity = 2 * WINSTD_STACK_BUFFER_BYTES / sizeof(wchar_t); GetLastError() == ERROR_INSUFFICIENT_BUFFER; dwCapacity *= 2) {
+        // Allocate on heap and retry.
+        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwCapacity]);
+        dwSize = dwCapacity;
+        if (::QueryFullProcessImageNameW(hProcess, dwFlags, szBuffer.get(), &dwSize)) {
+            sExeName.assign(szBuffer.get(), dwSize);
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
 
 /// @}
 
-#pragma once
-
+#pragma warning(pop)
 
 namespace winstd
 {
@@ -451,7 +1370,6 @@ namespace winstd
             CloseHandle(m_h);
         }
     };
-
 
     ///
     /// Module handle wrapper
@@ -503,7 +1421,6 @@ namespace winstd
         }
     };
 
-
     ///
     /// Process handle wrapper
     ///
@@ -530,7 +1447,6 @@ namespace winstd
         }
     };
 
-
     ///
     /// File handle wrapper
     ///
@@ -556,7 +1472,6 @@ namespace winstd
                 return false;
         }
     };
-
 
     ///
     /// Event handle wrapper
@@ -602,7 +1517,6 @@ namespace winstd
                 return false;
         }
     };
-
 
     ///
     /// Critical section wrapper
@@ -650,7 +1564,6 @@ namespace winstd
     protected:
         CRITICAL_SECTION m_data;    ///< Critical section struct
     };
-
 
     ///
     /// Find-file handle wrapper
@@ -701,7 +1614,6 @@ namespace winstd
             FindClose(m_h);
         }
     };
-
 
     ///
     /// Heap handle wrapper
@@ -798,7 +1710,6 @@ namespace winstd
             HeapDestroy(m_h);
         }
     };
-
 
     ///
     /// HeapAlloc allocator
@@ -916,7 +1827,6 @@ namespace winstd
         HANDLE m_heap;  ///< Heap handle
     };
 
-
     ///
     /// Activates given activation context in constructor and deactivates it in destructor
     ///
@@ -954,7 +1864,6 @@ namespace winstd
         ULONG_PTR m_cookie; ///< Cookie for context deactivation
     };
 
-
     ///
     /// Lets the calling thread impersonate the security context of a logged-on user
     ///
@@ -990,7 +1899,6 @@ namespace winstd
     protected:
         BOOL m_cookie; ///< Did impersonation succeed?
     };
-
 
     ///
     /// Console control handler stack management
@@ -1028,7 +1936,6 @@ namespace winstd
         BOOL m_cookie;              ///< Did pushing the console control handler succeed?
         PHANDLER_ROUTINE m_handler; ///< Pointer to console control handler
     };
-
 
     ///
     /// Memory in virtual address space of a process handle wrapper
@@ -1147,7 +2054,6 @@ namespace winstd
     protected:
         HANDLE m_proc;  ///< Handle of memory's process
     };
-
 
     ///
     /// Registry wrapper class
@@ -1280,7 +2186,6 @@ namespace winstd
         }
     };
 
-
     ///
     /// SID wrapper class
     ///
@@ -1311,7 +2216,6 @@ namespace winstd
             FreeSid(m_h);
         }
     };
-
 
     ///
     /// PROCESS_INFORMATION struct wrapper
@@ -1353,1124 +2257,3 @@ namespace winstd
 
     /// @}
 }
-
-
-#pragma warning(push)
-#pragma warning(disable: 4505) // Don't warn on unused code
-
-template<class _Traits, class _Ax>
-static DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept
-{
-    assert(0); // TODO: Test this code.
-
-    char szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(char)];
-
-    // Try with stack buffer first.
-    DWORD dwResult = ::GetModuleFileNameA(hModule, szStackBuffer, _countof(szStackBuffer));
-    if (dwResult < _countof(szStackBuffer)) {
-        // Copy from stack.
-        sValue.assign(szStackBuffer, dwResult);
-        return dwResult;
-    } else {
-        for (DWORD dwCapacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(char);; dwCapacity *= 2) {
-            // Allocate on heap and retry.
-            std::unique_ptr<char[]> szBuffer(new char[dwCapacity]);
-            dwResult = ::GetModuleFileNameA(hModule, szBuffer.get(), dwCapacity);
-            if (dwResult < dwCapacity) {
-                sValue.assign(szBuffer.get(), dwResult);
-                return dwResult;
-            }
-        }
-    }
-}
-
-
-template<class _Traits, class _Ax>
-static DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue) noexcept
-{
-    wchar_t szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
-
-    // Try with stack buffer first.
-    DWORD dwResult = ::GetModuleFileNameW(hModule, szStackBuffer, _countof(szStackBuffer));
-    if (dwResult < _countof(szStackBuffer)) {
-        // Copy from stack.
-        sValue.assign(szStackBuffer, dwResult);
-        return dwResult;
-    } else {
-        for (DWORD dwCapacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t);; dwCapacity *= 2) {
-            // Allocate on heap and retry.
-            std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwCapacity]);
-            dwResult = ::GetModuleFileNameW(hModule, szBuffer.get(), dwCapacity);
-            if (dwResult < dwCapacity) {
-                sValue.assign(szBuffer.get(), dwResult);
-                return dwResult;
-            }
-        }
-    }
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept
-{
-    assert(0); // TODO: Test this code.
-
-    int iResult;
-
-    // Query the final string length first.
-    iResult = ::GetWindowTextLengthA(hWnd);
-    if (iResult > 0) {
-        if (++iResult < WINSTD_STACK_BUFFER_BYTES/sizeof(char)) {
-            // Read string data to stack.
-            char szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(char)];
-            iResult = ::GetWindowTextA(hWnd, szBuffer, _countof(szBuffer));
-            sValue.assign(szBuffer, iResult);
-        } else {
-            // Allocate buffer on heap and read the string data into it.
-            std::unique_ptr<char[]> szBuffer(new char[++iResult]);
-            iResult = ::GetWindowTextA(hWnd, szBuffer.get(), iResult);
-            sValue.assign(szBuffer.get(), iResult);
-        }
-        return iResult;
-    }
-
-    sValue.clear();
-    return 0;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue) noexcept
-{
-    assert(0); // TODO: Test this code.
-
-    int iResult;
-
-    // Query the final string length first.
-    iResult = ::GetWindowTextLengthW(hWnd);
-    if (iResult > 0) {
-        if (++iResult < WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)) {
-            // Read string data to stack.
-            wchar_t szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
-            iResult = ::GetWindowTextW(hWnd, szBuffer, _countof(szBuffer));
-            sValue.assign(szBuffer, iResult);
-        } else {
-            // Allocate buffer on heap and read the string data into it.
-            std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[++iResult]);
-            iResult = ::GetWindowTextW(hWnd, szBuffer.get(), iResult);
-            sValue.assign(szBuffer.get(), iResult);
-        }
-        return iResult;
-    }
-
-    sValue.clear();
-    return 0;
-}
-
-
-template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL GetFileVersionInfoA(_In_z_ LPCSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue) noexcept
-{
-    assert(0); // TODO: Test this code.
-
-    // Get version info size.
-    DWORD dwVerInfoSize = ::GetFileVersionInfoSizeA(lptstrFilename, &dwHandle);
-    if (dwVerInfoSize != 0) {
-        // Read version info.
-        aValue.resize((dwVerInfoSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        return ::GetFileVersionInfoA(lptstrFilename, dwHandle, dwVerInfoSize, aValue.data());
-    } else
-        return FALSE;
-}
-
-
-template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFilename, __reserved DWORD dwHandle, _Out_ std::vector<_Ty, _Ax> &aValue) noexcept
-{
-    assert(0); // TODO: Test this code.
-
-    // Get version info size.
-    DWORD dwVerInfoSize = ::GetFileVersionInfoSizeW(lptstrFilename, &dwHandle);
-    if (dwVerInfoSize != 0) {
-        // Read version info.
-        aValue.resize((dwVerInfoSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        return ::GetFileVersionInfoW(lptstrFilename, dwHandle, dwVerInfoSize, aValue.data());
-    } else
-        return FALSE;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept
-{
-    assert(0); // TODO: Test this code.
-
-    for (DWORD dwSizeOut = (DWORD)strlen(lpSrc) + 0x100;;) {
-        DWORD dwSizeIn = dwSizeOut;
-        std::unique_ptr<char[]> szBuffer(new char[(size_t)dwSizeIn + 2]); // Note: ANSI version requires one extra char.
-        dwSizeOut = ::ExpandEnvironmentStringsA(lpSrc, szBuffer.get(), dwSizeIn);
-        if (dwSizeOut == 0) {
-            // Error or zero-length input.
-            break;
-        } else if (dwSizeOut <= dwSizeIn) {
-            // The buffer was sufficient.
-            sValue.assign(szBuffer.get(), dwSizeOut - 1);
-            return dwSizeOut;
-        }
-    }
-
-    sValue.clear();
-    return 0;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue) noexcept
-{
-    for (DWORD dwSizeOut = (DWORD)wcslen(lpSrc) + 0x100;;) {
-        DWORD dwSizeIn = dwSizeOut;
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[(size_t)dwSizeIn + 1]);
-        dwSizeOut = ::ExpandEnvironmentStringsW(lpSrc, szBuffer.get(), dwSizeIn);
-        if (dwSizeOut == 0) {
-            // Error or zero-length input.
-            break;
-        } else if (dwSizeOut <= dwSizeIn) {
-            // The buffer was sufficient.
-            sValue.assign(szBuffer.get(), dwSizeOut - 1);
-            return dwSizeOut;
-        }
-    }
-
-    sValue.clear();
-    return 0;
-}
-
-
-template<class _Traits, class _Ax>
-static VOID GuidToStringA(_In_ LPCGUID lpGuid, _Out_ std::basic_string<char, _Traits, _Ax> &str) noexcept
-{
-    assert(0); // TODO: Test this code.
-
-    sprintf(str, "{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}",
-        lpGuid->Data1,
-        lpGuid->Data2,
-        lpGuid->Data3,
-        lpGuid->Data4[0], lpGuid->Data4[1],
-        lpGuid->Data4[2], lpGuid->Data4[3], lpGuid->Data4[4], lpGuid->Data4[5], lpGuid->Data4[6], lpGuid->Data4[7]);
-}
-
-
-template<class _Traits, class _Ax>
-static VOID GuidToStringW(_In_ LPCGUID lpGuid, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &str) noexcept
-{
-    assert(0); // TODO: Test this code.
-
-    sprintf(str, L"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}",
-        lpGuid->Data1,
-        lpGuid->Data2,
-        lpGuid->Data3,
-        lpGuid->Data4[0], lpGuid->Data4[1],
-        lpGuid->Data4[2], lpGuid->Data4[3], lpGuid->Data4[4], lpGuid->Data4[5], lpGuid->Data4[6], lpGuid->Data4[7]);
-}
-
-
-static _Success_(return) BOOL StringToGuidA(_In_z_ LPCSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCSTR *lpszGuidEnd) noexcept
-{
-    GUID g;
-    LPSTR lpszEnd;
-    unsigned long ulTmp;
-    unsigned long long ullTmp;
-
-    if (!lpszGuid || !lpGuid || *lpszGuid != '{') return FALSE;
-    lpszGuid++;
-
-    g.Data1 = strtoul(lpszGuid, &lpszEnd, 16);
-    if (errno == ERANGE) return FALSE;
-    lpszGuid = lpszEnd;
-
-    if (*lpszGuid != '-') return FALSE;
-    lpszGuid++;
-
-    ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
-    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
-    g.Data2 = static_cast<unsigned short>(ulTmp);
-    lpszGuid = lpszEnd;
-
-    if (*lpszGuid != '-') return FALSE;
-    lpszGuid++;
-
-    ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
-    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
-    g.Data3 = static_cast<unsigned short>(ulTmp);
-    lpszGuid = lpszEnd;
-
-    if (*lpszGuid != '-') return FALSE;
-    lpszGuid++;
-
-    ulTmp = strtoul(lpszGuid, &lpszEnd, 16);
-    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
-    g.Data4[0] = static_cast<unsigned char>((ulTmp >> 8) & 0xff);
-    g.Data4[1] = static_cast<unsigned char>( ulTmp       & 0xff);
-    lpszGuid = lpszEnd;
-
-    if (*lpszGuid != '-') return FALSE;
-    lpszGuid++;
-
-    ullTmp = _strtoui64(lpszGuid, &lpszEnd, 16);
-    if (errno == ERANGE || ullTmp > 0xFFFFFFFFFFFF) return FALSE;
-    g.Data4[2] = static_cast<unsigned char>((ullTmp >> 40) & 0xff);
-    g.Data4[3] = static_cast<unsigned char>((ullTmp >> 32) & 0xff);
-    g.Data4[4] = static_cast<unsigned char>((ullTmp >> 24) & 0xff);
-    g.Data4[5] = static_cast<unsigned char>((ullTmp >> 16) & 0xff);
-    g.Data4[6] = static_cast<unsigned char>((ullTmp >>  8) & 0xff);
-    g.Data4[7] = static_cast<unsigned char>( ullTmp        & 0xff);
-    lpszGuid = lpszEnd;
-
-    if (*lpszGuid != '}') return FALSE;
-    lpszGuid++;
-
-    if (lpszGuidEnd)
-        *lpszGuidEnd = lpszGuid;
-
-    *lpGuid = g;
-    return TRUE;
-}
-
-
-static _Success_(return) BOOL StringToGuidW(_In_z_ LPCWSTR lpszGuid, _Out_ LPGUID lpGuid, _Out_opt_ LPCWSTR *lpszGuidEnd) noexcept
-{
-    GUID g;
-    LPWSTR lpszEnd;
-    unsigned long ulTmp;
-    unsigned long long ullTmp;
-
-    if (!lpszGuid || !lpGuid || *lpszGuid != '{') return FALSE;
-    lpszGuid++;
-
-    g.Data1 = wcstoul(lpszGuid, &lpszEnd, 16);
-    if (errno == ERANGE) return FALSE;
-    lpszGuid = lpszEnd;
-
-    if (*lpszGuid != '-') return FALSE;
-    lpszGuid++;
-
-    ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
-    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
-    g.Data2 = static_cast<unsigned short>(ulTmp);
-    lpszGuid = lpszEnd;
-
-    if (*lpszGuid != '-') return FALSE;
-    lpszGuid++;
-
-    ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
-    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
-    g.Data3 = static_cast<unsigned short>(ulTmp);
-    lpszGuid = lpszEnd;
-
-    if (*lpszGuid != '-') return FALSE;
-    lpszGuid++;
-
-    ulTmp = wcstoul(lpszGuid, &lpszEnd, 16);
-    if (errno == ERANGE || ulTmp > 0xFFFF) return FALSE;
-    g.Data4[0] = static_cast<unsigned char>((ulTmp >> 8) & 0xff);
-    g.Data4[1] = static_cast<unsigned char>( ulTmp       & 0xff);
-    lpszGuid = lpszEnd;
-
-    if (*lpszGuid != '-') return FALSE;
-    lpszGuid++;
-
-    ullTmp = _wcstoui64(lpszGuid, &lpszEnd, 16);
-    if (errno == ERANGE || ullTmp > 0xFFFFFFFFFFFF) return FALSE;
-    g.Data4[2] = static_cast<unsigned char>((ullTmp >> 40) & 0xff);
-    g.Data4[3] = static_cast<unsigned char>((ullTmp >> 32) & 0xff);
-    g.Data4[4] = static_cast<unsigned char>((ullTmp >> 24) & 0xff);
-    g.Data4[5] = static_cast<unsigned char>((ullTmp >> 16) & 0xff);
-    g.Data4[6] = static_cast<unsigned char>((ullTmp >>  8) & 0xff);
-    g.Data4[7] = static_cast<unsigned char>( ullTmp        & 0xff);
-    lpszGuid = lpszEnd;
-
-    if (*lpszGuid != '}') return FALSE;
-    lpszGuid++;
-
-    if (lpszGuidEnd)
-        *lpszGuidEnd = lpszGuid;
-
-    *lpGuid = g;
-    return TRUE;
-}
-
-
-template<class _Traits, class _Ax>
-static LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept
-{
-    LSTATUS lResult;
-    BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
-    DWORD dwSize = sizeof(aStackBuffer), dwType;
-
-    // Try with stack buffer first.
-    lResult = ::RegQueryValueExA(hReg, pszName, NULL, &dwType, aStackBuffer, &dwSize);
-    if (lResult == ERROR_SUCCESS) {
-        if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
-            // The value is REG_SZ or REG_MULTI_SZ.
-            dwSize /= sizeof(CHAR);
-            sValue.assign(reinterpret_cast<LPCSTR>(aStackBuffer), dwSize && reinterpret_cast<LPCSTR>(aStackBuffer)[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
-        } else if (dwType == REG_EXPAND_SZ) {
-            // The value is REG_EXPAND_SZ. Expand it from stack buffer.
-            if (::ExpandEnvironmentStringsA(reinterpret_cast<LPCSTR>(aStackBuffer), sValue) == 0)
-                lResult = ::GetLastError();
-        } else {
-            // The value is not a string type.
-            lResult = ERROR_INVALID_DATA;
-        }
-    } else if (lResult == ERROR_MORE_DATA) {
-        if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
-            // The value is REG_SZ or REG_MULTI_SZ. Read it now.
-            std::unique_ptr<CHAR[]> szBuffer(new CHAR[dwSize / sizeof(CHAR)]);
-            if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
-                dwSize /= sizeof(CHAR);
-                sValue.assign(szBuffer.get(), dwSize && szBuffer[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
-            }
-        } else if (dwType == REG_EXPAND_SZ) {
-            // The value is REG_EXPAND_SZ. Read it and expand environment variables.
-            std::unique_ptr<CHAR[]> szBuffer(new CHAR[dwSize / sizeof(CHAR)]);
-            if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
-                if (::ExpandEnvironmentStringsA(szBuffer.get(), sValue) == 0)
-                    lResult = ::GetLastError();
-            }
-        } else {
-            // The value is not a string type.
-            lResult = ERROR_INVALID_DATA;
-        }
-    }
-
-    return lResult;
-}
-
-
-template<class _Traits, class _Ax>
-static LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue) noexcept
-{
-    LSTATUS lResult;
-    BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
-    DWORD dwSize = sizeof(aStackBuffer), dwType;
-
-    // Try with stack buffer first.
-    lResult = ::RegQueryValueExW(hReg, pszName, NULL, &dwType, aStackBuffer, &dwSize);
-    if (lResult == ERROR_SUCCESS) {
-        if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
-            // The value is REG_SZ or REG_MULTI_SZ.
-            dwSize /= sizeof(WCHAR);
-            sValue.assign(reinterpret_cast<LPCWSTR>(aStackBuffer), dwSize && reinterpret_cast<LPCWSTR>(aStackBuffer)[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
-        } else if (dwType == REG_EXPAND_SZ) {
-            // The value is REG_EXPAND_SZ. Expand it from stack buffer.
-            if (::ExpandEnvironmentStringsW(reinterpret_cast<LPCWSTR>(aStackBuffer), sValue) == 0)
-                lResult = ::GetLastError();
-        } else {
-            // The value is not a string type.
-            lResult = ERROR_INVALID_DATA;
-        }
-    } else if (lResult == ERROR_MORE_DATA) {
-        if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
-            // The value is REG_SZ or REG_MULTI_SZ. Read it now.
-            std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[dwSize / sizeof(WCHAR)]);
-            if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
-                dwSize /= sizeof(WCHAR);
-                sValue.assign(szBuffer.get(), dwSize && szBuffer[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
-            }
-        } else if (dwType == REG_EXPAND_SZ) {
-            // The value is REG_EXPAND_SZ. Read it and expand environment variables.
-            std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[dwSize / sizeof(WCHAR)]);
-            if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
-                if (::ExpandEnvironmentStringsW(szBuffer.get(), sValue) == 0)
-                    lResult = ::GetLastError();
-            }
-        } else {
-            // The value is not a string type.
-            lResult = ERROR_INVALID_DATA;
-        }
-    }
-
-    return lResult;
-}
-
-
-template<class _Ty, class _Ax>
-static LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData) noexcept
-{
-    LSTATUS lResult;
-    BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
-    DWORD dwSize = sizeof(aStackBuffer);
-
-    // Try with stack buffer first.
-    lResult = RegQueryValueExA(hKey, lpValueName, lpReserved, lpType, aStackBuffer, &dwSize);
-    if (lResult == ERROR_SUCCESS) {
-        // Copy from stack buffer.
-        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        memcpy(aData.data(), aStackBuffer, dwSize);
-    } else if (lResult == ERROR_MORE_DATA) {
-        // Allocate buffer on heap and retry.
-        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        lResult = RegQueryValueExA(hKey, lpValueName, lpReserved, NULL, aData.data(), &dwSize);
-    }
-
-    return lResult;
-}
-
-
-template<class _Ty, class _Ax>
-static LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, __reserved LPDWORD lpReserved, _Out_opt_ LPDWORD lpType, _Out_ std::vector<_Ty, _Ax> &aData) noexcept
-{
-    LSTATUS lResult;
-    BYTE aStackBuffer[WINSTD_STACK_BUFFER_BYTES];
-    DWORD dwSize = sizeof(aStackBuffer);
-
-    // Try with stack buffer first.
-    lResult = RegQueryValueExW(hKey, lpValueName, lpReserved, lpType, aStackBuffer, &dwSize);
-    if (lResult == ERROR_SUCCESS) {
-        // Copy from stack buffer.
-        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        memcpy(aData.data(), aStackBuffer, dwSize);
-    } else if (lResult == ERROR_MORE_DATA) {
-        // Allocate buffer on heap and retry.
-        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        lResult = RegQueryValueExW(hKey, lpValueName, lpReserved, NULL, aData.data(), &dwSize);
-    }
-
-    return lResult;
-}
-
-
-#if _WIN32_WINNT >= _WIN32_WINNT_VISTA
-
-template<class _Traits, class _Ax>
-static LSTATUS RegLoadMUIStringA(_In_ HKEY hKey, _In_opt_z_ LPCSTR pszValue, _Out_ std::basic_string<char, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCSTR pszDirectory) noexcept
-{
-    // According to "Remarks" section in MSDN documentation of RegLoadMUIString(),
-    // this function is defined but not implemented as ANSI variation.
-    assert(0);
-    return ERROR_CALL_NOT_IMPLEMENTED;
-}
-
-
-template<class _Traits, class _Ax>
-static LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sOut, _In_ DWORD Flags, _In_opt_z_ LPCWSTR pszDirectory) noexcept
-{
-    LSTATUS lResult;
-    wchar_t szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
-    DWORD dwSize;
-
-    Flags &= ~REG_MUI_STRING_TRUNCATE;
-
-    // Try with stack buffer first.
-    lResult = RegLoadMUIStringW(hKey, pszValue, szStackBuffer, sizeof(szStackBuffer), &dwSize, Flags, pszDirectory);
-    if (lResult == ERROR_SUCCESS) {
-        // Copy from stack buffer.
-        sOut.assign(szStackBuffer, wcsnlen(szStackBuffer, dwSize/sizeof(wchar_t)));
-    } else if (lResult == ERROR_MORE_DATA) {
-        // Allocate buffer on heap and retry.
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[(dwSize + sizeof(wchar_t) - 1)/sizeof(wchar_t)]);
-        sOut.assign(szBuffer.get(), (lResult = RegLoadMUIStringW(hKey, pszValue, szBuffer.get(), dwSize, &dwSize, Flags, pszDirectory)) == ERROR_SUCCESS ? wcsnlen(szBuffer.get(), dwSize/sizeof(wchar_t)) : 0);
-    }
-
-    return lResult;
-}
-
-#endif
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
-{
-    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
-    if (cch) {
-        // Copy from stack. Be careful not to include zero terminator.
-        sMultiByteStr.assign(szStackBuffer, cchWideChar != -1 ? strnlen(szStackBuffer, cch) : (size_t)cch - 1);
-    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-        // Query the required output size. Allocate buffer. Then convert again.
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
-        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
-        sMultiByteStr.assign(szBuffer.get(), cchWideChar != -1 ? strnlen(szBuffer.get(), cch) : (size_t)cch - 1);
-    }
-
-    return cch;
-}
-
-
-template<class _Ax>
-static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
-{
-    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
-    if (cch) {
-        // Copy from stack.
-        sMultiByteStr.assign(szStackBuffer, szStackBuffer + cch);
-    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-        // Query the required output size. Allocate buffer. Then convert again.
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
-        sMultiByteStr.resize(cch);
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, sMultiByteStr.data(), cch, lpDefaultChar, lpUsedDefaultChar);
-    }
-
-    return cch;
-}
-
-
-template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
-{
-    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
-    if (cch) {
-        // Copy from stack.
-        sMultiByteStr.assign(szStackBuffer, cch);
-    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-        // Query the required output size. Allocate buffer. Then convert again.
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), NULL, 0, lpDefaultChar, lpUsedDefaultChar);
-        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
-        sMultiByteStr.assign(szBuffer.get(), cch);
-    }
-
-    return cch;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
-{
-    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
-    if (cch) {
-        // Copy from stack. Be careful not to include zero terminator.
-        sMultiByteStr.assign(szStackBuffer, cchWideChar != -1 ? strnlen(szStackBuffer, cch) : (size_t)cch - 1);
-    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-        // Query the required output size. Allocate buffer. Then convert again.
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
-        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
-        sMultiByteStr.assign(szBuffer.get(), cchWideChar != -1 ? strnlen(szBuffer.get(), cch) : (size_t)cch - 1);
-        SecureZeroMemory(szBuffer.get(), sizeof(CHAR)*cch);
-    }
-
-    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
-
-    return cch;
-}
-
-
-template<class _Ax>
-static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
-{
-    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
-    if (cch) {
-        // Copy from stack.
-        sMultiByteStr.assign(szStackBuffer, szStackBuffer + cch);
-    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-        // Query the required output size. Allocate buffer. Then convert again.
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
-        sMultiByteStr.resize(cch);
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, sMultiByteStr.data(), cch, lpDefaultChar, lpUsedDefaultChar);
-    }
-
-    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
-
-    return cch;
-}
-
-
-template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
-{
-    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(CHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
-    if (cch) {
-        // Copy from stack.
-        sMultiByteStr.assign(szStackBuffer, cch);
-    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-        // Query the required output size. Allocate buffer. Then convert again.
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), NULL, 0, lpDefaultChar, lpUsedDefaultChar);
-        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
-        sMultiByteStr.assign(szBuffer.get(), cch);
-        SecureZeroMemory(szBuffer.get(), sizeof(CHAR)*cch);
-    }
-
-    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
-
-    return cch;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr) noexcept
-{
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
-    if (cch) {
-        // Copy from stack.
-        sWideCharStr.assign(szStackBuffer, cbMultiByte != -1 ? wcsnlen(szStackBuffer, cch) : (size_t)cch - 1);
-    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-        // Query the required output size. Allocate buffer. Then convert again.
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
-        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szBuffer.get(), cch);
-        sWideCharStr.assign(szBuffer.get(), cbMultiByte != -1 ? wcsnlen(szBuffer.get(), cch) : (size_t)cch - 1);
-    }
-
-    return cch;
-}
-
-
-template<class _Ax>
-static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr) noexcept
-{
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
-    if (cch) {
-        // Copy from stack.
-        sWideCharStr.assign(szStackBuffer, szStackBuffer + cch);
-    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-        // Query the required output size. Allocate buffer. Then convert again.
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
-        sWideCharStr.resize(cch);
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, sWideCharStr.data(), cch);
-    }
-
-    return cch;
-}
-
-
-template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr) noexcept
-{
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szStackBuffer, _countof(szStackBuffer));
-    if (cch) {
-        // Copy from stack.
-        sWideCharStr.assign(szStackBuffer, cch);
-    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-        // Query the required output size. Allocate buffer. Then convert again.
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), NULL, 0);
-        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szBuffer.get(), cch);
-        sWideCharStr.assign(szBuffer.get(), cch);
-    }
-
-    return cch;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr) noexcept
-{
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
-    if (cch) {
-        // Copy from stack.
-        sWideCharStr.assign(szStackBuffer, cbMultiByte != -1 ? wcsnlen(szStackBuffer, cch) : (size_t)cch - 1);
-    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-        // Query the required output size. Allocate buffer. Then convert again.
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
-        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szBuffer.get(), cch);
-        sWideCharStr.assign(szBuffer.get(), cbMultiByte != -1 ? wcsnlen(szBuffer.get(), cch) : (size_t)cch - 1);
-        SecureZeroMemory(szBuffer.get(), sizeof(WCHAR)*cch);
-    }
-
-    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
-
-    return cch;
-}
-
-
-template<class _Ax>
-static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr) noexcept
-{
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
-    if (cch) {
-        // Copy from stack.
-        sWideCharStr.assign(szStackBuffer, szStackBuffer + cch);
-    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-        // Query the required output size. Allocate buffer. Then convert again.
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
-        sWideCharStr.resize(cch);
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, sWideCharStr.data(), cch);
-    }
-
-    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
-
-    return cch;
-}
-
-
-template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr) noexcept
-{
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szStackBuffer, _countof(szStackBuffer));
-    if (cch) {
-        // Copy from stack.
-        sWideCharStr.assign(szStackBuffer, cch);
-    } else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-        // Query the required output size. Allocate buffer. Then convert again.
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), NULL, 0);
-        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szBuffer.get(), cch);
-        sWideCharStr.assign(szBuffer.get(), cch);
-        SecureZeroMemory(szBuffer.get(), sizeof(WCHAR)*cch);
-    }
-
-    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
-
-    return cch;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ LPCWSTR lpSrcString, _In_ int cwSrcLength, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sDstString) noexcept
-{
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::NormalizeString(NormForm, lpSrcString, cwSrcLength, szStackBuffer, _countof(szStackBuffer));
-    if (cch > 0) {
-        // Copy from stack.
-        sDstString.assign(szStackBuffer, cwSrcLength != -1 ? wcsnlen(szStackBuffer, cch) : (size_t)cch - 1);
-    } else {
-        switch (::GetLastError()) {
-            case ERROR_INSUFFICIENT_BUFFER:
-                for (int i = 10; i--;) {
-                    // Allocate buffer. Then convert again.
-                    cch = -cch;
-                    std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
-                    cch = ::NormalizeString(NormForm, lpSrcString, cwSrcLength, szBuffer.get(), cch);
-                    if (cch > 0) {
-                        sDstString.assign(szBuffer.get(), cwSrcLength != -1 ? wcsnlen(szStackBuffer, cch) : (size_t)cch - 1);
-                        break;
-                    }
-                    if (::GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
-                        sDstString.clear();
-                        break;
-                    }
-                }
-                break;
-
-            case ERROR_SUCCESS:
-                sDstString.clear();
-                break;
-        }
-    }
-
-    return cch;
-}
-
-
-template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
-static _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ const std::basic_string<wchar_t, _Traits1, _Ax1> &sSrcString, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sDstString) noexcept
-{
-    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(WCHAR)];
-
-    // Try to convert to stack buffer first.
-    int cch = ::NormalizeString(NormForm, sSrcString.c_str(), (int)sSrcString.length(), szStackBuffer, _countof(szStackBuffer));
-    if (cch > 0) {
-        // Copy from stack.
-        sDstString.assign(szStackBuffer, cch);
-    } else {
-        switch (::GetLastError()) {
-            case ERROR_INSUFFICIENT_BUFFER:
-                for (int i = 10; i--;) {
-                    // Allocate buffer. Then convert again.
-                    cch = -cch;
-                    std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
-                    cch = ::NormalizeString(NormForm, sSrcString.c_str(), (int)sSrcString.length(), szBuffer.get(), cch);
-                    if (cch > 0) {
-                        sDstString.assign(szBuffer.get(), cch);
-                        break;
-                    }
-                    if (::GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
-                        sDstString.clear();
-                        break;
-                    }
-                }
-                break;
-
-            case ERROR_SUCCESS:
-                sDstString.clear();
-                break;
-        }
-    }
-
-    return cch;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) int WINAPI LoadStringA(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<char, _Traits, _Ax> &sBuffer) noexcept
-{
-    // Get read-only pointer to string resource.
-    LPCSTR pszStr;
-    int i = LoadStringA(hInstance, uID, reinterpret_cast<LPSTR>(&pszStr), 0);
-    if (i) {
-        sBuffer.assign(pszStr, i);
-        return i;
-    } else
-        return 0;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) int WINAPI LoadStringW(_In_opt_ HINSTANCE hInstance, _In_ UINT uID, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sBuffer) noexcept
-{
-    // Get read-only pointer to string resource.
-    LPCWSTR pszStr;
-    int i = LoadStringW(hInstance, uID, reinterpret_cast<LPWSTR>(&pszStr), 0);
-    if (i) {
-        sBuffer.assign(pszStr, i);
-        return i;
-    } else
-        return 0;
-}
-
-
-static VOID OutputDebugStrV(_In_z_ LPCSTR lpOutputString, _In_ va_list arg) noexcept
-{
-    std::string str;
-    try { vsprintf(str, lpOutputString, arg); } catch (...) { return; }
-    OutputDebugStringA(str.c_str());
-}
-
-
-static VOID OutputDebugStrV(_In_z_ LPCWSTR lpOutputString, _In_ va_list arg) noexcept
-{
-    std::wstring str;
-    try { vsprintf(str, lpOutputString, arg); } catch (...) { return; }
-    OutputDebugStringW(str.c_str());
-}
-
-
-static VOID OutputDebugStr(_In_z_ LPCSTR lpOutputString, ...) noexcept
-{
-    va_list arg;
-    va_start(arg, lpOutputString);
-    OutputDebugStrV(lpOutputString, arg);
-    va_end(arg);
-}
-
-
-static VOID OutputDebugStr(_In_z_ LPCWSTR lpOutputString, ...) noexcept
-{
-    va_list arg;
-    va_start(arg, lpOutputString);
-    OutputDebugStrV(lpOutputString, arg);
-    va_end(arg);
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCSTR lpFormat, _Out_ std::basic_string<char, _Traits, _Ax> &sDate) noexcept
-{
-    int iResult = GetDateFormatA(Locale, dwFlags, lpDate, lpFormat, NULL, 0);
-    if (iResult) {
-        // Allocate buffer on heap and retry.
-        std::unique_ptr<char[]> szBuffer(new char[iResult]);
-        iResult = GetDateFormatA(Locale, dwFlags, lpDate, lpFormat, szBuffer.get(), iResult);
-        sDate.assign(szBuffer.get(), iResult ? iResult - 1 : 0);
-        return iResult;
-    }
-
-    return iResult;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dwFlags, _In_opt_ const SYSTEMTIME *lpDate, _In_opt_z_ LPCWSTR lpFormat, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sDate) noexcept
-{
-    int iResult = GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, NULL, 0);
-    if (iResult) {
-        // Allocate buffer on heap and retry.
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[iResult]);
-        iResult = GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, szBuffer.get(), iResult);
-        sDate.assign(szBuffer.get(), iResult ? iResult - 1 : 0);
-        return iResult;
-    }
-
-    return iResult;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) BOOL LookupAccountSidA(_In_opt_z_ LPCSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<char, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<char, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse) noexcept
-{
-    assert(0); // TODO: Test this code.
-
-    DWORD dwNameLen = 0, dwRefDomainLen = 0;
-
-    if (LookupAccountSidA(lpSystemName, lpSid,
-        NULL, &dwNameLen     ,
-        NULL, &dwRefDomainLen,
-        peUse))
-    {
-        // Name and domain is blank.
-        if (sName                ) sName                ->clear();
-        if (sReferencedDomainName) sReferencedDomainName->clear();
-        return TRUE;
-    } else if (GetLastError() == ERROR_MORE_DATA) {
-        // Allocate on heap and retry.
-        std::unique_ptr<char[]> bufName     (new char[dwNameLen     ]);
-        std::unique_ptr<char[]> bufRefDomain(new char[dwRefDomainLen]);
-        if (LookupAccountSidA(lpSystemName, lpSid,
-            bufName     .get(), &dwNameLen     ,
-            bufRefDomain.get(), &dwRefDomainLen,
-            peUse))
-        {
-            if (sName                ) sName                ->assign(bufName     .get(), dwNameLen      - 1);
-            if (sReferencedDomainName) sReferencedDomainName->assign(bufRefDomain.get(), dwRefDomainLen - 1);
-            return TRUE;
-        }
-    }
-
-    return FALSE;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystemName, _In_ PSID lpSid, _Out_opt_ std::basic_string<wchar_t, _Traits, _Ax> *sName, _Out_opt_ std::basic_string<wchar_t, _Traits, _Ax> *sReferencedDomainName, _Out_ PSID_NAME_USE peUse) noexcept
-{
-    assert(0); // TODO: Test this code.
-
-    DWORD dwNameLen = 0, dwRefDomainLen = 0;
-
-    if (LookupAccountSidW(lpSystemName, lpSid,
-        NULL, &dwNameLen     ,
-        NULL, &dwRefDomainLen,
-        peUse))
-    {
-        // Name and domain is blank.
-        if (sName                ) sName                ->clear();
-        if (sReferencedDomainName) sReferencedDomainName->clear();
-        return TRUE;
-    } else if (GetLastError() == ERROR_MORE_DATA) {
-        // Allocate on heap and retry.
-        std::unique_ptr<wchar_t[]> bufName     (new wchar_t[dwNameLen     ]);
-        std::unique_ptr<wchar_t[]> bufRefDomain(new wchar_t[dwRefDomainLen]);
-        if (LookupAccountSidW(lpSystemName, lpSid,
-            bufName     .get(), &dwNameLen     ,
-            bufRefDomain.get(), &dwRefDomainLen,
-            peUse))
-        {
-            if (sName                ) sName                ->assign(bufName     .get(), dwNameLen      - 1);
-            if (sReferencedDomainName) sReferencedDomainName->assign(bufRefDomain.get(), dwRefDomainLen - 1);
-            return TRUE;
-        }
-    }
-
-    return FALSE;
-}
-
-
-template<class _Ty>
-static _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, _In_ TOKEN_INFORMATION_CLASS TokenInformationClass, _Out_ std::unique_ptr<_Ty> &TokenInformation) noexcept
-{
-    BYTE szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(BYTE)];
-    DWORD dwSize;
-
-    if (GetTokenInformation(TokenHandle, TokenInformationClass, szStackBuffer, sizeof(szStackBuffer), &dwSize)) {
-        // The stack buffer was big enough to retrieve complete data. Alloc and copy.
-        TokenInformation.reset((_Ty*)(new BYTE[dwSize / sizeof(BYTE)]));
-        if (!TokenInformation) {
-            SetLastError(ERROR_OUTOFMEMORY);
-            return FALSE;
-        }
-        memcpy(TokenInformation.get(), szStackBuffer, dwSize);
-        return TRUE;
-    } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-        // The stack buffer was too small to retrieve complete data. Alloc and retry.
-        TokenInformation.reset((_Ty*)(new BYTE[dwSize / sizeof(BYTE)]));
-        if (!TokenInformation) {
-            SetLastError(ERROR_OUTOFMEMORY);
-            return FALSE;
-        }
-        return GetTokenInformation(TokenHandle, TokenInformationClass, TokenInformation.get(), dwSize, &dwSize);
-    } else
-        return FALSE;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) BOOL QueryFullProcessImageNameA(_In_ HANDLE hProcess, _In_ DWORD dwFlags, _Inout_ std::basic_string<char, _Traits, _Ax>& sExeName)
-{
-    char szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(char)];
-    DWORD dwSize = _countof(szStackBuffer);
-
-    // Try with stack buffer first.
-    if (::QueryFullProcessImageNameA(hProcess, dwFlags, szStackBuffer, &dwSize)) {
-        // Copy from stack.
-        sExeName.assign(szStackBuffer, dwSize);
-        return TRUE;
-    }
-    for (DWORD dwCapacity = 2 * WINSTD_STACK_BUFFER_BYTES / sizeof(char); GetLastError() == ERROR_INSUFFICIENT_BUFFER; dwCapacity *= 2) {
-        // Allocate on heap and retry.
-        std::unique_ptr<char[]> szBuffer(new char[dwCapacity]);
-        dwSize = dwCapacity;
-        if (::QueryFullProcessImageNameA(hProcess, dwFlags, szBuffer.get(), &dwSize)) {
-            sExeName.assign(szBuffer.get(), dwSize);
-            return TRUE;
-        }
-    }
-    return FALSE;
-}
-
-
-template<class _Traits, class _Ax>
-static _Success_(return != 0) BOOL QueryFullProcessImageNameW(_In_ HANDLE hProcess, _In_ DWORD dwFlags, _Inout_ std::basic_string<wchar_t, _Traits, _Ax>& sExeName)
-{
-    wchar_t szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(wchar_t)];
-    DWORD dwSize = _countof(szStackBuffer);
-
-    // Try with stack buffer first.
-    if (::QueryFullProcessImageNameW(hProcess, dwFlags, szStackBuffer, &dwSize)) {
-        // Copy from stack.
-        sExeName.assign(szStackBuffer, dwSize);
-        return TRUE;
-    }
-    for (DWORD dwCapacity = 2 * WINSTD_STACK_BUFFER_BYTES / sizeof(wchar_t); GetLastError() == ERROR_INSUFFICIENT_BUFFER; dwCapacity *= 2) {
-        // Allocate on heap and retry.
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwCapacity]);
-        dwSize = dwCapacity;
-        if (::QueryFullProcessImageNameW(hProcess, dwFlags, szBuffer.get(), &dwSize)) {
-            sExeName.assign(szBuffer.get(), dwSize);
-            return TRUE;
-        }
-    }
-    return FALSE;
-}
-
-#pragma warning(pop)

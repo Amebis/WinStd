@@ -4,33 +4,47 @@
     Copyright © 2016 GÉANT
 */
 
+#pragma once
+
+#include "Common.h"
+#include <Security.h>
+#include <string>
+
 ///
 /// \defgroup WinStdSecurityAPI Security API
 /// Integrates WinStd classes with Microsoft Security API
 ///
-
-#include "Common.h"
-
-#include <Security.h>
-
-#include <string>
-
-namespace winstd
-{
-    class sec_credentials;
-    class sec_context;
-    class sec_buffer_desc;
-    class sec_runtime_error;
-}
+/// @{
 
 #if defined(SECURITY_WIN32) || defined(SECURITY_KERNEL)
 
-/// \addtogroup WinStdSecurityAPI
-/// @{
-
 /// @copydoc GetUserNameExW()
 template<class _Traits, class _Ax>
-static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<char, _Traits, _Ax> &sName);
+static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<char, _Traits, _Ax> &sName)
+{
+    assert(0); // TODO: Test this code.
+
+    char szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(char)];
+    ULONG ulSize = _countof(szStackBuffer);
+
+    // Try with stack buffer first.
+    if (::GetUserNameExA(NameFormat, szStackBuffer, &ulSize)) {
+        // Copy from stack.
+        sName.assign(szStackBuffer, ulSize);
+        return TRUE;
+    } else {
+        if (::GetLastError() == ERROR_MORE_DATA) {
+            // Allocate buffer on heap and retry.
+            std::unique_ptr<char[]> szBuffer(new char[ulSize]);
+            if (::GetUserNameExA(NameFormat, szBuffer.get(), &ulSize)) {
+                sName.assign(szBuffer.get(), ulSize);
+                return TRUE;
+            }
+        }
+    }
+
+    return FALSE;
+}
 
 ///
 /// Retrieves the name of the user or other security principal associated with the calling thread and stores it in a std::wstring string.
@@ -38,14 +52,35 @@ static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std:
 /// \sa [GetUserNameEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724435.aspx)
 ///
 template<class _Traits, class _Ax>
-static BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sName);
+static BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sName)
+{
+    assert(0); // TODO: Test this code.
+
+    wchar_t szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
+    ULONG ulSize = _countof(szStackBuffer);
+
+    // Try with stack buffer first.
+    if (::GetUserNameExW(NameFormat, szStackBuffer, &ulSize)) {
+        // Copy from stack.
+        sName.assign(szStackBuffer, ulSize);
+        return TRUE;
+    } else {
+        if (::GetLastError() == ERROR_MORE_DATA) {
+            // Allocate buffer on heap and retry.
+            std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[ulSize]);
+            if (::GetUserNameExW(NameFormat, szBuffer.get(), &ulSize)) {
+                sName.assign(szBuffer.get(), ulSize);
+                return TRUE;
+            }
+        }
+    }
+
+    return FALSE;
+}
 
 #endif
 
 /// @}
-
-#pragma once
-
 
 namespace winstd
 {
@@ -160,7 +195,6 @@ namespace winstd
     public:
         TimeStamp m_expires;    ///< Credentials expiration time
     };
-
 
     ///
     /// PCtxtHandle wrapper class
@@ -285,7 +319,6 @@ namespace winstd
         TimeStamp m_expires;    ///< Context expiration time
     };
 
-
     ///
     /// SecBufferDesc wrapper class
     ///
@@ -318,10 +351,7 @@ namespace winstd
 
     /// @}
 
-    ///
-    /// \defgroup WinStdExceptions Exceptions
-    /// Additional exceptions
-    ///
+    /// \addtogroup WinStdExceptions
     /// @{
 
     ///
@@ -342,7 +372,6 @@ namespace winstd
         {
         }
 
-
         ///
         /// Constructs an exception
         ///
@@ -352,7 +381,6 @@ namespace winstd
         sec_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<SECURITY_STATUS>(num, msg)
         {
         }
-
 
         ///
         /// Copies an exception
@@ -366,63 +394,3 @@ namespace winstd
 
     /// @}
 }
-
-
-#if defined(SECURITY_WIN32) || defined(SECURITY_KERNEL)
-
-template<class _Traits, class _Ax>
-static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<char, _Traits, _Ax> &sName)
-{
-    assert(0); // TODO: Test this code.
-
-    char szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(char)];
-    ULONG ulSize = _countof(szStackBuffer);
-
-    // Try with stack buffer first.
-    if (::GetUserNameExA(NameFormat, szStackBuffer, &ulSize)) {
-        // Copy from stack.
-        sName.assign(szStackBuffer, ulSize);
-        return TRUE;
-    } else {
-        if (::GetLastError() == ERROR_MORE_DATA) {
-            // Allocate buffer on heap and retry.
-            std::unique_ptr<char[]> szBuffer(new char[ulSize]);
-            if (::GetUserNameExA(NameFormat, szBuffer.get(), &ulSize)) {
-                sName.assign(szBuffer.get(), ulSize);
-                return TRUE;
-            }
-        }
-    }
-
-    return FALSE;
-}
-
-
-template<class _Traits, class _Ax>
-static BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sName)
-{
-    assert(0); // TODO: Test this code.
-
-    wchar_t szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
-    ULONG ulSize = _countof(szStackBuffer);
-
-    // Try with stack buffer first.
-    if (::GetUserNameExW(NameFormat, szStackBuffer, &ulSize)) {
-        // Copy from stack.
-        sName.assign(szStackBuffer, ulSize);
-        return TRUE;
-    } else {
-        if (::GetLastError() == ERROR_MORE_DATA) {
-            // Allocate buffer on heap and retry.
-            std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[ulSize]);
-            if (::GetUserNameExW(NameFormat, szBuffer.get(), &ulSize)) {
-                sName.assign(szBuffer.get(), ulSize);
-                return TRUE;
-            }
-        }
-    }
-
-    return FALSE;
-}
-
-#endif

@@ -4,31 +4,19 @@
     Copyright © 2016 GÉANT
 */
 
-///
-/// \defgroup WinSock2API WinSock2 API
-/// Integrates WinStd classes with Microsoft WinSock2 API
-///
-
-#include "Common.h"
-
-namespace winstd
-{
-    class ws2_runtime_error;
-#if (NTDDI_VERSION >= NTDDI_WINXPSP2) || (_WIN32_WINNT >= 0x0502)
-    class addrinfo;
-#endif
-}
-
 #pragma once
 
+#include "Common.h"
 #include <WinSock2.h>
 #include <ws2def.h>
 #include <WS2tcpip.h>
 
-
 namespace winstd
 {
-    /// \addtogroup WinStdExceptions
+    ///
+    /// \defgroup WinSock2API WinSock2 API
+    /// Integrates WinStd classes with Microsoft WinSock2 API
+    ///
     /// @{
 
     ///
@@ -47,7 +35,6 @@ namespace winstd
         {
         }
 
-
         ///
         /// Constructs an exception
         ///
@@ -58,7 +45,6 @@ namespace winstd
         {
         }
 
-
         ///
         /// Constructs an exception using `WSAGetLastError()`
         ///
@@ -68,7 +54,6 @@ namespace winstd
         {
         }
 
-
         ///
         /// Constructs an exception using `WSAGetLastError()`
         ///
@@ -77,7 +62,6 @@ namespace winstd
         ws2_runtime_error(_In_opt_z_ const char *msg = nullptr) : num_runtime_error<int>(WSAGetLastError(), msg)
         {
         }
-
 
         ///
         /// Returns a user-readable Windows error message
@@ -97,7 +81,6 @@ namespace winstd
     };
 
     /// @}
-
 
     /// \addtogroup WinSock2API
     /// @{
@@ -140,7 +123,6 @@ namespace winstd
             if (m_h != invalid)
                 free_internal();
         }
-
 
     protected:
         ///

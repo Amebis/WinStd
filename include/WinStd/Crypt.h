@@ -4,35 +4,34 @@
     Copyright © 2016 GÉANT
 */
 
+#pragma once
+
+#include "Common.h"
+#include <assert.h>
+#include <WinCrypt.h>
+#include <algorithm>
+#include <string>
+#include <vector>
+
 ///
 /// \defgroup WinStdCryptoAPI Cryptography API
 /// Integrates WinStd classes with Microsoft Cryptography API
 ///
-
-#include "Common.h"
-
-#include <WinCrypt.h>
-
-#include <string>
-#include <vector>
-
-namespace winstd
-{
-    class cert_context;
-    class cert_chain_context;
-    class cert_store;
-    class crypt_prov;
-    class crypt_hash;
-    class crypt_key;
-    class data_blob;
-}
-
-/// \addtogroup WinStdCryptoAPI
 /// @{
 
 /// @copydoc CertGetNameStringW()
 template<class _Traits, class _Ax>
-static DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<char, _Traits, _Ax> &sNameString);
+static DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<char, _Traits, _Ax> &sNameString)
+{
+    // Query the final string length first.
+    DWORD dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
+
+    // Allocate buffer on heap to format the string data into and read it.
+    std::unique_ptr<char[]> szBuffer(new char[dwSize]);
+    dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, szBuffer.get(), dwSize);
+    sNameString.assign(szBuffer.get(), dwSize - 1);
+    return dwSize;
+}
 
 ///
 /// Obtains the subject or issuer name from a certificate [CERT_CONTEXT](https://msdn.microsoft.com/en-us/library/windows/desktop/aa377189.aspx) structure and stores it in a std::wstring string.
@@ -40,7 +39,17 @@ static DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
 /// \sa [CertGetNameString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376086.aspx)
 ///
 template<class _Traits, class _Ax>
-static DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sNameString);
+static DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sNameString)
+{
+    // Query the final string length first.
+    DWORD dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
+
+    // Allocate buffer on heap to format the string data into and read it.
+    std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwSize]);
+    dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, szBuffer.get(), dwSize);
+    sNameString.assign(szBuffer.get(), dwSize - 1);
+    return dwSize;
+}
 
 ///
 /// Retrieves the information contained in an extended property of a certificate context.
@@ -48,7 +57,24 @@ static DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
 /// \sa [CertGetCertificateContextProperty function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376079.aspx)
 ///
 template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Out_ std::vector<_Ty, _Ax> &aData);
+static _Success_(return != 0) BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Out_ std::vector<_Ty, _Ax> &aData)
+{
+    BYTE buf[WINSTD_STACK_BUFFER_BYTES];
+    DWORD dwSize = WINSTD_STACK_BUFFER_BYTES;
+
+    // Try with the stack buffer first.
+    if (CertGetCertificateContextProperty(pCertContext, dwPropId, buf, &dwSize)) {
+        // Copy from stack.
+        aData.assign((const _Ty*)buf, (const _Ty*)buf + (dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        return TRUE;
+    } else if (GetLastError() == ERROR_MORE_DATA) {
+        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        if (CertGetCertificateContextProperty(pCertContext, dwPropId, (BYTE*)aData.data(), &dwSize))
+            return TRUE;
+    }
+
+    return FALSE;
+}
 
 ///
 /// Retrieves data that governs the operations of a hash object. The actual hash value can be retrieved by using this function.
@@ -56,7 +82,36 @@ static _Success_(return != 0) BOOL WINAPI CertGetCertificateContextProperty(_In_
 /// \sa [CryptGetHashParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379947.aspx)
 ///
 template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
+static _Success_(return != 0) BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
+{
+    BYTE buf[WINSTD_STACK_BUFFER_BYTES];
+    DWORD dwSize = WINSTD_STACK_BUFFER_BYTES;
+
+    // Try with the stack buffer first.
+    if (CryptGetHashParam(hHash, dwParam, buf, &dwSize, dwFlags)) {
+        // Copy from stack.
+        aData.assign((const _Ty*)buf, (const _Ty*)buf + (dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        return TRUE;
+    } else if (GetLastError() == ERROR_MORE_DATA) {
+        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        if (CryptGetHashParam(hHash, dwParam, (BYTE*)aData.data(), &dwSize, dwFlags))
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
+///
+/// Retrieves data that governs the operations of a hash object. The actual hash value can be retrieved by using this function.
+///
+/// \sa [CryptGetHashParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379947.aspx)
+///
+template<class T>
+static _Success_(return != 0) BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags)
+{
+    DWORD dwSize = sizeof(T);
+    return CryptGetHashParam(hHash, dwParam, (BYTE*)&data, &dwSize, dwFlags);
+}
 
 ///
 /// Retrieves data that governs the operations of a key.
@@ -64,7 +119,24 @@ static _Success_(return != 0) BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_
 /// \sa [CryptGetKeyParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379949.aspx)
 ///
 template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags);
+static _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
+{
+    BYTE buf[WINSTD_STACK_BUFFER_BYTES];
+    DWORD dwSize = WINSTD_STACK_BUFFER_BYTES;
+
+    // Try with the stack buffer first.
+    if (CryptGetKeyParam(hKey, dwParam, buf, &dwSize, dwFlags)) {
+        // Copy from stack.
+        aData.assign((const _Ty*)buf, (const _Ty*)buf + (dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        return TRUE;
+    } else if (GetLastError() == ERROR_MORE_DATA) {
+        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        if (CryptGetKeyParam(hKey, dwParam, (BYTE*)aData.data(), &dwSize, dwFlags))
+            return TRUE;
+    }
+
+    return FALSE;
+}
 
 ///
 /// Retrieves data that governs the operations of a key.
@@ -72,7 +144,11 @@ static _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DW
 /// \sa [CryptGetKeyParam function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379949.aspx)
 ///
 template<class T>
-static _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags);
+static BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags)
+{
+    DWORD dwSize = sizeof(T);
+    return CryptGetKeyParam(hKey, dwParam, (BYTE*)&data, &dwSize, dwFlags);
+}
 
 ///
 /// Exports a cryptographic key or a key pair from a cryptographic service provider (CSP) in a secure manner.
@@ -80,7 +156,18 @@ static _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DW
 /// \sa [CryptExportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379931.aspx)
 ///
 template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData);
+static _Success_(return != 0) BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData)
+{
+    DWORD dwKeyBLOBSize = 0;
+
+    if (CryptExportKey(hKey, hExpKey, dwBlobType, dwFlags, NULL, &dwKeyBLOBSize)) {
+        aData.resize((dwKeyBLOBSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+        if (CryptExportKey(hKey, hExpKey, dwBlobType, dwFlags, aData.data(), &dwKeyBLOBSize))
+            return TRUE;
+    }
+
+    return FALSE;
+}
 
 ///
 /// Encrypts data.
@@ -88,7 +175,49 @@ static _Success_(return != 0) BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRY
 /// \sa [CryptEncrypt function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379924.aspx)
 ///
 template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData);
+static _Success_(return != 0) BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
+{
+    DWORD
+        dwDataLen = (DWORD)(aData.size()     * sizeof(_Ty)),
+        dwBufLen  = (DWORD)(aData.capacity() * sizeof(_Ty)),
+        dwEncLen  = dwDataLen,
+        dwResult;
+
+    if (dwBufLen) {
+        aData.resize(dwBufLen);
+        if (CryptEncrypt(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &dwEncLen, dwBufLen)) {
+            // Encryption succeeded.
+            assert(dwEncLen <= dwBufLen);
+            if (dwEncLen < dwBufLen)
+                aData.resize((dwEncLen + sizeof(_Ty) - 1) / sizeof(_Ty));
+            return TRUE;
+        } else
+            dwResult = GetLastError();
+    } else if (CryptEncrypt(hKey, NULL, Final, dwFlags, NULL, &dwEncLen, 0)) {
+        // CryptEncrypt() always succeeds for output data size queries.
+        // dwEncLen contains required output data size. Continue as if the buffer was to small. Actually, the output buffer _was_ too small!
+        dwResult = ERROR_MORE_DATA;
+    } else
+        dwResult = GetLastError();
+
+    if (dwResult == ERROR_MORE_DATA) {
+        // Encrypted data will be longer. Reserve more space and retry.
+        aData.resize(((dwBufLen = dwEncLen) + sizeof(_Ty) - 1) / sizeof(_Ty));
+        dwEncLen = dwDataLen;
+        if (CryptEncrypt(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &dwEncLen, dwBufLen)) {
+            // Encryption succeeded.
+            assert(dwEncLen <= dwBufLen);
+            if (dwEncLen < dwBufLen)
+                aData.resize((dwEncLen + sizeof(_Ty) - 1) / sizeof(_Ty));
+            return TRUE;
+        }
+    } else {
+        // Resize back to data length.
+        aData.resize((dwDataLen + sizeof(_Ty) - 1) / sizeof(_Ty));
+    }
+
+    return FALSE;
+}
 
 ///
 /// Decrypts data previously encrypted by using the CryptEncrypt function.
@@ -96,16 +225,20 @@ static _Success_(return != 0) BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HC
 /// \sa [CryptDecrypt function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379913.aspx)
 ///
 template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData);
+static _Success_(return != 0) BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
+{
+    DWORD dwDataLen = (DWORD)(aData.size() * sizeof(_Ty));
+
+    if (CryptDecrypt(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &dwDataLen)) {
+        // Decryption succeeded.
+        aData.resize((dwDataLen + sizeof(_Ty) - 1) / sizeof(_Ty));
+        return TRUE;
+    }
+
+    return FALSE;
+}
 
 /// @}
-
-#pragma once
-
-#include <assert.h>
-
-#include <algorithm>
-
 
 namespace winstd
 {
@@ -261,7 +394,6 @@ namespace winstd
         }
     };
 
-
     ///
     /// PCCERT_CHAIN_CONTEXT wrapper class
     ///
@@ -325,7 +457,6 @@ namespace winstd
             return CertDuplicateCertificateChain(h);
         }
     };
-
 
     ///
     /// HCERTSTORE wrapper class
@@ -396,7 +527,6 @@ namespace winstd
         }
     };
 
-
     ///
     /// HCRYPTPROV wrapper class
     ///
@@ -446,7 +576,6 @@ namespace winstd
             CryptReleaseContext(m_h, 0);
         }
     };
-
 
     ///
     /// HCRYPTHASH wrapper class
@@ -512,7 +641,6 @@ namespace winstd
             return CryptDuplicateHash(h, NULL, 0, &hNew) ? hNew : invalid;
         }
     };
-
 
     ///
     /// HCRYPTKEY wrapper class
@@ -814,187 +942,4 @@ namespace winstd
     #pragma warning(pop)
 
     /// @}
-}
-
-
-template<class _Traits, class _Ax>
-static DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<char, _Traits, _Ax> &sNameString)
-{
-    // Query the final string length first.
-    DWORD dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
-
-    // Allocate buffer on heap to format the string data into and read it.
-    std::unique_ptr<char[]> szBuffer(new char[dwSize]);
-    dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, szBuffer.get(), dwSize);
-    sNameString.assign(szBuffer.get(), dwSize - 1);
-    return dwSize;
-}
-
-
-template<class _Traits, class _Ax>
-static DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sNameString)
-{
-    // Query the final string length first.
-    DWORD dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
-
-    // Allocate buffer on heap to format the string data into and read it.
-    std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwSize]);
-    dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, szBuffer.get(), dwSize);
-    sNameString.assign(szBuffer.get(), dwSize - 1);
-    return dwSize;
-}
-
-
-template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL WINAPI CertGetCertificateContextProperty(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwPropId, _Out_ std::vector<_Ty, _Ax> &aData)
-{
-    BYTE buf[WINSTD_STACK_BUFFER_BYTES];
-    DWORD dwSize = WINSTD_STACK_BUFFER_BYTES;
-
-    // Try with the stack buffer first.
-    if (CertGetCertificateContextProperty(pCertContext, dwPropId, buf, &dwSize)) {
-        // Copy from stack.
-        aData.assign((const _Ty*)buf, (const _Ty*)buf + (dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        return TRUE;
-    } else if (GetLastError() == ERROR_MORE_DATA) {
-        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        if (CertGetCertificateContextProperty(pCertContext, dwPropId, (BYTE*)aData.data(), &dwSize))
-            return TRUE;
-    }
-
-    return FALSE;
-}
-
-
-template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
-{
-    BYTE buf[WINSTD_STACK_BUFFER_BYTES];
-    DWORD dwSize = WINSTD_STACK_BUFFER_BYTES;
-
-    // Try with the stack buffer first.
-    if (CryptGetHashParam(hHash, dwParam, buf, &dwSize, dwFlags)) {
-        // Copy from stack.
-        aData.assign((const _Ty*)buf, (const _Ty*)buf + (dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        return TRUE;
-    } else if (GetLastError() == ERROR_MORE_DATA) {
-        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        if (CryptGetHashParam(hHash, dwParam, (BYTE*)aData.data(), &dwSize, dwFlags))
-            return TRUE;
-    }
-
-    return FALSE;
-}
-
-
-template<class T>
-static BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags)
-{
-    DWORD dwSize = sizeof(T);
-    return CryptGetHashParam(hHash, dwParam, (BYTE*)&data, &dwSize, dwFlags);
-}
-
-
-template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ std::vector<_Ty, _Ax> &aData, _In_ DWORD dwFlags)
-{
-    BYTE buf[WINSTD_STACK_BUFFER_BYTES];
-    DWORD dwSize = WINSTD_STACK_BUFFER_BYTES;
-
-    // Try with the stack buffer first.
-    if (CryptGetKeyParam(hKey, dwParam, buf, &dwSize, dwFlags)) {
-        // Copy from stack.
-        aData.assign((const _Ty*)buf, (const _Ty*)buf + (dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        return TRUE;
-    } else if (GetLastError() == ERROR_MORE_DATA) {
-        aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        if (CryptGetKeyParam(hKey, dwParam, (BYTE*)aData.data(), &dwSize, dwFlags))
-            return TRUE;
-    }
-
-    return FALSE;
-}
-
-
-template<class T>
-static BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DWORD dwParam, _Out_ T &data, _In_ DWORD dwFlags)
-{
-    DWORD dwSize = sizeof(T);
-    return CryptGetKeyParam(hKey, dwParam, (BYTE*)&data, &dwSize, dwFlags);
-}
-
-
-template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRYPTKEY hExpKey, _In_ DWORD dwBlobType, _In_ DWORD dwFlags, _Out_ std::vector<_Ty, _Ax> &aData)
-{
-    DWORD dwKeyBLOBSize = 0;
-
-    if (CryptExportKey(hKey, hExpKey, dwBlobType, dwFlags, NULL, &dwKeyBLOBSize)) {
-        aData.resize((dwKeyBLOBSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        if (CryptExportKey(hKey, hExpKey, dwBlobType, dwFlags, aData.data(), &dwKeyBLOBSize))
-            return TRUE;
-    }
-
-    return FALSE;
-}
-
-
-template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
-{
-    DWORD
-        dwDataLen = (DWORD)(aData.size()     * sizeof(_Ty)),
-        dwBufLen  = (DWORD)(aData.capacity() * sizeof(_Ty)),
-        dwEncLen  = dwDataLen,
-        dwResult;
-
-    if (dwBufLen) {
-        aData.resize(dwBufLen);
-        if (CryptEncrypt(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &dwEncLen, dwBufLen)) {
-            // Encryption succeeded.
-            assert(dwEncLen <= dwBufLen);
-            if (dwEncLen < dwBufLen)
-                aData.resize((dwEncLen + sizeof(_Ty) - 1) / sizeof(_Ty));
-            return TRUE;
-        } else
-            dwResult = GetLastError();
-    } else if (CryptEncrypt(hKey, NULL, Final, dwFlags, NULL, &dwEncLen, 0)) {
-        // CryptEncrypt() always succeeds for output data size queries.
-        // dwEncLen contains required output data size. Continue as if the buffer was to small. Actually, the output buffer _was_ too small!
-        dwResult = ERROR_MORE_DATA;
-    } else
-        dwResult = GetLastError();
-
-    if (dwResult == ERROR_MORE_DATA) {
-        // Encrypted data will be longer. Reserve more space and retry.
-        aData.resize(((dwBufLen = dwEncLen) + sizeof(_Ty) - 1) / sizeof(_Ty));
-        dwEncLen = dwDataLen;
-        if (CryptEncrypt(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &dwEncLen, dwBufLen)) {
-            // Encryption succeeded.
-            assert(dwEncLen <= dwBufLen);
-            if (dwEncLen < dwBufLen)
-                aData.resize((dwEncLen + sizeof(_Ty) - 1) / sizeof(_Ty));
-            return TRUE;
-        }
-    } else {
-        // Resize back to data length.
-        aData.resize((dwDataLen + sizeof(_Ty) - 1) / sizeof(_Ty));
-    }
-
-    return FALSE;
-}
-
-
-template<class _Ty, class _Ax>
-static _Success_(return != 0) BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
-{
-    DWORD dwDataLen = (DWORD)(aData.size() * sizeof(_Ty));
-
-    if (CryptDecrypt(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &dwDataLen)) {
-        // Decryption succeeded.
-        aData.resize((dwDataLen + sizeof(_Ty) - 1) / sizeof(_Ty));
-        return TRUE;
-    }
-
-    return FALSE;
 }

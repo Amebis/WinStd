@@ -4,36 +4,15 @@
     Copyright © 2016 GÉANT
 */
 
-///
-/// \defgroup WinStdCOM COM object management
-/// Provides helper templates for Windows COM object manipulation
-///
+#pragma once
 
 #include "Common.h"
-
+#include <unknwn.h>
 #include <string>
 
 namespace winstd
 {
-    class com_runtime_error;
-    struct CoTaskMemFree_delete;
-    template <class T> class com_obj;
-    class bstr;
-    class variant;
-    class com_initializer;
-}
-
-#pragma once
-
-#include <unknwn.h>
-
-namespace winstd
-{
-
-    ///
-    /// \defgroup WinStdExceptions Exceptions
-    /// Additional exceptions
-    ///
+    /// \addtogroup WinStdExceptions
     /// @{
 
     ///
@@ -54,7 +33,6 @@ namespace winstd
         {
         }
 
-
         ///
         /// Constructs an exception
         ///
@@ -67,7 +45,11 @@ namespace winstd
     };
 
     /// @}
-    /// \addtogroup WinStdCOM
+
+    ///
+    /// \defgroup WinStdCOM COM object management
+    /// Provides helper templates for Windows COM object manipulation
+    ///
     /// @{
 
     ///
@@ -111,7 +93,6 @@ namespace winstd
             CoCreateInstance(rclsid, pUnkOuter, dwClsContext, __uuidof(T), (LPVOID*)&m_h);
         }
 
-
         ///
         /// Queries the object for another interface and creates new class with it
         ///
@@ -124,7 +105,6 @@ namespace winstd
             other->QueryInterface(__uuidof(T), (void**)&m_h);
         }
 
-
         ///
         /// Queries the object for another interface and creates new class with it
         ///
@@ -136,7 +116,6 @@ namespace winstd
             other->QueryInterface(__uuidof(T), (void**)&m_h);
         }
 
-
         ///
         /// Releases object
         ///
@@ -145,7 +124,6 @@ namespace winstd
             if (m_h != invalid)
                 free_internal();
         }
-
 
         ///
         /// Creates a new object
@@ -161,7 +139,6 @@ namespace winstd
             return hr;
         }
 
-
         ///
         /// Queries the object for another interface
         ///
@@ -174,7 +151,6 @@ namespace winstd
             assert(m_h);
             return m_h->QueryInterface(__uuidof(_Other), (void**)h);
         }
-
 
         ///
         /// Queries the object for another interface
@@ -203,7 +179,6 @@ namespace winstd
             m_h->Release();
         }
 
-
         ///
         /// Duplicates the object by incrementing the reference counter
         ///
@@ -219,7 +194,6 @@ namespace winstd
             return h;
         }
     };
-
 
     ///
     /// BSTR string wrapper
@@ -300,7 +274,6 @@ namespace winstd
             return SysAllocStringLen(h, SysStringLen(h));
         }
     };
-
 
     ///
     /// VARIANT struct wrapper
@@ -680,7 +653,6 @@ namespace winstd
             return *this;
         }
 
-
         ///
         /// Copy from long long value
         ///
@@ -1057,7 +1029,6 @@ namespace winstd
     };
     #pragma warning(pop)
 
-
     ///
     /// Context scope automatic COM (un)initialization
     ///
@@ -1077,7 +1048,6 @@ namespace winstd
             m_result = CoInitialize(pvReserved);
         }
 
-
         ///
         /// Initializes the COM library for use by the calling thread, sets the thread's concurrency model, and creates a new apartment for the thread if one is required.
         ///
@@ -1087,7 +1057,6 @@ namespace winstd
         {
             m_result = CoInitializeEx(pvReserved, dwCoInit);
         }
-
 
         ///
         /// Uninitializes COM.
@@ -1099,7 +1068,6 @@ namespace winstd
             if (SUCCEEDED(m_result))
                 CoUninitialize();
         }
-
 
         ///
         /// Return result of `CoInitialize()` call.

@@ -3,28 +3,16 @@
     Copyright © 1991-2022 Amebis
 */
 
-///
-/// \defgroup WinStdGdiAPI GDI API
-/// Integrates WinStd classes with Microsoft Windows GDI
-///
+#pragma once
 
 #include "Common.h"
 
 namespace winstd
 {
-    template<class T> class gdi_handle;
-    class dc;
-    class window_dc;
-    class dc_selector;
-}
-
-
-#pragma once
-
-
-namespace winstd
-{
-    /// \addtogroup WinStdGdiAPI
+    ///
+    /// \defgroup WinStdGdiAPI GDI API
+    /// Integrates WinStd classes with Microsoft Windows GDI
+    ///
     /// @{
 
     ///
@@ -59,7 +47,6 @@ namespace winstd
         }
     };
 
-
     ///
     /// Device context wrapper class
     ///
@@ -90,7 +77,6 @@ namespace winstd
             DeleteDC(m_h);
         }
     };
-
 
     ///
     /// Device context wrapper class
@@ -148,7 +134,6 @@ namespace winstd
         HWND m_hwnd;    ///< Window handle
     };
 
-
     ///
     /// Context scope DC object restorer
     ///
@@ -169,7 +154,6 @@ namespace winstd
         {
         }
 
-
         ///
         /// Restores original object.
         ///
@@ -180,7 +164,6 @@ namespace winstd
             if (m_orig)
                 SelectObject(m_hdc, m_orig);
         }
-
 
         ///
         /// Return result of `SelectObject()` call.

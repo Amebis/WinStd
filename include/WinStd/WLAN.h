@@ -4,28 +4,20 @@
     Copyright © 2016 GÉANT
 */
 
-///
-/// \defgroup WinStdWLANAPI WLAN API
-/// Integrates WinStd classes with Microsoft WLAN API
-///
+#pragma once
 
 #include "Common.h"
-
 #include <wlanapi.h>
-
 #include <string>
 
 // Must not statically link to Wlanapi.dll as it is not available on Windows
 // without a WLAN interface.
 extern DWORD (WINAPI *pfnWlanReasonCodeToString)(__in DWORD dwReasonCode, __in DWORD dwBufferSize, __in_ecount(dwBufferSize) PWCHAR pStringBuffer, __reserved PVOID pReserved);
 
-namespace winstd {
-    template <class _Ty> struct WlanFreeMemory_delete;
-    template <class _Ty> struct WlanFreeMemory_delete<_Ty[]>;
-    class wlan_handle;
-}
-
-/// \addtogroup WinStdWLANAPI
+///
+/// \defgroup WinStdWLANAPI WLAN API
+/// Integrates WinStd classes with Microsoft WLAN API
+///
 /// @{
 
 ///
@@ -38,12 +30,35 @@ namespace winstd {
 /// function must be loaded dynamically.
 ///
 template<class _Traits, class _Ax>
-static DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sValue, __reserved PVOID pReserved);
+static DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sValue, __reserved PVOID pReserved)
+{
+    DWORD dwSize = 0;
+
+    if (!::pfnWlanReasonCodeToString)
+        return ERROR_CALL_NOT_IMPLEMENTED;
+
+    for (;;) {
+        // Increment size and allocate buffer.
+        dwSize += 1024;
+        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwSize]);
+
+        // Try!
+        DWORD dwResult = ::pfnWlanReasonCodeToString(dwReasonCode, dwSize, szBuffer.get(), pReserved);
+        if (dwResult == ERROR_SUCCESS) {
+            DWORD dwLength = (DWORD)wcsnlen(szBuffer.get(), dwSize);
+            if (dwLength < dwSize - 1) {
+                // Buffer was long enough.
+                sValue.assign(szBuffer.get(), dwLength);
+                return ERROR_SUCCESS;
+            }
+        } else {
+            // Return error code.
+            return dwResult;
+        }
+    }
+}
 
 /// @}
-
-#pragma once
-
 
 namespace winstd
 {
@@ -76,7 +91,6 @@ namespace winstd
         }
     };
 
-
     ///
     /// Deleter for unique_ptr to array of unknown size using WlanFreeMemory
     ///
@@ -106,7 +120,6 @@ namespace winstd
             WlanFreeMemory(_Ptr);
         }
     };
-
 
     ///
     /// WLAN handle wrapper
@@ -162,34 +175,4 @@ namespace winstd
     };
 
     /// @}
-}
-
-
-template<class _Traits, class _Ax>
-static DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sValue, __reserved PVOID pReserved)
-{
-    DWORD dwSize = 0;
-
-    if (!::pfnWlanReasonCodeToString)
-        return ERROR_CALL_NOT_IMPLEMENTED;
-
-    for (;;) {
-        // Increment size and allocate buffer.
-        dwSize += 1024;
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwSize]);
-
-        // Try!
-        DWORD dwResult = ::pfnWlanReasonCodeToString(dwReasonCode, dwSize, szBuffer.get(), pReserved);
-        if (dwResult == ERROR_SUCCESS) {
-            DWORD dwLength = (DWORD)wcsnlen(szBuffer.get(), dwSize);
-            if (dwLength < dwSize - 1) {
-                // Buffer was long enough.
-                sValue.assign(szBuffer.get(), dwLength);
-                return ERROR_SUCCESS;
-            }
-        } else {
-            // Return error code.
-            return dwResult;
-        }
-    }
 }

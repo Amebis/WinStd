@@ -4,51 +4,26 @@
     Copyright © 2016 GÉANT
 */
 
-///
-/// \defgroup WinStdETWAPI Event Tracing for Windows API
-/// Integrates WinStd classes with Event Tracing for Windows API
-///
+#pragma once
 
 #include "Common.h"
-
 #include <assert.h>
 #include <evntprov.h>
 #include <evntcons.h>
 #include <stdarg.h>
 #include <tdh.h>
-
 #include <memory>
 #include <string>
 #include <vector>
 
-namespace winstd
-{
-    class event_data;
-    class event_rec;
-    class event_provider;
-    class event_session;
-    class event_trace;
-    class event_trace_enabler;
-    class event_fn_auto;
-    template<class T> class event_fn_auto_ret;
-}
+#pragma warning(push)
+#pragma warning(disable: 4505) // Don't warn on unused code
 
-/// \addtogroup WinStdCryptoAPI
+///
+/// \defgroup WinStdETWAPI Event Tracing for Windows API
+/// Integrates WinStd classes with Event Tracing for Windows API
+///
 /// @{
-
-///
-/// Retrieves metadata about an event.
-///
-/// \sa [TdhGetEventInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964840.aspx)
-///
-static _Success_(return == ERROR_SUCCESS) ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_reads_opt_(TdhContextCount) PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info);
-
-///
-/// Retrieves information about the event map contained in the event.
-///
-/// \sa [TdhGetEventMapInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964841.aspx)
-///
-static _Success_(return == ERROR_SUCCESS) ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Inout_ std::unique_ptr<EVENT_MAP_INFO> &info);
 
 ///
 /// Retrieves a property value from the event data.
@@ -56,12 +31,81 @@ static _Success_(return == ERROR_SUCCESS) ULONG TdhGetEventMapInformation(_In_ P
 /// \sa [TdhGetProperty function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964843.aspx)
 ///
 template<class _Ty, class _Ax>
-static _Success_(return == ERROR_SUCCESS) ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_reads_opt_(TdhContextCount) PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_reads_(PropertyDataCount) PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Inout_ std::vector<_Ty, _Ax> &aData);
+static _Success_(return == ERROR_SUCCESS) ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_reads_opt_(TdhContextCount) PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_reads_(PropertyDataCount) PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Inout_ std::vector<_Ty, _Ax> &aData)
+{
+    ULONG ulSize, ulResult;
+
+    // Query property size.
+    ulResult = TdhGetPropertySize(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, &ulSize);
+    if (ulResult == ERROR_SUCCESS) {
+        if (ulSize) {
+            // Query property value.
+            aData.resize((ulSize + sizeof(_Ty) - 1) / sizeof(_Ty));
+            ulResult = TdhGetProperty(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, ulSize, reinterpret_cast<LPBYTE>(aData.data()));
+        } else {
+            // Property value size is zero.
+            aData.clear();
+        }
+    }
+
+    return ulResult;
+}
+
+///
+/// Retrieves metadata about an event.
+///
+/// \sa [TdhGetEventInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964840.aspx)
+///
+static _Success_(return == ERROR_SUCCESS) ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_reads_opt_(TdhContextCount) PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info)
+{
+    BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
+    ULONG ulSize = sizeof(szBuffer), ulResult;
+
+    // Try with stack buffer first.
+    ulResult = TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, (PTRACE_EVENT_INFO)szBuffer, &ulSize);
+    if (ulResult == ERROR_SUCCESS) {
+        // Copy from stack.
+        info.reset(reinterpret_cast<PTRACE_EVENT_INFO>(new char[ulSize]));
+        memcpy(info.get(), szBuffer, ulSize);
+        return ERROR_SUCCESS;
+    } else if (ulResult == ERROR_INSUFFICIENT_BUFFER) {
+        // Create buffer on heap and retry.
+        info.reset(reinterpret_cast<PTRACE_EVENT_INFO>(new char[ulSize]));
+        return TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, info.get(), &ulSize);
+    }
+
+    return ulResult;
+}
+
+///
+/// Retrieves information about the event map contained in the event.
+///
+/// \sa [TdhGetEventMapInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa964841.aspx)
+///
+static _Success_(return == ERROR_SUCCESS) ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Inout_ std::unique_ptr<EVENT_MAP_INFO> &info)
+{
+    BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
+    ULONG ulSize = sizeof(szBuffer), ulResult;
+
+    // Try with stack buffer first.
+    ulResult = TdhGetEventMapInformation(pEvent, pMapName, (PEVENT_MAP_INFO)szBuffer, &ulSize);
+    if (ulResult == ERROR_SUCCESS) {
+        // Copy from stack.
+        info.reset(reinterpret_cast<PEVENT_MAP_INFO>(new char[ulSize]));
+        memcpy(info.get(), szBuffer, ulSize);
+        return ERROR_SUCCESS;
+    } else if (ulResult == ERROR_INSUFFICIENT_BUFFER) {
+        // Create buffer on heap and retry.
+        info.reset(reinterpret_cast<PEVENT_MAP_INFO>(new char[ulSize]));
+        return TdhGetEventMapInformation(pEvent, pMapName, info.get(), &ulSize);
+    }
+
+    return ulResult;
+}
 
 /// @}
 
-#pragma once
-
+#pragma warning(pop)
 
 namespace winstd
 {
@@ -84,7 +128,6 @@ namespace winstd
             Reserved = (ULONG)-1;   // Used for varadic argument terminator.
         }
 
-
         ///
         /// Construct class pointing to an `char`.
         ///
@@ -97,7 +140,6 @@ namespace winstd
         {
             EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
         }
-
 
         ///
         /// Construct class pointing to an `unsigned char`.
@@ -112,7 +154,6 @@ namespace winstd
             EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
         }
 
-
         ///
         /// Construct class pointing to an `int`.
         ///
@@ -125,7 +166,6 @@ namespace winstd
         {
             EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
         }
-
 
         ///
         /// Construct class pointing to an `unsigned int`.
@@ -140,7 +180,6 @@ namespace winstd
             EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
         }
 
-
         ///
         /// Construct class pointing to a `long`.
         ///
@@ -153,7 +192,6 @@ namespace winstd
         {
             EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
         }
-
 
         ///
         /// Construct class pointing to an `unsigned long`.
@@ -168,7 +206,6 @@ namespace winstd
             EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
         }
 
-
         ///
         /// Construct class pointing to a `GUID`.
         ///
@@ -181,7 +218,6 @@ namespace winstd
         {
             EventDataDescCreate(this, &data, (ULONG)(sizeof(data)));
         }
-
 
         ///
         /// Construct class pointing to a string.
@@ -202,7 +238,6 @@ namespace winstd
             }
         }
 
-
         ///
         /// Construct class pointing to a wide string.
         ///
@@ -222,7 +257,6 @@ namespace winstd
             }
         }
 
-
         ///
         /// Template to construct pointing to a `std::basic_string<>`.
         ///
@@ -236,7 +270,6 @@ namespace winstd
         {
             EventDataDescCreate(this, data.c_str(), (ULONG)((data.length() + 1) * sizeof(_Elem)));
         }
-
 
         ///
         /// Construct class pointing to binary data.
@@ -258,7 +291,6 @@ namespace winstd
     ///
     static const event_data blank_event_data;
 
-
     ///
     /// EVENT_RECORD wrapper
     ///
@@ -273,7 +305,6 @@ namespace winstd
             memset((EVENT_RECORD*)this, 0, sizeof(EVENT_RECORD));
         }
 
-
         ///
         /// Copies an existing event record.
         ///
@@ -284,7 +315,6 @@ namespace winstd
             set_extended_data_internal(other.ExtendedDataCount, other.ExtendedData);
             set_user_data_internal(other.UserDataLength, other.UserData);
         }
-
 
         ///
         /// Copies an existing event record.
@@ -297,7 +327,6 @@ namespace winstd
             set_user_data_internal(other.UserDataLength, other.UserData);
         }
 
-
         ///
         /// Moves the event record.
         ///
@@ -307,7 +336,6 @@ namespace winstd
         {
             memset((EVENT_RECORD*)&other, 0, sizeof(EVENT_RECORD));
         }
-
 
         ///
         /// Destroys event record data and frees the allocated memory.
@@ -320,7 +348,6 @@ namespace winstd
             if (UserData)
                 delete reinterpret_cast<unsigned char*>(UserData);
         }
-
 
         ///
         /// Copies an existing event record.
@@ -338,7 +365,6 @@ namespace winstd
             return *this;
         }
 
-
         ///
         /// Copies an existing event record.
         ///
@@ -355,7 +381,6 @@ namespace winstd
             return *this;
         }
 
-
         ///
         /// Moves the event record.
         ///
@@ -371,7 +396,6 @@ namespace winstd
             return *this;
         }
 
-
         ///
         /// Sets event record extended data.
         ///
@@ -385,7 +409,6 @@ namespace winstd
 
             set_extended_data_internal(count, data);
         }
-
 
         ///
         /// Sets event record user data.
@@ -463,7 +486,6 @@ namespace winstd
         }
     };
 
-
     ///
     /// ETW event provider
     ///
@@ -483,7 +505,6 @@ namespace winstd
                 free_internal();
         }
 
-
         ///
         /// Registers the event provider.
         ///
@@ -502,7 +523,6 @@ namespace winstd
             return ulRes;
         }
 
-
         ///
         /// Writes an event with no parameters.
         ///
@@ -518,7 +538,6 @@ namespace winstd
             return EventWrite(m_h, EventDescriptor, 0, NULL);
         }
 
-
         ///
         /// Writes an event with parameters stored in array.
         ///
@@ -533,7 +552,6 @@ namespace winstd
             assert(m_h != invalid);
             return EventWrite(m_h, EventDescriptor, UserDataCount, UserData);
         }
-
 
         ///
         /// Writes an event with one or more parameter.
@@ -589,7 +607,6 @@ namespace winstd
 #pragma warning(pop)
         }
 
-
         ///
         /// Writes an event with variable number of parameters.
         ///
@@ -634,7 +651,6 @@ namespace winstd
 #pragma warning(pop)
         }
 
-
         ///
         /// Writes a string event.
         ///
@@ -671,7 +687,6 @@ namespace winstd
             EventUnregister(m_h);
         }
 
-
         ///
         /// Receive enable or disable notification requests
         ///
@@ -687,7 +702,6 @@ namespace winstd
             UNREFERENCED_PARAMETER(FilterData);
         }
 
-
         ///
         /// Receive enable or disable notification requests
         ///
@@ -701,7 +715,6 @@ namespace winstd
                 assert(0); // Where did the "this" pointer get lost?
         }
     };
-
 
     ///
     /// ETW session
@@ -718,7 +731,6 @@ namespace winstd
         {
         }
 
-
         ///
         /// Initializes a new session with an already available object handle.
         ///
@@ -732,7 +744,6 @@ namespace winstd
             memcpy(m_prop.get(), prop, prop->Wnode.BufferSize);
         }
 
-
         ///
         /// Move constructor
         ///
@@ -744,7 +755,6 @@ namespace winstd
         {
         }
 
-
         ///
         /// Closes the session.
         ///
@@ -755,7 +765,6 @@ namespace winstd
             if (m_h != invalid)
                 free_internal();
         }
-
 
         ///
         /// Move assignment
@@ -771,7 +780,6 @@ namespace winstd
             return *this;
         }
 
-
         ///
         /// Auto-typecasting operator
         ///
@@ -781,7 +789,6 @@ namespace winstd
         {
             return m_prop.get();
         }
-
 
         ///
         /// Auto-typecasting operator
@@ -793,7 +800,6 @@ namespace winstd
             const EVENT_TRACE_PROPERTIES *prop = m_prop.get();
             return reinterpret_cast<LPCTSTR>(reinterpret_cast<const char*>(prop) + prop->LoggerNameOffset);
         }
-
 
         ///
         /// Sets a new session handle for the class
@@ -808,7 +814,6 @@ namespace winstd
             handle<handle_type, 0>::attach(h);
             m_prop.reset(prop);
         }
-
 
         ///
         /// Registers and starts an event tracing session.
@@ -829,7 +834,6 @@ namespace winstd
                 attach(h, prop.release());
             return ulRes;
         }
-
 
         ///
         /// Enables the specified event trace provider.
@@ -855,7 +859,6 @@ namespace winstd
                 EnableFilterDesc);
         }
 
-
         ///
         /// Disables the specified event trace provider.
         ///
@@ -880,7 +883,6 @@ namespace winstd
                 EnableFilterDesc);
         }
 
-
     protected:
         ///
         /// Releases the session.
@@ -895,7 +897,6 @@ namespace winstd
     protected:
         std::unique_ptr<EVENT_TRACE_PROPERTIES> m_prop; ///< Session properties
     };
-
 
     ///
     /// ETW trace
@@ -915,7 +916,6 @@ namespace winstd
             if (m_h != invalid)
                 free_internal();
         }
-
 
         ///
         /// Opens a real-time trace session or log file for consuming.
@@ -947,7 +947,6 @@ namespace winstd
             CloseTrace(m_h);
         }
     };
-
 
     ///
     /// Helper class to enable event provider in constructor and disables it in destructor
@@ -990,7 +989,6 @@ namespace winstd
                 m_enable_filter_desc);
         }
 
-
         ///
         /// Enables event trace
         ///
@@ -1025,7 +1023,6 @@ namespace winstd
                 m_enable_filter_desc);
         }
 
-
         ///
         /// Return result of `EnableTraceEx()` call.
         ///
@@ -1035,7 +1032,6 @@ namespace winstd
         {
             return m_status;
         }
-
 
         ///
         /// Disables event trace.
@@ -1069,7 +1065,6 @@ namespace winstd
         PEVENT_FILTER_DESCRIPTOR m_enable_filter_desc;  ///< Event filter descriptor
     };
 
-
     ///
     /// Helper class to write an event on entry/exit of scope.
     ///
@@ -1089,7 +1084,6 @@ namespace winstd
             m_ep.write(event_cons, 1, &m_fn_name);
         }
 
-
         ///
         /// Copies the object
         ///
@@ -1099,7 +1093,6 @@ namespace winstd
             m_fn_name(other.m_fn_name)
         {
         }
-
 
         ///
         /// Moves the object
@@ -1112,7 +1105,6 @@ namespace winstd
             other.m_event_dest = NULL;
         }
 
-
         ///
         /// Writes the `event_dest` event
         ///
@@ -1121,7 +1113,6 @@ namespace winstd
             if (m_event_dest)
                 m_ep.write(m_event_dest, 1, &m_fn_name);
         }
-
 
         ///
         /// Copies the object
@@ -1136,7 +1127,6 @@ namespace winstd
 
             return *this;
         }
-
 
         ///
         /// Moves the object
@@ -1153,13 +1143,11 @@ namespace winstd
             return *this;
         }
 
-
     protected:
         event_provider &m_ep;                   ///< Reference to event provider in use
         const EVENT_DESCRIPTOR *m_event_dest;   ///< Event descriptor at destruction
         EVENT_DATA_DESCRIPTOR m_fn_name;        ///< Function name
     };
-
 
     ///
     /// Helper template to write an event on entry/exit of scope with one parameter (typically result).
@@ -1182,7 +1170,6 @@ namespace winstd
             m_ep.write(event_cons, 1, m_desc);
         }
 
-
         ///
         /// Copies the object
         ///
@@ -1193,7 +1180,6 @@ namespace winstd
         {
             m_desc[0] = other.m_desc[0];
         }
-
 
         ///
         /// Moves the object
@@ -1207,7 +1193,6 @@ namespace winstd
             other.m_event_dest = NULL;
         }
 
-
         ///
         /// Writes the `event_dest` event
         ///
@@ -1218,7 +1203,6 @@ namespace winstd
                 m_ep.write(m_event_dest, 2, m_desc);
             }
         }
-
 
         ///
         /// Copies the object
@@ -1234,7 +1218,6 @@ namespace winstd
 
             return *this;
         }
-
 
         ///
         /// Moves the object
@@ -1252,7 +1235,6 @@ namespace winstd
             return *this;
         }
 
-
     protected:
         event_provider &m_ep;                   ///< Reference to event provider in use
         const EVENT_DESCRIPTOR *m_event_dest;   ///< Event descriptor at destruction
@@ -1262,74 +1244,3 @@ namespace winstd
 
     /// @}
 }
-
-
-#pragma warning(push)
-#pragma warning(disable: 4505) // Don't warn on unused code
-
-static _Success_(return == ERROR_SUCCESS) ULONG TdhGetEventInformation(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_reads_opt_(TdhContextCount) PTDH_CONTEXT pTdhContext, _Out_ std::unique_ptr<TRACE_EVENT_INFO> &info)
-{
-    BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
-    ULONG ulSize = sizeof(szBuffer), ulResult;
-
-    // Try with stack buffer first.
-    ulResult = TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, (PTRACE_EVENT_INFO)szBuffer, &ulSize);
-    if (ulResult == ERROR_SUCCESS) {
-        // Copy from stack.
-        info.reset(reinterpret_cast<PTRACE_EVENT_INFO>(new char[ulSize]));
-        memcpy(info.get(), szBuffer, ulSize);
-        return ERROR_SUCCESS;
-    } else if (ulResult == ERROR_INSUFFICIENT_BUFFER) {
-        // Create buffer on heap and retry.
-        info.reset(reinterpret_cast<PTRACE_EVENT_INFO>(new char[ulSize]));
-        return TdhGetEventInformation(pEvent, TdhContextCount, pTdhContext, info.get(), &ulSize);
-    }
-
-    return ulResult;
-}
-
-
-static _Success_(return == ERROR_SUCCESS) ULONG TdhGetEventMapInformation(_In_ PEVENT_RECORD pEvent, _In_ LPWSTR pMapName, _Inout_ std::unique_ptr<EVENT_MAP_INFO> &info)
-{
-    BYTE szBuffer[WINSTD_STACK_BUFFER_BYTES];
-    ULONG ulSize = sizeof(szBuffer), ulResult;
-
-    // Try with stack buffer first.
-    ulResult = TdhGetEventMapInformation(pEvent, pMapName, (PEVENT_MAP_INFO)szBuffer, &ulSize);
-    if (ulResult == ERROR_SUCCESS) {
-        // Copy from stack.
-        info.reset(reinterpret_cast<PEVENT_MAP_INFO>(new char[ulSize]));
-        memcpy(info.get(), szBuffer, ulSize);
-        return ERROR_SUCCESS;
-    } else if (ulResult == ERROR_INSUFFICIENT_BUFFER) {
-        // Create buffer on heap and retry.
-        info.reset(reinterpret_cast<PEVENT_MAP_INFO>(new char[ulSize]));
-        return TdhGetEventMapInformation(pEvent, pMapName, info.get(), &ulSize);
-    }
-
-    return ulResult;
-}
-
-
-template<class _Ty, class _Ax>
-static _Success_(return == ERROR_SUCCESS) ULONG TdhGetProperty(_In_ PEVENT_RECORD pEvent, _In_ ULONG TdhContextCount, _In_reads_opt_(TdhContextCount) PTDH_CONTEXT pTdhContext, _In_ ULONG PropertyDataCount, _In_reads_(PropertyDataCount) PPROPERTY_DATA_DESCRIPTOR pPropertyData, _Inout_ std::vector<_Ty, _Ax> &aData)
-{
-    ULONG ulSize, ulResult;
-
-    // Query property size.
-    ulResult = TdhGetPropertySize(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, &ulSize);
-    if (ulResult == ERROR_SUCCESS) {
-        if (ulSize) {
-            // Query property value.
-            aData.resize((ulSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-            ulResult = TdhGetProperty(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, ulSize, reinterpret_cast<LPBYTE>(aData.data()));
-        } else {
-            // Property value size is zero.
-            aData.clear();
-        }
-    }
-
-    return ulResult;
-}
-
-#pragma warning(pop)

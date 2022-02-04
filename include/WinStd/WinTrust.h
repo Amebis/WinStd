@@ -6,26 +6,15 @@
 
 #pragma once
 
-///
-/// \defgroup WinTrustAPI WinTrust API
-/// Integrates WinStd classes with Microsoft WinTrust API
-///
-
 #include "Common.h"
-
 #include <WinTrust.h>
 
 namespace winstd
 {
-    class wintrust;
-}
-
-#pragma once
-
-
-namespace winstd
-{
-    /// \addtogroup WinTrustAPI
+    ///
+    /// \defgroup WinTrustAPI WinTrust API
+    /// Integrates WinStd classes with Microsoft WinTrust API
+    ///
     /// @{
 
     ///
