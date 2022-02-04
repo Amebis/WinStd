@@ -33,28 +33,28 @@ namespace winstd
 static BOOL CredEnumerate(_In_z_ LPCTSTR Filter, _Reserved_ DWORD Flags, _Out_ DWORD *Count, _Inout_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials) noexcept;
 
 /// @copydoc CredProtectW()
-template<class _Elem, class _Traits, class _Ax>
-static BOOL CredProtectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR pszCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
+template<class _Traits, class _Ax>
+static BOOL CredProtectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR pszCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<char, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
 
 ///
 /// Encrypts the specified credentials so that only the current security context can decrypt them.
 ///
 /// \sa [CredProtect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374803.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax>
-static BOOL CredProtectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR pszCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
+template<class _Traits, class _Ax>
+static BOOL CredProtectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR pszCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType);
 
 /// @copydoc CredUnprotectW()
-template<class _Elem, class _Traits, class _Ax>
-static BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials);
+template<class _Traits, class _Ax>
+static BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<char, _Traits, _Ax> &sCredentials);
 
 ///
 /// Decrypts credentials that were previously encrypted by using the CredProtect function.
 ///
 /// \sa [CredUnprotect function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa375186.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax>
-static BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials);
+template<class _Traits, class _Ax>
+static BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sCredentials);
 
 /// @}
 
@@ -149,10 +149,10 @@ static BOOL CredEnumerate(_In_z_ LPCTSTR Filter, _Reserved_ DWORD Flags, _Out_ D
 }
 
 
-template<class _Elem, class _Traits, class _Ax>
-static BOOL CredProtectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR pszCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType)
+template<class _Traits, class _Ax>
+static BOOL CredProtectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR pszCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<char, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType)
 {
-    _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
+    char buf[WINSTD_STACK_BUFFER_BYTES/sizeof(char)];
     DWORD dwSize = _countof(buf);
 
     // Try with the stack buffer first.
@@ -162,7 +162,7 @@ static BOOL CredProtectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR ps
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
-        std::unique_ptr<_Elem[]> buf(new _Elem[dwSize]);
+        std::unique_ptr<char[]> buf(new char[dwSize]);
         if (CredProtectA(fAsSelf, const_cast<LPSTR>(pszCredentials), cchCredentials, buf.get(), &dwSize, ProtectionType)) {
             sProtectedCredentials.assign(buf.get(), dwSize - 1);
             return TRUE;
@@ -173,10 +173,10 @@ static BOOL CredProtectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR ps
 }
 
 
-template<class _Elem, class _Traits, class _Ax>
-static BOOL CredProtectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR pszCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType)
+template<class _Traits, class _Ax>
+static BOOL CredProtectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR pszCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sProtectedCredentials, _Out_ CRED_PROTECTION_TYPE *ProtectionType)
 {
-    _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
+    wchar_t buf[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
     DWORD dwSize = _countof(buf);
 
     // Try with the stack buffer first.
@@ -186,7 +186,7 @@ static BOOL CredProtectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR p
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
-        std::unique_ptr<_Elem[]> buf(new _Elem[dwSize]);
+        std::unique_ptr<wchar_t[]> buf(new wchar_t[dwSize]);
         if (CredProtectW(fAsSelf, const_cast<LPWSTR>(pszCredentials), cchCredentials, buf.get(), &dwSize, ProtectionType)) {
             sProtectedCredentials.assign(buf.get(), dwSize - 1);
             return TRUE;
@@ -197,10 +197,10 @@ static BOOL CredProtectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR p
 }
 
 
-template<class _Elem, class _Traits, class _Ax>
-static BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials)
+template<class _Traits, class _Ax>
+static BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<char, _Traits, _Ax> &sCredentials)
 {
-    _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
+    char buf[WINSTD_STACK_BUFFER_BYTES/sizeof(char)];
     DWORD dwSize = _countof(buf);
 
     // Try with the stack buffer first.
@@ -210,7 +210,7 @@ static BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR 
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
-        std::unique_ptr<_Elem[]> buf(new _Elem[dwSize]);
+        std::unique_ptr<char[]> buf(new char[dwSize]);
         if (CredUnprotectA(fAsSelf, const_cast<LPSTR>(pszProtectedCredentials), cchCredentials, buf.get(), &dwSize)) {
             sCredentials.assign(buf.get(), dwSize);
             return TRUE;
@@ -221,10 +221,10 @@ static BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR 
 }
 
 
-template<class _Elem, class _Traits, class _Ax>
-static BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sCredentials)
+template<class _Traits, class _Ax>
+static BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR pszProtectedCredentials, _In_ DWORD cchCredentials, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sCredentials)
 {
-    _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
+    wchar_t buf[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
     DWORD dwSize = _countof(buf);
 
     // Try with the stack buffer first.
@@ -234,7 +234,7 @@ static BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
-        std::unique_ptr<_Elem[]> buf(new _Elem[dwSize]);
+        std::unique_ptr<wchar_t[]> buf(new wchar_t[dwSize]);
         if (CredUnprotectW(fAsSelf, const_cast<LPWSTR>(pszProtectedCredentials), cchCredentials, buf.get(), &dwSize)) {
             sCredentials.assign(buf.get(), dwSize);
             return TRUE;

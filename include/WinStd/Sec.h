@@ -29,16 +29,16 @@ namespace winstd
 /// @{
 
 /// @copydoc GetUserNameExW()
-template<class _Elem, class _Traits, class _Ax>
-static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName);
+template<class _Traits, class _Ax>
+static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<char, _Traits, _Ax> &sName);
 
 ///
 /// Retrieves the name of the user or other security principal associated with the calling thread and stores it in a std::wstring string.
 ///
 /// \sa [GetUserNameEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724435.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax>
-static BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName);
+template<class _Traits, class _Ax>
+static BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sName);
 
 #endif
 
@@ -370,12 +370,12 @@ namespace winstd
 
 #if defined(SECURITY_WIN32) || defined(SECURITY_KERNEL)
 
-template<class _Elem, class _Traits, class _Ax>
-static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName)
+template<class _Traits, class _Ax>
+static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<char, _Traits, _Ax> &sName)
 {
     assert(0); // TODO: Test this code.
 
-    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
+    char szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(char)];
     ULONG ulSize = _countof(szStackBuffer);
 
     // Try with stack buffer first.
@@ -386,7 +386,7 @@ static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std:
     } else {
         if (::GetLastError() == ERROR_MORE_DATA) {
             // Allocate buffer on heap and retry.
-            std::unique_ptr<_Elem[]> szBuffer(new _Elem[ulSize]);
+            std::unique_ptr<char[]> szBuffer(new char[ulSize]);
             if (::GetUserNameExA(NameFormat, szBuffer.get(), &ulSize)) {
                 sName.assign(szBuffer.get(), ulSize);
                 return TRUE;
@@ -398,12 +398,12 @@ static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std:
 }
 
 
-template<class _Elem, class _Traits, class _Ax>
-static BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sName)
+template<class _Traits, class _Ax>
+static BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sName)
 {
     assert(0); // TODO: Test this code.
 
-    _Elem szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
+    wchar_t szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
     ULONG ulSize = _countof(szStackBuffer);
 
     // Try with stack buffer first.
@@ -414,7 +414,7 @@ static BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std:
     } else {
         if (::GetLastError() == ERROR_MORE_DATA) {
             // Allocate buffer on heap and retry.
-            std::unique_ptr<_Elem[]> szBuffer(new _Elem[ulSize]);
+            std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[ulSize]);
             if (::GetUserNameExW(NameFormat, szBuffer.get(), &ulSize)) {
                 sName.assign(szBuffer.get(), ulSize);
                 return TRUE;

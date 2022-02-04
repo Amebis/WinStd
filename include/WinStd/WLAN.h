@@ -37,8 +37,8 @@ namespace winstd {
 /// Since Wlanapi.dll is not always present, the `pfnWlanReasonCodeToString` pointer to `WlanReasonCodeToString()`
 /// function must be loaded dynamically.
 ///
-template<class _Elem, class _Traits, class _Ax>
-static DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved);
+template<class _Traits, class _Ax>
+static DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sValue, __reserved PVOID pReserved);
 
 /// @}
 
@@ -165,8 +165,8 @@ namespace winstd
 }
 
 
-template<class _Elem, class _Traits, class _Ax>
-static DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<_Elem, _Traits, _Ax> &sValue, __reserved PVOID pReserved)
+template<class _Traits, class _Ax>
+static DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sValue, __reserved PVOID pReserved)
 {
     DWORD dwSize = 0;
 
@@ -176,7 +176,7 @@ static DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_
     for (;;) {
         // Increment size and allocate buffer.
         dwSize += 1024;
-        std::unique_ptr<_Elem[]> szBuffer(new _Elem[dwSize]);
+        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwSize]);
 
         // Try!
         DWORD dwResult = ::pfnWlanReasonCodeToString(dwReasonCode, dwSize, szBuffer.get(), pReserved);

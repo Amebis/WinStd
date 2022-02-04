@@ -31,16 +31,16 @@ namespace winstd
 /// @{
 
 /// @copydoc CertGetNameStringW()
-template<class _Elem, class _Traits, class _Ax>
-static DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
+template<class _Traits, class _Ax>
+static DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<char, _Traits, _Ax> &sNameString);
 
 ///
 /// Obtains the subject or issuer name from a certificate [CERT_CONTEXT](https://msdn.microsoft.com/en-us/library/windows/desktop/aa377189.aspx) structure and stores it in a std::wstring string.
 ///
 /// \sa [CertGetNameString function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376086.aspx)
 ///
-template<class _Elem, class _Traits, class _Ax>
-static DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString);
+template<class _Traits, class _Ax>
+static DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sNameString);
 
 ///
 /// Retrieves the information contained in an extended property of a certificate context.
@@ -817,28 +817,28 @@ namespace winstd
 }
 
 
-template<class _Elem, class _Traits, class _Ax>
-static DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
+template<class _Traits, class _Ax>
+static DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<char, _Traits, _Ax> &sNameString)
 {
     // Query the final string length first.
     DWORD dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
 
     // Allocate buffer on heap to format the string data into and read it.
-    std::unique_ptr<_Elem[]> szBuffer(new _Elem[dwSize]);
+    std::unique_ptr<char[]> szBuffer(new char[dwSize]);
     dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, szBuffer.get(), dwSize);
     sNameString.assign(szBuffer.get(), dwSize - 1);
     return dwSize;
 }
 
 
-template<class _Elem, class _Traits, class _Ax>
-static DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<_Elem, _Traits, _Ax> &sNameString)
+template<class _Traits, class _Ax>
+static DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwType, _In_ DWORD dwFlags, _In_opt_ void *pvTypePara, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sNameString)
 {
     // Query the final string length first.
     DWORD dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
 
     // Allocate buffer on heap to format the string data into and read it.
-    std::unique_ptr<_Elem[]> szBuffer(new _Elem[dwSize]);
+    std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwSize]);
     dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, szBuffer.get(), dwSize);
     sNameString.assign(szBuffer.get(), dwSize - 1);
     return dwSize;
