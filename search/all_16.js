@@ -42,10 +42,9 @@ var searchData=
   ['_7esetup_5fdriver_5finfo_5flist_5fbuilder_39',['~setup_driver_info_list_builder',['../classwinstd_1_1setup__driver__info__list__builder.html#a836a7bb6c3c78c7c78965a32cfc2750e',1,'winstd::setup_driver_info_list_builder']]],
   ['_7euser_5fimpersonator_40',['~user_impersonator',['../classwinstd_1_1user__impersonator.html#a986ca1cabf89b994f1634feb911c26a6',1,'winstd::user_impersonator']]],
   ['_7evariant_41',['~variant',['../classwinstd_1_1variant.html#a69b429a61582fc777b07541daad7887b',1,'winstd::variant']]],
-  ['_7evector_5fqueue_42',['~vector_queue',['../classwinstd_1_1vector__queue.html#a22fc796402dba2b99821eef11bacdbd3',1,'winstd::vector_queue']]],
-  ['_7evmemory_43',['~vmemory',['../classwinstd_1_1vmemory.html#aa0d2edd7c1986736662b54a553695d51',1,'winstd::vmemory']]],
-  ['_7ewin_5fhandle_44',['~win_handle',['../classwinstd_1_1win__handle.html#a6b8070a3be4dede99a1c764b7f341a36',1,'winstd::win_handle']]],
-  ['_7ewindow_5fdc_45',['~window_dc',['../classwinstd_1_1window__dc.html#a3fd01c5264443520462cb7cab886a79b',1,'winstd::window_dc']]],
-  ['_7ewintrust_46',['~wintrust',['../classwinstd_1_1wintrust.html#ac529a244b4f2f4eb85bcdf594ff723c3',1,'winstd::wintrust']]],
-  ['_7ewlan_5fhandle_47',['~wlan_handle',['../classwinstd_1_1wlan__handle.html#a57e97a572a121f6e28673e6d84493de9',1,'winstd::wlan_handle']]]
+  ['_7evmemory_42',['~vmemory',['../classwinstd_1_1vmemory.html#aa0d2edd7c1986736662b54a553695d51',1,'winstd::vmemory']]],
+  ['_7ewin_5fhandle_43',['~win_handle',['../classwinstd_1_1win__handle.html#a6b8070a3be4dede99a1c764b7f341a36',1,'winstd::win_handle']]],
+  ['_7ewindow_5fdc_44',['~window_dc',['../classwinstd_1_1window__dc.html#a3fd01c5264443520462cb7cab886a79b',1,'winstd::window_dc']]],
+  ['_7ewintrust_45',['~wintrust',['../classwinstd_1_1wintrust.html#ac529a244b4f2f4eb85bcdf594ff723c3',1,'winstd::wintrust']]],
+  ['_7ewlan_5fhandle_46',['~wlan_handle',['../classwinstd_1_1wlan__handle.html#a57e97a572a121f6e28673e6d84493de9',1,'winstd::wlan_handle']]]
 ];

@@ -27,8 +27,7 @@ var searchData=
   ['handle_3c_20tracehandle_2c_200_20_3e_24',['handle&lt; TRACEHANDLE, 0 &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
   ['handle_3c_20tracehandle_2c_20invalid_5fprocesstrace_5fhandle_20_3e_25',['handle&lt; TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
   ['handle_5ftype_26',['handle_type',['../classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81',1,'winstd::handle']]],
-  ['head_27',['head',['../classwinstd_1_1vector__queue.html#a964a0400a8bad322267c8128caa78f5d',1,'winstd::vector_queue']]],
-  ['heap_28',['heap',['../classwinstd_1_1heap.html',1,'winstd']]],
-  ['heap_5fallocator_29',['heap_allocator',['../classwinstd_1_1heap__allocator.html#ac5f30e886e7bfff4c18470b990eba118',1,'winstd::heap_allocator::heap_allocator(_In_ HANDLE heap)'],['../classwinstd_1_1heap__allocator.html#aaed5a79d60e4d9ae77d251c900ccd78b',1,'winstd::heap_allocator::heap_allocator(_In_ const heap_allocator&lt; _Other &gt; &amp;other)'],['../classwinstd_1_1heap__allocator.html',1,'winstd::heap_allocator&lt; _Ty &gt;']]],
-  ['help_5flink_5fid_30',['help_link_id',['../classwinstd_1_1eap__runtime__error.html#af7179a9cc9ff633a0e7d5983a4680171',1,'winstd::eap_runtime_error']]]
+  ['heap_27',['heap',['../classwinstd_1_1heap.html',1,'winstd']]],
+  ['heap_5fallocator_28',['heap_allocator',['../classwinstd_1_1heap__allocator.html#ac5f30e886e7bfff4c18470b990eba118',1,'winstd::heap_allocator::heap_allocator(_In_ HANDLE heap)'],['../classwinstd_1_1heap__allocator.html#aaed5a79d60e4d9ae77d251c900ccd78b',1,'winstd::heap_allocator::heap_allocator(_In_ const heap_allocator&lt; _Other &gt; &amp;other)'],['../classwinstd_1_1heap__allocator.html',1,'winstd::heap_allocator&lt; _Ty &gt;']]],
+  ['help_5flink_5fid_29',['help_link_id',['../classwinstd_1_1eap__runtime__error.html#af7179a9cc9ff633a0e7d5983a4680171',1,'winstd::eap_runtime_error']]]
 ];
