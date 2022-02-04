@@ -76,4 +76,6 @@ void main()
 }
 ```
 
+An auto-generated documentation is [here](https://amebis.github.io/WinStd/).
+
 More examples and use-cases can be found in [GÉANTLink](https://github.com/Amebis/GEANTLink) and [ZRCola](https://github.com/Amebis/ZRCola) projects source code. They make heavy use of WinStd.
