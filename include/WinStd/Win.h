@@ -2255,5 +2255,55 @@ namespace winstd
         }
     };
 
+    ///
+    /// Event log handle wrapper
+    ///
+    class event_log : public handle<HANDLE, NULL>
+    {
+        WINSTD_HANDLE_IMPL(event_log, NULL)
+
+    public:
+        ///
+        /// Closes an event log handle.
+        ///
+        /// \sa [DeregisterEventSource function](https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-deregistereventsource)
+        ///
+        virtual ~event_log()
+        {
+            if (m_h != invalid)
+                free_internal();
+        }
+
+        ///
+        /// Retrieves a registered handle to the specified event log.
+        ///
+        /// \sa [RegisterEventSource function](https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-registereventsourcew)
+        ///
+        /// \return
+        /// - \c true when succeeds;
+        /// - \c false when fails. Use `GetLastError()` for failure reason.
+        ///
+        bool open(_In_z_ LPCTSTR lpUNCServerName, _In_z_ LPCTSTR lpSourceName) noexcept
+        {
+            handle_type h = RegisterEventSource(lpUNCServerName, lpSourceName);
+            if (h != invalid) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+    protected:
+        ///
+        /// Closes an event log handle.
+        ///
+        /// \sa [DeregisterEventSource function](https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-deregistereventsource)
+        ///
+        void free_internal() noexcept override
+        {
+            DeregisterEventSource(m_h);
+        }
+    };
+
     /// @}
 }
