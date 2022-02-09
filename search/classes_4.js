@@ -13,9 +13,10 @@ var searchData=
   ['event_5fdata_10',['event_data',['../classwinstd_1_1event__data.html',1,'winstd']]],
   ['event_5ffn_5fauto_11',['event_fn_auto',['../classwinstd_1_1event__fn__auto.html',1,'winstd']]],
   ['event_5ffn_5fauto_5fret_12',['event_fn_auto_ret',['../classwinstd_1_1event__fn__auto__ret.html',1,'winstd']]],
-  ['event_5fprovider_13',['event_provider',['../classwinstd_1_1event__provider.html',1,'winstd']]],
-  ['event_5frec_14',['event_rec',['../classwinstd_1_1event__rec.html',1,'winstd']]],
-  ['event_5fsession_15',['event_session',['../classwinstd_1_1event__session.html',1,'winstd']]],
-  ['event_5ftrace_16',['event_trace',['../classwinstd_1_1event__trace.html',1,'winstd']]],
-  ['event_5ftrace_5fenabler_17',['event_trace_enabler',['../classwinstd_1_1event__trace__enabler.html',1,'winstd']]]
+  ['event_5flog_13',['event_log',['../classwinstd_1_1event__log.html',1,'winstd']]],
+  ['event_5fprovider_14',['event_provider',['../classwinstd_1_1event__provider.html',1,'winstd']]],
+  ['event_5frec_15',['event_rec',['../classwinstd_1_1event__rec.html',1,'winstd']]],
+  ['event_5fsession_16',['event_session',['../classwinstd_1_1event__session.html',1,'winstd']]],
+  ['event_5ftrace_17',['event_trace',['../classwinstd_1_1event__trace.html',1,'winstd']]],
+  ['event_5ftrace_5fenabler_18',['event_trace_enabler',['../classwinstd_1_1event__trace__enabler.html',1,'winstd']]]
 ];
