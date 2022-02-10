@@ -859,7 +859,7 @@ namespace winstd
     const T handle<T, INVAL>::invalid = INVAL;
 
     ///
-    /// Base abstract template class to support object handle keeping for objects that support handle duplication
+    /// Base abstract template class to support object handle keeping for objects that support trivial handle duplication
     ///
     template <class T, T INVAL>
     class dplhandle : public handle<T, INVAL>
