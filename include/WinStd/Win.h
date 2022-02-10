@@ -1474,6 +1474,91 @@ namespace winstd
     };
 
     ///
+    /// File mapping
+    ///
+    class file_mapping : public win_handle<NULL>
+    {
+    public:
+        ///
+        /// Creates or opens a named or unnamed file mapping object for a specified file.
+        ///
+        /// \sa [CreateFileMapping function](https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-createfilemappingw)
+        ///
+        /// \return
+        /// - \c true when succeeds;
+        /// - \c false when fails. Use `GetLastError()` for failure reason.
+        ///
+        bool create(_In_ HANDLE hFile, _In_ DWORD flProtect, _In_ DWORD dwMaximumSizeHigh, _In_ DWORD dwMaximumSizeLow, _In_opt_ LPSECURITY_ATTRIBUTES lpFileMappingAttributes = NULL, _In_opt_ LPCTSTR lpName = NULL) noexcept
+        {
+            handle_type h = CreateFileMappingW(hFile, lpFileMappingAttributes, flProtect, dwMaximumSizeHigh, dwMaximumSizeLow, lpName);
+            if (h != invalid) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+    };
+
+    ///
+    /// Deleter for unique_ptr using UnmapViewOfFile
+    ///
+    template <class _Ty> struct UnmapViewOfFile_delete
+    {
+        typedef UnmapViewOfFile_delete<_Ty> _Myt; ///< This type
+
+        ///
+        /// Default construct
+        ///
+        UnmapViewOfFile_delete() {}
+
+        ///
+        /// Construct from another UnmapViewOfFile_delete
+        ///
+        template <class _Ty2> UnmapViewOfFile_delete(const UnmapViewOfFile_delete<_Ty2>&) {}
+
+        ///
+        /// Delete a pointer
+        ///
+        void operator()(_Ty* _Ptr) const
+        {
+            if (!UnmapViewOfFile(_Ptr))
+                throw win_runtime_error("UnmapViewOfFile failed");
+        }
+    };
+
+    ///
+    /// Deleter for unique_ptr to array of unknown size using UnmapViewOfFile
+    ///
+    template <class _Ty> struct UnmapViewOfFile_delete<_Ty[]>
+    {
+        typedef UnmapViewOfFile_delete<_Ty> _Myt; ///< This type
+
+        ///
+        /// Default construct
+        ///
+        UnmapViewOfFile_delete() {}
+
+        ///
+        /// Delete a pointer
+        ///
+        void operator()(_Ty* _Ptr) const
+        {
+            if (!UnmapViewOfFile(_Ptr))
+                throw win_runtime_error("UnmapViewOfFile failed");
+        }
+
+        ///
+        /// Delete a pointer of another type
+        ///
+        template<class _Other>
+        void operator()(_Other*) const
+        {
+            if (!UnmapViewOfFile(_Ptr))
+                throw win_runtime_error("UnmapViewOfFile failed");
+        }
+    };
+
+    ///
     /// Event handle wrapper
     ///
     class event : public win_handle<NULL>
