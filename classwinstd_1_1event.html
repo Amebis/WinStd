@@ -69,6 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classwinstd_1_1event-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">winstd::event Class Reference<div class="ingroups"><a class="el" href="group___win_std_win_a_p_i.html">Windows API</a></div></div></div>
 </div><!--header-->
@@ -91,12 +92,9 @@ Inheritance diagram for winstd::event:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a97d7be96a11e0b5232db73e7cb5d1395"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event.html#a97d7be96a11e0b5232db73e7cb5d1395">create</a> (BOOL bManualReset, BOOL bInitialState, LPSECURITY_ATTRIBUTES lpEventAttributes=NULL, LPCTSTR lpName=NULL) noexcept</td></tr>
-<tr class="memdesc:a97d7be96a11e0b5232db73e7cb5d1395"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates or opens a named or unnamed event object.  <a href="classwinstd_1_1event.html#a97d7be96a11e0b5232db73e7cb5d1395">More...</a><br /></td></tr>
-<tr class="separator:a97d7be96a11e0b5232db73e7cb5d1395"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a208402e837b0663e6f2a4babbc555145"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event.html#a208402e837b0663e6f2a4babbc555145">open</a> (DWORD dwDesiredAccess, BOOL bInheritHandle, LPCTSTR lpName) noexcept</td></tr>
-<tr class="memdesc:a208402e837b0663e6f2a4babbc555145"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens an existing named event object.  <a href="classwinstd_1_1event.html#a208402e837b0663e6f2a4babbc555145">More...</a><br /></td></tr>
-<tr class="separator:a208402e837b0663e6f2a4babbc555145"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f42085bfce4c8d55a9a84bcf2046dfd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event.html#a5f42085bfce4c8d55a9a84bcf2046dfd">__declspec</a> (deprecated(&quot;Use CreateEvent&quot;)) bool create(BOOL bManualReset</td></tr>
+<tr class="memdesc:a5f42085bfce4c8d55a9a84bcf2046dfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates or opens a named or unnamed event object.  <a href="classwinstd_1_1event.html#a5f42085bfce4c8d55a9a84bcf2046dfd">More...</a><br /></td></tr>
+<tr class="separator:a5f42085bfce4c8d55a9a84bcf2046dfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classwinstd_1_1win__handle"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classwinstd_1_1win__handle')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classwinstd_1_1win__handle.html">winstd::win_handle&lt; NULL &gt;</a></td></tr>
 <tr class="memitem:a6b8070a3be4dede99a1c764b7f341a36 inherit pub_methods_classwinstd_1_1win__handle"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1win__handle.html#a6b8070a3be4dede99a1c764b7f341a36">~win_handle</a> ()</td></tr>
 <tr class="memdesc:a6b8070a3be4dede99a1c764b7f341a36 inherit pub_methods_classwinstd_1_1win__handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes an open object handle.  <a href="classwinstd_1_1win__handle.html#a6b8070a3be4dede99a1c764b7f341a36">More...</a><br /></td></tr>
@@ -162,6 +160,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>free</b> ()</td></tr>
 <tr class="memdesc:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the object. <br /></td></tr>
 <tr class="separator:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ab3830f0e603429cf07870b6901503f2e"><td class="memItemLeft" align="right" valign="top"><a id="ab3830f0e603429cf07870b6901503f2e" name="ab3830f0e603429cf07870b6901503f2e"></a>
+BOOL&#160;</td><td class="memItemRight" valign="bottom"><b>bInitialState</b></td></tr>
+<tr class="separator:ab3830f0e603429cf07870b6901503f2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53fd23a516ab3f291a37676936b9e199"><td class="memItemLeft" align="right" valign="top"><a id="a53fd23a516ab3f291a37676936b9e199" name="a53fd23a516ab3f291a37676936b9e199"></a>
+BOOL LPSECURITY_ATTRIBUTES&#160;</td><td class="memItemRight" valign="bottom"><b>lpEventAttributes</b> = NULL</td></tr>
+<tr class="separator:a53fd23a516ab3f291a37676936b9e199"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_classwinstd_1_1handle"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classwinstd_1_1handle')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classwinstd_1_1handle.html">winstd::handle&lt; HANDLE, INVALID &gt;</a></td></tr>
@@ -190,104 +197,24 @@ static const HANDLE&#160;</td><td class="memItemRight" valign="bottom"><b>invali
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Event handle wrapper. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a97d7be96a11e0b5232db73e7cb5d1395" name="a97d7be96a11e0b5232db73e7cb5d1395"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a97d7be96a11e0b5232db73e7cb5d1395">&#9670;&nbsp;</a></span>create()</h2>
+<a id="a5f42085bfce4c8d55a9a84bcf2046dfd" name="a5f42085bfce4c8d55a9a84bcf2046dfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f42085bfce4c8d55a9a84bcf2046dfd">&#9670;&nbsp;</a></span>__declspec()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool winstd::event::create </td>
+          <td class="memname">winstd::event::__declspec </td>
           <td>(</td>
-          <td class="paramtype">BOOL&#160;</td>
-          <td class="paramname"><em>bManualReset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">deprecated(&quot;Use CreateEvent&quot;)&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">BOOL&#160;</td>
-          <td class="paramname"><em>bInitialState</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">LPSECURITY_ATTRIBUTES&#160;</td>
-          <td class="paramname"><em>lpEventAttributes</em> = <code>NULL</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">LPCTSTR&#160;</td>
-          <td class="paramname"><em>lpName</em> = <code>NULL</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Creates or opens a named or unnamed event object. </p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-createeventw">CreateEventW function</a></dd></dl>
-<dl class="section return"><dt>Returns</dt><dd><ul>
-<li><code>true</code> when succeeds;</li>
-<li><code>false</code> when fails. Use <code>GetLastError()</code> for failure reason. </li>
-</ul>
-</dd></dl>
-
-</div>
-</div>
-<a id="a208402e837b0663e6f2a4babbc555145" name="a208402e837b0663e6f2a4babbc555145"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a208402e837b0663e6f2a4babbc555145">&#9670;&nbsp;</a></span>open()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool winstd::event::open </td>
-          <td>(</td>
-          <td class="paramtype">DWORD&#160;</td>
-          <td class="paramname"><em>dwDesiredAccess</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">BOOL&#160;</td>
-          <td class="paramname"><em>bInheritHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">LPCTSTR&#160;</td>
-          <td class="paramname"><em>lpName</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Opens an existing named event object. </p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-openeventw">OpenEventW function</a></dd></dl>
 <dl class="section return"><dt>Returns</dt><dd><ul>
 <li><code>true</code> when succeeds;</li>
 <li><code>false</code> when fails. Use <code>GetLastError()</code> for failure reason. </li>
@@ -302,7 +229,7 @@ static const HANDLE&#160;</td><td class="memItemRight" valign="bottom"><b>invali
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 10 2022 11:16:57 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Wed Mar 2 2022 14:42:08 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

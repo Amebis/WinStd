@@ -69,6 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classwinstd_1_1setup__device__info__list-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">winstd::setup_device_info_list Class Reference<div class="ingroups"><a class="el" href="group___setup_a_p_i.html">Setup API</a></div></div></div>
@@ -94,12 +95,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a25368d32a4f4bfe23cb9749464daa487"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1setup__device__info__list.html#a25368d32a4f4bfe23cb9749464daa487">~setup_device_info_list</a> ()</td></tr>
 <tr class="memdesc:a25368d32a4f4bfe23cb9749464daa487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees the device information set.  <a href="classwinstd_1_1setup__device__info__list.html#a25368d32a4f4bfe23cb9749464daa487">More...</a><br /></td></tr>
 <tr class="separator:a25368d32a4f4bfe23cb9749464daa487"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a022aef9dcf004062bde1594035711792"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1setup__device__info__list.html#a022aef9dcf004062bde1594035711792">create</a> (const GUID *ClassGuid, HWND hwndParent) noexcept</td></tr>
-<tr class="memdesc:a022aef9dcf004062bde1594035711792"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty device information set and optionally associates the set with a device setup class and a top-level window.  <a href="classwinstd_1_1setup__device__info__list.html#a022aef9dcf004062bde1594035711792">More...</a><br /></td></tr>
-<tr class="separator:a022aef9dcf004062bde1594035711792"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4771923fd032c1caf574f7e14056d0e3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1setup__device__info__list.html#a4771923fd032c1caf574f7e14056d0e3">create</a> (const GUID *ClassGuid, PCTSTR Enumerator, HWND hwndParent, DWORD Flags, HDEVINFO DeviceInfoSet, PCTSTR MachineName, PVOID Reserved) noexcept</td></tr>
-<tr class="memdesc:a4771923fd032c1caf574f7e14056d0e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a device information set that contains requested device information elements for a local or a remote computer.  <a href="classwinstd_1_1setup__device__info__list.html#a4771923fd032c1caf574f7e14056d0e3">More...</a><br /></td></tr>
-<tr class="separator:a4771923fd032c1caf574f7e14056d0e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32f9ef2a22f02740517f2148f0cbe6eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1setup__device__info__list.html#a32f9ef2a22f02740517f2148f0cbe6eb">__declspec</a> (deprecated(&quot;Use SetupDiCreateDeviceInfoList&quot;)) bool create(const GUID *ClassGuid</td></tr>
+<tr class="memdesc:a32f9ef2a22f02740517f2148f0cbe6eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty device information set and optionally associates the set with a device setup class and a top-level window.  <a href="classwinstd_1_1setup__device__info__list.html#a32f9ef2a22f02740517f2148f0cbe6eb">More...</a><br /></td></tr>
+<tr class="separator:a32f9ef2a22f02740517f2148f0cbe6eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30141a52d2b3fab06478fc8dde28939e"><td class="memItemLeft" align="right" valign="top"><a id="a30141a52d2b3fab06478fc8dde28939e" name="a30141a52d2b3fab06478fc8dde28939e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (h !=<a class="el" href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">invalid</a>)</td></tr>
+<tr class="separator:a30141a52d2b3fab06478fc8dde28939e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6716eae1d58e3c5d49ae66cfe4b76063"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1setup__device__info__list.html#a6716eae1d58e3c5d49ae66cfe4b76063">__declspec</a> (deprecated(&quot;Use SetupDiGetClassDevsEx&quot;)) bool create(const GUID *ClassGuid</td></tr>
+<tr class="memdesc:a6716eae1d58e3c5d49ae66cfe4b76063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a device information set that contains requested device information elements for a local or a remote computer.  <a href="classwinstd_1_1setup__device__info__list.html#a6716eae1d58e3c5d49ae66cfe4b76063">More...</a><br /></td></tr>
+<tr class="separator:a6716eae1d58e3c5d49ae66cfe4b76063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30141a52d2b3fab06478fc8dde28939e"><td class="memItemLeft" align="right" valign="top"><a id="a30141a52d2b3fab06478fc8dde28939e" name="a30141a52d2b3fab06478fc8dde28939e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (h !=<a class="el" href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">invalid</a>)</td></tr>
+<tr class="separator:a30141a52d2b3fab06478fc8dde28939e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classwinstd_1_1handle"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classwinstd_1_1handle')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classwinstd_1_1handle.html">winstd::handle&lt; HDEVINFO, INVALID_HANDLE_VALUE &gt;</a></td></tr>
 <tr class="memitem:a1b9c4f9529c9efa7d16dec8bab3b00e4 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top"><a id="a1b9c4f9529c9efa7d16dec8bab3b00e4" name="a1b9c4f9529c9efa7d16dec8bab3b00e4"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>handle</b> () noexcept</td></tr>
@@ -161,6 +168,31 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>free</b> ()</td></tr>
 <tr class="memdesc:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the object. <br /></td></tr>
 <tr class="separator:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a2723ac36f6379676782e2c4c76e1796b"><td class="memItemLeft" align="right" valign="top">HWND hwndParent&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1setup__device__info__list.html#a2723ac36f6379676782e2c4c76e1796b">noexcept</a></td></tr>
+<tr class="separator:a2723ac36f6379676782e2c4c76e1796b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a147f95fb4078aeb5550fbf83785df30a"><td class="memItemLeft" align="right" valign="top"><a id="a147f95fb4078aeb5550fbf83785df30a" name="a147f95fb4078aeb5550fbf83785df30a"></a>
+else return&#160;</td><td class="memItemRight" valign="bottom"><b>false</b></td></tr>
+<tr class="separator:a147f95fb4078aeb5550fbf83785df30a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00ae52a6503d790f54e7d89ff366e433"><td class="memItemLeft" align="right" valign="top"><a id="a00ae52a6503d790f54e7d89ff366e433" name="a00ae52a6503d790f54e7d89ff366e433"></a>
+PCTSTR&#160;</td><td class="memItemRight" valign="bottom"><b>Enumerator</b></td></tr>
+<tr class="separator:a00ae52a6503d790f54e7d89ff366e433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa004ab28da441fb8fafbee854e7c6596"><td class="memItemLeft" align="right" valign="top"><a id="aa004ab28da441fb8fafbee854e7c6596" name="aa004ab28da441fb8fafbee854e7c6596"></a>
+PCTSTR HWND&#160;</td><td class="memItemRight" valign="bottom"><b>hwndParent</b></td></tr>
+<tr class="separator:aa004ab28da441fb8fafbee854e7c6596"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa5c8690d822ddc2b44c52f81569ad2a"><td class="memItemLeft" align="right" valign="top"><a id="afa5c8690d822ddc2b44c52f81569ad2a" name="afa5c8690d822ddc2b44c52f81569ad2a"></a>
+PCTSTR HWND DWORD&#160;</td><td class="memItemRight" valign="bottom"><b>Flags</b></td></tr>
+<tr class="separator:afa5c8690d822ddc2b44c52f81569ad2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e64391c94c9e169a208e1a30e9623ad"><td class="memItemLeft" align="right" valign="top"><a id="a1e64391c94c9e169a208e1a30e9623ad" name="a1e64391c94c9e169a208e1a30e9623ad"></a>
+PCTSTR HWND DWORD HDEVINFO&#160;</td><td class="memItemRight" valign="bottom"><b>DeviceInfoSet</b></td></tr>
+<tr class="separator:a1e64391c94c9e169a208e1a30e9623ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada828a322b28cd22cc33ae4dfa4cc3ca"><td class="memItemLeft" align="right" valign="top"><a id="ada828a322b28cd22cc33ae4dfa4cc3ca" name="ada828a322b28cd22cc33ae4dfa4cc3ca"></a>
+PCTSTR HWND DWORD HDEVINFO PCTSTR&#160;</td><td class="memItemRight" valign="bottom"><b>MachineName</b></td></tr>
+<tr class="separator:ada828a322b28cd22cc33ae4dfa4cc3ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2991f3e27506c1c31b990b384104d318"><td class="memItemLeft" align="right" valign="top">PCTSTR HWND DWORD HDEVINFO PCTSTR PVOID Reserved&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1setup__device__info__list.html#a2991f3e27506c1c31b990b384104d318">noexcept</a></td></tr>
+<tr class="separator:a2991f3e27506c1c31b990b384104d318"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a41f013a37e16074f1972fd279f8c1437"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1setup__device__info__list.html#a41f013a37e16074f1972fd279f8c1437">free_internal</a> () noexcept override</td></tr>
@@ -220,38 +252,20 @@ static const HDEVINFO&#160;</td><td class="memItemRight" valign="bottom"><b>inva
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a022aef9dcf004062bde1594035711792" name="a022aef9dcf004062bde1594035711792"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a022aef9dcf004062bde1594035711792">&#9670;&nbsp;</a></span>create() <span class="overload">[1/2]</span></h2>
+<a id="a32f9ef2a22f02740517f2148f0cbe6eb" name="a32f9ef2a22f02740517f2148f0cbe6eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32f9ef2a22f02740517f2148f0cbe6eb">&#9670;&nbsp;</a></span>__declspec() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool winstd::setup_device_info_list::create </td>
+          <td class="memname">winstd::setup_device_info_list::__declspec </td>
           <td>(</td>
-          <td class="paramtype">const GUID *&#160;</td>
-          <td class="paramname"><em>ClassGuid</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">HWND&#160;</td>
-          <td class="paramname"><em>hwndParent</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="paramtype">deprecated(&quot;Use SetupDiCreateDeviceInfoList&quot;)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Creates an empty device information set and optionally associates the set with a device setup class and a top-level window. </p>
@@ -264,68 +278,20 @@ static const HDEVINFO&#160;</td><td class="memItemRight" valign="bottom"><b>inva
 
 </div>
 </div>
-<a id="a4771923fd032c1caf574f7e14056d0e3" name="a4771923fd032c1caf574f7e14056d0e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4771923fd032c1caf574f7e14056d0e3">&#9670;&nbsp;</a></span>create() <span class="overload">[2/2]</span></h2>
+<a id="a6716eae1d58e3c5d49ae66cfe4b76063" name="a6716eae1d58e3c5d49ae66cfe4b76063"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6716eae1d58e3c5d49ae66cfe4b76063">&#9670;&nbsp;</a></span>__declspec() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool winstd::setup_device_info_list::create </td>
+          <td class="memname">winstd::setup_device_info_list::__declspec </td>
           <td>(</td>
-          <td class="paramtype">const GUID *&#160;</td>
-          <td class="paramname"><em>ClassGuid</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">PCTSTR&#160;</td>
-          <td class="paramname"><em>Enumerator</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">HWND&#160;</td>
-          <td class="paramname"><em>hwndParent</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DWORD&#160;</td>
-          <td class="paramname"><em>Flags</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">HDEVINFO&#160;</td>
-          <td class="paramname"><em>DeviceInfoSet</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">PCTSTR&#160;</td>
-          <td class="paramname"><em>MachineName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">PVOID&#160;</td>
-          <td class="paramname"><em>Reserved</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="paramtype">deprecated(&quot;Use SetupDiGetClassDevsEx&quot;)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Creates a device information set that contains requested device information elements for a local or a remote computer. </p>
@@ -368,13 +334,47 @@ static const HDEVINFO&#160;</td><td class="memItemRight" valign="bottom"><b>inva
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a2723ac36f6379676782e2c4c76e1796b" name="a2723ac36f6379676782e2c4c76e1796b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2723ac36f6379676782e2c4c76e1796b">&#9670;&nbsp;</a></span>noexcept <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">HWND hwndParent winstd::setup_device_info_list::noexcept</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">            <a class="code hl_typedef" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h = SetupDiCreateDeviceInfoList(ClassGuid, hwndParent)</div>
+<div class="ttc" id="aclasswinstd_1_1handle_html_a3dda19199ecfbc378c932e7d84d0ea81"><div class="ttname"><a href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">winstd::handle&lt; HDEVINFO, INVALID_HANDLE_VALUE &gt;::handle_type</a></div><div class="ttdeci">HDEVINFO handle_type</div><div class="ttdoc">Datatype of the object handle this template class handles.</div><div class="ttdef"><b>Definition:</b> Common.h:608</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2991f3e27506c1c31b990b384104d318" name="a2991f3e27506c1c31b990b384104d318"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2991f3e27506c1c31b990b384104d318">&#9670;&nbsp;</a></span>noexcept <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PCTSTR HWND DWORD HDEVINFO PCTSTR PVOID Reserved winstd::setup_device_info_list::noexcept</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">            <a class="code hl_typedef" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h = SetupDiGetClassDevsEx(ClassGuid, Enumerator, hwndParent, Flags, DeviceInfoSet, MachineName, Reserved)</div>
+</div><!-- fragment -->
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/WinStd/<a class="el" href="_setup_a_p_i_8h_source.html">SetupAPI.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 10 2022 11:16:57 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Wed Mar 2 2022 14:42:08 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

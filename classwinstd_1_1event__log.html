@@ -69,6 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classwinstd_1_1event__log-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">winstd::event_log Class Reference<div class="ingroups"><a class="el" href="group___win_std_win_a_p_i.html">Windows API</a></div></div></div>
@@ -94,9 +95,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adcaee9990fb509eb281159b170218700"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event__log.html#adcaee9990fb509eb281159b170218700">~event_log</a> ()</td></tr>
 <tr class="memdesc:adcaee9990fb509eb281159b170218700"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes an event log handle.  <a href="classwinstd_1_1event__log.html#adcaee9990fb509eb281159b170218700">More...</a><br /></td></tr>
 <tr class="separator:adcaee9990fb509eb281159b170218700"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd27669d627368ec4a71719382c871ca"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event__log.html#afd27669d627368ec4a71719382c871ca">open</a> (LPCTSTR lpUNCServerName, LPCTSTR lpSourceName) noexcept</td></tr>
-<tr class="memdesc:afd27669d627368ec4a71719382c871ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a registered handle to the specified event log.  <a href="classwinstd_1_1event__log.html#afd27669d627368ec4a71719382c871ca">More...</a><br /></td></tr>
-<tr class="separator:afd27669d627368ec4a71719382c871ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1ff6bdf207ba72d1edb26c3a8ed38e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event__log.html#af1ff6bdf207ba72d1edb26c3a8ed38e6">__declspec</a> (deprecated(&quot;Use RegisterEventSource&quot;)) bool open(LPCTSTR lpUNCServerName</td></tr>
+<tr class="memdesc:af1ff6bdf207ba72d1edb26c3a8ed38e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a registered handle to the specified event log.  <a href="classwinstd_1_1event__log.html#af1ff6bdf207ba72d1edb26c3a8ed38e6">More...</a><br /></td></tr>
+<tr class="separator:af1ff6bdf207ba72d1edb26c3a8ed38e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcbf9b531c2a1a6028194d1c99c85367"><td class="memItemLeft" align="right" valign="top"><a id="afcbf9b531c2a1a6028194d1c99c85367" name="afcbf9b531c2a1a6028194d1c99c85367"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (h !=<a class="el" href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">invalid</a>)</td></tr>
+<tr class="separator:afcbf9b531c2a1a6028194d1c99c85367"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classwinstd_1_1handle"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classwinstd_1_1handle')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classwinstd_1_1handle.html">winstd::handle&lt; HANDLE, NULL &gt;</a></td></tr>
 <tr class="memitem:a1b9c4f9529c9efa7d16dec8bab3b00e4 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top"><a id="a1b9c4f9529c9efa7d16dec8bab3b00e4" name="a1b9c4f9529c9efa7d16dec8bab3b00e4"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>handle</b> () noexcept</td></tr>
@@ -158,6 +162,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>free</b> ()</td></tr>
 <tr class="memdesc:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the object. <br /></td></tr>
 <tr class="separator:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a00763eac6d65bc9e6c75f8ef9dd75ea6"><td class="memItemLeft" align="right" valign="top">LPCTSTR lpSourceName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event__log.html#a00763eac6d65bc9e6c75f8ef9dd75ea6">noexcept</a></td></tr>
+<tr class="separator:a00763eac6d65bc9e6c75f8ef9dd75ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6c17d30a9382152a3b338be185960a0"><td class="memItemLeft" align="right" valign="top"><a id="aa6c17d30a9382152a3b338be185960a0" name="aa6c17d30a9382152a3b338be185960a0"></a>
+else return&#160;</td><td class="memItemRight" valign="bottom"><b>false</b></td></tr>
+<tr class="separator:aa6c17d30a9382152a3b338be185960a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a3e7c083403f5692926aff600f6ead52e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event__log.html#a3e7c083403f5692926aff600f6ead52e">free_internal</a> () noexcept override</td></tr>
@@ -217,6 +229,32 @@ static const HANDLE&#160;</td><td class="memItemRight" valign="bottom"><b>invali
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="af1ff6bdf207ba72d1edb26c3a8ed38e6" name="af1ff6bdf207ba72d1edb26c3a8ed38e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1ff6bdf207ba72d1edb26c3a8ed38e6">&#9670;&nbsp;</a></span>__declspec()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">winstd::event_log::__declspec </td>
+          <td>(</td>
+          <td class="paramtype">deprecated(&quot;Use RegisterEventSource&quot;)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retrieves a registered handle to the specified event log. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-registereventsourcew">RegisterEventSource function</a></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><ul>
+<li><code>true</code> when succeeds;</li>
+<li><code>false</code> when fails. Use <code>GetLastError()</code> for failure reason. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
 <a id="a3e7c083403f5692926aff600f6ead52e" name="a3e7c083403f5692926aff600f6ead52e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3e7c083403f5692926aff600f6ead52e">&#9670;&nbsp;</a></span>free_internal()</h2>
 
@@ -247,48 +285,22 @@ static const HANDLE&#160;</td><td class="memItemRight" valign="bottom"><b>invali
 
 </div>
 </div>
-<a id="afd27669d627368ec4a71719382c871ca" name="afd27669d627368ec4a71719382c871ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd27669d627368ec4a71719382c871ca">&#9670;&nbsp;</a></span>open()</h2>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a00763eac6d65bc9e6c75f8ef9dd75ea6" name="a00763eac6d65bc9e6c75f8ef9dd75ea6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00763eac6d65bc9e6c75f8ef9dd75ea6">&#9670;&nbsp;</a></span>noexcept</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool winstd::event_log::open </td>
-          <td>(</td>
-          <td class="paramtype">LPCTSTR&#160;</td>
-          <td class="paramname"><em>lpUNCServerName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">LPCTSTR&#160;</td>
-          <td class="paramname"><em>lpSourceName</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">LPCTSTR lpSourceName winstd::event_log::noexcept</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-
-<p>Retrieves a registered handle to the specified event log. </p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-registereventsourcew">RegisterEventSource function</a></dd></dl>
-<dl class="section return"><dt>Returns</dt><dd><ul>
-<li><code>true</code> when succeeds;</li>
-<li><code>false</code> when fails. Use <code>GetLastError()</code> for failure reason. </li>
-</ul>
-</dd></dl>
-
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">            <a class="code hl_typedef" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h = RegisterEventSource(lpUNCServerName, lpSourceName)</div>
+<div class="ttc" id="aclasswinstd_1_1handle_html_a3dda19199ecfbc378c932e7d84d0ea81"><div class="ttname"><a href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">winstd::handle&lt; HANDLE, NULL &gt;::handle_type</a></div><div class="ttdeci">HANDLE handle_type</div><div class="ttdoc">Datatype of the object handle this template class handles.</div><div class="ttdef"><b>Definition:</b> Common.h:608</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
@@ -297,7 +309,7 @@ static const HANDLE&#160;</td><td class="memItemRight" valign="bottom"><b>invali
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 10 2022 11:16:57 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Wed Mar 2 2022 14:42:08 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

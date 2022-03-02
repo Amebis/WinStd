@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['query_5finterface_0',['query_interface',['../classwinstd_1_1com__obj.html#a1ce5cf9682ee1b876cb9eba372e2b1a1',1,'winstd::com_obj::query_interface(_Other **h) const'],['../classwinstd_1_1com__obj.html#a8e898e0977c00b196e1986a02709c185',1,'winstd::com_obj::query_interface(com_obj&lt; _Other &gt; &amp;h) const']]]
+  ['process_0',['process',['../classwinstd_1_1sec__context.html#a07d7c85d0db22a2b7ababdac632b3c54',1,'winstd::sec_context']]],
+  ['process_5finformation_1',['process_information',['../classwinstd_1_1process__information.html#a8b66efb1e5c75ac7aef0ea02b9f9fd39',1,'winstd::process_information']]]
 ];

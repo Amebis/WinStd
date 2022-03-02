@@ -138,6 +138,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:gaba2cbef7017ee8daf1c65e4105257f95"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gaba2cbef7017ee8daf1c65e4105257f95">WINSTD_WINHANDLE_IMPL</a>(C,  INVAL)</td></tr>
+<tr class="memdesc:gaba2cbef7017ee8daf1c65e4105257f95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements default constructors and operators to prevent their auto-generation by compiler.  <a href="group___win_std_win_a_p_i.html#gaba2cbef7017ee8daf1c65e4105257f95">More...</a><br /></td></tr>
+<tr class="separator:gaba2cbef7017ee8daf1c65e4105257f95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad08dfb2a0d1254918a2a4ed45061a50d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gad08dfb2a0d1254918a2a4ed45061a50d">GuidToString</a>&#160;&#160;&#160;GuidToStringA</td></tr>
 <tr class="memdesc:gad08dfb2a0d1254918a2a4ed45061a50d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats GUID and stores it in a std::wstring string.  <a href="group___win_std_win_a_p_i.html#gad08dfb2a0d1254918a2a4ed45061a50d">More...</a><br /></td></tr>
 <tr class="separator:gad08dfb2a0d1254918a2a4ed45061a50d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,10 +203,47 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a id="gaba2cbef7017ee8daf1c65e4105257f95" name="gaba2cbef7017ee8daf1c65e4105257f95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaba2cbef7017ee8daf1c65e4105257f95">&#9670;&nbsp;</a></span>WINSTD_WINHANDLE_IMPL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WINSTD_WINHANDLE_IMPL</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">C, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">INVAL&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>: \</div>
+<div class="line">       C        (                        ) noexcept                                   {                                                           } \</div>
+<div class="line">       C        (_In_opt_ handle_type   h) noexcept : win_handle&lt;INVAL&gt;(          h ) {                                                           } \</div>
+<div class="line">       C        (_Inout_  C           &amp;&amp;h) noexcept : win_handle&lt;INVAL&gt;(std::move(h)) {                                                           } \</div>
+<div class="line">    C&amp; operator=(_In_opt_ handle_type   h) <span class="keyword">noexcept</span>                                   { win_handle&lt;INVAL&gt;::operator=(          h ); <span class="keywordflow">return</span> *<span class="keyword">this</span>; } \</div>
+<div class="line">    C&amp; operator=(_Inout_  C           &amp;&amp;h) <span class="keyword">noexcept</span>                                   { win_handle&lt;INVAL&gt;::operator=(std::move(h)); <span class="keywordflow">return</span> *<span class="keyword">this</span>; } \</div>
+<div class="line">WINSTD_NONCOPYABLE(C)</div>
+</div><!-- fragment -->
+<p>Implements default constructors and operators to prevent their auto-generation by compiler. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 10 2022 11:16:56 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Wed Mar 2 2022 14:42:08 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

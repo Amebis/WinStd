@@ -69,6 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classwinstd_1_1crypt__key-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">winstd::crypt_key Class Reference<div class="ingroups"><a class="el" href="group___win_std_crypto_a_p_i.html">Cryptography API</a></div></div></div>
@@ -95,18 +96,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a396a4af75fd99c896757679a890e6e29"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a396a4af75fd99c896757679a890e6e29">~crypt_key</a> ()</td></tr>
 <tr class="memdesc:a396a4af75fd99c896757679a890e6e29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the key.  <a href="classwinstd_1_1crypt__key.html#a396a4af75fd99c896757679a890e6e29">More...</a><br /></td></tr>
 <tr class="separator:a396a4af75fd99c896757679a890e6e29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17f93ad625dd48168ca1b16765024fd9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a17f93ad625dd48168ca1b16765024fd9">generate</a> (HCRYPTPROV hProv, ALG_ID Algid, DWORD dwFlags) noexcept</td></tr>
-<tr class="memdesc:a17f93ad625dd48168ca1b16765024fd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the key.  <a href="classwinstd_1_1crypt__key.html#a17f93ad625dd48168ca1b16765024fd9">More...</a><br /></td></tr>
-<tr class="separator:a17f93ad625dd48168ca1b16765024fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac383be38a4b70b63c53e4650a1b15d7c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#ac383be38a4b70b63c53e4650a1b15d7c">import</a> (HCRYPTPROV hProv, __in_bcount(dwDataLen) LPCBYTE pbData, DWORD dwDataLen, HCRYPTKEY hPubKey, DWORD dwFlags) noexcept</td></tr>
-<tr class="memdesc:ac383be38a4b70b63c53e4650a1b15d7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imports the key.  <a href="classwinstd_1_1crypt__key.html#ac383be38a4b70b63c53e4650a1b15d7c">More...</a><br /></td></tr>
-<tr class="separator:ac383be38a4b70b63c53e4650a1b15d7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab78817b44504f46fba8688b44a5d23bc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#ab78817b44504f46fba8688b44a5d23bc">import_public</a> (HCRYPTPROV hCryptProv, DWORD dwCertEncodingType, PCERT_PUBLIC_KEY_INFO pInfo) noexcept</td></tr>
-<tr class="memdesc:ab78817b44504f46fba8688b44a5d23bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imports the public key.  <a href="classwinstd_1_1crypt__key.html#ab78817b44504f46fba8688b44a5d23bc">More...</a><br /></td></tr>
-<tr class="separator:ab78817b44504f46fba8688b44a5d23bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d31c1f07a3880db6d75f3d5bea8b681"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a1d31c1f07a3880db6d75f3d5bea8b681">derive</a> (HCRYPTPROV hProv, ALG_ID Algid, HCRYPTHASH hBaseData, DWORD dwFlags) noexcept</td></tr>
-<tr class="memdesc:a1d31c1f07a3880db6d75f3d5bea8b681"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates cryptographic session keys derived from a base data value.  <a href="classwinstd_1_1crypt__key.html#a1d31c1f07a3880db6d75f3d5bea8b681">More...</a><br /></td></tr>
-<tr class="separator:a1d31c1f07a3880db6d75f3d5bea8b681"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ef17f3785334f4b71fcb9d261934b5d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a5ef17f3785334f4b71fcb9d261934b5d">__declspec</a> (deprecated(&quot;Use CryptGenKey&quot;)) bool generate(HCRYPTPROV hProv</td></tr>
+<tr class="memdesc:a5ef17f3785334f4b71fcb9d261934b5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the key.  <a href="classwinstd_1_1crypt__key.html#a5ef17f3785334f4b71fcb9d261934b5d">More...</a><br /></td></tr>
+<tr class="separator:a5ef17f3785334f4b71fcb9d261934b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00a486c3a9a5a1df42800a14c4d22c6c"><td class="memItemLeft" align="right" valign="top"><a id="a00a486c3a9a5a1df42800a14c4d22c6c" name="a00a486c3a9a5a1df42800a14c4d22c6c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (CryptGenKey(hProv, Algid, dwFlags, &amp;h))</td></tr>
+<tr class="separator:a00a486c3a9a5a1df42800a14c4d22c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af739d250cfd15a210a030ac37b13e097"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#af739d250cfd15a210a030ac37b13e097">__declspec</a> (deprecated(&quot;Use CryptImportKey&quot;)) bool import(HCRYPTPROV hProv</td></tr>
+<tr class="memdesc:af739d250cfd15a210a030ac37b13e097"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imports the key.  <a href="classwinstd_1_1crypt__key.html#af739d250cfd15a210a030ac37b13e097">More...</a><br /></td></tr>
+<tr class="separator:af739d250cfd15a210a030ac37b13e097"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac479c7c297c9d58caef359cb6c9d30ef"><td class="memItemLeft" align="right" valign="top"><a id="ac479c7c297c9d58caef359cb6c9d30ef" name="ac479c7c297c9d58caef359cb6c9d30ef"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>__in_bcount</b> (dwDataLen) LPCBYTE pbData</td></tr>
+<tr class="separator:ac479c7c297c9d58caef359cb6c9d30ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12d6deea527e8df96f0767584d34de74"><td class="memItemLeft" align="right" valign="top"><a id="a12d6deea527e8df96f0767584d34de74" name="a12d6deea527e8df96f0767584d34de74"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (CryptImportKey(hProv, pbData, dwDataLen, hPubKey, dwFlags, &amp;h))</td></tr>
+<tr class="separator:a12d6deea527e8df96f0767584d34de74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae858523209565263ded161c0f9db3aec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#ae858523209565263ded161c0f9db3aec">__declspec</a> (deprecated(&quot;Use CryptImportPublicKeyInfo&quot;)) bool import_public(HCRYPTPROV hCryptProv</td></tr>
+<tr class="memdesc:ae858523209565263ded161c0f9db3aec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imports the public key.  <a href="classwinstd_1_1crypt__key.html#ae858523209565263ded161c0f9db3aec">More...</a><br /></td></tr>
+<tr class="separator:ae858523209565263ded161c0f9db3aec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fbb5b653cf92dd6a69667f14c93287b"><td class="memItemLeft" align="right" valign="top"><a id="a5fbb5b653cf92dd6a69667f14c93287b" name="a5fbb5b653cf92dd6a69667f14c93287b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (CryptImportPublicKeyInfo(hCryptProv, dwCertEncodingType, pInfo, &amp;h))</td></tr>
+<tr class="separator:a5fbb5b653cf92dd6a69667f14c93287b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbca7cf94a63d444438e1883ccfe5ab9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#afbca7cf94a63d444438e1883ccfe5ab9">__declspec</a> (deprecated(&quot;Use CryptDeriveKey&quot;)) bool derive(HCRYPTPROV hProv</td></tr>
+<tr class="memdesc:afbca7cf94a63d444438e1883ccfe5ab9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates cryptographic session keys derived from a base data value.  <a href="classwinstd_1_1crypt__key.html#afbca7cf94a63d444438e1883ccfe5ab9">More...</a><br /></td></tr>
+<tr class="separator:afbca7cf94a63d444438e1883ccfe5ab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c49a9b8668ab9e7f0dd17429f5cba26"><td class="memItemLeft" align="right" valign="top"><a id="a0c49a9b8668ab9e7f0dd17429f5cba26" name="a0c49a9b8668ab9e7f0dd17429f5cba26"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (CryptDeriveKey(hProv, Algid, hBaseData, dwFlags, &amp;h))</td></tr>
+<tr class="separator:a0c49a9b8668ab9e7f0dd17429f5cba26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a6097582df953795969c29ec134914a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a9a6097582df953795969c29ec134914a">create_exp1</a> (HCRYPTPROV hProv, DWORD dwKeySpec)</td></tr>
 <tr class="memdesc:a9a6097582df953795969c29ec134914a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates Exponent-of-one key.  <a href="classwinstd_1_1crypt__key.html#a9a6097582df953795969c29ec134914a">More...</a><br /></td></tr>
 <tr class="separator:a9a6097582df953795969c29ec134914a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,6 +216,35 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>free</b> ()</td></tr>
 <tr class="memdesc:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the object. <br /></td></tr>
 <tr class="separator:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a111063a39ad90647210cddf6d59fed9f"><td class="memItemLeft" align="right" valign="top"><a id="a111063a39ad90647210cddf6d59fed9f" name="a111063a39ad90647210cddf6d59fed9f"></a>
+ALG_ID&#160;</td><td class="memItemRight" valign="bottom"><b>Algid</b></td></tr>
+<tr class="separator:a111063a39ad90647210cddf6d59fed9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab77414fc40bc645c1e9f995e329bdd5b"><td class="memItemLeft" align="right" valign="top">ALG_ID DWORD dwFlags&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#ab77414fc40bc645c1e9f995e329bdd5b">noexcept</a></td></tr>
+<tr class="separator:ab77414fc40bc645c1e9f995e329bdd5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af40ed6ee58a24edcaaf55a24dd7d7c7a"><td class="memItemLeft" align="right" valign="top"><a id="af40ed6ee58a24edcaaf55a24dd7d7c7a" name="af40ed6ee58a24edcaaf55a24dd7d7c7a"></a>
+else return&#160;</td><td class="memItemRight" valign="bottom"><b>false</b></td></tr>
+<tr class="separator:af40ed6ee58a24edcaaf55a24dd7d7c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3989891dd7738e97dc95a3fbb448ddf5"><td class="memItemLeft" align="right" valign="top"><a id="a3989891dd7738e97dc95a3fbb448ddf5" name="a3989891dd7738e97dc95a3fbb448ddf5"></a>
+DWORD&#160;</td><td class="memItemRight" valign="bottom"><b>dwDataLen</b></td></tr>
+<tr class="separator:a3989891dd7738e97dc95a3fbb448ddf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fd3643322583afb7d2866271fb7c68b"><td class="memItemLeft" align="right" valign="top"><a id="a1fd3643322583afb7d2866271fb7c68b" name="a1fd3643322583afb7d2866271fb7c68b"></a>
+DWORD HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>hPubKey</b></td></tr>
+<tr class="separator:a1fd3643322583afb7d2866271fb7c68b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a96e18c00c7272966d0849c4139349e"><td class="memItemLeft" align="right" valign="top">DWORD HCRYPTKEY DWORD dwFlags&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#a5a96e18c00c7272966d0849c4139349e">noexcept</a></td></tr>
+<tr class="separator:a5a96e18c00c7272966d0849c4139349e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28365abb8436870b190f66ebb0dd59eb"><td class="memItemLeft" align="right" valign="top"><a id="a28365abb8436870b190f66ebb0dd59eb" name="a28365abb8436870b190f66ebb0dd59eb"></a>
+DWORD&#160;</td><td class="memItemRight" valign="bottom"><b>dwCertEncodingType</b></td></tr>
+<tr class="separator:a28365abb8436870b190f66ebb0dd59eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa708f5104042c28ad2f8b71ff4a8918f"><td class="memItemLeft" align="right" valign="top">DWORD PCERT_PUBLIC_KEY_INFO pInfo&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#aa708f5104042c28ad2f8b71ff4a8918f">noexcept</a></td></tr>
+<tr class="separator:aa708f5104042c28ad2f8b71ff4a8918f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8930f7962562f2346052ecddcc05c93"><td class="memItemLeft" align="right" valign="top"><a id="ac8930f7962562f2346052ecddcc05c93" name="ac8930f7962562f2346052ecddcc05c93"></a>
+ALG_ID HCRYPTHASH&#160;</td><td class="memItemRight" valign="bottom"><b>hBaseData</b></td></tr>
+<tr class="separator:ac8930f7962562f2346052ecddcc05c93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac70888e4321ca6d1cfb05db9714a8e20"><td class="memItemLeft" align="right" valign="top">ALG_ID HCRYPTHASH DWORD dwFlags&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#ac70888e4321ca6d1cfb05db9714a8e20">noexcept</a></td></tr>
+<tr class="separator:ac70888e4321ca6d1cfb05db9714a8e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:acf2f2ad35dd7602adcdeef17f605e391"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1crypt__key.html#acf2f2ad35dd7602adcdeef17f605e391">free_internal</a> () noexcept override</td></tr>
@@ -265,6 +310,90 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="afbca7cf94a63d444438e1883ccfe5ab9" name="afbca7cf94a63d444438e1883ccfe5ab9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbca7cf94a63d444438e1883ccfe5ab9">&#9670;&nbsp;</a></span>__declspec() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">winstd::crypt_key::__declspec </td>
+          <td>(</td>
+          <td class="paramtype">deprecated(&quot;Use CryptDeriveKey&quot;)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates cryptographic session keys derived from a base data value. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa379916.aspx">CryptDeriveKey function</a> </dd></dl>
+
+</div>
+</div>
+<a id="a5ef17f3785334f4b71fcb9d261934b5d" name="a5ef17f3785334f4b71fcb9d261934b5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ef17f3785334f4b71fcb9d261934b5d">&#9670;&nbsp;</a></span>__declspec() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">winstd::crypt_key::__declspec </td>
+          <td>(</td>
+          <td class="paramtype">deprecated(&quot;Use CryptGenKey&quot;)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates the key. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa379941.aspx">CryptGenKey function</a> </dd></dl>
+
+</div>
+</div>
+<a id="af739d250cfd15a210a030ac37b13e097" name="af739d250cfd15a210a030ac37b13e097"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af739d250cfd15a210a030ac37b13e097">&#9670;&nbsp;</a></span>__declspec() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">winstd::crypt_key::__declspec </td>
+          <td>(</td>
+          <td class="paramtype">deprecated(&quot;Use CryptImportKey&quot;)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Imports the key. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa380207.aspx">CryptImportKey function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ae858523209565263ded161c0f9db3aec" name="ae858523209565263ded161c0f9db3aec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae858523209565263ded161c0f9db3aec">&#9670;&nbsp;</a></span>__declspec() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">winstd::crypt_key::__declspec </td>
+          <td>(</td>
+          <td class="paramtype">deprecated(&quot;Use CryptImportPublicKeyInfo&quot;)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Imports the public key. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa380209.aspx">CryptImportPublicKeyInfo function</a> </dd></dl>
+
+</div>
+</div>
 <a id="a9a6097582df953795969c29ec134914a" name="a9a6097582df953795969c29ec134914a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9a6097582df953795969c29ec134914a">&#9670;&nbsp;</a></span>create_exp1()</h2>
 
@@ -308,57 +437,6 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a1d31c1f07a3880db6d75f3d5bea8b681" name="a1d31c1f07a3880db6d75f3d5bea8b681"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d31c1f07a3880db6d75f3d5bea8b681">&#9670;&nbsp;</a></span>derive()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool winstd::crypt_key::derive </td>
-          <td>(</td>
-          <td class="paramtype">HCRYPTPROV&#160;</td>
-          <td class="paramname"><em>hProv</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ALG_ID&#160;</td>
-          <td class="paramname"><em>Algid</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">HCRYPTHASH&#160;</td>
-          <td class="paramname"><em>hBaseData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DWORD&#160;</td>
-          <td class="paramname"><em>dwFlags</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Generates cryptographic session keys derived from a base data value. </p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa379916.aspx">CryptDeriveKey function</a> </dd></dl>
 
 </div>
 </div>
@@ -430,151 +508,70 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
 
 </div>
 </div>
-<a id="a17f93ad625dd48168ca1b16765024fd9" name="a17f93ad625dd48168ca1b16765024fd9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17f93ad625dd48168ca1b16765024fd9">&#9670;&nbsp;</a></span>generate()</h2>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ab77414fc40bc645c1e9f995e329bdd5b" name="ab77414fc40bc645c1e9f995e329bdd5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab77414fc40bc645c1e9f995e329bdd5b">&#9670;&nbsp;</a></span>noexcept <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool winstd::crypt_key::generate </td>
-          <td>(</td>
-          <td class="paramtype">HCRYPTPROV&#160;</td>
-          <td class="paramname"><em>hProv</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ALG_ID&#160;</td>
-          <td class="paramname"><em>Algid</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DWORD&#160;</td>
-          <td class="paramname"><em>dwFlags</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">ALG_ID DWORD dwFlags winstd::crypt_key::noexcept</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-
-<p>Generates the key. </p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa379941.aspx">CryptGenKey function</a> </dd></dl>
-
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">            <a class="code hl_typedef" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h</div>
+<div class="ttc" id="aclasswinstd_1_1handle_html_a3dda19199ecfbc378c932e7d84d0ea81"><div class="ttname"><a href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">winstd::handle&lt; HCRYPTKEY, INVAL &gt;::handle_type</a></div><div class="ttdeci">HCRYPTKEY handle_type</div><div class="ttdoc">Datatype of the object handle this template class handles.</div><div class="ttdef"><b>Definition:</b> Common.h:608</div></div>
+</div><!-- fragment -->
 </div>
 </div>
-<a id="ac383be38a4b70b63c53e4650a1b15d7c" name="ac383be38a4b70b63c53e4650a1b15d7c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac383be38a4b70b63c53e4650a1b15d7c">&#9670;&nbsp;</a></span>import()</h2>
+<a id="a5a96e18c00c7272966d0849c4139349e" name="a5a96e18c00c7272966d0849c4139349e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a96e18c00c7272966d0849c4139349e">&#9670;&nbsp;</a></span>noexcept <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool winstd::crypt_key::import </td>
-          <td>(</td>
-          <td class="paramtype">HCRYPTPROV&#160;</td>
-          <td class="paramname"><em>hProv</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">__in_bcount(dwDataLen) LPCBYTE&#160;</td>
-          <td class="paramname"><em>pbData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DWORD&#160;</td>
-          <td class="paramname"><em>dwDataLen</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">HCRYPTKEY&#160;</td>
-          <td class="paramname"><em>hPubKey</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DWORD&#160;</td>
-          <td class="paramname"><em>dwFlags</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">DWORD HCRYPTKEY DWORD dwFlags winstd::crypt_key::noexcept</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-
-<p>Imports the key. </p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa380207.aspx">CryptImportKey function</a> </dd></dl>
-
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">            <a class="code hl_typedef" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h</div>
+</div><!-- fragment -->
 </div>
 </div>
-<a id="ab78817b44504f46fba8688b44a5d23bc" name="ab78817b44504f46fba8688b44a5d23bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab78817b44504f46fba8688b44a5d23bc">&#9670;&nbsp;</a></span>import_public()</h2>
+<a id="aa708f5104042c28ad2f8b71ff4a8918f" name="aa708f5104042c28ad2f8b71ff4a8918f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa708f5104042c28ad2f8b71ff4a8918f">&#9670;&nbsp;</a></span>noexcept <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool winstd::crypt_key::import_public </td>
-          <td>(</td>
-          <td class="paramtype">HCRYPTPROV&#160;</td>
-          <td class="paramname"><em>hCryptProv</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DWORD&#160;</td>
-          <td class="paramname"><em>dwCertEncodingType</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">PCERT_PUBLIC_KEY_INFO&#160;</td>
-          <td class="paramname"><em>pInfo</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">DWORD PCERT_PUBLIC_KEY_INFO pInfo winstd::crypt_key::noexcept</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">            <a class="code hl_typedef" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac70888e4321ca6d1cfb05db9714a8e20" name="ac70888e4321ca6d1cfb05db9714a8e20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac70888e4321ca6d1cfb05db9714a8e20">&#9670;&nbsp;</a></span>noexcept <span class="overload">[4/4]</span></h2>
 
-<p>Imports the public key. </p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa380209.aspx">CryptImportPublicKeyInfo function</a> </dd></dl>
-
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ALG_ID HCRYPTHASH DWORD dwFlags winstd::crypt_key::noexcept</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">            <a class="code hl_typedef" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
@@ -583,7 +580,7 @@ static const HCRYPTKEY&#160;</td><td class="memItemRight" valign="bottom"><b>inv
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 10 2022 11:16:56 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Wed Mar 2 2022 14:42:08 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

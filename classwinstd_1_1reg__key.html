@@ -69,7 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classwinstd_1_1reg__key-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">winstd::reg_key Class Reference<div class="ingroups"><a class="el" href="group___win_std_win_a_p_i.html">Windows API</a></div></div></div>
 </div><!--header-->
@@ -94,15 +94,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae54556effe6fe91942f87fc8c8ff5d7c"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1reg__key.html#ae54556effe6fe91942f87fc8c8ff5d7c">~reg_key</a> ()</td></tr>
 <tr class="memdesc:ae54556effe6fe91942f87fc8c8ff5d7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes a handle to the registry key.  <a href="classwinstd_1_1reg__key.html#ae54556effe6fe91942f87fc8c8ff5d7c">More...</a><br /></td></tr>
 <tr class="separator:ae54556effe6fe91942f87fc8c8ff5d7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad331246ce1b00187315048df2716ed57"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1reg__key.html#ad331246ce1b00187315048df2716ed57">create</a> (HKEY hKey, LPCTSTR lpSubKey, LPTSTR lpClass, DWORD dwOptions, REGSAM samDesired, LPSECURITY_ATTRIBUTES lpSecurityAttributes=NULL, LPDWORD lpdwDisposition=NULL) noexcept</td></tr>
-<tr class="memdesc:ad331246ce1b00187315048df2716ed57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the specified registry key. If the key already exists, the function opens it.  <a href="classwinstd_1_1reg__key.html#ad331246ce1b00187315048df2716ed57">More...</a><br /></td></tr>
-<tr class="separator:ad331246ce1b00187315048df2716ed57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb5d9b3f87c70423940818b5c5df79a7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1reg__key.html#abb5d9b3f87c70423940818b5c5df79a7">open</a> (HKEY hKey, LPCTSTR lpSubKey, DWORD ulOptions, REGSAM samDesired) noexcept</td></tr>
-<tr class="memdesc:abb5d9b3f87c70423940818b5c5df79a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the specified registry key.  <a href="classwinstd_1_1reg__key.html#abb5d9b3f87c70423940818b5c5df79a7">More...</a><br /></td></tr>
-<tr class="separator:abb5d9b3f87c70423940818b5c5df79a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b8ee8731e0caa51c84b271f43604f54"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1reg__key.html#a5b8ee8731e0caa51c84b271f43604f54">delete_subkey</a> (LPCTSTR szSubkey)</td></tr>
-<tr class="memdesc:a5b8ee8731e0caa51c84b271f43604f54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the specified registry subkey.  <a href="classwinstd_1_1reg__key.html#a5b8ee8731e0caa51c84b271f43604f54">More...</a><br /></td></tr>
-<tr class="separator:a5b8ee8731e0caa51c84b271f43604f54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b8468435096a51c239f986adecfaa50"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1reg__key.html#a2b8468435096a51c239f986adecfaa50">__declspec</a> (deprecated(&quot;Use RegCreateKeyEx - mind it returns error number rather than SetLastError&quot;)) bool create(HKEY hKey</td></tr>
+<tr class="memdesc:a2b8468435096a51c239f986adecfaa50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the specified registry key. If the key already exists, the function opens it.  <a href="classwinstd_1_1reg__key.html#a2b8468435096a51c239f986adecfaa50">More...</a><br /></td></tr>
+<tr class="separator:a2b8468435096a51c239f986adecfaa50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classwinstd_1_1handle"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classwinstd_1_1handle')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classwinstd_1_1handle.html">winstd::handle&lt; HKEY, NULL &gt;</a></td></tr>
 <tr class="memitem:a1b9c4f9529c9efa7d16dec8bab3b00e4 inherit pub_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top"><a id="a1b9c4f9529c9efa7d16dec8bab3b00e4" name="a1b9c4f9529c9efa7d16dec8bab3b00e4"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>handle</b> () noexcept</td></tr>
@@ -164,14 +158,23 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>free</b> ()</td></tr>
 <tr class="memdesc:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the object. <br /></td></tr>
 <tr class="separator:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a3dba00d2105a1c633c571d8ad3131f54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1reg__key.html#a3dba00d2105a1c633c571d8ad3131f54">free_internal</a> () noexcept override</td></tr>
-<tr class="memdesc:a3dba00d2105a1c633c571d8ad3131f54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes a handle to the registry key.  <a href="classwinstd_1_1reg__key.html#a3dba00d2105a1c633c571d8ad3131f54">More...</a><br /></td></tr>
-<tr class="separator:a3dba00d2105a1c633c571d8ad3131f54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a137560600851eb4c3e4b80e25d4da629"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a137560600851eb4c3e4b80e25d4da629">free_internal</a> () noexcept=0</td></tr>
-<tr class="memdesc:a137560600851eb4c3e4b80e25d4da629"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract member function that must be implemented by child classes to do the actual object destruction.  <a href="classwinstd_1_1handle.html#a137560600851eb4c3e4b80e25d4da629">More...</a><br /></td></tr>
-<tr class="separator:a137560600851eb4c3e4b80e25d4da629"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a44c5e74eec40d6cb4baeaf5b544b5d6b"><td class="memItemLeft" align="right" valign="top"><a id="a44c5e74eec40d6cb4baeaf5b544b5d6b" name="a44c5e74eec40d6cb4baeaf5b544b5d6b"></a>
+LPCTSTR&#160;</td><td class="memItemRight" valign="bottom"><b>lpSubKey</b></td></tr>
+<tr class="separator:a44c5e74eec40d6cb4baeaf5b544b5d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0474bc7eecbd57f588b6e8d22b476030"><td class="memItemLeft" align="right" valign="top"><a id="a0474bc7eecbd57f588b6e8d22b476030" name="a0474bc7eecbd57f588b6e8d22b476030"></a>
+LPCTSTR LPTSTR&#160;</td><td class="memItemRight" valign="bottom"><b>lpClass</b></td></tr>
+<tr class="separator:a0474bc7eecbd57f588b6e8d22b476030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a775cfac7a085000552616e1eca4ec40d"><td class="memItemLeft" align="right" valign="top"><a id="a775cfac7a085000552616e1eca4ec40d" name="a775cfac7a085000552616e1eca4ec40d"></a>
+LPCTSTR LPTSTR DWORD&#160;</td><td class="memItemRight" valign="bottom"><b>dwOptions</b></td></tr>
+<tr class="separator:a775cfac7a085000552616e1eca4ec40d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbad711ec769d2529302e3bfebca31f3"><td class="memItemLeft" align="right" valign="top"><a id="afbad711ec769d2529302e3bfebca31f3" name="afbad711ec769d2529302e3bfebca31f3"></a>
+LPCTSTR LPTSTR DWORD REGSAM&#160;</td><td class="memItemRight" valign="bottom"><b>samDesired</b></td></tr>
+<tr class="separator:afbad711ec769d2529302e3bfebca31f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45fa6037f2fb231de186684988977110"><td class="memItemLeft" align="right" valign="top"><a id="a45fa6037f2fb231de186684988977110" name="a45fa6037f2fb231de186684988977110"></a>
+LPCTSTR LPTSTR DWORD REGSAM LPSECURITY_ATTRIBUTES&#160;</td><td class="memItemRight" valign="bottom"><b>lpSecurityAttributes</b> = NULL</td></tr>
+<tr class="separator:a45fa6037f2fb231de186684988977110"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -185,6 +188,11 @@ typedef HKEY&#160;</td><td class="memItemRight" valign="bottom"><b>handle_type</
 static const HKEY&#160;</td><td class="memItemRight" valign="bottom"><b>invalid</b></td></tr>
 <tr class="memdesc:gacf43e306968474166474090690857e1c inherit pub_static_attribs_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid handle value. <br /></td></tr>
 <tr class="separator:gacf43e306968474166474090690857e1c inherit pub_static_attribs_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classwinstd_1_1handle"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classwinstd_1_1handle')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classwinstd_1_1handle.html">winstd::handle&lt; HKEY, NULL &gt;</a></td></tr>
+<tr class="memitem:a137560600851eb4c3e4b80e25d4da629 inherit pro_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top"><a id="a137560600851eb4c3e4b80e25d4da629" name="a137560600851eb4c3e4b80e25d4da629"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>free_internal</b> () noexcept=0</td></tr>
+<tr class="memdesc:a137560600851eb4c3e4b80e25d4da629 inherit pro_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract member function that must be implemented by child classes to do the actual object destruction. <br /></td></tr>
+<tr class="separator:a137560600851eb4c3e4b80e25d4da629 inherit pro_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classwinstd_1_1handle"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classwinstd_1_1handle')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classwinstd_1_1handle.html">winstd::handle&lt; HKEY, NULL &gt;</a></td></tr>
 <tr class="memitem:aabde3f16fd98b06b3b0282ef7806eb59 inherit pro_attribs_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top"><a id="aabde3f16fd98b06b3b0282ef7806eb59" name="aabde3f16fd98b06b3b0282ef7806eb59"></a>
 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_h</b></td></tr>
@@ -223,68 +231,20 @@ static const HKEY&#160;</td><td class="memItemRight" valign="bottom"><b>invalid<
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad331246ce1b00187315048df2716ed57" name="ad331246ce1b00187315048df2716ed57"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad331246ce1b00187315048df2716ed57">&#9670;&nbsp;</a></span>create()</h2>
+<a id="a2b8468435096a51c239f986adecfaa50" name="a2b8468435096a51c239f986adecfaa50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b8468435096a51c239f986adecfaa50">&#9670;&nbsp;</a></span>__declspec()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool winstd::reg_key::create </td>
+          <td class="memname">winstd::reg_key::__declspec </td>
           <td>(</td>
-          <td class="paramtype">HKEY&#160;</td>
-          <td class="paramname"><em>hKey</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">deprecated(&quot;Use RegCreateKeyEx - mind it returns error number rather than SetLastError&quot;)&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">LPCTSTR&#160;</td>
-          <td class="paramname"><em>lpSubKey</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">LPTSTR&#160;</td>
-          <td class="paramname"><em>lpClass</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DWORD&#160;</td>
-          <td class="paramname"><em>dwOptions</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">REGSAM&#160;</td>
-          <td class="paramname"><em>samDesired</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">LPSECURITY_ATTRIBUTES&#160;</td>
-          <td class="paramname"><em>lpSecurityAttributes</em> = <code>NULL</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">LPDWORD&#160;</td>
-          <td class="paramname"><em>lpdwDisposition</em> = <code>NULL</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Creates the specified registry key. If the key already exists, the function opens it. </p>
@@ -297,138 +257,13 @@ static const HKEY&#160;</td><td class="memItemRight" valign="bottom"><b>invalid<
 
 </div>
 </div>
-<a id="a5b8ee8731e0caa51c84b271f43604f54" name="a5b8ee8731e0caa51c84b271f43604f54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b8ee8731e0caa51c84b271f43604f54">&#9670;&nbsp;</a></span>delete_subkey()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool winstd::reg_key::delete_subkey </td>
-          <td>(</td>
-          <td class="paramtype">LPCTSTR&#160;</td>
-          <td class="paramname"><em>szSubkey</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Deletes the specified registry subkey. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">szSubkey</td><td>Name of the subkey to delete</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><ul>
-<li>true when creation succeeds;</li>
-<li>false when creation fails. For extended error information, call <code>GetLastError()</code>. </li>
-</ul>
-</dd></dl>
-
-</div>
-</div>
-<a id="a3dba00d2105a1c633c571d8ad3131f54" name="a3dba00d2105a1c633c571d8ad3131f54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3dba00d2105a1c633c571d8ad3131f54">&#9670;&nbsp;</a></span>free_internal()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void winstd::reg_key::free_internal </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Closes a handle to the registry key. </p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724837.aspx">RegCloseKey function</a> </dd></dl>
-
-<p>Implements <a class="el" href="classwinstd_1_1handle.html#a137560600851eb4c3e4b80e25d4da629">winstd::handle&lt; HKEY, NULL &gt;</a>.</p>
-
-</div>
-</div>
-<a id="abb5d9b3f87c70423940818b5c5df79a7" name="abb5d9b3f87c70423940818b5c5df79a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb5d9b3f87c70423940818b5c5df79a7">&#9670;&nbsp;</a></span>open()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool winstd::reg_key::open </td>
-          <td>(</td>
-          <td class="paramtype">HKEY&#160;</td>
-          <td class="paramname"><em>hKey</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">LPCTSTR&#160;</td>
-          <td class="paramname"><em>lpSubKey</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DWORD&#160;</td>
-          <td class="paramname"><em>ulOptions</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">REGSAM&#160;</td>
-          <td class="paramname"><em>samDesired</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Opens the specified registry key. </p>
-<dl class="section return"><dt>Returns</dt><dd><ul>
-<li>true when creation succeeds;</li>
-<li>false when creation fails. For extended error information, call <code>GetLastError()</code>.</li>
-</ul>
-</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724897.aspx">RegOpenKeyEx function</a> </dd></dl>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/WinStd/<a class="el" href="_win_8h_source.html">Win.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 10 2022 11:16:57 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Wed Mar 2 2022 14:42:08 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

@@ -69,6 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classwinstd_1_1heap-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">winstd::heap Class Reference<div class="ingroups"><a class="el" href="group___win_std_win_a_p_i.html">Windows API</a></div></div></div>
@@ -94,9 +95,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aecb12bb6a2677638a6061510bdda868b"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap.html#aecb12bb6a2677638a6061510bdda868b">~heap</a> ()</td></tr>
 <tr class="memdesc:aecb12bb6a2677638a6061510bdda868b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the heap.  <a href="classwinstd_1_1heap.html#aecb12bb6a2677638a6061510bdda868b">More...</a><br /></td></tr>
 <tr class="separator:aecb12bb6a2677638a6061510bdda868b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0f6791633a50ff1b2d616a76cd1e021"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap.html#ae0f6791633a50ff1b2d616a76cd1e021">create</a> (DWORD flOptions, SIZE_T dwInitialSize, SIZE_T dwMaximumSize) noexcept</td></tr>
-<tr class="memdesc:ae0f6791633a50ff1b2d616a76cd1e021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the heap.  <a href="classwinstd_1_1heap.html#ae0f6791633a50ff1b2d616a76cd1e021">More...</a><br /></td></tr>
-<tr class="separator:ae0f6791633a50ff1b2d616a76cd1e021"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f05e5c3822be42b2f8b0fb937526bea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap.html#a9f05e5c3822be42b2f8b0fb937526bea">__declspec</a> (deprecated(&quot;Use HeapCreate&quot;)) bool create(DWORD flOptions</td></tr>
+<tr class="memdesc:a9f05e5c3822be42b2f8b0fb937526bea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the heap.  <a href="classwinstd_1_1heap.html#a9f05e5c3822be42b2f8b0fb937526bea">More...</a><br /></td></tr>
+<tr class="separator:a9f05e5c3822be42b2f8b0fb937526bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c37e9b4ed6ce2e7d19efab0f0150051"><td class="memItemLeft" align="right" valign="top"><a id="a0c37e9b4ed6ce2e7d19efab0f0150051" name="a0c37e9b4ed6ce2e7d19efab0f0150051"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (h !=<a class="el" href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">invalid</a>)</td></tr>
+<tr class="separator:a0c37e9b4ed6ce2e7d19efab0f0150051"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a938dca2d614e8d33ae5add61b013847f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap.html#a938dca2d614e8d33ae5add61b013847f">enumerate</a> () noexcept</td></tr>
 <tr class="memdesc:a938dca2d614e8d33ae5add61b013847f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerates allocated heap blocks using <code>OutputDebugString()</code>  <a href="classwinstd_1_1heap.html#a938dca2d614e8d33ae5add61b013847f">More...</a><br /></td></tr>
 <tr class="separator:a938dca2d614e8d33ae5add61b013847f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,6 +165,17 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>free</b> ()</td></tr>
 <tr class="memdesc:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the object. <br /></td></tr>
 <tr class="separator:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ae1c05b8a4000b3533cb4957bff3269aa"><td class="memItemLeft" align="right" valign="top"><a id="ae1c05b8a4000b3533cb4957bff3269aa" name="ae1c05b8a4000b3533cb4957bff3269aa"></a>
+SIZE_T&#160;</td><td class="memItemRight" valign="bottom"><b>dwInitialSize</b></td></tr>
+<tr class="separator:ae1c05b8a4000b3533cb4957bff3269aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2653c77389e9f39c850027b3a48e9e44"><td class="memItemLeft" align="right" valign="top">SIZE_T SIZE_T dwMaximumSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap.html#a2653c77389e9f39c850027b3a48e9e44">noexcept</a></td></tr>
+<tr class="separator:a2653c77389e9f39c850027b3a48e9e44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a803d387a0a44241b8e7d0a76453daf40"><td class="memItemLeft" align="right" valign="top"><a id="a803d387a0a44241b8e7d0a76453daf40" name="a803d387a0a44241b8e7d0a76453daf40"></a>
+else return&#160;</td><td class="memItemRight" valign="bottom"><b>false</b></td></tr>
+<tr class="separator:a803d387a0a44241b8e7d0a76453daf40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:ae25434d96356a74d27c0b3b0e268df45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1heap.html#ae25434d96356a74d27c0b3b0e268df45">free_internal</a> () noexcept override</td></tr>
@@ -220,44 +235,20 @@ static const HANDLE&#160;</td><td class="memItemRight" valign="bottom"><b>invali
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae0f6791633a50ff1b2d616a76cd1e021" name="ae0f6791633a50ff1b2d616a76cd1e021"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0f6791633a50ff1b2d616a76cd1e021">&#9670;&nbsp;</a></span>create()</h2>
+<a id="a9f05e5c3822be42b2f8b0fb937526bea" name="a9f05e5c3822be42b2f8b0fb937526bea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f05e5c3822be42b2f8b0fb937526bea">&#9670;&nbsp;</a></span>__declspec()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool winstd::heap::create </td>
+          <td class="memname">winstd::heap::__declspec </td>
           <td>(</td>
-          <td class="paramtype">DWORD&#160;</td>
-          <td class="paramname"><em>flOptions</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">deprecated(&quot;Use HeapCreate&quot;)&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">SIZE_T&#160;</td>
-          <td class="paramname"><em>dwInitialSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">SIZE_T&#160;</td>
-          <td class="paramname"><em>dwMaximumSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Creates the heap. </p>
@@ -332,13 +323,31 @@ static const HANDLE&#160;</td><td class="memItemRight" valign="bottom"><b>invali
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a2653c77389e9f39c850027b3a48e9e44" name="a2653c77389e9f39c850027b3a48e9e44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2653c77389e9f39c850027b3a48e9e44">&#9670;&nbsp;</a></span>noexcept</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SIZE_T SIZE_T dwMaximumSize winstd::heap::noexcept</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">            <a class="code hl_typedef" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h = HeapCreate(flOptions, dwInitialSize, dwMaximumSize)</div>
+<div class="ttc" id="aclasswinstd_1_1handle_html_a3dda19199ecfbc378c932e7d84d0ea81"><div class="ttname"><a href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">winstd::handle&lt; HANDLE, NULL &gt;::handle_type</a></div><div class="ttdeci">HANDLE handle_type</div><div class="ttdoc">Datatype of the object handle this template class handles.</div><div class="ttdef"><b>Definition:</b> Common.h:608</div></div>
+</div><!-- fragment -->
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/WinStd/<a class="el" href="_win_8h_source.html">Win.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 10 2022 11:16:57 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Wed Mar 2 2022 14:42:08 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>
