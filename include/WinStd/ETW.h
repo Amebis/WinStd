@@ -926,6 +926,7 @@ namespace winstd
         ///
         /// \sa [OpenTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa364089.aspx)
         ///
+        __declspec(deprecated("Use OpenTrace"))
         bool create(_Inout_ PEVENT_TRACE_LOGFILE Logfile)
         {
             handle_type h = OpenTrace(Logfile);

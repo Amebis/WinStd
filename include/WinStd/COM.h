@@ -88,6 +88,7 @@ namespace winstd
         ///
         /// \sa [CoCreateInstance function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms686615.aspx)
         ///
+        __declspec(deprecated("Use CoCreateInstance"))
         com_obj(_In_ REFCLSID rclsid, _In_opt_ LPUNKNOWN pUnkOuter = NULL, DWORD dwClsContext = CLSCTX_ALL)
         {
             CoCreateInstance(rclsid, pUnkOuter, dwClsContext, __uuidof(T), (LPVOID*)&m_h);
@@ -130,6 +131,7 @@ namespace winstd
         ///
         /// \sa [CoCreateInstance function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms686615.aspx)
         ///
+        __declspec(deprecated("Use CoCreateInstance"))
         HRESULT create(_In_ REFCLSID rclsid, _In_opt_ LPUNKNOWN pUnkOuter = NULL, _In_ DWORD dwClsContext = CLSCTX_ALL)
         {
             handle_type h;
@@ -1085,3 +1087,23 @@ namespace winstd
 
     /// @}
 }
+
+/// \addtogroup WinStdCOM
+/// @{
+
+///
+/// Creates and default-initializes a single object of the class associated with a specified CLSID
+///
+/// \sa [CoCreateInstance function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms686615.aspx)
+///
+template <class T>
+static _Check_return_ HRESULT CoCreateInstance(_In_ REFCLSID rclsid, _In_opt_ LPUNKNOWN pUnkOuter, _In_ DWORD dwClsContext, _Inout_ winstd::com_obj<T> &v)
+{
+    T* ppv;
+    HRESULT hr = CoCreateInstance(rclsid, pUnkOuter, dwClsContext, __uuidof(T), (LPVOID*)&ppv);
+    if (SUCCEEDED(hr))
+        v.attach(ppv);
+    return hr;
+}
+
+/// @}

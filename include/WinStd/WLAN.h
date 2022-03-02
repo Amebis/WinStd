@@ -149,6 +149,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
+        __declspec(deprecated("Use WlanOpenHandle - mind it returns error number rather than SetLastError"))
         bool open(_In_ DWORD dwClientVersion, _Out_ PDWORD pdwNegotiatedVersion) noexcept
         {
             handle_type h;
@@ -176,3 +177,27 @@ namespace winstd
 
     /// @}
 }
+
+/// \addtogroup WinStdWLANAPI
+/// @{
+
+///
+/// Opens a connection to the server.
+///
+/// \sa [WlanOpenHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms706759.aspx)
+///
+#pragma warning(suppress: 4505) // Don't warn on unused code
+static DWORD WlanOpenHandle(
+    _In_ DWORD dwClientVersion,
+    _Reserved_ PVOID pReserved,
+    _Out_ PDWORD pdwNegotiatedVersion,
+    _Inout_ winstd::wlan_handle &handle)
+{
+    HANDLE h;
+    DWORD dwResult = WlanOpenHandle(dwClientVersion, pReserved, pdwNegotiatedVersion, &h);
+    if (dwResult == ERROR_SUCCESS)
+        handle.attach(h);
+    return dwResult;
+}
+
+/// @}

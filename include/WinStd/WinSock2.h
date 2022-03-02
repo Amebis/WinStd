@@ -90,7 +90,7 @@ namespace winstd
     ///
     /// SID wrapper class
     ///
-    class addrinfo : public handle<PADDRINFOT, NULL>
+    class addrinfo : public handle<PADDRINFOA, NULL>
     {
         WINSTD_HANDLE_IMPL(addrinfo, NULL)
 
@@ -100,13 +100,14 @@ namespace winstd
         ///
         /// \sa [GetAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-getaddrinfow)
         ///
+        __declspec(deprecated("Use GetAddrInfoA"))
         bool get(
-            _In_opt_ PCTSTR          pNodeName,
-            _In_opt_ PCTSTR          pServiceName,
-            _In_opt_ const ADDRINFOT *pHints)
+            _In_opt_ PCSTR           pNodeName,
+            _In_opt_ PCSTR           pServiceName,
+            _In_opt_ const ADDRINFOA *pHints)
         {
             handle_type h;
-            if (GetAddrInfo(pNodeName, pServiceName, pHints, &h) == 0) {
+            if (GetAddrInfoA(pNodeName, pServiceName, pHints, &h) == 0) {
                 attach(h);
                 return true;
             } else
@@ -132,11 +133,112 @@ namespace winstd
         ///
         void free_internal() noexcept override
         {
-            FreeAddrInfo(m_h);
+            FreeAddrInfoA(m_h);
         }
     };
+
+    ///
+    /// SID wrapper class
+    ///
+    class waddrinfo : public handle<PADDRINFOW, NULL>
+    {
+        WINSTD_HANDLE_IMPL(waddrinfo, NULL)
+
+    public:
+        ///
+        /// Provides protocol-independent translation from a host name to an address.
+        ///
+        /// \sa [GetAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-getaddrinfow)
+        ///
+        __declspec(deprecated("Use GetAddrInfoW"))
+        bool get(
+            _In_opt_ PCWSTR          pNodeName,
+            _In_opt_ PCWSTR          pServiceName,
+            _In_opt_ const ADDRINFOW *pHints)
+        {
+            handle_type h;
+            if (GetAddrInfoW(pNodeName, pServiceName, pHints, &h) == 0) {
+                attach(h);
+                return true;
+            } else
+                return false;
+        }
+
+        ///
+        /// Frees address information
+        ///
+        /// \sa [FreeAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-freeaddrinfow)
+        ///
+        virtual ~waddrinfo()
+        {
+            if (m_h != invalid)
+                free_internal();
+        }
+
+    protected:
+        ///
+        /// Frees address information
+        ///
+        /// \sa [FreeAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-freeaddrinfow)
+        ///
+        void free_internal() noexcept override
+        {
+            FreeAddrInfoW(m_h);
+        }
+    };
+
+    ///
+    /// Multi-byte / Wide-character SID wrapper class (according to _UNICODE)
+    ///
+#ifdef _UNICODE
+    typedef waddrinfo taddrinfo;
+#else
+    typedef addrinfo taddrinfo;
+#endif
 
 #endif
 
     /// @}
 }
+
+/// \addtogroup WinSock2API
+/// @{
+
+#pragma warning(push)
+#pragma warning(disable: 4505) // Don't warn on unused code
+
+/// @copydoc GetAddrInfoW()
+static INT GetAddrInfoA(
+    _In_opt_ PCSTR pNodeName,
+    _In_opt_ PCSTR pServiceName,
+    _In_opt_ const ADDRINFOA *pHints,
+    _Inout_ winstd::addrinfo &result)
+{
+    PADDRINFOA h;
+    INT iResult = GetAddrInfoA(pNodeName, pServiceName, pHints, &h);
+    if (iResult == 0)
+        result.attach(h);
+    return iResult;
+}
+
+///
+/// Provides protocol-independent translation from a host name to an address.
+///
+/// \sa [GetAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-getaddrinfow)
+///
+static INT GetAddrInfoW(
+    _In_opt_ PCWSTR pNodeName,
+    _In_opt_ PCWSTR pServiceName,
+    _In_opt_ const ADDRINFOW *pHints,
+    _Inout_ winstd::waddrinfo &result)
+{
+    PADDRINFOW h;
+    INT iResult = GetAddrInfoW(pNodeName, pServiceName, pHints, &h);
+    if (iResult == 0)
+        result.attach(h);
+    return iResult;
+}
+
+#pragma warning(pop)
+
+/// @}

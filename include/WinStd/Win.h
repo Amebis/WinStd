@@ -19,6 +19,18 @@
 ///
 /// @{
 
+///
+/// Implements default constructors and operators to prevent their auto-generation by compiler.
+///
+#define WINSTD_WINHANDLE_IMPL(C, INVAL) \
+public: \
+       C        (                        ) noexcept                                   {                                                           } \
+       C        (_In_opt_ handle_type   h) noexcept : win_handle<INVAL>(          h ) {                                                           } \
+       C        (_Inout_  C           &&h) noexcept : win_handle<INVAL>(std::move(h)) {                                                           } \
+    C& operator=(_In_opt_ handle_type   h) noexcept                                   { win_handle<INVAL>::operator=(          h ); return *this; } \
+    C& operator=(_Inout_  C           &&h) noexcept                                   { win_handle<INVAL>::operator=(std::move(h)); return *this; } \
+WINSTD_NONCOPYABLE(C)
+
 /// @copydoc GetModuleFileNameW()
 template<class _Traits, class _Ax>
 static DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept
@@ -1399,6 +1411,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
+        __declspec(deprecated("Use LoadLibraryEx"))
         bool load(_In_z_ LPCTSTR lpFileName, __reserved handle_type hFile, _In_ DWORD dwFlags) noexcept
         {
             handle_type h = LoadLibraryEx(lpFileName, hFile, dwFlags);
@@ -1426,6 +1439,8 @@ namespace winstd
     ///
     class process : public win_handle<NULL>
     {
+        WINSTD_WINHANDLE_IMPL(process, NULL)
+
     public:
         ///
         /// Opens process handle.
@@ -1436,6 +1451,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
+        __declspec(deprecated("Use OpenProcess"))
         bool open(_In_ DWORD dwDesiredAccess, _In_ BOOL bInheritHandle, _In_ DWORD dwProcessId) noexcept
         {
             handle_type h = OpenProcess(dwDesiredAccess, bInheritHandle, dwProcessId);
@@ -1452,6 +1468,8 @@ namespace winstd
     ///
     class file : public win_handle<INVALID_HANDLE_VALUE>
     {
+        WINSTD_WINHANDLE_IMPL(file, INVALID_HANDLE_VALUE)
+
     public:
         ///
         /// Opens file handle.
@@ -1462,6 +1480,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
+        __declspec(deprecated("Use CreateFile"))
         bool create(_In_z_ LPCTSTR lpFileName, _In_ DWORD dwDesiredAccess, _In_ DWORD dwShareMode, _In_ DWORD dwCreationDisposition, _In_opt_ DWORD dwFlagsAndAttributes = FILE_ATTRIBUTE_NORMAL, _In_opt_ LPSECURITY_ATTRIBUTES lpSecurityAttributes = NULL, _In_opt_ HANDLE hTemplateFile = NULL) noexcept
         {
             handle_type h = CreateFile(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
@@ -1478,6 +1497,8 @@ namespace winstd
     ///
     class file_mapping : public win_handle<NULL>
     {
+        WINSTD_WINHANDLE_IMPL(file_mapping, NULL)
+
     public:
         ///
         /// Creates or opens a named or unnamed file mapping object for a specified file.
@@ -1488,9 +1509,10 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
+        __declspec(deprecated("Use CreateFileMapping"))
         bool create(_In_ HANDLE hFile, _In_ DWORD flProtect, _In_ DWORD dwMaximumSizeHigh, _In_ DWORD dwMaximumSizeLow, _In_opt_ LPSECURITY_ATTRIBUTES lpFileMappingAttributes = NULL, _In_opt_ LPCTSTR lpName = NULL) noexcept
         {
-            handle_type h = CreateFileMappingW(hFile, lpFileMappingAttributes, flProtect, dwMaximumSizeHigh, dwMaximumSizeLow, lpName);
+            handle_type h = CreateFileMapping(hFile, lpFileMappingAttributes, flProtect, dwMaximumSizeHigh, dwMaximumSizeLow, lpName);
             if (h != invalid) {
                 attach(h);
                 return true;
@@ -1563,6 +1585,8 @@ namespace winstd
     ///
     class event : public win_handle<NULL>
     {
+        WINSTD_WINHANDLE_IMPL(event, NULL)
+
     public:
         ///
         /// Creates or opens a named or unnamed event object.
@@ -1573,6 +1597,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
+        __declspec(deprecated("Use CreateEvent"))
         bool create(_In_ BOOL bManualReset, _In_ BOOL bInitialState, _In_opt_ LPSECURITY_ATTRIBUTES lpEventAttributes = NULL, _In_opt_z_ LPCTSTR lpName = NULL) noexcept
         {
             handle_type h = CreateEvent(lpEventAttributes, bManualReset, bInitialState, lpName);
@@ -1592,6 +1617,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
+        __declspec(deprecated("Use OpenEvent"))
         bool open(_In_ DWORD dwDesiredAccess, _In_ BOOL bInheritHandle, _In_z_ LPCTSTR lpName) noexcept
         {
             handle_type h = OpenEvent(dwDesiredAccess, bInheritHandle, lpName);
@@ -1678,6 +1704,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
+        __declspec(deprecated("Use FindFirstFile"))
         bool find(_In_ LPCTSTR lpFileName, _Out_ LPWIN32_FIND_DATA lpFindFileData) noexcept
         {
             handle_type h = FindFirstFile(lpFileName, lpFindFileData);
@@ -1728,6 +1755,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
+        __declspec(deprecated("Use HeapCreate"))
         bool create(_In_ DWORD flOptions, _In_ SIZE_T dwInitialSize, _In_ SIZE_T dwMaximumSize) noexcept
         {
             handle_type h = HeapCreate(flOptions, dwInitialSize, dwMaximumSize);
@@ -2168,6 +2196,7 @@ namespace winstd
         ///
         /// \sa [RegCreateKeyEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724844.aspx)
         ///
+        __declspec(deprecated("Use RegCreateKeyEx - mind it returns error number rather than SetLastError"))
         bool create(
             _In_      HKEY                  hKey,
             _In_z_    LPCTSTR               lpSubKey,
@@ -2197,6 +2226,7 @@ namespace winstd
         ///
         /// \sa [RegOpenKeyEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724897.aspx)
         ///
+        __declspec(deprecated("Use RegOpenKeyEx - mind it returns error number rather than SetLastError"))
         bool open(
             _In_       HKEY    hKey,
             _In_opt_z_ LPCTSTR lpSubKey,
@@ -2204,7 +2234,7 @@ namespace winstd
             _In_       REGSAM  samDesired) noexcept
         {
             handle_type h;
-            const LONG s = RegOpenKeyEx(hKey, lpSubKey, ulOptions, samDesired, &h);
+            const LSTATUS s = RegOpenKeyEx(hKey, lpSubKey, ulOptions, samDesired, &h);
             if (s == ERROR_SUCCESS) {
                 attach(h);
                 return true;
@@ -2233,8 +2263,14 @@ namespace winstd
 
             {
                 reg_key k;
-                if (!k.open(m_h, szSubkey, 0, KEY_ENUMERATE_SUB_KEYS))
+                handle_type h;
+                s = RegOpenKeyEx(m_h, szSubkey, 0, KEY_ENUMERATE_SUB_KEYS, &h);
+                if (s == ERROR_SUCCESS)
+                    k.attach(h);
+                else {
+                    SetLastError(s);
                     return false;
+                }
                 for (;;) {
                     TCHAR szName[MAX_PATH];
                     DWORD dwSize = _countof(szName);
@@ -2368,6 +2404,7 @@ namespace winstd
         /// - \c true when succeeds;
         /// - \c false when fails. Use `GetLastError()` for failure reason.
         ///
+        __declspec(deprecated("Use RegisterEventSource"))
         bool open(_In_z_ LPCTSTR lpUNCServerName, _In_z_ LPCTSTR lpSourceName) noexcept
         {
             handle_type h = RegisterEventSource(lpUNCServerName, lpSourceName);
@@ -2392,3 +2429,93 @@ namespace winstd
 
     /// @}
 }
+
+/// \addtogroup WinStdWinAPI
+/// @{
+
+#pragma warning(push)
+#pragma warning(disable: 4505) // Don't warn on unused code
+
+/// @copydoc RegCreateKeyExW()
+static LSTATUS RegCreateKeyExA(
+    _In_ HKEY hKey,
+    _In_ LPCSTR lpSubKey,
+    _Reserved_ DWORD Reserved,
+    _In_opt_ LPSTR lpClass,
+    _In_ DWORD dwOptions,
+    _In_ REGSAM samDesired,
+    _In_opt_ CONST LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+    _Inout_ winstd::reg_key &result,
+    _Out_opt_ LPDWORD lpdwDisposition)
+{
+    HKEY h;
+    LSTATUS s = RegCreateKeyExA(hKey, lpSubKey, Reserved, lpClass, dwOptions, samDesired, lpSecurityAttributes, &h, lpdwDisposition);
+    if (s == ERROR_SUCCESS)
+        result.attach(h);
+    return s;
+}
+
+///
+/// Creates the specified registry key. If the key already exists, the function opens it.
+///
+/// \sa [RegCreateKeyEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724844.aspx)
+///
+static LSTATUS RegCreateKeyExW(
+    _In_ HKEY hKey,
+    _In_ LPCWSTR lpSubKey,
+    _Reserved_ DWORD Reserved,
+    _In_opt_ LPWSTR lpClass,
+    _In_ DWORD dwOptions,
+    _In_ REGSAM samDesired,
+    _In_opt_ CONST LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+    _Inout_ winstd::reg_key &result,
+    _Out_opt_ LPDWORD lpdwDisposition)
+{
+    HKEY h;
+    LSTATUS s = RegCreateKeyExW(hKey, lpSubKey, Reserved, lpClass, dwOptions, samDesired, lpSecurityAttributes, &h, lpdwDisposition);
+    if (s == ERROR_SUCCESS)
+        result.attach(h);
+    return s;
+}
+
+/// @copydoc RegOpenKeyExW()
+static LSTATUS RegOpenKeyExA(
+    _In_ HKEY hKey,
+    _In_opt_ LPCSTR lpSubKey,
+    _In_opt_ DWORD ulOptions,
+    _In_ REGSAM samDesired,
+    _Inout_ winstd::reg_key &result)
+{
+    HKEY h;
+    LSTATUS s = RegOpenKeyExA(hKey, lpSubKey, ulOptions, samDesired, &h);
+    if (s == ERROR_SUCCESS)
+        result.attach(h);
+    return s;
+}
+
+///
+/// Opens the specified registry key.
+///
+/// \return
+/// - true when creation succeeds;
+/// - false when creation fails. For extended error information, call `GetLastError()`.
+///
+/// \sa [RegOpenKeyEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724897.aspx)
+///
+static LSTATUS RegOpenKeyExW(
+    _In_ HKEY hKey,
+    _In_opt_ LPCWSTR lpSubKey,
+    _In_opt_ DWORD ulOptions,
+    _In_ REGSAM samDesired,
+    _Inout_ winstd::reg_key &result)
+{
+    HKEY h;
+    LSTATUS s = RegOpenKeyExW(hKey, lpSubKey, ulOptions, samDesired, &h);
+    if (s == ERROR_SUCCESS)
+        result.attach(h);
+    return s;
+}
+
+#pragma warning(pop)
+
+/// @}

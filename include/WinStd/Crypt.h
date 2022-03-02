@@ -273,6 +273,7 @@ namespace winstd
         ///
         /// \sa [CertCreateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376033.aspx)
         ///
+        __declspec(deprecated("Use CertCreateCertificateContext"))
         bool create(_In_  DWORD dwCertEncodingType, _In_  LPCBYTE pbCertEncoded, _In_  DWORD cbCertEncoded) noexcept
         {
             handle_type h = CertCreateCertificateContext(dwCertEncodingType, pbCertEncoded, cbCertEncoded);
@@ -422,6 +423,7 @@ namespace winstd
         ///
         /// \sa [CertGetCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376078.aspx)
         ///
+        __declspec(deprecated("Use CertGetCertificateChain"))
         bool create(_In_opt_ HCERTCHAINENGINE hChainEngine, _In_ PCCERT_CONTEXT pCertContext, _In_opt_ LPFILETIME pTime, _In_opt_ HCERTSTORE hAdditionalStore, _In_ PCERT_CHAIN_PARA pChainPara, _In_ DWORD dwFlags, __reserved LPVOID pvReserved = NULL) noexcept
         {
             handle_type h;
@@ -486,6 +488,7 @@ namespace winstd
         ///
         /// \sa [CertOpenStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376559.aspx)
         ///
+        __declspec(deprecated("Use CertOpenStore"))
         bool create(_In_ LPCSTR lpszStoreProvider, _In_ DWORD dwEncodingType, _In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ DWORD dwFlags, _In_opt_ const void *pvPara) noexcept
         {
             handle_type h = CertOpenStore(lpszStoreProvider, dwEncodingType, hCryptProv, dwFlags, pvPara);
@@ -505,6 +508,7 @@ namespace winstd
         ///
         /// \sa [CertOpenSystemStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376560.aspx)
         ///
+        __declspec(deprecated("Use CertOpenSystemStore"))
         bool create(_In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_z_ LPCTSTR szSubsystemProtocol) noexcept
         {
             handle_type h = CertOpenSystemStore(hCryptProv, szSubsystemProtocol);
@@ -555,6 +559,7 @@ namespace winstd
         ///
         /// \sa [CryptAcquireContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379886.aspx)
         ///
+        __declspec(deprecated("Use CryptAcquireContext"))
         bool create(_In_opt_z_ LPCTSTR szContainer, _In_opt_z_ LPCTSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags = 0) noexcept
         {
             handle_type h;
@@ -605,6 +610,7 @@ namespace winstd
         ///
         /// \sa [CryptCreateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379908.aspx)
         ///
+        __declspec(deprecated("Use CryptCreateHash"))
         bool create(_In_ HCRYPTPROV  hProv, _In_ ALG_ID Algid, _In_opt_ HCRYPTKEY hKey = NULL, _In_opt_ DWORD dwFlags = 0) noexcept
         {
             handle_type h;
@@ -637,7 +643,7 @@ namespace winstd
         ///
         handle_type duplicate_internal(_In_ handle_type h) const noexcept override
         {
-            handle_type hNew = invalid;
+            handle_type hNew;
             return CryptDuplicateHash(h, NULL, 0, &hNew) ? hNew : invalid;
         }
     };
@@ -666,6 +672,7 @@ namespace winstd
         ///
         /// \sa [CryptGenKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379941.aspx)
         ///
+        __declspec(deprecated("Use CryptGenKey"))
         bool generate(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ DWORD dwFlags) noexcept
         {
             handle_type h;
@@ -681,6 +688,7 @@ namespace winstd
         ///
         /// \sa [CryptImportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380207.aspx)
         ///
+        __declspec(deprecated("Use CryptImportKey"))
         bool import(_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) LPCBYTE pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags) noexcept
         {
             handle_type h;
@@ -696,6 +704,7 @@ namespace winstd
         ///
         /// \sa [CryptImportPublicKeyInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380209.aspx)
         ///
+        __declspec(deprecated("Use CryptImportPublicKeyInfo"))
         bool import_public(_In_ HCRYPTPROV hCryptProv, _In_ DWORD dwCertEncodingType, _In_ PCERT_PUBLIC_KEY_INFO pInfo) noexcept
         {
             handle_type h;
@@ -711,6 +720,7 @@ namespace winstd
         ///
         /// \sa [CryptDeriveKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379916.aspx)
         ///
+        __declspec(deprecated("Use CryptDeriveKey"))
         bool derive(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ HCRYPTHASH hBaseData, _In_ DWORD dwFlags) noexcept
         {
             handle_type h;
@@ -813,7 +823,7 @@ namespace winstd
         ///
         handle_type duplicate_internal(_In_ handle_type h) const noexcept override
         {
-            handle_type hNew = invalid;
+            handle_type hNew;
             return CryptDuplicateKey(h, NULL, 0, &hNew) ? hNew : invalid;
         }
     };
@@ -943,3 +953,121 @@ namespace winstd
 
     /// @}
 }
+
+/// \addtogroup WinStdCryptoAPI
+/// @{
+
+#pragma warning(push)
+#pragma warning(disable: 4505) // Don't warn on unused code
+
+///
+/// The CertGetCertificateChain function builds a certificate chain context starting from an end certificate and going back, if possible, to a trusted root certificate.
+///
+/// \sa [CertGetCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376078.aspx)
+///
+static BOOL CertGetCertificateChain(_In_opt_ HCERTCHAINENGINE hChainEngine, _In_ PCCERT_CONTEXT pCertContext, _In_opt_ LPFILETIME pTime, _In_opt_ HCERTSTORE hAdditionalStore, _In_ PCERT_CHAIN_PARA pChainPara, _In_ DWORD dwFlags, _Reserved_ LPVOID pvReserved, _Inout_ winstd::cert_chain_context &ctx)
+{
+    PCCERT_CHAIN_CONTEXT pChainContext;
+    BOOL bResult = CertGetCertificateChain(hChainEngine, pCertContext, pTime, hAdditionalStore, pChainPara, dwFlags, pvReserved, &pChainContext);
+    if (bResult)
+        ctx.attach(pChainContext);
+    return bResult;
+}
+
+/// @copydoc CryptAcquireContextW()
+static BOOL CryptAcquireContextA(_Inout_ winstd::crypt_prov &prov, _In_opt_ LPCSTR szContainer, _In_opt_ LPCSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags)
+{
+    HCRYPTPROV h;
+    BOOL bResult = CryptAcquireContextA(&h, szContainer, szProvider, dwProvType, dwFlags);
+    if (bResult)
+        prov.attach(h);
+    return bResult;
+}
+
+///
+/// Acquires the cryptographic context.
+///
+/// \sa [CryptAcquireContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379886.aspx)
+///
+static BOOL CryptAcquireContextW(_Inout_ winstd::crypt_prov &prov, _In_opt_ LPCWSTR szContainer, _In_opt_ LPCWSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags)
+{
+    HCRYPTPROV h;
+    BOOL bResult = CryptAcquireContextW(&h, szContainer, szProvider, dwProvType, dwFlags);
+    if (bResult)
+        prov.attach(h);
+    return bResult;
+}
+
+///
+/// Creates the hash context.
+///
+/// \sa [CryptCreateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379908.aspx)
+///
+static BOOL CryptCreateHash(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ HCRYPTKEY hKey, _In_ DWORD dwFlags, _Inout_ winstd::crypt_hash &hash)
+{
+    HCRYPTHASH h;
+    BOOL bResult = CryptCreateHash(hProv, Algid, hKey, dwFlags, &h);
+    if (bResult)
+        hash.attach(h);
+    return bResult;
+}
+
+///
+/// Generates the key.
+///
+/// \sa [CryptGenKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379941.aspx)
+///
+static BOOL CryptGenKey(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ DWORD dwFlags, _Inout_ winstd::crypt_key &key)
+{
+    HCRYPTKEY h;
+    BOOL bResult = CryptGenKey(hProv, Algid, dwFlags, &h);
+    if (bResult)
+        key.attach(h);
+    return bResult;
+}
+
+///
+/// Imports the key.
+///
+/// \sa [CryptImportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380207.aspx)
+///
+static bool CryptImportKey(_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) LPCBYTE pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags, _Inout_ winstd::crypt_key &key)
+{
+    HCRYPTKEY h;
+    BOOL bResult = CryptImportKey(hProv, pbData, dwDataLen, hPubKey, dwFlags, &h);
+    if (bResult)
+        key.attach(h);
+    return bResult;
+}
+
+///
+/// Imports the public key.
+///
+/// \sa [CryptImportPublicKeyInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380209.aspx)
+///
+static bool CryptImportPublicKeyInfo(_In_ HCRYPTPROV hCryptProv, _In_ DWORD dwCertEncodingType, _In_ PCERT_PUBLIC_KEY_INFO pInfo, _Inout_ winstd::crypt_key &key)
+{
+    HCRYPTKEY h;
+    BOOL bResult = CryptImportPublicKeyInfo(hCryptProv, dwCertEncodingType, pInfo, &h);
+    if (bResult)
+        key.attach(h);
+    return bResult;
+}
+
+///
+/// Generates cryptographic session keys derived from a base data value.
+///
+/// \sa [CryptDeriveKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379916.aspx)
+///
+static bool CryptDeriveKey(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ HCRYPTHASH hBaseData, _In_ DWORD dwFlags, _Inout_ winstd::crypt_key &key)
+{
+    HCRYPTKEY h;
+    BOOL bResult = CryptDeriveKey(hProv, Algid, hBaseData, dwFlags, &h);
+    if (bResult)
+        key.attach(h);
+    return bResult;
+}
+
+#pragma warning(pop)
+
+/// @}

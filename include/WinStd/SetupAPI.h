@@ -45,6 +45,7 @@ namespace winstd
         ///
         /// \sa [SetupDiCreateDeviceInfoList function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdicreatedeviceinfolist)
         ///
+        __declspec(deprecated("Use SetupDiCreateDeviceInfoList"))
         bool create(
             _In_opt_ const GUID * ClassGuid,
             _In_opt_ HWND         hwndParent) noexcept
@@ -67,6 +68,7 @@ namespace winstd
         ///
         /// \sa [SetupDiGetClassDevsExW function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetclassdevsexw)
         ///
+        __declspec(deprecated("Use SetupDiGetClassDevsEx"))
         bool create(
             _In_opt_   const GUID * ClassGuid,
             _In_opt_   PCTSTR       Enumerator,
