@@ -69,7 +69,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classwinstd_1_1cert__context-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">winstd::cert_context Class Reference<div class="ingroups"><a class="el" href="group___win_std_crypto_a_p_i.html">Cryptography API</a></div></div></div>
@@ -96,12 +95,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:affa4b97554e6676d392301b5928130fd"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1cert__context.html#affa4b97554e6676d392301b5928130fd">~cert_context</a> ()</td></tr>
 <tr class="memdesc:affa4b97554e6676d392301b5928130fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the certificate context.  <a href="classwinstd_1_1cert__context.html#affa4b97554e6676d392301b5928130fd">More...</a><br /></td></tr>
 <tr class="separator:affa4b97554e6676d392301b5928130fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac69666d447dd88f5f4b0e15824200270"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1cert__context.html#ac69666d447dd88f5f4b0e15824200270">__declspec</a> (deprecated(&quot;Use CertCreateCertificateContext&quot;)) bool create(DWORD dwCertEncodingType</td></tr>
-<tr class="memdesc:ac69666d447dd88f5f4b0e15824200270"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the certificate context.  <a href="classwinstd_1_1cert__context.html#ac69666d447dd88f5f4b0e15824200270">More...</a><br /></td></tr>
-<tr class="separator:ac69666d447dd88f5f4b0e15824200270"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85d11a340a11da4edf944c1edd30f475"><td class="memItemLeft" align="right" valign="top"><a id="a85d11a340a11da4edf944c1edd30f475" name="a85d11a340a11da4edf944c1edd30f475"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (h !=<a class="el" href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">invalid</a>)</td></tr>
-<tr class="separator:a85d11a340a11da4edf944c1edd30f475"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f3ad38a637fce69d8c2a5ee3460a296"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1cert__context.html#a2f3ad38a637fce69d8c2a5ee3460a296">operator==</a> (const <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> &amp;other) const noexcept</td></tr>
 <tr class="memdesc:a2f3ad38a637fce69d8c2a5ee3460a296"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is certificate equal to?  <a href="classwinstd_1_1cert__context.html#a2f3ad38a637fce69d8c2a5ee3460a296">More...</a><br /></td></tr>
 <tr class="separator:a2f3ad38a637fce69d8c2a5ee3460a296"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -210,17 +203,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>free</b> ()</td></tr>
 <tr class="memdesc:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the object. <br /></td></tr>
 <tr class="separator:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a9f01d70fbc84f645ca10f6b88471348a"><td class="memItemLeft" align="right" valign="top"><a id="a9f01d70fbc84f645ca10f6b88471348a" name="a9f01d70fbc84f645ca10f6b88471348a"></a>
-LPCBYTE&#160;</td><td class="memItemRight" valign="bottom"><b>pbCertEncoded</b></td></tr>
-<tr class="separator:a9f01d70fbc84f645ca10f6b88471348a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e8b87f00b69368222ef9a2a8dc4e1a2"><td class="memItemLeft" align="right" valign="top">LPCBYTE DWORD cbCertEncoded&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1cert__context.html#a5e8b87f00b69368222ef9a2a8dc4e1a2">noexcept</a></td></tr>
-<tr class="separator:a5e8b87f00b69368222ef9a2a8dc4e1a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa24a897eab036d39156b7bc579b0a30e"><td class="memItemLeft" align="right" valign="top"><a id="aa24a897eab036d39156b7bc579b0a30e" name="aa24a897eab036d39156b7bc579b0a30e"></a>
-else return&#160;</td><td class="memItemRight" valign="bottom"><b>false</b></td></tr>
-<tr class="separator:aa24a897eab036d39156b7bc579b0a30e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a1615ec6693eb68764543456ad418a970"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1cert__context.html#a1615ec6693eb68764543456ad418a970">free_internal</a> () noexcept override</td></tr>
@@ -256,6 +238,7 @@ static const PCCERT_CONTEXT&#160;</td><td class="memItemRight" valign="bottom"><
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >PCCERT_CONTEXT wrapper class. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa376033.aspx">CertCreateCertificateContext function</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="affa4b97554e6676d392301b5928130fd" name="affa4b97554e6676d392301b5928130fd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#affa4b97554e6676d392301b5928130fd">&#9670;&nbsp;</a></span>~cert_context()</h2>
@@ -286,32 +269,6 @@ static const PCCERT_CONTEXT&#160;</td><td class="memItemRight" valign="bottom"><
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac69666d447dd88f5f4b0e15824200270" name="ac69666d447dd88f5f4b0e15824200270"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac69666d447dd88f5f4b0e15824200270">&#9670;&nbsp;</a></span>__declspec()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">winstd::cert_context::__declspec </td>
-          <td>(</td>
-          <td class="paramtype">deprecated(&quot;Use CertCreateCertificateContext&quot;)&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Creates the certificate context. </p>
-<dl class="section return"><dt>Returns</dt><dd><ul>
-<li>true when creation succeeds;</li>
-<li>false when creation fails. For extended error information, call <code>GetLastError()</code>.</li>
-</ul>
-</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa376033.aspx">CertCreateCertificateContext function</a> </dd></dl>
-
-</div>
-</div>
 <a id="a3d0ee01002ccef041ffb164151cab14b" name="a3d0ee01002ccef041ffb164151cab14b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3d0ee01002ccef041ffb164151cab14b">&#9670;&nbsp;</a></span>duplicate_internal()</h2>
 
@@ -614,31 +571,13 @@ static const PCCERT_CONTEXT&#160;</td><td class="memItemRight" valign="bottom"><
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a5e8b87f00b69368222ef9a2a8dc4e1a2" name="a5e8b87f00b69368222ef9a2a8dc4e1a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e8b87f00b69368222ef9a2a8dc4e1a2">&#9670;&nbsp;</a></span>noexcept</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">LPCBYTE DWORD cbCertEncoded winstd::cert_context::noexcept</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">            <a class="code hl_typedef" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h = CertCreateCertificateContext(dwCertEncodingType, pbCertEncoded, cbCertEncoded)</div>
-<div class="ttc" id="aclasswinstd_1_1handle_html_a3dda19199ecfbc378c932e7d84d0ea81"><div class="ttname"><a href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">winstd::handle&lt; PCCERT_CONTEXT, INVAL &gt;::handle_type</a></div><div class="ttdeci">PCCERT_CONTEXT handle_type</div><div class="ttdoc">Datatype of the object handle this template class handles.</div><div class="ttdef"><b>Definition:</b> Common.h:608</div></div>
-</div><!-- fragment -->
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/WinStd/<a class="el" href="_crypt_8h_source.html">Crypt.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 08:18:01 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Thu Mar 3 2022 15:02:05 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

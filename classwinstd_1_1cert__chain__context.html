@@ -69,7 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classwinstd_1_1cert__chain__context-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">winstd::cert_chain_context Class Reference<div class="ingroups"><a class="el" href="group___win_std_crypto_a_p_i.html">Cryptography API</a></div></div></div>
 </div><!--header-->
@@ -95,9 +95,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9f8b8604ea5766ffa59726b46e210eb3"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1cert__chain__context.html#a9f8b8604ea5766ffa59726b46e210eb3">~cert_chain_context</a> ()</td></tr>
 <tr class="memdesc:a9f8b8604ea5766ffa59726b46e210eb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the certificate chain context.  <a href="classwinstd_1_1cert__chain__context.html#a9f8b8604ea5766ffa59726b46e210eb3">More...</a><br /></td></tr>
 <tr class="separator:a9f8b8604ea5766ffa59726b46e210eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9812a21e3b8b02f8f9de905136efdc9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1cert__chain__context.html#ad9812a21e3b8b02f8f9de905136efdc9">__declspec</a> (deprecated(&quot;Use CertGetCertificateChain&quot;)) bool create(HCERTCHAINENGINE hChainEngine</td></tr>
-<tr class="memdesc:ad9812a21e3b8b02f8f9de905136efdc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the certificate chain context.  <a href="classwinstd_1_1cert__chain__context.html#ad9812a21e3b8b02f8f9de905136efdc9">More...</a><br /></td></tr>
-<tr class="separator:ad9812a21e3b8b02f8f9de905136efdc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classwinstd_1_1dplhandle"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classwinstd_1_1dplhandle')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classwinstd_1_1dplhandle.html">winstd::dplhandle&lt; PCCERT_CHAIN_CONTEXT, NULL &gt;</a></td></tr>
 <tr class="memitem:ac95cbfb481c0d5e6c60d130f3c270b59 inherit pub_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top"><a id="ac95cbfb481c0d5e6c60d130f3c270b59" name="ac95cbfb481c0d5e6c60d130f3c270b59"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>dplhandle</b> () noexcept</td></tr>
@@ -188,23 +185,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>free</b> ()</td></tr>
 <tr class="memdesc:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the object. <br /></td></tr>
 <tr class="separator:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a1a81bfff33925e6b0424588ada2b16f1"><td class="memItemLeft" align="right" valign="top"><a id="a1a81bfff33925e6b0424588ada2b16f1" name="a1a81bfff33925e6b0424588ada2b16f1"></a>
-PCCERT_CONTEXT&#160;</td><td class="memItemRight" valign="bottom"><b>pCertContext</b></td></tr>
-<tr class="separator:a1a81bfff33925e6b0424588ada2b16f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa8873cd80c879d7f8bcc34d3384e485"><td class="memItemLeft" align="right" valign="top"><a id="aaa8873cd80c879d7f8bcc34d3384e485" name="aaa8873cd80c879d7f8bcc34d3384e485"></a>
-PCCERT_CONTEXT LPFILETIME&#160;</td><td class="memItemRight" valign="bottom"><b>pTime</b></td></tr>
-<tr class="separator:aaa8873cd80c879d7f8bcc34d3384e485"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e76739612018a558f72934d5e75a080"><td class="memItemLeft" align="right" valign="top"><a id="a9e76739612018a558f72934d5e75a080" name="a9e76739612018a558f72934d5e75a080"></a>
-PCCERT_CONTEXT LPFILETIME HCERTSTORE&#160;</td><td class="memItemRight" valign="bottom"><b>hAdditionalStore</b></td></tr>
-<tr class="separator:a9e76739612018a558f72934d5e75a080"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25b3f0b1b28881707105bfc70ccabe3a"><td class="memItemLeft" align="right" valign="top"><a id="a25b3f0b1b28881707105bfc70ccabe3a" name="a25b3f0b1b28881707105bfc70ccabe3a"></a>
-PCCERT_CONTEXT LPFILETIME HCERTSTORE PCERT_CHAIN_PARA&#160;</td><td class="memItemRight" valign="bottom"><b>pChainPara</b></td></tr>
-<tr class="separator:a25b3f0b1b28881707105bfc70ccabe3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f2c321cdbffcf70c66267b944b72ad7"><td class="memItemLeft" align="right" valign="top"><a id="a5f2c321cdbffcf70c66267b944b72ad7" name="a5f2c321cdbffcf70c66267b944b72ad7"></a>
-PCCERT_CONTEXT LPFILETIME HCERTSTORE PCERT_CHAIN_PARA DWORD&#160;</td><td class="memItemRight" valign="bottom"><b>dwFlags</b></td></tr>
-<tr class="separator:a5f2c321cdbffcf70c66267b944b72ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:ae15044b1a7be10d96643d3921e149ee6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1cert__chain__context.html#ae15044b1a7be10d96643d3921e149ee6">free_internal</a> () noexcept override</td></tr>
+<tr class="memdesc:ae15044b1a7be10d96643d3921e149ee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the certificate chain context.  <a href="classwinstd_1_1cert__chain__context.html#ae15044b1a7be10d96643d3921e149ee6">More...</a><br /></td></tr>
+<tr class="separator:ae15044b1a7be10d96643d3921e149ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cded78d368c01b0513364f00be26385"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1cert__chain__context.html#a1cded78d368c01b0513364f00be26385">duplicate_internal</a> (<a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const noexcept override</td></tr>
+<tr class="memdesc:a1cded78d368c01b0513364f00be26385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicates the certificate chain context.  <a href="classwinstd_1_1cert__chain__context.html#a1cded78d368c01b0513364f00be26385">More...</a><br /></td></tr>
+<tr class="separator:a1cded78d368c01b0513364f00be26385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6ec5fd1ce258a3dd66da1cfb4d6dfb8"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#aa6ec5fd1ce258a3dd66da1cfb4d6dfb8">duplicate_internal</a> (<a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const noexcept=0</td></tr>
+<tr class="memdesc:aa6ec5fd1ce258a3dd66da1cfb4d6dfb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract member function that must be implemented by child classes to do the actual object handle duplication.  <a href="classwinstd_1_1dplhandle.html#aa6ec5fd1ce258a3dd66da1cfb4d6dfb8">More...</a><br /></td></tr>
+<tr class="separator:aa6ec5fd1ce258a3dd66da1cfb4d6dfb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a137560600851eb4c3e4b80e25d4da629"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1handle.html#a137560600851eb4c3e4b80e25d4da629">free_internal</a> () noexcept=0</td></tr>
+<tr class="memdesc:a137560600851eb4c3e4b80e25d4da629"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract member function that must be implemented by child classes to do the actual object destruction.  <a href="classwinstd_1_1handle.html#a137560600851eb4c3e4b80e25d4da629">More...</a><br /></td></tr>
+<tr class="separator:a137560600851eb4c3e4b80e25d4da629"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -218,15 +212,6 @@ typedef PCCERT_CHAIN_CONTEXT&#160;</td><td class="memItemRight" valign="bottom">
 static const PCCERT_CHAIN_CONTEXT&#160;</td><td class="memItemRight" valign="bottom"><b>invalid</b></td></tr>
 <tr class="memdesc:gacf43e306968474166474090690857e1c inherit pub_static_attribs_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid handle value. <br /></td></tr>
 <tr class="separator:gacf43e306968474166474090690857e1c inherit pub_static_attribs_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_classwinstd_1_1dplhandle"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classwinstd_1_1dplhandle')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classwinstd_1_1dplhandle.html">winstd::dplhandle&lt; PCCERT_CHAIN_CONTEXT, NULL &gt;</a></td></tr>
-<tr class="memitem:aa6ec5fd1ce258a3dd66da1cfb4d6dfb8 inherit pro_methods_classwinstd_1_1dplhandle"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1dplhandle.html#aa6ec5fd1ce258a3dd66da1cfb4d6dfb8">duplicate_internal</a> (<a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h) const noexcept=0</td></tr>
-<tr class="memdesc:aa6ec5fd1ce258a3dd66da1cfb4d6dfb8 inherit pro_methods_classwinstd_1_1dplhandle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract member function that must be implemented by child classes to do the actual object handle duplication.  <a href="classwinstd_1_1dplhandle.html#aa6ec5fd1ce258a3dd66da1cfb4d6dfb8">More...</a><br /></td></tr>
-<tr class="separator:aa6ec5fd1ce258a3dd66da1cfb4d6dfb8 inherit pro_methods_classwinstd_1_1dplhandle"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_classwinstd_1_1handle"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classwinstd_1_1handle')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classwinstd_1_1handle.html">winstd::handle&lt; PCCERT_CHAIN_CONTEXT, INVAL &gt;</a></td></tr>
-<tr class="memitem:a137560600851eb4c3e4b80e25d4da629 inherit pro_methods_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top"><a id="a137560600851eb4c3e4b80e25d4da629" name="a137560600851eb4c3e4b80e25d4da629"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>free_internal</b> () noexcept=0</td></tr>
-<tr class="memdesc:a137560600851eb4c3e4b80e25d4da629 inherit pro_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract member function that must be implemented by child classes to do the actual object destruction. <br /></td></tr>
-<tr class="separator:a137560600851eb4c3e4b80e25d4da629 inherit pro_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classwinstd_1_1handle"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classwinstd_1_1handle')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classwinstd_1_1handle.html">winstd::handle&lt; PCCERT_CHAIN_CONTEXT, INVAL &gt;</a></td></tr>
 <tr class="memitem:aabde3f16fd98b06b3b0282ef7806eb59 inherit pro_attribs_classwinstd_1_1handle"><td class="memItemLeft" align="right" valign="top"><a id="aabde3f16fd98b06b3b0282ef7806eb59" name="aabde3f16fd98b06b3b0282ef7806eb59"></a>
 <a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_h</b></td></tr>
@@ -235,6 +220,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>free_internal
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >PCCERT_CHAIN_CONTEXT wrapper class. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa376078.aspx">CertGetCertificateChain function</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a9f8b8604ea5766ffa59726b46e210eb3" name="a9f8b8604ea5766ffa59726b46e210eb3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9f8b8604ea5766ffa59726b46e210eb3">&#9670;&nbsp;</a></span>~cert_chain_context()</h2>
@@ -265,29 +251,71 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>free_internal
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad9812a21e3b8b02f8f9de905136efdc9" name="ad9812a21e3b8b02f8f9de905136efdc9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9812a21e3b8b02f8f9de905136efdc9">&#9670;&nbsp;</a></span>__declspec()</h2>
+<a id="a1cded78d368c01b0513364f00be26385" name="a1cded78d368c01b0513364f00be26385"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cded78d368c01b0513364f00be26385">&#9670;&nbsp;</a></span>duplicate_internal()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">winstd::cert_chain_context::__declspec </td>
+          <td class="memname"><a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> winstd::cert_chain_context::duplicate_internal </td>
           <td>(</td>
-          <td class="paramtype">deprecated(&quot;Use CertGetCertificateChain&quot;)&#160;</td>
+          <td class="paramtype"><a class="el" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a>&#160;</td>
+          <td class="paramname"><em>h</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Duplicates the certificate chain context. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">h</td><td>Object handle of existing certificate chain context</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Duplicated certificate chain context handle</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa376045.aspx">CertDuplicateCertificateContext function</a> </dd></dl>
+
+<p>Implements <a class="el" href="classwinstd_1_1dplhandle.html#aa6ec5fd1ce258a3dd66da1cfb4d6dfb8">winstd::dplhandle&lt; PCCERT_CHAIN_CONTEXT, NULL &gt;</a>.</p>
+
+</div>
+</div>
+<a id="ae15044b1a7be10d96643d3921e149ee6" name="ae15044b1a7be10d96643d3921e149ee6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae15044b1a7be10d96643d3921e149ee6">&#9670;&nbsp;</a></span>free_internal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void winstd::cert_chain_context::free_internal </td>
+          <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Creates the certificate chain context. </p>
-<dl class="section return"><dt>Returns</dt><dd><ul>
-<li>true when creation succeeds;</li>
-<li>false when creation fails. For extended error information, call <code>GetLastError()</code>.</li>
-</ul>
-</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa376078.aspx">CertGetCertificateChain function</a> </dd></dl>
+<p>Destroys the certificate chain context. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa376073.aspx">CertFreeCertificateChain function</a> </dd></dl>
+
+<p>Implements <a class="el" href="classwinstd_1_1handle.html#a137560600851eb4c3e4b80e25d4da629">winstd::handle&lt; PCCERT_CHAIN_CONTEXT, INVAL &gt;</a>.</p>
 
 </div>
 </div>
@@ -297,7 +325,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>free_internal
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 08:18:01 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Thu Mar 3 2022 15:02:05 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

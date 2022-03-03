@@ -69,7 +69,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classwinstd_1_1waddrinfo-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">winstd::waddrinfo Class Reference<div class="ingroups"><a class="el" href="group___win_sock2_a_p_i.html">WinSock2 API</a></div></div></div>
@@ -92,12 +91,6 @@ Inheritance diagram for winstd::waddrinfo:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a76c68fdab030ad17fa59b8879657a12e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1waddrinfo.html#a76c68fdab030ad17fa59b8879657a12e">__declspec</a> (deprecated(&quot;Use GetAddrInfoW&quot;)) bool get(PCWSTR pNodeName</td></tr>
-<tr class="memdesc:a76c68fdab030ad17fa59b8879657a12e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides protocol-independent translation from a host name to an address.  <a href="classwinstd_1_1waddrinfo.html#a76c68fdab030ad17fa59b8879657a12e">More...</a><br /></td></tr>
-<tr class="separator:a76c68fdab030ad17fa59b8879657a12e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a8049b3065211f8d82dd211d6d17a0e"><td class="memItemLeft" align="right" valign="top"><a id="a1a8049b3065211f8d82dd211d6d17a0e" name="a1a8049b3065211f8d82dd211d6d17a0e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (GetAddrInfoW(pNodeName, pServiceName, pHints, &amp;h)==0)</td></tr>
-<tr class="separator:a1a8049b3065211f8d82dd211d6d17a0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b1209904bd7486acefd833ff5c4bcca"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1waddrinfo.html#a2b1209904bd7486acefd833ff5c4bcca">~waddrinfo</a> ()</td></tr>
 <tr class="memdesc:a2b1209904bd7486acefd833ff5c4bcca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees address information.  <a href="classwinstd_1_1waddrinfo.html#a2b1209904bd7486acefd833ff5c4bcca">More...</a><br /></td></tr>
 <tr class="separator:a2b1209904bd7486acefd833ff5c4bcca"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,17 +155,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>free</b> ()</td></tr>
 <tr class="memdesc:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the object. <br /></td></tr>
 <tr class="separator:a706aaab7691a472c608890f8e5dd0d96 inherit pub_methods_classwinstd_1_1handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a6c4d9078d5b89e8ad8e3af06f80861f1"><td class="memItemLeft" align="right" valign="top"><a id="a6c4d9078d5b89e8ad8e3af06f80861f1" name="a6c4d9078d5b89e8ad8e3af06f80861f1"></a>
-PCWSTR&#160;</td><td class="memItemRight" valign="bottom"><b>pServiceName</b></td></tr>
-<tr class="separator:a6c4d9078d5b89e8ad8e3af06f80861f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a820fb272d438f9e6a40eed0337e915d2"><td class="memItemLeft" align="right" valign="top">PCWSTR const ADDRINFOW *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1waddrinfo.html#a820fb272d438f9e6a40eed0337e915d2">pHints</a></td></tr>
-<tr class="separator:a820fb272d438f9e6a40eed0337e915d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d00f994487d2a3774d89b19aac93d4d"><td class="memItemLeft" align="right" valign="top"><a id="a7d00f994487d2a3774d89b19aac93d4d" name="a7d00f994487d2a3774d89b19aac93d4d"></a>
-else return&#160;</td><td class="memItemRight" valign="bottom"><b>false</b></td></tr>
-<tr class="separator:a7d00f994487d2a3774d89b19aac93d4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a479f7602b60a4c4205a9327f91e25f66"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1waddrinfo.html#a479f7602b60a4c4205a9327f91e25f66">free_internal</a> () noexcept override</td></tr>
@@ -202,6 +184,7 @@ static const PADDRINFOW&#160;</td><td class="memItemRight" valign="bottom"><b>in
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >SID wrapper class. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-getaddrinfow">GetAddrInfoW function</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2b1209904bd7486acefd833ff5c4bcca" name="a2b1209904bd7486acefd833ff5c4bcca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2b1209904bd7486acefd833ff5c4bcca">&#9670;&nbsp;</a></span>~waddrinfo()</h2>
@@ -232,27 +215,6 @@ static const PADDRINFOW&#160;</td><td class="memItemRight" valign="bottom"><b>in
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a76c68fdab030ad17fa59b8879657a12e" name="a76c68fdab030ad17fa59b8879657a12e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a76c68fdab030ad17fa59b8879657a12e">&#9670;&nbsp;</a></span>__declspec()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">winstd::waddrinfo::__declspec </td>
-          <td>(</td>
-          <td class="paramtype">deprecated(&quot;Use GetAddrInfoW&quot;)&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Provides protocol-independent translation from a host name to an address. </p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-getaddrinfow">GetAddrInfoW function</a> </dd></dl>
-
-</div>
-</div>
 <a id="a479f7602b60a4c4205a9327f91e25f66" name="a479f7602b60a4c4205a9327f91e25f66"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a479f7602b60a4c4205a9327f91e25f66">&#9670;&nbsp;</a></span>free_internal()</h2>
 
@@ -283,31 +245,13 @@ static const PADDRINFOW&#160;</td><td class="memItemRight" valign="bottom"><b>in
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a820fb272d438f9e6a40eed0337e915d2" name="a820fb272d438f9e6a40eed0337e915d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a820fb272d438f9e6a40eed0337e915d2">&#9670;&nbsp;</a></span>pHints</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">PCWSTR const ADDRINFOW* winstd::waddrinfo::pHints</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">            <a class="code hl_typedef" href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">handle_type</a> h</div>
-<div class="ttc" id="aclasswinstd_1_1handle_html_a3dda19199ecfbc378c932e7d84d0ea81"><div class="ttname"><a href="classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81">winstd::handle&lt; PADDRINFOW, NULL &gt;::handle_type</a></div><div class="ttdeci">PADDRINFOW handle_type</div><div class="ttdoc">Datatype of the object handle this template class handles.</div><div class="ttdef"><b>Definition:</b> Common.h:608</div></div>
-</div><!-- fragment -->
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/WinStd/<a class="el" href="_win_sock2_8h_source.html">WinSock2.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 08:18:01 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Thu Mar 3 2022 15:02:05 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>
