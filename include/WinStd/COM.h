@@ -77,23 +77,14 @@ namespace winstd
     ///
     /// COM object wrapper template
     ///
+    /// \sa [CoCreateInstance function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms686615.aspx)
+    ///
     template <class T>
     class com_obj : public dplhandle<T*, NULL>
     {
         WINSTD_DPLHANDLE_IMPL(com_obj, NULL)
 
     public:
-        ///
-        /// Constructs a new object and creates a new class with it
-        ///
-        /// \sa [CoCreateInstance function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms686615.aspx)
-        ///
-        __declspec(deprecated("Use CoCreateInstance"))
-        com_obj(_In_ REFCLSID rclsid, _In_opt_ LPUNKNOWN pUnkOuter = NULL, DWORD dwClsContext = CLSCTX_ALL)
-        {
-            CoCreateInstance(rclsid, pUnkOuter, dwClsContext, __uuidof(T), (LPVOID*)&m_h);
-        }
-
         ///
         /// Queries the object for another interface and creates new class with it
         ///
@@ -124,21 +115,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Creates a new object
-        ///
-        /// \sa [CoCreateInstance function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms686615.aspx)
-        ///
-        __declspec(deprecated("Use CoCreateInstance"))
-        HRESULT create(_In_ REFCLSID rclsid, _In_opt_ LPUNKNOWN pUnkOuter = NULL, _In_ DWORD dwClsContext = CLSCTX_ALL)
-        {
-            handle_type h;
-            HRESULT hr = CoCreateInstance(rclsid, pUnkOuter, dwClsContext, __uuidof(T), (void**)&h);
-            if (SUCCEEDED(hr))
-                attach(h);
-            return hr;
         }
 
         ///

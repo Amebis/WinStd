@@ -248,6 +248,8 @@ namespace winstd
     ///
     /// PCCERT_CONTEXT wrapper class
     ///
+    /// \sa [CertCreateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376033.aspx)
+    ///
     class cert_context : public dplhandle<PCCERT_CONTEXT, NULL>
     {
         WINSTD_DPLHANDLE_IMPL(cert_context, NULL)
@@ -262,26 +264,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Creates the certificate context.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [CertCreateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376033.aspx)
-        ///
-        __declspec(deprecated("Use CertCreateCertificateContext"))
-        bool create(_In_  DWORD dwCertEncodingType, _In_  LPCBYTE pbCertEncoded, _In_  DWORD cbCertEncoded) noexcept
-        {
-            handle_type h = CertCreateCertificateContext(dwCertEncodingType, pbCertEncoded, cbCertEncoded);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            } else
-                return false;
         }
 
         ///
@@ -398,6 +380,8 @@ namespace winstd
     ///
     /// PCCERT_CHAIN_CONTEXT wrapper class
     ///
+    /// \sa [CertGetCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376078.aspx)
+    ///
     class cert_chain_context : public dplhandle<PCCERT_CHAIN_CONTEXT, NULL>
     {
         WINSTD_DPLHANDLE_IMPL(cert_chain_context, NULL)
@@ -412,26 +396,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Creates the certificate chain context.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [CertGetCertificateChain function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376078.aspx)
-        ///
-        __declspec(deprecated("Use CertGetCertificateChain"))
-        bool create(_In_opt_ HCERTCHAINENGINE hChainEngine, _In_ PCCERT_CONTEXT pCertContext, _In_opt_ LPFILETIME pTime, _In_opt_ HCERTSTORE hAdditionalStore, _In_ PCERT_CHAIN_PARA pChainPara, _In_ DWORD dwFlags, __reserved LPVOID pvReserved = NULL) noexcept
-        {
-            handle_type h;
-            if (CertGetCertificateChain(hChainEngine, pCertContext, pTime, hAdditionalStore, pChainPara, dwFlags, pvReserved, &h)) {
-                attach(h);
-                return true;
-            } else
-                return false;
         }
 
     protected:
@@ -463,6 +427,9 @@ namespace winstd
     ///
     /// HCERTSTORE wrapper class
     ///
+    /// \sa [CertOpenStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376559.aspx)
+    /// \sa [CertOpenSystemStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376560.aspx)
+    ///
     class cert_store : public handle<HCERTSTORE, NULL>
     {
         WINSTD_HANDLE_IMPL(cert_store, NULL)
@@ -477,46 +444,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Opens the certificate store.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [CertOpenStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376559.aspx)
-        ///
-        __declspec(deprecated("Use CertOpenStore"))
-        bool create(_In_ LPCSTR lpszStoreProvider, _In_ DWORD dwEncodingType, _In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_ DWORD dwFlags, _In_opt_ const void *pvPara) noexcept
-        {
-            handle_type h = CertOpenStore(lpszStoreProvider, dwEncodingType, hCryptProv, dwFlags, pvPara);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-        ///
-        /// Opens the most common system certificate store. To open certificate stores with more complex requirements, such as file-based or memory-based stores, use `create()`.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [CertOpenSystemStore function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376560.aspx)
-        ///
-        __declspec(deprecated("Use CertOpenSystemStore"))
-        bool create(_In_opt_ HCRYPTPROV_LEGACY hCryptProv, _In_z_ LPCTSTR szSubsystemProtocol) noexcept
-        {
-            handle_type h = CertOpenSystemStore(hCryptProv, szSubsystemProtocol);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            } else
-                return false;
         }
 
     protected:
@@ -534,6 +461,8 @@ namespace winstd
     ///
     /// HCRYPTPROV wrapper class
     ///
+    /// \sa [CryptAcquireContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379886.aspx)
+    ///
     class crypt_prov : public handle<HCRYPTPROV, NULL>
     {
         WINSTD_HANDLE_IMPL(crypt_prov, NULL)
@@ -548,26 +477,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Acquires the cryptographic context.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [CryptAcquireContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379886.aspx)
-        ///
-        __declspec(deprecated("Use CryptAcquireContext"))
-        bool create(_In_opt_z_ LPCTSTR szContainer, _In_opt_z_ LPCTSTR szProvider, _In_ DWORD dwProvType, _In_ DWORD dwFlags = 0) noexcept
-        {
-            handle_type h;
-            if (CryptAcquireContext(&h, szContainer, szProvider, dwProvType, dwFlags)) {
-                attach(h);
-                return true;
-            } else
-                return false;
         }
 
     protected:
@@ -585,6 +494,8 @@ namespace winstd
     ///
     /// HCRYPTHASH wrapper class
     ///
+    /// \sa [CryptCreateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379908.aspx)
+    ///
     class crypt_hash : public dplhandle<HCRYPTHASH, NULL>
     {
         WINSTD_DPLHANDLE_IMPL(crypt_hash, NULL)
@@ -599,26 +510,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Creates the hash context.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [CryptCreateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379908.aspx)
-        ///
-        __declspec(deprecated("Use CryptCreateHash"))
-        bool create(_In_ HCRYPTPROV  hProv, _In_ ALG_ID Algid, _In_opt_ HCRYPTKEY hKey = NULL, _In_opt_ DWORD dwFlags = 0) noexcept
-        {
-            handle_type h;
-            if (CryptCreateHash(hProv, Algid, hKey, dwFlags, &h)) {
-                attach(h);
-                return true;
-            } else
-                return false;
         }
 
     protected:
@@ -651,6 +542,11 @@ namespace winstd
     ///
     /// HCRYPTKEY wrapper class
     ///
+    /// \sa [CryptGenKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379941.aspx)
+    /// \sa [CryptImportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380207.aspx)
+    /// \sa [CryptImportPublicKeyInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380209.aspx)
+    /// \sa [CryptDeriveKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379916.aspx)
+    ///
     class crypt_key : public dplhandle<HCRYPTKEY, NULL>
     {
         WINSTD_DPLHANDLE_IMPL(crypt_key, NULL)
@@ -665,70 +561,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Generates the key.
-        ///
-        /// \sa [CryptGenKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379941.aspx)
-        ///
-        __declspec(deprecated("Use CryptGenKey"))
-        bool generate(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ DWORD dwFlags) noexcept
-        {
-            handle_type h;
-            if (CryptGenKey(hProv, Algid, dwFlags, &h)) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-        ///
-        /// Imports the key.
-        ///
-        /// \sa [CryptImportKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380207.aspx)
-        ///
-        __declspec(deprecated("Use CryptImportKey"))
-        bool import(_In_ HCRYPTPROV hProv, __in_bcount(dwDataLen) LPCBYTE pbData, _In_ DWORD dwDataLen, _In_ HCRYPTKEY hPubKey, _In_ DWORD dwFlags) noexcept
-        {
-            handle_type h;
-            if (CryptImportKey(hProv, pbData, dwDataLen, hPubKey, dwFlags, &h)) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-        ///
-        /// Imports the public key.
-        ///
-        /// \sa [CryptImportPublicKeyInfo function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380209.aspx)
-        ///
-        __declspec(deprecated("Use CryptImportPublicKeyInfo"))
-        bool import_public(_In_ HCRYPTPROV hCryptProv, _In_ DWORD dwCertEncodingType, _In_ PCERT_PUBLIC_KEY_INFO pInfo) noexcept
-        {
-            handle_type h;
-            if (CryptImportPublicKeyInfo(hCryptProv, dwCertEncodingType, pInfo, &h)) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-        ///
-        /// Generates cryptographic session keys derived from a base data value.
-        ///
-        /// \sa [CryptDeriveKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379916.aspx)
-        ///
-        __declspec(deprecated("Use CryptDeriveKey"))
-        bool derive(_In_ HCRYPTPROV hProv, _In_ ALG_ID Algid, _In_ HCRYPTHASH hBaseData, _In_ DWORD dwFlags) noexcept
-        {
-            handle_type h;
-            if (CryptDeriveKey(hProv, Algid, hBaseData, dwFlags, &h)) {
-                attach(h);
-                return true;
-            } else
-                return false;
         }
 
         ///

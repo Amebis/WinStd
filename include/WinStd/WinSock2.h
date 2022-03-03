@@ -90,34 +90,17 @@ namespace winstd
     ///
     /// SID wrapper class
     ///
+    /// \sa [GetAddrInfoA function](https://docs.microsoft.com/en-us/windows/win32/api/ws2tcpip/nf-ws2tcpip-getaddrinfo)
+    ///
     class addrinfo : public handle<PADDRINFOA, NULL>
     {
         WINSTD_HANDLE_IMPL(addrinfo, NULL)
 
     public:
         ///
-        /// Provides protocol-independent translation from a host name to an address.
-        ///
-        /// \sa [GetAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-getaddrinfow)
-        ///
-        __declspec(deprecated("Use GetAddrInfoA"))
-        bool get(
-            _In_opt_ PCSTR           pNodeName,
-            _In_opt_ PCSTR           pServiceName,
-            _In_opt_ const ADDRINFOA *pHints)
-        {
-            handle_type h;
-            if (GetAddrInfoA(pNodeName, pServiceName, pHints, &h) == 0) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-        ///
         /// Frees address information
         ///
-        /// \sa [FreeAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-freeaddrinfow)
+        /// \sa [FreeAddrInfoA function](https://docs.microsoft.com/en-us/windows/win32/api/ws2tcpip/nf-ws2tcpip-freeaddrinfo)
         ///
         virtual ~addrinfo()
         {
@@ -129,7 +112,7 @@ namespace winstd
         ///
         /// Frees address information
         ///
-        /// \sa [FreeAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-freeaddrinfow)
+        /// \sa [FreeAddrInfoA function](https://docs.microsoft.com/en-us/windows/win32/api/ws2tcpip/nf-ws2tcpip-freeaddrinfo)
         ///
         void free_internal() noexcept override
         {
@@ -140,30 +123,13 @@ namespace winstd
     ///
     /// SID wrapper class
     ///
+    /// \sa [GetAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-getaddrinfow)
+    ///
     class waddrinfo : public handle<PADDRINFOW, NULL>
     {
         WINSTD_HANDLE_IMPL(waddrinfo, NULL)
 
     public:
-        ///
-        /// Provides protocol-independent translation from a host name to an address.
-        ///
-        /// \sa [GetAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-getaddrinfow)
-        ///
-        __declspec(deprecated("Use GetAddrInfoW"))
-        bool get(
-            _In_opt_ PCWSTR          pNodeName,
-            _In_opt_ PCWSTR          pServiceName,
-            _In_opt_ const ADDRINFOW *pHints)
-        {
-            handle_type h;
-            if (GetAddrInfoW(pNodeName, pServiceName, pHints, &h) == 0) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
         ///
         /// Frees address information
         ///

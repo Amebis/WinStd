@@ -19,18 +19,6 @@
 ///
 /// @{
 
-///
-/// Implements default constructors and operators to prevent their auto-generation by compiler.
-///
-#define WINSTD_WINHANDLE_IMPL(C, INVAL) \
-public: \
-       C        (                        ) noexcept                                   {                                                           } \
-       C        (_In_opt_ handle_type   h) noexcept : win_handle<INVAL>(          h ) {                                                           } \
-       C        (_Inout_  C           &&h) noexcept : win_handle<INVAL>(std::move(h)) {                                                           } \
-    C& operator=(_In_opt_ handle_type   h) noexcept                                   { win_handle<INVAL>::operator=(          h ); return *this; } \
-    C& operator=(_Inout_  C           &&h) noexcept                                   { win_handle<INVAL>::operator=(std::move(h)); return *this; } \
-WINSTD_NONCOPYABLE(C)
-
 /// @copydoc GetModuleFileNameW()
 template<class _Traits, class _Ax>
 static DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept
@@ -1386,6 +1374,8 @@ namespace winstd
     ///
     /// Module handle wrapper
     ///
+    /// \sa [LoadLibraryEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms684179.aspx)
+    ///
     class library : public handle<HMODULE, NULL>
     {
         WINSTD_HANDLE_IMPL(library, NULL)
@@ -1400,26 +1390,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Loads the specified module into the address space of the calling process.
-        ///
-        /// \sa [LoadLibraryEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms684179.aspx)
-        ///
-        /// \return
-        /// - \c true when succeeds;
-        /// - \c false when fails. Use `GetLastError()` for failure reason.
-        ///
-        __declspec(deprecated("Use LoadLibraryEx"))
-        bool load(_In_z_ LPCTSTR lpFileName, __reserved handle_type hFile, _In_ DWORD dwFlags) noexcept
-        {
-            handle_type h = LoadLibraryEx(lpFileName, hFile, dwFlags);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            } else
-                return false;
         }
 
     protected:
@@ -1437,31 +1407,9 @@ namespace winstd
     ///
     /// Process handle wrapper
     ///
-    class process : public win_handle<NULL>
-    {
-        WINSTD_WINHANDLE_IMPL(process, NULL)
-
-    public:
-        ///
-        /// Opens process handle.
-        ///
-        /// \sa [OpenProcess function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms684320.aspx)
-        ///
-        /// \return
-        /// - \c true when succeeds;
-        /// - \c false when fails. Use `GetLastError()` for failure reason.
-        ///
-        __declspec(deprecated("Use OpenProcess"))
-        bool open(_In_ DWORD dwDesiredAccess, _In_ BOOL bInheritHandle, _In_ DWORD dwProcessId) noexcept
-        {
-            handle_type h = OpenProcess(dwDesiredAccess, bInheritHandle, dwProcessId);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-    };
+    /// \sa [OpenProcess function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms684320.aspx)
+    ///
+    typedef win_handle<NULL> process;
 
     ///
     /// Thread handle wrapper
@@ -1480,60 +1428,16 @@ namespace winstd
     ///
     /// File handle wrapper
     ///
-    class file : public win_handle<INVALID_HANDLE_VALUE>
-    {
-        WINSTD_WINHANDLE_IMPL(file, INVALID_HANDLE_VALUE)
-
-    public:
-        ///
-        /// Opens file handle.
-        ///
-        /// \sa [CreateFile function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx)
-        ///
-        /// \return
-        /// - \c true when succeeds;
-        /// - \c false when fails. Use `GetLastError()` for failure reason.
-        ///
-        __declspec(deprecated("Use CreateFile"))
-        bool create(_In_z_ LPCTSTR lpFileName, _In_ DWORD dwDesiredAccess, _In_ DWORD dwShareMode, _In_ DWORD dwCreationDisposition, _In_opt_ DWORD dwFlagsAndAttributes = FILE_ATTRIBUTE_NORMAL, _In_opt_ LPSECURITY_ATTRIBUTES lpSecurityAttributes = NULL, _In_opt_ HANDLE hTemplateFile = NULL) noexcept
-        {
-            handle_type h = CreateFile(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-    };
+    /// \sa [CreateFile function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx)
+    ///
+    typedef win_handle<INVALID_HANDLE_VALUE> file;
 
     ///
     /// File mapping
     ///
-    class file_mapping : public win_handle<NULL>
-    {
-        WINSTD_WINHANDLE_IMPL(file_mapping, NULL)
-
-    public:
-        ///
-        /// Creates or opens a named or unnamed file mapping object for a specified file.
-        ///
-        /// \sa [CreateFileMapping function](https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-createfilemappingw)
-        ///
-        /// \return
-        /// - \c true when succeeds;
-        /// - \c false when fails. Use `GetLastError()` for failure reason.
-        ///
-        __declspec(deprecated("Use CreateFileMapping"))
-        bool create(_In_ HANDLE hFile, _In_ DWORD flProtect, _In_ DWORD dwMaximumSizeHigh, _In_ DWORD dwMaximumSizeLow, _In_opt_ LPSECURITY_ATTRIBUTES lpFileMappingAttributes = NULL, _In_opt_ LPCTSTR lpName = NULL) noexcept
-        {
-            handle_type h = CreateFileMapping(hFile, lpFileMappingAttributes, flProtect, dwMaximumSizeHigh, dwMaximumSizeLow, lpName);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-    };
+    /// \sa [CreateFileMapping function](https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-createfilemappingw)
+    ///
+    typedef win_handle<NULL> file_mapping;
 
     ///
     /// Deleter for unique_ptr using UnmapViewOfFile
@@ -1597,51 +1501,10 @@ namespace winstd
     ///
     /// Event handle wrapper
     ///
-    class event : public win_handle<NULL>
-    {
-        WINSTD_WINHANDLE_IMPL(event, NULL)
-
-    public:
-        ///
-        /// Creates or opens a named or unnamed event object.
-        ///
-        /// \sa [CreateEventW function](https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-createeventw)
-        ///
-        /// \return
-        /// - \c true when succeeds;
-        /// - \c false when fails. Use `GetLastError()` for failure reason.
-        ///
-        __declspec(deprecated("Use CreateEvent"))
-        bool create(_In_ BOOL bManualReset, _In_ BOOL bInitialState, _In_opt_ LPSECURITY_ATTRIBUTES lpEventAttributes = NULL, _In_opt_z_ LPCTSTR lpName = NULL) noexcept
-        {
-            handle_type h = CreateEvent(lpEventAttributes, bManualReset, bInitialState, lpName);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-
-        ///
-        /// Opens an existing named event object.
-        ///
-        /// \sa [OpenEventW function](https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-openeventw)
-        ///
-        /// \return
-        /// - \c true when succeeds;
-        /// - \c false when fails. Use `GetLastError()` for failure reason.
-        ///
-        __declspec(deprecated("Use OpenEvent"))
-        bool open(_In_ DWORD dwDesiredAccess, _In_ BOOL bInheritHandle, _In_z_ LPCTSTR lpName) noexcept
-        {
-            handle_type h = OpenEvent(dwDesiredAccess, bInheritHandle, lpName);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            } else
-                return false;
-        }
-    };
+    /// \sa [CreateEventW function](https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-createeventw)
+    /// \sa [OpenEventW function](https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-openeventw)
+    ///
+    typedef win_handle<NULL> event;
 
     ///
     /// Critical section wrapper
@@ -1693,6 +1556,8 @@ namespace winstd
     ///
     /// Find-file handle wrapper
     ///
+    /// \sa [FindFirstFile function](https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-findfirstfilew)
+    ///
     class find_file : public handle<HANDLE, INVALID_HANDLE_VALUE>
     {
         WINSTD_HANDLE_IMPL(find_file, INVALID_HANDLE_VALUE)
@@ -1707,26 +1572,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Searches a directory for a file or subdirectory with a name that matches a specific name (or partial name if wildcards are used).
-        ///
-        /// \sa [FindFirstFile function](https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-findfirstfilew)
-        ///
-        /// \return
-        /// - \c true when succeeds;
-        /// - \c false when fails. Use `GetLastError()` for failure reason.
-        ///
-        __declspec(deprecated("Use FindFirstFile"))
-        bool find(_In_ LPCTSTR lpFileName, _Out_ LPWIN32_FIND_DATA lpFindFileData) noexcept
-        {
-            handle_type h = FindFirstFile(lpFileName, lpFindFileData);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            } else
-                return false;
         }
 
     protected:
@@ -1744,6 +1589,8 @@ namespace winstd
     ///
     /// Heap handle wrapper
     ///
+    /// \sa [HeapCreate function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366599.aspx)
+    ///
     class heap : public handle<HANDLE, NULL>
     {
         WINSTD_HANDLE_IMPL(heap, NULL)
@@ -1758,26 +1605,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Creates the heap.
-        ///
-        /// \sa [HeapCreate function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366599.aspx)
-        ///
-        /// \return
-        /// - \c true when succeeds;
-        /// - \c false when fails. Use `GetLastError()` for failure reason.
-        ///
-        __declspec(deprecated("Use HeapCreate"))
-        bool create(_In_ DWORD flOptions, _In_ SIZE_T dwInitialSize, _In_ SIZE_T dwMaximumSize) noexcept
-        {
-            handle_type h = HeapCreate(flOptions, dwInitialSize, dwMaximumSize);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            } else
-                return false;
         }
 
         ///
@@ -2183,7 +2010,10 @@ namespace winstd
     };
 
     ///
-    /// Registry wrapper class
+    /// Registry key wrapper class
+    ///
+    /// \sa [RegCreateKeyEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724844.aspx)
+    /// \sa [RegOpenKeyEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724897.aspx)
     ///
     class reg_key : public handle<HKEY, NULL>
     {
@@ -2199,63 +2029,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Creates the specified registry key. If the key already exists, the function opens it.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [RegCreateKeyEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724844.aspx)
-        ///
-        __declspec(deprecated("Use RegCreateKeyEx - mind it returns error number rather than SetLastError"))
-        bool create(
-            _In_      HKEY                  hKey,
-            _In_z_    LPCTSTR               lpSubKey,
-            _In_opt_  LPTSTR                lpClass,
-            _In_      DWORD                 dwOptions,
-            _In_      REGSAM                samDesired,
-            _In_opt_  LPSECURITY_ATTRIBUTES lpSecurityAttributes = NULL,
-            _Out_opt_ LPDWORD               lpdwDisposition = NULL) noexcept
-        {
-            handle_type h;
-            const LSTATUS s = RegCreateKeyEx(hKey, lpSubKey, 0, lpClass, dwOptions, samDesired, lpSecurityAttributes, &h, lpdwDisposition);
-            if (s == ERROR_SUCCESS) {
-                attach(h);
-                return true;
-            } else {
-                SetLastError(s);
-                return false;
-            }
-        }
-
-        ///
-        /// Opens the specified registry key.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [RegOpenKeyEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724897.aspx)
-        ///
-        __declspec(deprecated("Use RegOpenKeyEx - mind it returns error number rather than SetLastError"))
-        bool open(
-            _In_       HKEY    hKey,
-            _In_opt_z_ LPCTSTR lpSubKey,
-            _In_       DWORD   ulOptions,
-            _In_       REGSAM  samDesired) noexcept
-        {
-            handle_type h;
-            const LSTATUS s = RegOpenKeyEx(hKey, lpSubKey, ulOptions, samDesired, &h);
-            if (s == ERROR_SUCCESS) {
-                attach(h);
-                return true;
-            } else {
-                SetLastError(s);
-                return false;
-            }
         }
 
         ///
@@ -2393,6 +2166,8 @@ namespace winstd
     ///
     /// Event log handle wrapper
     ///
+    /// \sa [RegisterEventSource function](https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-registereventsourcew)
+    ///
     class event_log : public handle<HANDLE, NULL>
     {
         WINSTD_HANDLE_IMPL(event_log, NULL)
@@ -2407,26 +2182,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Retrieves a registered handle to the specified event log.
-        ///
-        /// \sa [RegisterEventSource function](https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-registereventsourcew)
-        ///
-        /// \return
-        /// - \c true when succeeds;
-        /// - \c false when fails. Use `GetLastError()` for failure reason.
-        ///
-        __declspec(deprecated("Use RegisterEventSource"))
-        bool open(_In_z_ LPCTSTR lpUNCServerName, _In_z_ LPCTSTR lpSourceName) noexcept
-        {
-            handle_type h = RegisterEventSource(lpUNCServerName, lpSourceName);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            } else
-                return false;
         }
 
     protected:

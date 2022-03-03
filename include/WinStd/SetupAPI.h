@@ -20,6 +20,9 @@ namespace winstd
     ///
     /// HDEVINFO wrapper class
     ///
+    /// \sa [SetupDiCreateDeviceInfoList function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdicreatedeviceinfolist)
+    /// \sa [SetupDiGetClassDevsExW function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetclassdevsexw)
+    ///
     class setup_device_info_list : public handle<HDEVINFO, INVALID_HANDLE_VALUE>
     {
         WINSTD_HANDLE_IMPL(setup_device_info_list, INVALID_HANDLE_VALUE)
@@ -34,57 +37,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Creates an empty device information set and optionally associates the set with a device setup class and a top-level window.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [SetupDiCreateDeviceInfoList function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdicreatedeviceinfolist)
-        ///
-        __declspec(deprecated("Use SetupDiCreateDeviceInfoList"))
-        bool create(
-            _In_opt_ const GUID * ClassGuid,
-            _In_opt_ HWND         hwndParent) noexcept
-        {
-            handle_type h = SetupDiCreateDeviceInfoList(ClassGuid, hwndParent);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            }
-            else
-                return false;
-        }
-
-        ///
-        /// Creates a device information set that contains requested device information elements for a local or a remote computer.
-        ///
-        /// \return
-        /// - true when creation succeeds;
-        /// - false when creation fails. For extended error information, call `GetLastError()`.
-        ///
-        /// \sa [SetupDiGetClassDevsExW function](https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetclassdevsexw)
-        ///
-        __declspec(deprecated("Use SetupDiGetClassDevsEx"))
-        bool create(
-            _In_opt_   const GUID * ClassGuid,
-            _In_opt_   PCTSTR       Enumerator,
-            _In_opt_   HWND         hwndParent,
-            _In_       DWORD        Flags,
-            _In_opt_   HDEVINFO     DeviceInfoSet,
-            _In_opt_   PCTSTR       MachineName,
-            _Reserved_ PVOID        Reserved) noexcept
-        {
-            handle_type h = SetupDiGetClassDevsEx(ClassGuid, Enumerator, hwndParent, Flags, DeviceInfoSet, MachineName, Reserved);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            }
-            else
-                return false;
         }
 
     protected:

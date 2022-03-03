@@ -901,6 +901,8 @@ namespace winstd
     ///
     /// ETW trace
     ///
+    /// \sa [OpenTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa364089.aspx)
+    ///
     class event_trace : public handle<TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE>
     {
         WINSTD_HANDLE_IMPL(event_trace, INVALID_PROCESSTRACE_HANDLE)
@@ -915,26 +917,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Opens a real-time trace session or log file for consuming.
-        ///
-        /// \return
-        /// - `ERROR_SUCCESS` when creation succeeds;
-        /// - error code otherwise.
-        ///
-        /// \sa [OpenTrace function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa364089.aspx)
-        ///
-        __declspec(deprecated("Use OpenTrace"))
-        bool create(_Inout_ PEVENT_TRACE_LOGFILE Logfile)
-        {
-            handle_type h = OpenTrace(Logfile);
-            if (h != invalid) {
-                attach(h);
-                return true;
-            } else
-                return false;
         }
 
     protected:

@@ -124,6 +124,8 @@ namespace winstd
     ///
     /// WLAN handle wrapper
     ///
+    /// \sa [WlanOpenHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms706759.aspx)
+    ///
     class wlan_handle : public handle<HANDLE, NULL>
     {
         WINSTD_HANDLE_IMPL(wlan_handle, NULL)
@@ -138,29 +140,6 @@ namespace winstd
         {
             if (m_h != invalid)
                 free_internal();
-        }
-
-        ///
-        /// Opens a connection to the server.
-        ///
-        /// \sa [WlanOpenHandle function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms706759.aspx)
-        ///
-        /// \return
-        /// - \c true when succeeds;
-        /// - \c false when fails. Use `GetLastError()` for failure reason.
-        ///
-        __declspec(deprecated("Use WlanOpenHandle - mind it returns error number rather than SetLastError"))
-        bool open(_In_ DWORD dwClientVersion, _Out_ PDWORD pdwNegotiatedVersion) noexcept
-        {
-            handle_type h;
-            const DWORD dwResult = WlanOpenHandle(dwClientVersion, 0, pdwNegotiatedVersion, &h);
-            if (dwResult == ERROR_SUCCESS) {
-                attach(h);
-                return true;
-            } else {
-                SetLastError(dwResult);
-                return false;
-            }
         }
 
     protected:
