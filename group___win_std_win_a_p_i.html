@@ -65,7 +65,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">Windows API</div></div>
 </div><!--header-->
 <div class="contents">
@@ -147,6 +148,15 @@ Macros</h2></td></tr>
 <tr class="memitem:gab9c35127ac48f8d941a5354b1a1b7abe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gab9c35127ac48f8d941a5354b1a1b7abe">StringToGuid</a>&#160;&#160;&#160;StringToGuidA</td></tr>
 <tr class="memdesc:gab9c35127ac48f8d941a5354b1a1b7abe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses string with GUID and stores it to GUID.  <a href="group___win_std_win_a_p_i.html#gab9c35127ac48f8d941a5354b1a1b7abe">More...</a><br /></td></tr>
 <tr class="separator:gab9c35127ac48f8d941a5354b1a1b7abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaff5d7416024ba7489a7631c310e15aab"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classwinstd_1_1win__handle.html">win_handle</a>&lt; NULL &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gaff5d7416024ba7489a7631c310e15aab">winstd::thread</a></td></tr>
+<tr class="memdesc:gaff5d7416024ba7489a7631c310e15aab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread handle wrapper.  <a href="group___win_std_win_a_p_i.html#gaff5d7416024ba7489a7631c310e15aab">More...</a><br /></td></tr>
+<tr class="separator:gaff5d7416024ba7489a7631c310e15aab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59cd7dece6bf5649013f07c929547e80"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classwinstd_1_1win__handle.html">win_handle</a>&lt; INVALID_HANDLE_VALUE &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga59cd7dece6bf5649013f07c929547e80">winstd::process_snapshot</a></td></tr>
+<tr class="memdesc:ga59cd7dece6bf5649013f07c929547e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process snapshot handle wrapper.  <a href="group___win_std_win_a_p_i.html#ga59cd7dece6bf5649013f07c929547e80">More...</a><br /></td></tr>
+<tr class="separator:ga59cd7dece6bf5649013f07c929547e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p >Integrates WinStd classes with Microsoft Windows API. </p>
@@ -240,10 +250,45 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga59cd7dece6bf5649013f07c929547e80" name="ga59cd7dece6bf5649013f07c929547e80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga59cd7dece6bf5649013f07c929547e80">&#9670;&nbsp;</a></span>process_snapshot</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="classwinstd_1_1win__handle.html">win_handle</a>&lt;INVALID_HANDLE_VALUE&gt; <a class="el" href="group___win_std_win_a_p_i.html#ga59cd7dece6bf5649013f07c929547e80">winstd::process_snapshot</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Process snapshot handle wrapper. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/win32/api/tlhelp32/nf-tlhelp32-createtoolhelp32snapshot">CreateToolhelp32Snapshot function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gaff5d7416024ba7489a7631c310e15aab" name="gaff5d7416024ba7489a7631c310e15aab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaff5d7416024ba7489a7631c310e15aab">&#9670;&nbsp;</a></span>thread</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="classwinstd_1_1win__handle.html">win_handle</a>&lt;NULL&gt; <a class="el" href="group___win_std_win_a_p_i.html#gaff5d7416024ba7489a7631c310e15aab">winstd::thread</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Thread handle wrapper. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createthread">CreateThread function</a> </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 2 2022 14:42:08 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Thu Mar 3 2022 08:18:01 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>
