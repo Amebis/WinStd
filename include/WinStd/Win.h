@@ -1464,6 +1464,20 @@ namespace winstd
     };
 
     ///
+    /// Thread handle wrapper
+    ///
+    /// \sa [CreateThread function](https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createthread)
+    ///
+    typedef win_handle<NULL> thread;
+
+    ///
+    /// Process snapshot handle wrapper
+    ///
+    /// \sa [CreateToolhelp32Snapshot function](https://docs.microsoft.com/en-us/windows/win32/api/tlhelp32/nf-tlhelp32-createtoolhelp32snapshot)
+    ///
+    typedef win_handle<INVALID_HANDLE_VALUE> process_snapshot;
+
+    ///
     /// File handle wrapper
     ///
     class file : public win_handle<INVALID_HANDLE_VALUE>
