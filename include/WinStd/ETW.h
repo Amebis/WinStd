@@ -790,14 +790,14 @@ namespace winstd
         }
 
         ///
-        /// Auto-typecasting operator
+        /// Gets session name
         ///
-        /// \return Session properties
+        /// \return Session name
         ///
         LPCTSTR name() const
         {
             const EVENT_TRACE_PROPERTIES *prop = m_prop.get();
-            return reinterpret_cast<LPCTSTR>(reinterpret_cast<const char*>(prop) + prop->LoggerNameOffset);
+            return reinterpret_cast<LPCTSTR>(reinterpret_cast<LPCBYTE>(prop) + prop->LoggerNameOffset);
         }
 
         ///
