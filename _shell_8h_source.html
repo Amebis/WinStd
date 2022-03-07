@@ -87,32 +87,27 @@ $(function() {
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> _Traits, <span class="keyword">class</span> _Ax&gt;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="group___win_std_shell_w_a_p_i.html#gabc79615c035f76d08ddced61807b6676">   20</a></span><span class="keyword">static</span> BOOL <a class="code hl_function" href="group___win_std_shell_w_a_p_i.html#gabc79615c035f76d08ddced61807b6676">PathCanonicalizeA</a>(_Inout_ std::basic_string&lt;char, _Traits, _Ax&gt; &amp;sValue, _In_ LPCSTR pszPath)</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>{</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    assert(0); <span class="comment">// TODO: Test this code.</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="comment">// Allocate buffer on heap and read into it.</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">char</span> szBuffer[MAX_PATH + 1];</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    BOOL bResult = <a class="code hl_function" href="group___win_std_shell_w_a_p_i.html#gabc79615c035f76d08ddced61807b6676">::PathCanonicalizeA</a>(szBuffer, pszPath);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    sValue.assign(szBuffer, bResult ? MAX_PATH : 0);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span> bResult;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> _Traits, <span class="keyword">class</span> _Ax&gt;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="group___win_std_shell_w_a_p_i.html#ga2bb4436e8e3b7452b48d01cbb18bc818">   37</a></span><span class="keyword">static</span> BOOL <a class="code hl_function" href="group___win_std_shell_w_a_p_i.html#ga2bb4436e8e3b7452b48d01cbb18bc818">PathCanonicalizeW</a>(_Inout_ std::basic_string&lt;wchar_t, _Traits, _Ax&gt; &amp;sValue, _In_ LPCWSTR pszPath)</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>{</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    assert(0); <span class="comment">// TODO: Test this code.</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordtype">wchar_t</span> szBuffer[MAX_PATH + 1];</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    BOOL bResult = <a class="code hl_function" href="group___win_std_shell_w_a_p_i.html#ga2bb4436e8e3b7452b48d01cbb18bc818">::PathCanonicalizeW</a>(szBuffer, pszPath);</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    sValue.assign(szBuffer, bResult ? MAX_PATH : 0);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordflow">return</span> bResult;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>}</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="ttc" id="agroup___win_std_shell_w_a_p_i_html_ga2bb4436e8e3b7452b48d01cbb18bc818"><div class="ttname"><a href="group___win_std_shell_w_a_p_i.html#ga2bb4436e8e3b7452b48d01cbb18bc818">PathCanonicalizeW</a></div><div class="ttdeci">static BOOL PathCanonicalizeW(std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue, LPCWSTR pszPath)</div><div class="ttdoc">Simplifies a path by removing navigation elements such as &quot;.&quot; and &quot;..&quot; to produce a direct,...</div><div class="ttdef"><b>Definition:</b> Shell.h:37</div></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordtype">char</span> szBuffer[MAX_PATH + 1];</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    BOOL bResult = <a class="code hl_function" href="group___win_std_shell_w_a_p_i.html#gabc79615c035f76d08ddced61807b6676">::PathCanonicalizeA</a>(szBuffer, pszPath);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    sValue.assign(szBuffer, bResult ? MAX_PATH : 0);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordflow">return</span> bResult;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>}</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> _Traits, <span class="keyword">class</span> _Ax&gt;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="group___win_std_shell_w_a_p_i.html#ga2bb4436e8e3b7452b48d01cbb18bc818">   34</a></span><span class="keyword">static</span> BOOL <a class="code hl_function" href="group___win_std_shell_w_a_p_i.html#ga2bb4436e8e3b7452b48d01cbb18bc818">PathCanonicalizeW</a>(_Inout_ std::basic_string&lt;wchar_t, _Traits, _Ax&gt; &amp;sValue, _In_ LPCWSTR pszPath)</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>{</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordtype">wchar_t</span> szBuffer[MAX_PATH + 1];</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    BOOL bResult = <a class="code hl_function" href="group___win_std_shell_w_a_p_i.html#ga2bb4436e8e3b7452b48d01cbb18bc818">::PathCanonicalizeW</a>(szBuffer, pszPath);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    sValue.assign(szBuffer, bResult ? MAX_PATH : 0);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordflow">return</span> bResult;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="ttc" id="agroup___win_std_shell_w_a_p_i_html_ga2bb4436e8e3b7452b48d01cbb18bc818"><div class="ttname"><a href="group___win_std_shell_w_a_p_i.html#ga2bb4436e8e3b7452b48d01cbb18bc818">PathCanonicalizeW</a></div><div class="ttdeci">static BOOL PathCanonicalizeW(std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue, LPCWSTR pszPath)</div><div class="ttdoc">Simplifies a path by removing navigation elements such as &quot;.&quot; and &quot;..&quot; to produce a direct,...</div><div class="ttdef"><b>Definition:</b> Shell.h:34</div></div>
 <div class="ttc" id="agroup___win_std_shell_w_a_p_i_html_gabc79615c035f76d08ddced61807b6676"><div class="ttname"><a href="group___win_std_shell_w_a_p_i.html#gabc79615c035f76d08ddced61807b6676">PathCanonicalizeA</a></div><div class="ttdeci">static BOOL PathCanonicalizeA(std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sValue, LPCSTR pszPath)</div><div class="ttdoc">Simplifies a path by removing navigation elements such as &quot;.&quot; and &quot;..&quot; to produce a direct,...</div><div class="ttdef"><b>Definition:</b> Shell.h:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 7 2022 12:00:44 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Mon Mar 7 2022 13:21:24 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

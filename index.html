@@ -92,7 +92,7 @@ Example</h3>
 <div class="fragment"><div class="line"> {C++}</div>
 <div class="line">// Encode response as OEM.</div>
 <div class="line">std::string response;</div>
-<div class="line">WideCharToMultiByte(CP_OEMCP, 0, L&quot;Copyright \u00A9 2017&quot;, response, NULL, NULL);</div>
+<div class="line">WideCharToMultiByte(CP_OEMCP, 0, L&quot;Copyright \u00A9 2017&quot;, -1, response, NULL, NULL);</div>
 <div class="line">std::cout &lt;&lt; response.c_str() &lt;&lt; std::endl;</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
 String Formatters</h2>
@@ -130,13 +130,13 @@ Usage</h1>
 </div><!-- fragment --></li>
 </ol>
 <p >An auto-generated documentation is <a href="https://amebis.github.io/WinStd/">here</a>.</p>
-<p >More examples and use-cases can be found in <a href="https://github.com/Amebis/GEANTLink">GÉANTLink</a> and <a href="https://github.com/Amebis/ZRCola">ZRCola</a> projects source code. They make heavy use of WinStd.</p>
+<p >More examples and use-cases can be found in <a href="https://github.com/Amebis/GEANTLink">GÉANTLink</a> and <a href="https://github.com/Amebis/ZRCola">ZRCola</a> projects source code. They make heavy use of WinStd. Examples can also be found in the <code>UnitTests</code> project.</p>
 <p >This is a one-man project for the time being, so the Win32 API support is far from complete. It is added as needed. Contributions are welcome. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 7 2022 12:00:44 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Mon Mar 7 2022 13:21:25 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>
