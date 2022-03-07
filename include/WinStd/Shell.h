@@ -19,9 +19,6 @@
 template<class _Traits, class _Ax>
 static BOOL PathCanonicalizeA(_Inout_ std::basic_string<char, _Traits, _Ax> &sValue, _In_ LPCSTR pszPath)
 {
-    assert(0); // TODO: Test this code.
-
-    // Allocate buffer on heap and read into it.
     char szBuffer[MAX_PATH + 1];
     BOOL bResult = ::PathCanonicalizeA(szBuffer, pszPath);
     sValue.assign(szBuffer, bResult ? MAX_PATH : 0);
@@ -36,8 +33,6 @@ static BOOL PathCanonicalizeA(_Inout_ std::basic_string<char, _Traits, _Ax> &sVa
 template<class _Traits, class _Ax>
 static BOOL PathCanonicalizeW(_Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sValue, _In_ LPCWSTR pszPath)
 {
-    assert(0); // TODO: Test this code.
-
     wchar_t szBuffer[MAX_PATH + 1];
     BOOL bResult = ::PathCanonicalizeW(szBuffer, pszPath);
     sValue.assign(szBuffer, bResult ? MAX_PATH : 0);

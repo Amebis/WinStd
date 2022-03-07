@@ -33,7 +33,7 @@ WinStd provides a subset of Win32 API identically named functions (C++ polymorph
 ```C++
 // Encode response as OEM.
 std::string response;
-WideCharToMultiByte(CP_OEMCP, 0, L"Copyright \u00A9 2017", response, NULL, NULL);
+WideCharToMultiByte(CP_OEMCP, 0, L"Copyright \u00A9 2017", -1, response, NULL, NULL);
 std::cout << response.c_str() << std::endl;
 ```
 
@@ -78,6 +78,6 @@ void main()
 
 An auto-generated documentation is [here](https://amebis.github.io/WinStd/).
 
-More examples and use-cases can be found in [GÉANTLink](https://github.com/Amebis/GEANTLink) and [ZRCola](https://github.com/Amebis/ZRCola) projects source code. They make heavy use of WinStd.
+More examples and use-cases can be found in [GÉANTLink](https://github.com/Amebis/GEANTLink) and [ZRCola](https://github.com/Amebis/ZRCola) projects source code. They make heavy use of WinStd. Examples can also be found in the `UnitTests` project.
 
 This is a one-man project for the time being, so the Win32 API support is far from complete. It is added as needed. Contributions are welcome.

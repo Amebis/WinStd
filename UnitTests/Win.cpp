@@ -1,0 +1,41 @@
+/*
+	SPDX-License-Identifier: MIT
+	Copyright © 2022 Amebis
+*/
+
+#include "pch.h"
+
+using namespace std;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace UnitTests
+{
+	TEST_CLASS(Win)
+	{
+	public:
+		TEST_METHOD(WideCharToMultiByte)
+		{
+			string response;
+			{
+				static const char expected[] = "Copyright \xA9 2017";
+				Assert::IsTrue(sizeof(expected) <= WINSTD_STACK_BUFFER_BYTES);
+				Assert::AreEqual<int>(_countof(expected), ::WideCharToMultiByte(1252, 0, L"Copyright \u00A9 2017", -1, response, NULL, NULL));
+				Assert::AreEqual(expected, response.c_str(), true);
+			}
+
+			{
+				static const char expected[] = "The WC_COMPOSITECHECK flag causes the WideCharToMultiByte function to test for decomposed Unicode characters and attempts to compose them before converting them to the requested code page. This flag is only available for conversion to single byte (SBCS) or double byte (DBCS) code pages (code pages < 50000, excluding code page 42). If your application needs to convert decomposed Unicode data to single byte or double byte code pages, this flag might be useful. However, not all characters can be converted this way and it is more reliable to save and store such data as Unicode.\r\n\r\nWhen an application is using WC_COMPOSITECHECK, some character combinations might remain incomplete or might have additional nonspacing characters left over.For example, A + \xc2\xa8 + \xc2\xa8 combines to \xc3\x84 + \xc2\xa8.Using the WC_DISCARDNS flag causes the function to discard additional nonspacing characters.Using the WC_DEFAULTCHAR flag causes the function to use the default replacement character(typically \" ? \") instead. Using the WC_SEPCHARS flag causes the function to attempt to convert each additional nonspacing character to the target code page. Usually this flag also causes the use of the replacement character (\" ? \"). However, for code page 1258 (Vietnamese) and 20269, nonspacing characters exist and can be used. The conversions for these code pages are not perfect. Some combinations do not convert correctly to code page 1258, and WC_COMPOSITECHECK corrupts data in code page 20269. As mentioned earlier, it is more reliable to design your application to save and store such data as Unicode.";
+				Assert::IsTrue(sizeof(expected) > WINSTD_STACK_BUFFER_BYTES);
+				Assert::AreEqual<int>(_countof(expected), ::WideCharToMultiByte(CP_UTF8, 0, L"The WC_COMPOSITECHECK flag causes the WideCharToMultiByte function to test for decomposed Unicode characters and attempts to compose them before converting them to the requested code page. This flag is only available for conversion to single byte (SBCS) or double byte (DBCS) code pages (code pages < 50000, excluding code page 42). If your application needs to convert decomposed Unicode data to single byte or double byte code pages, this flag might be useful. However, not all characters can be converted this way and it is more reliable to save and store such data as Unicode.\r\n\r\nWhen an application is using WC_COMPOSITECHECK, some character combinations might remain incomplete or might have additional nonspacing characters left over.For example, A + \u00a8 + \u00a8 combines to \u00c4 + \u00a8.Using the WC_DISCARDNS flag causes the function to discard additional nonspacing characters.Using the WC_DEFAULTCHAR flag causes the function to use the default replacement character(typically \" ? \") instead. Using the WC_SEPCHARS flag causes the function to attempt to convert each additional nonspacing character to the target code page. Usually this flag also causes the use of the replacement character (\" ? \"). However, for code page 1258 (Vietnamese) and 20269, nonspacing characters exist and can be used. The conversions for these code pages are not perfect. Some combinations do not convert correctly to code page 1258, and WC_COMPOSITECHECK corrupts data in code page 20269. As mentioned earlier, it is more reliable to design your application to save and store such data as Unicode.", -1, response, NULL, NULL));
+				Assert::AreEqual(expected, response.c_str(), true);
+			}
+		}
+
+		TEST_METHOD(library)
+		{
+			winstd::library lib_shell32(LoadLibraryEx(_T("shell32.dll"), NULL, LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_IMAGE_RESOURCE));
+			if (!lib_shell32)
+				Assert::Fail(L"LoadLibraryEx failed");
+		}
+	};
+}
