@@ -23,7 +23,7 @@
   <td id="projectalign">
    <div id="projectname">WinStd
    </div>
-   <div id="projectbrief">Additional templates and function helpers for Microsoft Windows using Standard C++ classes</div>
+   <div id="projectbrief">Windows Win32 API using Standard C++</div>
   </td>
  </tr>
  </tbody>
@@ -70,94 +70,92 @@ $(function() {
   <div class="headertitle"><div class="title">SetupAPI.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="_setup_a_p_i_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">    SPDX-License-Identifier: MIT</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">    Copyright © 1991-2022 Amebis</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">    Copyright © 2016 GÉANT</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">*/</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_common_8h.html">Common.h</a>&quot;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;<a class="code" href="_setup_a_p_i_8h.html">SetupAPI.h</a>&gt;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span>winstd</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>{</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__device__info__list.html">   29</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classwinstd_1_1setup__device__info__list.html">setup_device_info_list</a> : <span class="keyword">public</span> <a class="code hl_class" href="classwinstd_1_1handle.html">handle</a>&lt;HDEVINFO, INVALID_HANDLE_VALUE&gt;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    {</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <a class="code hl_define" href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a>(<a class="code hl_class" href="classwinstd_1_1setup__device__info__list.html">setup_device_info_list</a>, INVALID_HANDLE_VALUE)</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__device__info__list.html#a25368d32a4f4bfe23cb9749464daa487">   39</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="classwinstd_1_1setup__device__info__list.html#a25368d32a4f4bfe23cb9749464daa487">~setup_device_info_list</a>()</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        {</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="classwinstd_1_1handle.html#aabde3f16fd98b06b3b0282ef7806eb59">m_h</a> != <a class="code hl_variable" href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">invalid</a>)</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                <a class="code hl_function" href="classwinstd_1_1setup__device__info__list.html#a41f013a37e16074f1972fd279f8c1437">free_internal</a>();</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        }</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__device__info__list.html#a41f013a37e16074f1972fd279f8c1437">   51</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classwinstd_1_1setup__device__info__list.html#a41f013a37e16074f1972fd279f8c1437">free_internal</a>() noexcept<span class="keyword"> override</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            SetupDiDestroyDeviceInfoList(<a class="code hl_variable" href="classwinstd_1_1handle.html#aabde3f16fd98b06b3b0282ef7806eb59">m_h</a>);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        }</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    };</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__driver__info__list__builder.html">   60</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classwinstd_1_1setup__driver__info__list__builder.html">setup_driver_info_list_builder</a></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    {</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <a class="code hl_define" href="group___win_std_general.html#ga11254c72ad33a6e0f5de31db708f784c">WINSTD_NONCOPYABLE</a>(<a class="code hl_class" href="classwinstd_1_1setup__driver__info__list__builder.html">setup_driver_info_list_builder</a>)</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <a class="code hl_define" href="group___win_std_general.html#gac91fa8d79c860b1fdbba65b6a322f760">WINSTD_NONMOVABLE</a>(<a class="code hl_class" href="classwinstd_1_1setup__driver__info__list__builder.html">setup_driver_info_list_builder</a>)</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__driver__info__list__builder.html#a4774edfbe680a3a496e243544a68c94f">   71</a></span>        <a class="code hl_function" href="classwinstd_1_1setup__driver__info__list__builder.html#a4774edfbe680a3a496e243544a68c94f">setup_driver_info_list_builder</a>(</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            _In_        HDEVINFO         DeviceInfoSet,</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            _Inout_opt_ PSP_DEVINFO_DATA DeviceInfoData,</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            _In_        DWORD            DriverType) noexcept :</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            m_DeviceInfoSet (DeviceInfoSet),</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            m_DeviceInfoData(DeviceInfoData),</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            m_DriverType    (DriverType)</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        {</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            m_result = SetupDiBuildDriverInfoList(m_DeviceInfoSet, m_DeviceInfoData, m_DriverType);</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        }</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__driver__info__list__builder.html#a836a7bb6c3c78c7c78965a32cfc2750e">   87</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="classwinstd_1_1setup__driver__info__list__builder.html#a836a7bb6c3c78c7c78965a32cfc2750e">~setup_driver_info_list_builder</a>()</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        {</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            <span class="keywordflow">if</span> (m_result)</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                SetupDiDestroyDriverInfoList(m_DeviceInfoSet, m_DeviceInfoData, m_DriverType);</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        }</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__driver__info__list__builder.html#ae9c062e82afc1ee1eda5926a0567637e">   98</a></span>        BOOL <a class="code hl_function" href="classwinstd_1_1setup__driver__info__list__builder.html#ae9c062e82afc1ee1eda5926a0567637e">status</a>() const noexcept</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        {</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            <span class="keywordflow">return</span> m_result;</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        }</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        HDEVINFO         m_DeviceInfoSet;</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        PSP_DEVINFO_DATA m_DeviceInfoData;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        DWORD            m_DriverType;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        BOOL             m_result;</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    };</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>}</div>
-<div class="ttc" id="a_common_8h_html"><div class="ttname"><a href="_common_8h.html">Common.h</a></div><div class="ttdoc">General API.</div></div>
-<div class="ttc" id="a_setup_a_p_i_8h_html"><div class="ttname"><a href="_setup_a_p_i_8h.html">SetupAPI.h</a></div><div class="ttdoc">Integrates WinStd classes with Microsoft Setup API.</div></div>
-<div class="ttc" id="aclasswinstd_1_1handle_html"><div class="ttname"><a href="classwinstd_1_1handle.html">winstd::handle</a></div><div class="ttdoc">Base abstract template class to support generic object handle keeping.</div><div class="ttdef"><b>Definition:</b> Common.h:615</div></div>
-<div class="ttc" id="aclasswinstd_1_1handle_html_aabde3f16fd98b06b3b0282ef7806eb59"><div class="ttname"><a href="classwinstd_1_1handle.html#aabde3f16fd98b06b3b0282ef7806eb59">winstd::handle&lt; HDEVINFO, INVALID_HANDLE_VALUE &gt;::m_h</a></div><div class="ttdeci">handle_type m_h</div><div class="ttdoc">Object handle.</div><div class="ttdef"><b>Definition:</b> Common.h:866</div></div>
-<div class="ttc" id="aclasswinstd_1_1setup__device__info__list_html"><div class="ttname"><a href="classwinstd_1_1setup__device__info__list.html">winstd::setup_device_info_list</a></div><div class="ttdoc">HDEVINFO wrapper class.</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:30</div></div>
-<div class="ttc" id="aclasswinstd_1_1setup__device__info__list_html_a25368d32a4f4bfe23cb9749464daa487"><div class="ttname"><a href="classwinstd_1_1setup__device__info__list.html#a25368d32a4f4bfe23cb9749464daa487">winstd::setup_device_info_list::~setup_device_info_list</a></div><div class="ttdeci">virtual ~setup_device_info_list()</div><div class="ttdoc">Frees the device information set.</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:39</div></div>
-<div class="ttc" id="aclasswinstd_1_1setup__device__info__list_html_a41f013a37e16074f1972fd279f8c1437"><div class="ttname"><a href="classwinstd_1_1setup__device__info__list.html#a41f013a37e16074f1972fd279f8c1437">winstd::setup_device_info_list::free_internal</a></div><div class="ttdeci">void free_internal() noexcept override</div><div class="ttdoc">Frees the device information set.</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:51</div></div>
-<div class="ttc" id="aclasswinstd_1_1setup__driver__info__list__builder_html"><div class="ttname"><a href="classwinstd_1_1setup__driver__info__list__builder.html">winstd::setup_driver_info_list_builder</a></div><div class="ttdoc">Builds a list of drivers in constructor and deletes it in destructor.</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:61</div></div>
-<div class="ttc" id="aclasswinstd_1_1setup__driver__info__list__builder_html_a4774edfbe680a3a496e243544a68c94f"><div class="ttname"><a href="classwinstd_1_1setup__driver__info__list__builder.html#a4774edfbe680a3a496e243544a68c94f">winstd::setup_driver_info_list_builder::setup_driver_info_list_builder</a></div><div class="ttdeci">setup_driver_info_list_builder(HDEVINFO DeviceInfoSet, PSP_DEVINFO_DATA DeviceInfoData, DWORD DriverType) noexcept</div><div class="ttdoc">Construct the builder and builds a list of drivers that is associated with a specific device or with ...</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:71</div></div>
-<div class="ttc" id="aclasswinstd_1_1setup__driver__info__list__builder_html_a836a7bb6c3c78c7c78965a32cfc2750e"><div class="ttname"><a href="classwinstd_1_1setup__driver__info__list__builder.html#a836a7bb6c3c78c7c78965a32cfc2750e">winstd::setup_driver_info_list_builder::~setup_driver_info_list_builder</a></div><div class="ttdeci">virtual ~setup_driver_info_list_builder()</div><div class="ttdoc">Deletes a driver list and destructs the builder.</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:87</div></div>
-<div class="ttc" id="aclasswinstd_1_1setup__driver__info__list__builder_html_ae9c062e82afc1ee1eda5926a0567637e"><div class="ttname"><a href="classwinstd_1_1setup__driver__info__list__builder.html#ae9c062e82afc1ee1eda5926a0567637e">winstd::setup_driver_info_list_builder::status</a></div><div class="ttdeci">BOOL status() const noexcept</div><div class="ttdoc">Return result of SetupDiBuildDriverInfoList() call.</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:98</div></div>
-<div class="ttc" id="agroup___win_std_general_html_ga11254c72ad33a6e0f5de31db708f784c"><div class="ttname"><a href="group___win_std_general.html#ga11254c72ad33a6e0f5de31db708f784c">WINSTD_NONCOPYABLE</a></div><div class="ttdeci">#define WINSTD_NONCOPYABLE(C)</div><div class="ttdoc">Declares a class as non-copyable.</div><div class="ttdef"><b>Definition:</b> Common.h:74</div></div>
-<div class="ttc" id="agroup___win_std_general_html_gac91fa8d79c860b1fdbba65b6a322f760"><div class="ttname"><a href="group___win_std_general.html#gac91fa8d79c860b1fdbba65b6a322f760">WINSTD_NONMOVABLE</a></div><div class="ttdeci">#define WINSTD_NONMOVABLE(C)</div><div class="ttdoc">Declares a class as non-movable.</div><div class="ttdef"><b>Definition:</b> Common.h:82</div></div>
-<div class="ttc" id="agroup___win_std_sys_handles_html_ga419efffd12b5c96abc8a275ba375ca60"><div class="ttname"><a href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a></div><div class="ttdeci">#define WINSTD_HANDLE_IMPL(C, INVAL)</div><div class="ttdoc">Implements default constructors and operators to prevent their auto-generation by compiler.</div><div class="ttdef"><b>Definition:</b> Common.h:171</div></div>
-<div class="ttc" id="agroup___win_std_sys_handles_html_gacf43e306968474166474090690857e1c"><div class="ttname"><a href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">winstd::handle&lt; HDEVINFO, INVALID_HANDLE_VALUE &gt;::invalid</a></div><div class="ttdeci">static const HDEVINFO invalid</div><div class="ttdoc">Invalid handle value.</div><div class="ttdef"><b>Definition:</b> Common.h:625</div></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;Common.h&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;SetupAPI.h&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span>winstd</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__device__info__list.html">   25</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classwinstd_1_1setup__device__info__list.html">setup_device_info_list</a> : <span class="keyword">public</span> <a class="code hl_class" href="classwinstd_1_1handle.html">handle</a>&lt;HDEVINFO, INVALID_HANDLE_VALUE&gt;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <a class="code hl_define" href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a>(<a class="code hl_class" href="classwinstd_1_1setup__device__info__list.html">setup_device_info_list</a>, INVALID_HANDLE_VALUE)</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__device__info__list.html#a25368d32a4f4bfe23cb9749464daa487">   35</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="classwinstd_1_1setup__device__info__list.html#a25368d32a4f4bfe23cb9749464daa487">~setup_device_info_list</a>()</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="classwinstd_1_1handle.html#aabde3f16fd98b06b3b0282ef7806eb59">m_h</a> != <a class="code hl_variable" href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">invalid</a>)</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                <a class="code hl_function" href="classwinstd_1_1setup__device__info__list.html#a41f013a37e16074f1972fd279f8c1437">free_internal</a>();</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        }</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__device__info__list.html#a41f013a37e16074f1972fd279f8c1437">   47</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classwinstd_1_1setup__device__info__list.html#a41f013a37e16074f1972fd279f8c1437">free_internal</a>() noexcept<span class="keyword"> override</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            SetupDiDestroyDeviceInfoList(<a class="code hl_variable" href="classwinstd_1_1handle.html#aabde3f16fd98b06b3b0282ef7806eb59">m_h</a>);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        }</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    };</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__driver__info__list__builder.html">   56</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classwinstd_1_1setup__driver__info__list__builder.html">setup_driver_info_list_builder</a></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <a class="code hl_define" href="group___win_std_general.html#ga11254c72ad33a6e0f5de31db708f784c">WINSTD_NONCOPYABLE</a>(<a class="code hl_class" href="classwinstd_1_1setup__driver__info__list__builder.html">setup_driver_info_list_builder</a>)</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <a class="code hl_define" href="group___win_std_general.html#gac91fa8d79c860b1fdbba65b6a322f760">WINSTD_NONMOVABLE</a>(<a class="code hl_class" href="classwinstd_1_1setup__driver__info__list__builder.html">setup_driver_info_list_builder</a>)</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__driver__info__list__builder.html#a4774edfbe680a3a496e243544a68c94f">   67</a></span>        <a class="code hl_function" href="classwinstd_1_1setup__driver__info__list__builder.html#a4774edfbe680a3a496e243544a68c94f">setup_driver_info_list_builder</a>(</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            _In_        HDEVINFO         DeviceInfoSet,</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            _Inout_opt_ PSP_DEVINFO_DATA DeviceInfoData,</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            _In_        DWORD            DriverType) noexcept :</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            m_DeviceInfoSet (DeviceInfoSet),</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            m_DeviceInfoData(DeviceInfoData),</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            m_DriverType    (DriverType)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            m_result = SetupDiBuildDriverInfoList(m_DeviceInfoSet, m_DeviceInfoData, m_DriverType);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__driver__info__list__builder.html#a836a7bb6c3c78c7c78965a32cfc2750e">   83</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="classwinstd_1_1setup__driver__info__list__builder.html#a836a7bb6c3c78c7c78965a32cfc2750e">~setup_driver_info_list_builder</a>()</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        {</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            <span class="keywordflow">if</span> (m_result)</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                SetupDiDestroyDriverInfoList(m_DeviceInfoSet, m_DeviceInfoData, m_DriverType);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        }</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="classwinstd_1_1setup__driver__info__list__builder.html#ae9c062e82afc1ee1eda5926a0567637e">   94</a></span>        BOOL <a class="code hl_function" href="classwinstd_1_1setup__driver__info__list__builder.html#ae9c062e82afc1ee1eda5926a0567637e">status</a>() const noexcept</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        {</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            <span class="keywordflow">return</span> m_result;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        }</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        HDEVINFO         m_DeviceInfoSet;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        PSP_DEVINFO_DATA m_DeviceInfoData;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        DWORD            m_DriverType;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        BOOL             m_result;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    };</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>}</div>
+<div class="ttc" id="aclasswinstd_1_1handle_html"><div class="ttname"><a href="classwinstd_1_1handle.html">winstd::handle</a></div><div class="ttdoc">Base abstract template class to support generic object handle keeping.</div><div class="ttdef"><b>Definition:</b> Common.h:607</div></div>
+<div class="ttc" id="aclasswinstd_1_1handle_html_aabde3f16fd98b06b3b0282ef7806eb59"><div class="ttname"><a href="classwinstd_1_1handle.html#aabde3f16fd98b06b3b0282ef7806eb59">winstd::handle&lt; HDEVINFO, INVALID_HANDLE_VALUE &gt;::m_h</a></div><div class="ttdeci">handle_type m_h</div><div class="ttdoc">Object handle.</div><div class="ttdef"><b>Definition:</b> Common.h:858</div></div>
+<div class="ttc" id="aclasswinstd_1_1setup__device__info__list_html"><div class="ttname"><a href="classwinstd_1_1setup__device__info__list.html">winstd::setup_device_info_list</a></div><div class="ttdoc">HDEVINFO wrapper class.</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:26</div></div>
+<div class="ttc" id="aclasswinstd_1_1setup__device__info__list_html_a25368d32a4f4bfe23cb9749464daa487"><div class="ttname"><a href="classwinstd_1_1setup__device__info__list.html#a25368d32a4f4bfe23cb9749464daa487">winstd::setup_device_info_list::~setup_device_info_list</a></div><div class="ttdeci">virtual ~setup_device_info_list()</div><div class="ttdoc">Frees the device information set.</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:35</div></div>
+<div class="ttc" id="aclasswinstd_1_1setup__device__info__list_html_a41f013a37e16074f1972fd279f8c1437"><div class="ttname"><a href="classwinstd_1_1setup__device__info__list.html#a41f013a37e16074f1972fd279f8c1437">winstd::setup_device_info_list::free_internal</a></div><div class="ttdeci">void free_internal() noexcept override</div><div class="ttdoc">Frees the device information set.</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:47</div></div>
+<div class="ttc" id="aclasswinstd_1_1setup__driver__info__list__builder_html"><div class="ttname"><a href="classwinstd_1_1setup__driver__info__list__builder.html">winstd::setup_driver_info_list_builder</a></div><div class="ttdoc">Builds a list of drivers in constructor and deletes it in destructor.</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:57</div></div>
+<div class="ttc" id="aclasswinstd_1_1setup__driver__info__list__builder_html_a4774edfbe680a3a496e243544a68c94f"><div class="ttname"><a href="classwinstd_1_1setup__driver__info__list__builder.html#a4774edfbe680a3a496e243544a68c94f">winstd::setup_driver_info_list_builder::setup_driver_info_list_builder</a></div><div class="ttdeci">setup_driver_info_list_builder(HDEVINFO DeviceInfoSet, PSP_DEVINFO_DATA DeviceInfoData, DWORD DriverType) noexcept</div><div class="ttdoc">Construct the builder and builds a list of drivers that is associated with a specific device or with ...</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:67</div></div>
+<div class="ttc" id="aclasswinstd_1_1setup__driver__info__list__builder_html_a836a7bb6c3c78c7c78965a32cfc2750e"><div class="ttname"><a href="classwinstd_1_1setup__driver__info__list__builder.html#a836a7bb6c3c78c7c78965a32cfc2750e">winstd::setup_driver_info_list_builder::~setup_driver_info_list_builder</a></div><div class="ttdeci">virtual ~setup_driver_info_list_builder()</div><div class="ttdoc">Deletes a driver list and destructs the builder.</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:83</div></div>
+<div class="ttc" id="aclasswinstd_1_1setup__driver__info__list__builder_html_ae9c062e82afc1ee1eda5926a0567637e"><div class="ttname"><a href="classwinstd_1_1setup__driver__info__list__builder.html#ae9c062e82afc1ee1eda5926a0567637e">winstd::setup_driver_info_list_builder::status</a></div><div class="ttdeci">BOOL status() const noexcept</div><div class="ttdoc">Return result of SetupDiBuildDriverInfoList() call.</div><div class="ttdef"><b>Definition:</b> SetupAPI.h:94</div></div>
+<div class="ttc" id="agroup___win_std_general_html_ga11254c72ad33a6e0f5de31db708f784c"><div class="ttname"><a href="group___win_std_general.html#ga11254c72ad33a6e0f5de31db708f784c">WINSTD_NONCOPYABLE</a></div><div class="ttdeci">#define WINSTD_NONCOPYABLE(C)</div><div class="ttdoc">Declares a class as non-copyable.</div><div class="ttdef"><b>Definition:</b> Common.h:66</div></div>
+<div class="ttc" id="agroup___win_std_general_html_gac91fa8d79c860b1fdbba65b6a322f760"><div class="ttname"><a href="group___win_std_general.html#gac91fa8d79c860b1fdbba65b6a322f760">WINSTD_NONMOVABLE</a></div><div class="ttdeci">#define WINSTD_NONMOVABLE(C)</div><div class="ttdoc">Declares a class as non-movable.</div><div class="ttdef"><b>Definition:</b> Common.h:74</div></div>
+<div class="ttc" id="agroup___win_std_sys_handles_html_ga419efffd12b5c96abc8a275ba375ca60"><div class="ttname"><a href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a></div><div class="ttdeci">#define WINSTD_HANDLE_IMPL(C, INVAL)</div><div class="ttdoc">Implements default constructors and operators to prevent their auto-generation by compiler.</div><div class="ttdef"><b>Definition:</b> Common.h:163</div></div>
+<div class="ttc" id="agroup___win_std_sys_handles_html_gacf43e306968474166474090690857e1c"><div class="ttname"><a href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">winstd::handle&lt; HDEVINFO, INVALID_HANDLE_VALUE &gt;::invalid</a></div><div class="ttdeci">static const HDEVINFO invalid</div><div class="ttdoc">Invalid handle value.</div><div class="ttdef"><b>Definition:</b> Common.h:617</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 7 2022 11:58:55 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Mon Mar 7 2022 12:00:44 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>
