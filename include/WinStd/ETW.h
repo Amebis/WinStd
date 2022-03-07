@@ -4,6 +4,12 @@
     Copyright © 2016 GÉANT
 */
 
+/// \file
+/// Integrates WinStd classes with Event Tracing for Windows API
+///
+/// \defgroup WinStdETWAPI Event Tracing for Windows API
+/// Integrates WinStd classes with Event Tracing for Windows API
+
 #pragma once
 
 #include "Common.h"
@@ -19,10 +25,7 @@
 #pragma warning(push)
 #pragma warning(disable: 4505) // Don't warn on unused code
 
-///
-/// \defgroup WinStdETWAPI Event Tracing for Windows API
-/// Integrates WinStd classes with Event Tracing for Windows API
-///
+/// \addtogroup WinStdETWAPI
 /// @{
 
 ///

@@ -4,6 +4,12 @@
     Copyright © 2016 GÉANT
 */
 
+/// \file
+/// Integrates WinStd classes with Microsoft Installer API
+///
+/// \defgroup WinStdMSIAPI Microsoft Installer API
+/// Integrates WinStd classes with Microsoft Installer API
+
 #pragma once
 
 #include "Common.h"
@@ -11,10 +17,6 @@
 #include <string>
 #include <vector>
 
-///
-/// \defgroup WinStdMSIAPI Microsoft Installer API
-/// Integrates WinStd classes with Microsoft Installer API
-///
 /// \addtogroup WinStdMSIAPI
 /// @{
 

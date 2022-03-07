@@ -4,16 +4,19 @@
     Copyright © 2016 GÉANT
 */
 
+/// \file
+/// Integrates WinStd classes with Microsoft Credentials API
+///
+/// \defgroup WinStdCredAPI Credentials API
+/// Integrates WinStd classes with Microsoft Credentials API
+
 #pragma once
 
 #include "Common.h"
 #include <wincred.h>
 #include <memory>
 
-///
-/// \defgroup WinStdCredAPI Credentials API
-/// Integrates WinStd classes with Microsoft Credentials API
-///
+/// \addtogroup WinStdCredAPI
 /// @{
 
 /// @copydoc CredProtectW()

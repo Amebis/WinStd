@@ -4,6 +4,12 @@
     Copyright © 2016 GÉANT
 */
 
+/// \file
+/// Integrates WinStd classes with Microsoft Windows API
+///
+/// \defgroup WinStdWinAPI Windows API
+/// Integrates WinStd classes with Microsoft Windows API
+
 #pragma once
 
 #include "Common.h"
@@ -13,10 +19,7 @@
 #pragma warning(push)
 #pragma warning(disable: 4505) // Don't warn on unused code
 
-///
-/// \defgroup WinStdWinAPI Windows API
-/// Integrates WinStd classes with Microsoft Windows API
-///
+/// \addtogroup WinStdWinAPI
 /// @{
 
 /// @copydoc GetModuleFileNameW()

@@ -4,21 +4,26 @@
     Copyright © 2016 GÉANT
 */
 
+/// \file
+/// Integrates WinStd classes with Microsoft WLAN API
+///
+/// \defgroup WinStdWLANAPI WLAN API
+/// Integrates WinStd classes with Microsoft WLAN API
+
 #pragma once
 
 #include "Common.h"
 #include <wlanapi.h>
 #include <string>
 
+/// \addtogroup WinStdWLANAPI
+/// @{
+
+/// \cond internal
 // Must not statically link to Wlanapi.dll as it is not available on Windows
 // without a WLAN interface.
 extern DWORD (WINAPI *pfnWlanReasonCodeToString)(__in DWORD dwReasonCode, __in DWORD dwBufferSize, __in_ecount(dwBufferSize) PWCHAR pStringBuffer, __reserved PVOID pReserved);
-
-///
-/// \defgroup WinStdWLANAPI WLAN API
-/// Integrates WinStd classes with Microsoft WLAN API
-///
-/// @{
+/// \endcond
 
 ///
 /// Retrieves a string that describes a specified reason code and stores it in a std::wstring string.

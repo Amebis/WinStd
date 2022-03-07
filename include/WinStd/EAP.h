@@ -4,6 +4,12 @@
     Copyright © 2016 GÉANT
 */
 
+/// \file
+/// Integrates WinStd classes with Microsoft EAP API
+///
+/// \defgroup WinStdEAPAPI Extensible Authentication Protocol API
+/// Integrates WinStd classes with Microsoft EAP API
+
 #pragma once
 
 #include "Common.h"
@@ -21,10 +27,7 @@
 #pragma warning(push)
 #pragma warning(disable: 4505) // Don't warn on unused code
 
-///
-/// \defgroup WinStdEAPAPI Extensible Authentication Protocol API
-/// Integrates WinStd classes with Microsoft EAP API
-///
+/// \addtogroup WinStdEAPAPI
 /// @{
 
 ///

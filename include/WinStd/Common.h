@@ -16,10 +16,32 @@
 #include <string>
 #include <vector>
 
+/// \file
+/// General API
 ///
 /// \defgroup WinStdGeneral General
 /// General API
 ///
+/// \defgroup WinStdStrFormat String Formatting
+/// Formatted string generation
+///
+/// \par Example
+/// \code
+/// // Please note the PCSTR typecasting invokes an operator to return
+/// // pointer to formatted buffer rather than class reference itself.
+/// cout << (PCSTR)(winstd::string_printf("%i is less than %i.\n", 1, 5));
+/// \endcode
+///
+/// \defgroup WinStdSysHandles System Handles
+/// Simplifies work with object handles of various type
+///
+/// \defgroup WinStdExceptions Exceptions
+/// Additional exceptions
+///
+/// \defgroup WinStdMemSanitize Auto-sanitize Memory Management
+/// Sanitizes memory before dismissed
+
+/// \addtogroup WinStdGeneral
 /// @{
 
 ///
@@ -81,16 +103,7 @@ private: \
 
 /// @}
 
-/// \defgroup WinStdStrFormat String Formatting
-/// Formatted string generation
-///
-/// \par Example
-/// \code
-/// // Please note the PCSTR typecasting invokes an operator to return
-/// // pointer to formatted buffer rather than class reference itself.
-/// cout << (PCSTR)(winstd::string_printf("%i is less than %i.\n", 1, 5));
-/// \endcode
-///
+/// \addtogroup WinStdStrFormat
 /// @{
 
 ///
@@ -149,10 +162,7 @@ private: \
 
 /// @}
 
-///
-/// \defgroup WinStdSysHandles System Handles
-/// Simplifies work with object handles of various type
-///
+/// \addtogroup WinStdSysHandles
 /// @{
 
 ///
@@ -187,10 +197,12 @@ private:
 #define _FormatMessage_format_string_ _In_z_
 #endif
 
+/// \cond internal
 #ifndef _LPCBYTE_DEFINED
 #define _LPCBYTE_DEFINED
 typedef const BYTE *LPCBYTE;
 #endif
+/// \endcond
 
 #pragma warning(push)
 // Do not use _vsnprintf_s/_vsnwprintf_s(), since it terminates string by force even when we explicitly want to write unterminated string.
@@ -988,10 +1000,7 @@ namespace winstd
 
     /// @}
 
-    ///
-    /// \defgroup WinStdExceptions Exceptions
-    /// Additional exceptions
-    ///
+    /// \addtogroup WinStdExceptions
     /// @{
 
     ///
@@ -1400,10 +1409,7 @@ namespace winstd
 
     /// @}
 
-    ///
-    /// \defgroup WinStdMemSanitize Auto-sanitize Memory Management
-    /// Sanitizes memory before dismissed
-    ///
+    /// \addtogroup WinStdMemSanitize
     /// @{
 
     // winstd::sanitizing_allocator::destroy() member generates _Ptr parameter not used warning for primitive datatypes _Ty.

@@ -4,16 +4,19 @@
     Copyright © 2016 GÉANT
 */
 
+/// \file
+/// Integrates WinStd classes with Microsoft Security API
+///
+/// \defgroup WinStdSecurityAPI Security API
+/// Integrates WinStd classes with Microsoft Security API
+
 #pragma once
 
 #include "Common.h"
 #include <Security.h>
 #include <string>
 
-///
-/// \defgroup WinStdSecurityAPI Security API
-/// Integrates WinStd classes with Microsoft Security API
-///
+/// \addtogroup WinStdSecurityAPI
 /// @{
 
 #if defined(SECURITY_WIN32) || defined(SECURITY_KERNEL)

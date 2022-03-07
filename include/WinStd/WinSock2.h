@@ -4,6 +4,12 @@
     Copyright © 2016 GÉANT
 */
 
+/// \file
+/// Integrates WinStd classes with Microsoft WinSock2 API
+///
+/// \defgroup WinSock2API WinSock2 API
+/// Integrates WinStd classes with Microsoft WinSock2 API
+
 #pragma once
 
 #include "Common.h"
@@ -13,10 +19,7 @@
 
 namespace winstd
 {
-    ///
-    /// \defgroup WinSock2API WinSock2 API
-    /// Integrates WinStd classes with Microsoft WinSock2 API
-    ///
+    /// \addtogroup WinSock2API
     /// @{
 
     ///
