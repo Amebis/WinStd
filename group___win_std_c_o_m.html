@@ -64,7 +64,8 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">COM object management</div></div>
 </div><!--header-->
 <div class="contents">
@@ -89,13 +90,74 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1com__initializer.html">winstd::com_initializer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context scope automatic COM (un)initialization.  <a href="classwinstd_1_1com__initializer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaa05e677aa01b9b1f2f8b58571532c965"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:gaa05e677aa01b9b1f2f8b58571532c965"><td class="memTemplItemLeft" align="right" valign="top">static _Check_return_ HRESULT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965">CoCreateInstance</a> (REFCLSID rclsid, LPUNKNOWN pUnkOuter, DWORD dwClsContext, <a class="el" href="classwinstd_1_1com__obj.html">winstd::com_obj</a>&lt; T &gt; &amp;v)</td></tr>
+<tr class="memdesc:gaa05e677aa01b9b1f2f8b58571532c965"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and default-initializes a single object of the class associated with a specified CLSID.  <a href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965">More...</a><br /></td></tr>
+<tr class="separator:gaa05e677aa01b9b1f2f8b58571532c965"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p >Provides helper templates for Windows COM object manipulation. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gaa05e677aa01b9b1f2f8b58571532c965" name="gaa05e677aa01b9b1f2f8b58571532c965"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa05e677aa01b9b1f2f8b58571532c965">&#9670;&nbsp;</a></span>CoCreateInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static _Check_return_ HRESULT CoCreateInstance </td>
+          <td>(</td>
+          <td class="paramtype">REFCLSID&#160;</td>
+          <td class="paramname"><em>rclsid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPUNKNOWN&#160;</td>
+          <td class="paramname"><em>pUnkOuter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwClsContext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classwinstd_1_1com__obj.html">winstd::com_obj</a>&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>v</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates and default-initializes a single object of the class associated with a specified CLSID. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms686615.aspx">CoCreateInstance function</a> </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 15:02:05 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Mon Mar 7 2022 09:10:52 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

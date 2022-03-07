@@ -70,143 +70,147 @@ $(function() {
   <div class="headertitle"><div class="title">WLAN.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<a href="_w_l_a_n_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">    SPDX-License-Identifier: MIT</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">    Copyright © 1991-2022 Amebis</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">    Copyright © 2016 GÉANT</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">*/</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;Common.h&quot;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;wlanapi.h&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">// Must not statically link to Wlanapi.dll as it is not available on Windows</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment">// without a WLAN interface.</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">extern</span> DWORD (WINAPI *pfnWlanReasonCodeToString)(__in DWORD dwReasonCode, __in DWORD dwBufferSize, __in_ecount(dwBufferSize) PWCHAR pStringBuffer, __reserved PVOID pReserved);</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> _Traits, <span class="keyword">class</span> _Ax&gt;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">static</span> DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string&lt;wchar_t, _Traits, _Ax&gt; &amp;sValue, __reserved PVOID pReserved)</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>{</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    DWORD dwSize = 0;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordflow">if</span> (!::pfnWlanReasonCodeToString)</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordflow">return</span> ERROR_CALL_NOT_IMPLEMENTED;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordflow">for</span> (;;) {</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="comment">// Increment size and allocate buffer.</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        dwSize += 1024;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        std::unique_ptr&lt;wchar_t[]&gt; szBuffer(<span class="keyword">new</span> <span class="keywordtype">wchar_t</span>[dwSize]);</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_common_8h.html">Common.h</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;wlanapi.h&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">// Must not statically link to Wlanapi.dll as it is not available on Windows</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">// without a WLAN interface.</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">extern</span> DWORD (WINAPI *pfnWlanReasonCodeToString)(__in DWORD dwReasonCode, __in DWORD dwBufferSize, __in_ecount(dwBufferSize) PWCHAR pStringBuffer, __reserved PVOID pReserved);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> _Traits, <span class="keyword">class</span> _Ax&gt;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="group___win_std_w_l_a_n_a_p_i.html#gaf621eeb252e56982bc063a629bee30c7">   38</a></span><span class="keyword">static</span> DWORD <a class="code hl_function" href="group___win_std_w_l_a_n_a_p_i.html#gaf621eeb252e56982bc063a629bee30c7">WlanReasonCodeToString</a>(_In_ DWORD dwReasonCode, _Inout_ std::basic_string&lt;wchar_t, _Traits, _Ax&gt; &amp;sValue, __reserved PVOID pReserved)</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>{</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    DWORD dwSize = 0;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordflow">if</span> (!::pfnWlanReasonCodeToString)</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordflow">return</span> ERROR_CALL_NOT_IMPLEMENTED;</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="comment">// Try!</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        DWORD dwResult = ::pfnWlanReasonCodeToString(dwReasonCode, dwSize, szBuffer.get(), pReserved);</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keywordflow">if</span> (dwResult == ERROR_SUCCESS) {</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            DWORD dwLength = (DWORD)wcsnlen(szBuffer.get(), dwSize);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="keywordflow">if</span> (dwLength &lt; dwSize - 1) {</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                <span class="comment">// Buffer was long enough.</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                sValue.assign(szBuffer.get(), dwLength);</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                <span class="keywordflow">return</span> ERROR_SUCCESS;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            }</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <span class="comment">// Return error code.</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="keywordflow">return</span> dwResult;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        }</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    }</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>}</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="keyword">namespace </span>winstd</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>{</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">for</span> (;;) {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="comment">// Increment size and allocate buffer.</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        dwSize += 1024;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        std::unique_ptr&lt;wchar_t[]&gt; szBuffer(<span class="keyword">new</span> <span class="keywordtype">wchar_t</span>[dwSize]);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="comment">// Try!</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        DWORD dwResult = ::pfnWlanReasonCodeToString(dwReasonCode, dwSize, szBuffer.get(), pReserved);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keywordflow">if</span> (dwResult == ERROR_SUCCESS) {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            DWORD dwLength = (DWORD)wcsnlen(szBuffer.get(), dwSize);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <span class="keywordflow">if</span> (dwLength &lt; dwSize - 1) {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                <span class="comment">// Buffer was long enough.</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                sValue.assign(szBuffer.get(), dwLength);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                <span class="keywordflow">return</span> ERROR_SUCCESS;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            }</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            <span class="comment">// Return error code.</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            <span class="keywordflow">return</span> dwResult;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        }</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    }</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>}</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete.html">   71</a></span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span> _Ty&gt; <span class="keyword">struct </span><a class="code hl_struct" href="structwinstd_1_1_wlan_free_memory__delete.html">WlanFreeMemory_delete</a></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    {</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete.html#a92dd05a3becb4a67ad858472eb615668">   73</a></span>        <span class="keyword">typedef</span> <a class="code hl_struct" href="structwinstd_1_1_wlan_free_memory__delete.html">WlanFreeMemory_delete&lt;_Ty&gt;</a> <a class="code hl_typedef" href="structwinstd_1_1_wlan_free_memory__delete.html#a92dd05a3becb4a67ad858472eb615668">_Myt</a>; </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete.html#a3e356b7c4a09f33100e3e35a71d1d94e">   78</a></span>        <a class="code hl_function" href="structwinstd_1_1_wlan_free_memory__delete.html#a3e356b7c4a09f33100e3e35a71d1d94e">WlanFreeMemory_delete</a>() {}</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="keyword">namespace </span>winstd</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>{</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete.html">   76</a></span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span> _Ty&gt; <span class="keyword">struct </span><a class="code hl_struct" href="structwinstd_1_1_wlan_free_memory__delete.html">WlanFreeMemory_delete</a></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    {</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete.html#a92dd05a3becb4a67ad858472eb615668">   78</a></span>        <span class="keyword">typedef</span> <a class="code hl_struct" href="structwinstd_1_1_wlan_free_memory__delete.html">WlanFreeMemory_delete&lt;_Ty&gt;</a> <a class="code hl_typedef" href="structwinstd_1_1_wlan_free_memory__delete.html#a92dd05a3becb4a67ad858472eb615668">_Myt</a>; </div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete.html#ab30e2946800931f214e9a55a527fe546">   83</a></span>        <span class="keyword">template</span> &lt;<span class="keyword">class</span> _Ty2&gt; <a class="code hl_function" href="structwinstd_1_1_wlan_free_memory__delete.html#ab30e2946800931f214e9a55a527fe546">WlanFreeMemory_delete</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structwinstd_1_1_wlan_free_memory__delete.html">WlanFreeMemory_delete&lt;_Ty2&gt;</a>&amp;) {}</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete.html#a3e356b7c4a09f33100e3e35a71d1d94e">   83</a></span>        <a class="code hl_function" href="structwinstd_1_1_wlan_free_memory__delete.html#a3e356b7c4a09f33100e3e35a71d1d94e">WlanFreeMemory_delete</a>() {}</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete.html#a5013eb2213d92798d755cbb9fa24e26b">   88</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structwinstd_1_1_wlan_free_memory__delete.html#a5013eb2213d92798d755cbb9fa24e26b">operator()</a>(_Ty *_Ptr)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            WlanFreeMemory(_Ptr);</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        }</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    };</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html">   97</a></span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span> _Ty&gt; <span class="keyword">struct </span><a class="code hl_struct" href="structwinstd_1_1_wlan_free_memory__delete.html">WlanFreeMemory_delete</a>&lt;_Ty[]&gt;</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    {</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a42bc91dcaea20ff32034ba5482027837">   99</a></span>        <span class="keyword">typedef</span> <a class="code hl_struct" href="structwinstd_1_1_wlan_free_memory__delete.html">WlanFreeMemory_delete&lt;_Ty&gt;</a> <a class="code hl_typedef" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a42bc91dcaea20ff32034ba5482027837">_Myt</a>; </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a39d42f9429ac337513cd2cad1b5c8fdf">  104</a></span>        <a class="code hl_function" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a39d42f9429ac337513cd2cad1b5c8fdf">WlanFreeMemory_delete</a>() {}</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete.html#ab30e2946800931f214e9a55a527fe546">   88</a></span>        <span class="keyword">template</span> &lt;<span class="keyword">class</span> _Ty2&gt; <a class="code hl_function" href="structwinstd_1_1_wlan_free_memory__delete.html#ab30e2946800931f214e9a55a527fe546">WlanFreeMemory_delete</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structwinstd_1_1_wlan_free_memory__delete.html">WlanFreeMemory_delete&lt;_Ty2&gt;</a>&amp;) {}</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete.html#a5013eb2213d92798d755cbb9fa24e26b">   93</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structwinstd_1_1_wlan_free_memory__delete.html#a5013eb2213d92798d755cbb9fa24e26b">operator()</a>(_Ty *_Ptr)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            WlanFreeMemory(_Ptr);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        }</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    };</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html">  102</a></span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span> _Ty&gt; <span class="keyword">struct </span><a class="code hl_struct" href="structwinstd_1_1_wlan_free_memory__delete.html">WlanFreeMemory_delete</a>&lt;_Ty[]&gt;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a42bc91dcaea20ff32034ba5482027837">  104</a></span>        <span class="keyword">typedef</span> <a class="code hl_struct" href="structwinstd_1_1_wlan_free_memory__delete.html">WlanFreeMemory_delete&lt;_Ty&gt;</a> <a class="code hl_typedef" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a42bc91dcaea20ff32034ba5482027837">_Myt</a>; </div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a60d22784612a4cfd16ca8ad6629a77e4">  109</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a60d22784612a4cfd16ca8ad6629a77e4">operator()</a>(_Ty *_Ptr)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            WlanFreeMemory(_Ptr);</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        }</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        <span class="keyword">template</span>&lt;<span class="keyword">class</span> _Other&gt;</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a3b0a5a8db35677a63c3583a45658df1b">  118</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a3b0a5a8db35677a63c3583a45658df1b">operator()</a>(_Other *)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            WlanFreeMemory(_Ptr);</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        }</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    };</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="classwinstd_1_1wlan__handle.html">  129</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classwinstd_1_1wlan__handle.html">wlan_handle</a> : <span class="keyword">public</span> <a class="code hl_class" href="classwinstd_1_1handle.html">handle</a>&lt;HANDLE, NULL&gt;</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    {</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        <a class="code hl_define" href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a>(<a class="code hl_class" href="classwinstd_1_1wlan__handle.html">wlan_handle</a>, NULL)</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="classwinstd_1_1wlan__handle.html#a57e97a572a121f6e28673e6d84493de9">  139</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="classwinstd_1_1wlan__handle.html#a57e97a572a121f6e28673e6d84493de9">~wlan_handle</a>()</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        {</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="classwinstd_1_1handle.html#aabde3f16fd98b06b3b0282ef7806eb59">m_h</a> != <a class="code hl_variable" href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">invalid</a>)</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                <a class="code hl_function" href="classwinstd_1_1wlan__handle.html#a86e2b4aa2a5177b6ebac0258099f9261">free_internal</a>();</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        }</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno"><a class="line" href="classwinstd_1_1wlan__handle.html#a86e2b4aa2a5177b6ebac0258099f9261">  151</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classwinstd_1_1wlan__handle.html#a86e2b4aa2a5177b6ebac0258099f9261">free_internal</a>() noexcept<span class="keyword"> override</span></div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>            WlanCloseHandle(<a class="code hl_variable" href="classwinstd_1_1handle.html#aabde3f16fd98b06b3b0282ef7806eb59">m_h</a>, NULL);</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        }</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    };</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>}</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="preprocessor">#pragma warning(suppress: 4505) </span><span class="comment">// Don&#39;t warn on unused code</span></div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="keyword">static</span> DWORD WlanOpenHandle(</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    _In_ DWORD dwClientVersion,</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    _Reserved_ PVOID pReserved,</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    _Out_ PDWORD pdwNegotiatedVersion,</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    _Inout_ <a class="code hl_class" href="classwinstd_1_1wlan__handle.html">winstd::wlan_handle</a> &amp;handle)</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>{</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    HANDLE h;</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    DWORD dwResult = WlanOpenHandle(dwClientVersion, pReserved, pdwNegotiatedVersion, &amp;h);</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    <span class="keywordflow">if</span> (dwResult == ERROR_SUCCESS)</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        handle.attach(h);</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    <span class="keywordflow">return</span> dwResult;</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>}</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
-<div class="ttc" id="aclasswinstd_1_1handle_html"><div class="ttname"><a href="classwinstd_1_1handle.html">winstd::handle</a></div><div class="ttdoc">Base abstract template class to support generic object handle keeping.</div><div class="ttdef"><b>Definition:</b> Common.h:603</div></div>
-<div class="ttc" id="aclasswinstd_1_1handle_html_aabde3f16fd98b06b3b0282ef7806eb59"><div class="ttname"><a href="classwinstd_1_1handle.html#aabde3f16fd98b06b3b0282ef7806eb59">winstd::handle&lt; HANDLE, NULL &gt;::m_h</a></div><div class="ttdeci">handle_type m_h</div><div class="ttdoc">Object handle.</div><div class="ttdef"><b>Definition:</b> Common.h:854</div></div>
-<div class="ttc" id="aclasswinstd_1_1wlan__handle_html"><div class="ttname"><a href="classwinstd_1_1wlan__handle.html">winstd::wlan_handle</a></div><div class="ttdoc">WLAN handle wrapper.</div><div class="ttdef"><b>Definition:</b> WLAN.h:130</div></div>
-<div class="ttc" id="aclasswinstd_1_1wlan__handle_html_a57e97a572a121f6e28673e6d84493de9"><div class="ttname"><a href="classwinstd_1_1wlan__handle.html#a57e97a572a121f6e28673e6d84493de9">winstd::wlan_handle::~wlan_handle</a></div><div class="ttdeci">virtual ~wlan_handle()</div><div class="ttdoc">Closes a connection to the server.</div><div class="ttdef"><b>Definition:</b> WLAN.h:139</div></div>
-<div class="ttc" id="aclasswinstd_1_1wlan__handle_html_a86e2b4aa2a5177b6ebac0258099f9261"><div class="ttname"><a href="classwinstd_1_1wlan__handle.html#a86e2b4aa2a5177b6ebac0258099f9261">winstd::wlan_handle::free_internal</a></div><div class="ttdeci">void free_internal() noexcept override</div><div class="ttdoc">Closes a connection to the server.</div><div class="ttdef"><b>Definition:</b> WLAN.h:151</div></div>
-<div class="ttc" id="agroup___win_std_sys_handles_html_ga419efffd12b5c96abc8a275ba375ca60"><div class="ttname"><a href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a></div><div class="ttdeci">#define WINSTD_HANDLE_IMPL(C, INVAL)</div><div class="ttdoc">Implements default constructors and operators to prevent their auto-generation by compiler.</div><div class="ttdef"><b>Definition:</b> Common.h:161</div></div>
-<div class="ttc" id="agroup___win_std_sys_handles_html_gacf43e306968474166474090690857e1c"><div class="ttname"><a href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">winstd::handle&lt; HANDLE, NULL &gt;::invalid</a></div><div class="ttdeci">static const HANDLE invalid</div><div class="ttdoc">Invalid handle value.</div><div class="ttdef"><b>Definition:</b> Common.h:613</div></div>
-<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4_html_a39d42f9429ac337513cd2cad1b5c8fdf"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a39d42f9429ac337513cd2cad1b5c8fdf">winstd::WlanFreeMemory_delete&lt; _Ty[]&gt;::WlanFreeMemory_delete</a></div><div class="ttdeci">WlanFreeMemory_delete()</div><div class="ttdoc">Default construct.</div><div class="ttdef"><b>Definition:</b> WLAN.h:104</div></div>
-<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4_html_a3b0a5a8db35677a63c3583a45658df1b"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a3b0a5a8db35677a63c3583a45658df1b">winstd::WlanFreeMemory_delete&lt; _Ty[]&gt;::operator()</a></div><div class="ttdeci">void operator()(_Other *) const</div><div class="ttdoc">Delete a pointer of another type.</div><div class="ttdef"><b>Definition:</b> WLAN.h:118</div></div>
-<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4_html_a42bc91dcaea20ff32034ba5482027837"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a42bc91dcaea20ff32034ba5482027837">winstd::WlanFreeMemory_delete&lt; _Ty[]&gt;::_Myt</a></div><div class="ttdeci">WlanFreeMemory_delete&lt; _Ty &gt; _Myt</div><div class="ttdoc">This type.</div><div class="ttdef"><b>Definition:</b> WLAN.h:99</div></div>
-<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4_html_a60d22784612a4cfd16ca8ad6629a77e4"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a60d22784612a4cfd16ca8ad6629a77e4">winstd::WlanFreeMemory_delete&lt; _Ty[]&gt;::operator()</a></div><div class="ttdeci">void operator()(_Ty *_Ptr) const</div><div class="ttdoc">Delete a pointer.</div><div class="ttdef"><b>Definition:</b> WLAN.h:109</div></div>
-<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_html"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete.html">winstd::WlanFreeMemory_delete</a></div><div class="ttdoc">Deleter for unique_ptr using WlanFreeMemory.</div><div class="ttdef"><b>Definition:</b> WLAN.h:72</div></div>
-<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_html_a3e356b7c4a09f33100e3e35a71d1d94e"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete.html#a3e356b7c4a09f33100e3e35a71d1d94e">winstd::WlanFreeMemory_delete::WlanFreeMemory_delete</a></div><div class="ttdeci">WlanFreeMemory_delete()</div><div class="ttdoc">Default construct.</div><div class="ttdef"><b>Definition:</b> WLAN.h:78</div></div>
-<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_html_a5013eb2213d92798d755cbb9fa24e26b"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete.html#a5013eb2213d92798d755cbb9fa24e26b">winstd::WlanFreeMemory_delete::operator()</a></div><div class="ttdeci">void operator()(_Ty *_Ptr) const</div><div class="ttdoc">Delete a pointer.</div><div class="ttdef"><b>Definition:</b> WLAN.h:88</div></div>
-<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_html_a92dd05a3becb4a67ad858472eb615668"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete.html#a92dd05a3becb4a67ad858472eb615668">winstd::WlanFreeMemory_delete::_Myt</a></div><div class="ttdeci">WlanFreeMemory_delete&lt; _Ty &gt; _Myt</div><div class="ttdoc">This type.</div><div class="ttdef"><b>Definition:</b> WLAN.h:73</div></div>
-<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_html_ab30e2946800931f214e9a55a527fe546"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete.html#ab30e2946800931f214e9a55a527fe546">winstd::WlanFreeMemory_delete::WlanFreeMemory_delete</a></div><div class="ttdeci">WlanFreeMemory_delete(const WlanFreeMemory_delete&lt; _Ty2 &gt; &amp;)</div><div class="ttdoc">Construct from another WlanFreeMemory_delete.</div><div class="ttdef"><b>Definition:</b> WLAN.h:83</div></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a39d42f9429ac337513cd2cad1b5c8fdf">  109</a></span>        <a class="code hl_function" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a39d42f9429ac337513cd2cad1b5c8fdf">WlanFreeMemory_delete</a>() {}</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a60d22784612a4cfd16ca8ad6629a77e4">  114</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a60d22784612a4cfd16ca8ad6629a77e4">operator()</a>(_Ty *_Ptr)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            WlanFreeMemory(_Ptr);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        }</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <span class="keyword">template</span>&lt;<span class="keyword">class</span> _Other&gt;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a3b0a5a8db35677a63c3583a45658df1b">  123</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a3b0a5a8db35677a63c3583a45658df1b">operator()</a>(_Other *)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>            WlanFreeMemory(_Ptr);</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        }</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    };</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="classwinstd_1_1wlan__handle.html">  134</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classwinstd_1_1wlan__handle.html">wlan_handle</a> : <span class="keyword">public</span> <a class="code hl_class" href="classwinstd_1_1handle.html">handle</a>&lt;HANDLE, NULL&gt;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    {</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        <a class="code hl_define" href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a>(<a class="code hl_class" href="classwinstd_1_1wlan__handle.html">wlan_handle</a>, NULL)</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="classwinstd_1_1wlan__handle.html#a57e97a572a121f6e28673e6d84493de9">  144</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="classwinstd_1_1wlan__handle.html#a57e97a572a121f6e28673e6d84493de9">~wlan_handle</a>()</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        {</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="classwinstd_1_1handle.html#aabde3f16fd98b06b3b0282ef7806eb59">m_h</a> != <a class="code hl_variable" href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">invalid</a>)</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>                <a class="code hl_function" href="classwinstd_1_1wlan__handle.html#a86e2b4aa2a5177b6ebac0258099f9261">free_internal</a>();</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        }</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="classwinstd_1_1wlan__handle.html#a86e2b4aa2a5177b6ebac0258099f9261">  156</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classwinstd_1_1wlan__handle.html#a86e2b4aa2a5177b6ebac0258099f9261">free_internal</a>() noexcept<span class="keyword"> override</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            WlanCloseHandle(<a class="code hl_variable" href="classwinstd_1_1handle.html#aabde3f16fd98b06b3b0282ef7806eb59">m_h</a>, NULL);</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        }</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    };</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>}</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="preprocessor">#pragma warning(suppress: 4505) </span><span class="comment">// Don&#39;t warn on unused code</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="group___win_std_w_l_a_n_a_p_i.html#ga2d1669a80ed12f13ffa780048076c586">  174</a></span><span class="keyword">static</span> DWORD <a class="code hl_function" href="group___win_std_w_l_a_n_a_p_i.html#ga2d1669a80ed12f13ffa780048076c586">WlanOpenHandle</a>(</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    _In_ DWORD dwClientVersion,</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    _Reserved_ PVOID pReserved,</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    _Out_ PDWORD pdwNegotiatedVersion,</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    _Inout_ <a class="code hl_class" href="classwinstd_1_1wlan__handle.html">winstd::wlan_handle</a> &amp;handle)</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>{</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    HANDLE h;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    DWORD dwResult = <a class="code hl_function" href="group___win_std_w_l_a_n_a_p_i.html#ga2d1669a80ed12f13ffa780048076c586">WlanOpenHandle</a>(dwClientVersion, pReserved, pdwNegotiatedVersion, &amp;h);</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    <span class="keywordflow">if</span> (dwResult == ERROR_SUCCESS)</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        handle.attach(h);</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keywordflow">return</span> dwResult;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>}</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="ttc" id="a_common_8h_html"><div class="ttname"><a href="_common_8h.html">Common.h</a></div><div class="ttdoc">General API.</div></div>
+<div class="ttc" id="aclasswinstd_1_1handle_html"><div class="ttname"><a href="classwinstd_1_1handle.html">winstd::handle</a></div><div class="ttdoc">Base abstract template class to support generic object handle keeping.</div><div class="ttdef"><b>Definition:</b> Common.h:615</div></div>
+<div class="ttc" id="aclasswinstd_1_1handle_html_aabde3f16fd98b06b3b0282ef7806eb59"><div class="ttname"><a href="classwinstd_1_1handle.html#aabde3f16fd98b06b3b0282ef7806eb59">winstd::handle&lt; HANDLE, NULL &gt;::m_h</a></div><div class="ttdeci">handle_type m_h</div><div class="ttdoc">Object handle.</div><div class="ttdef"><b>Definition:</b> Common.h:866</div></div>
+<div class="ttc" id="aclasswinstd_1_1wlan__handle_html"><div class="ttname"><a href="classwinstd_1_1wlan__handle.html">winstd::wlan_handle</a></div><div class="ttdoc">WLAN handle wrapper.</div><div class="ttdef"><b>Definition:</b> WLAN.h:135</div></div>
+<div class="ttc" id="aclasswinstd_1_1wlan__handle_html_a57e97a572a121f6e28673e6d84493de9"><div class="ttname"><a href="classwinstd_1_1wlan__handle.html#a57e97a572a121f6e28673e6d84493de9">winstd::wlan_handle::~wlan_handle</a></div><div class="ttdeci">virtual ~wlan_handle()</div><div class="ttdoc">Closes a connection to the server.</div><div class="ttdef"><b>Definition:</b> WLAN.h:144</div></div>
+<div class="ttc" id="aclasswinstd_1_1wlan__handle_html_a86e2b4aa2a5177b6ebac0258099f9261"><div class="ttname"><a href="classwinstd_1_1wlan__handle.html#a86e2b4aa2a5177b6ebac0258099f9261">winstd::wlan_handle::free_internal</a></div><div class="ttdeci">void free_internal() noexcept override</div><div class="ttdoc">Closes a connection to the server.</div><div class="ttdef"><b>Definition:</b> WLAN.h:156</div></div>
+<div class="ttc" id="agroup___win_std_sys_handles_html_ga419efffd12b5c96abc8a275ba375ca60"><div class="ttname"><a href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a></div><div class="ttdeci">#define WINSTD_HANDLE_IMPL(C, INVAL)</div><div class="ttdoc">Implements default constructors and operators to prevent their auto-generation by compiler.</div><div class="ttdef"><b>Definition:</b> Common.h:171</div></div>
+<div class="ttc" id="agroup___win_std_sys_handles_html_gacf43e306968474166474090690857e1c"><div class="ttname"><a href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">winstd::handle&lt; HANDLE, NULL &gt;::invalid</a></div><div class="ttdeci">static const HANDLE invalid</div><div class="ttdoc">Invalid handle value.</div><div class="ttdef"><b>Definition:</b> Common.h:625</div></div>
+<div class="ttc" id="agroup___win_std_w_l_a_n_a_p_i_html_ga2d1669a80ed12f13ffa780048076c586"><div class="ttname"><a href="group___win_std_w_l_a_n_a_p_i.html#ga2d1669a80ed12f13ffa780048076c586">WlanOpenHandle</a></div><div class="ttdeci">static DWORD WlanOpenHandle(DWORD dwClientVersion, PVOID pReserved, PDWORD pdwNegotiatedVersion, winstd::wlan_handle &amp;handle)</div><div class="ttdoc">Opens a connection to the server.</div><div class="ttdef"><b>Definition:</b> WLAN.h:174</div></div>
+<div class="ttc" id="agroup___win_std_w_l_a_n_a_p_i_html_gaf621eeb252e56982bc063a629bee30c7"><div class="ttname"><a href="group___win_std_w_l_a_n_a_p_i.html#gaf621eeb252e56982bc063a629bee30c7">WlanReasonCodeToString</a></div><div class="ttdeci">static DWORD WlanReasonCodeToString(DWORD dwReasonCode, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue, __reserved PVOID pReserved)</div><div class="ttdoc">Retrieves a string that describes a specified reason code and stores it in a std::wstring string.</div><div class="ttdef"><b>Definition:</b> WLAN.h:38</div></div>
+<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4_html_a39d42f9429ac337513cd2cad1b5c8fdf"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a39d42f9429ac337513cd2cad1b5c8fdf">winstd::WlanFreeMemory_delete&lt; _Ty[]&gt;::WlanFreeMemory_delete</a></div><div class="ttdeci">WlanFreeMemory_delete()</div><div class="ttdoc">Default construct.</div><div class="ttdef"><b>Definition:</b> WLAN.h:109</div></div>
+<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4_html_a3b0a5a8db35677a63c3583a45658df1b"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a3b0a5a8db35677a63c3583a45658df1b">winstd::WlanFreeMemory_delete&lt; _Ty[]&gt;::operator()</a></div><div class="ttdeci">void operator()(_Other *) const</div><div class="ttdoc">Delete a pointer of another type.</div><div class="ttdef"><b>Definition:</b> WLAN.h:123</div></div>
+<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4_html_a42bc91dcaea20ff32034ba5482027837"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a42bc91dcaea20ff32034ba5482027837">winstd::WlanFreeMemory_delete&lt; _Ty[]&gt;::_Myt</a></div><div class="ttdeci">WlanFreeMemory_delete&lt; _Ty &gt; _Myt</div><div class="ttdoc">This type.</div><div class="ttdef"><b>Definition:</b> WLAN.h:104</div></div>
+<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4_html_a60d22784612a4cfd16ca8ad6629a77e4"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete_3_01___ty_0f_0e_4.html#a60d22784612a4cfd16ca8ad6629a77e4">winstd::WlanFreeMemory_delete&lt; _Ty[]&gt;::operator()</a></div><div class="ttdeci">void operator()(_Ty *_Ptr) const</div><div class="ttdoc">Delete a pointer.</div><div class="ttdef"><b>Definition:</b> WLAN.h:114</div></div>
+<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_html"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete.html">winstd::WlanFreeMemory_delete</a></div><div class="ttdoc">Deleter for unique_ptr using WlanFreeMemory.</div><div class="ttdef"><b>Definition:</b> WLAN.h:77</div></div>
+<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_html_a3e356b7c4a09f33100e3e35a71d1d94e"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete.html#a3e356b7c4a09f33100e3e35a71d1d94e">winstd::WlanFreeMemory_delete::WlanFreeMemory_delete</a></div><div class="ttdeci">WlanFreeMemory_delete()</div><div class="ttdoc">Default construct.</div><div class="ttdef"><b>Definition:</b> WLAN.h:83</div></div>
+<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_html_a5013eb2213d92798d755cbb9fa24e26b"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete.html#a5013eb2213d92798d755cbb9fa24e26b">winstd::WlanFreeMemory_delete::operator()</a></div><div class="ttdeci">void operator()(_Ty *_Ptr) const</div><div class="ttdoc">Delete a pointer.</div><div class="ttdef"><b>Definition:</b> WLAN.h:93</div></div>
+<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_html_a92dd05a3becb4a67ad858472eb615668"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete.html#a92dd05a3becb4a67ad858472eb615668">winstd::WlanFreeMemory_delete::_Myt</a></div><div class="ttdeci">WlanFreeMemory_delete&lt; _Ty &gt; _Myt</div><div class="ttdoc">This type.</div><div class="ttdef"><b>Definition:</b> WLAN.h:78</div></div>
+<div class="ttc" id="astructwinstd_1_1_wlan_free_memory__delete_html_ab30e2946800931f214e9a55a527fe546"><div class="ttname"><a href="structwinstd_1_1_wlan_free_memory__delete.html#ab30e2946800931f214e9a55a527fe546">winstd::WlanFreeMemory_delete::WlanFreeMemory_delete</a></div><div class="ttdeci">WlanFreeMemory_delete(const WlanFreeMemory_delete&lt; _Ty2 &gt; &amp;)</div><div class="ttdoc">Construct from another WlanFreeMemory_delete.</div><div class="ttdef"><b>Definition:</b> WLAN.h:88</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 15:02:05 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Mon Mar 7 2022 09:10:52 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

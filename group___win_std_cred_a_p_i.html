@@ -64,7 +64,8 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Credentials API</div></div>
 </div><!--header-->
 <div class="contents">
@@ -80,13 +81,311 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structwinstd_1_1_cred_free__delete_3_01___ty_0f_0e_4.html">winstd::CredFree_delete&lt; _Ty[]&gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deleter for unique_ptr to array of unknown size using CredFree.  <a href="structwinstd_1_1_cred_free__delete_3_01___ty_0f_0e_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga66f305cb6a0bf6d4f2c6f2f49180df9b"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga66f305cb6a0bf6d4f2c6f2f49180df9b"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_cred_a_p_i.html#ga66f305cb6a0bf6d4f2c6f2f49180df9b">CredProtectA</a> (BOOL fAsSelf, LPCSTR pszCredentials, DWORD cchCredentials, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sProtectedCredentials, CRED_PROTECTION_TYPE *ProtectionType)</td></tr>
+<tr class="memdesc:ga66f305cb6a0bf6d4f2c6f2f49180df9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts the specified credentials so that only the current security context can decrypt them.  <a href="group___win_std_cred_a_p_i.html#ga66f305cb6a0bf6d4f2c6f2f49180df9b">More...</a><br /></td></tr>
+<tr class="separator:ga66f305cb6a0bf6d4f2c6f2f49180df9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa140d15e40f91b075ad1fa69429a0922"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gaa140d15e40f91b075ad1fa69429a0922"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_cred_a_p_i.html#gaa140d15e40f91b075ad1fa69429a0922">CredProtectW</a> (BOOL fAsSelf, LPCWSTR pszCredentials, DWORD cchCredentials, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sProtectedCredentials, CRED_PROTECTION_TYPE *ProtectionType)</td></tr>
+<tr class="memdesc:gaa140d15e40f91b075ad1fa69429a0922"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts the specified credentials so that only the current security context can decrypt them.  <a href="group___win_std_cred_a_p_i.html#gaa140d15e40f91b075ad1fa69429a0922">More...</a><br /></td></tr>
+<tr class="separator:gaa140d15e40f91b075ad1fa69429a0922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga289617e5856f3f4fd18b86754726407b"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga289617e5856f3f4fd18b86754726407b"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_cred_a_p_i.html#ga289617e5856f3f4fd18b86754726407b">CredUnprotectA</a> (BOOL fAsSelf, LPCSTR pszProtectedCredentials, DWORD cchCredentials, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sCredentials)</td></tr>
+<tr class="memdesc:ga289617e5856f3f4fd18b86754726407b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts credentials that were previously encrypted by using the CredProtect function.  <a href="group___win_std_cred_a_p_i.html#ga289617e5856f3f4fd18b86754726407b">More...</a><br /></td></tr>
+<tr class="separator:ga289617e5856f3f4fd18b86754726407b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5fc6137d0a5f7c4bc713676e08a214e"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gac5fc6137d0a5f7c4bc713676e08a214e"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_cred_a_p_i.html#gac5fc6137d0a5f7c4bc713676e08a214e">CredUnprotectW</a> (BOOL fAsSelf, LPCWSTR pszProtectedCredentials, DWORD cchCredentials, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sCredentials)</td></tr>
+<tr class="memdesc:gac5fc6137d0a5f7c4bc713676e08a214e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts credentials that were previously encrypted by using the CredProtect function.  <a href="group___win_std_cred_a_p_i.html#gac5fc6137d0a5f7c4bc713676e08a214e">More...</a><br /></td></tr>
+<tr class="separator:gac5fc6137d0a5f7c4bc713676e08a214e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3279ce4382680fc19b1a89ea5a3f261e"><td class="memItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_cred_a_p_i.html#ga3279ce4382680fc19b1a89ea5a3f261e">CredEnumerate</a> (LPCTSTR Filter, DWORD Flags, DWORD *Count, std::unique_ptr&lt; PCREDENTIAL[], <a class="el" href="structwinstd_1_1_cred_free__delete.html">winstd::CredFree_delete</a>&lt; PCREDENTIAL[]&gt; &gt; &amp;cCredentials) noexcept</td></tr>
+<tr class="memdesc:ga3279ce4382680fc19b1a89ea5a3f261e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerates the credentials from the user's credential set. The credential set used is the one associated with the logon session of the current token. The token must not have the user's SID disabled.  <a href="group___win_std_cred_a_p_i.html#ga3279ce4382680fc19b1a89ea5a3f261e">More...</a><br /></td></tr>
+<tr class="separator:ga3279ce4382680fc19b1a89ea5a3f261e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p >Integrates WinStd classes with Microsoft Credentials API. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga3279ce4382680fc19b1a89ea5a3f261e" name="ga3279ce4382680fc19b1a89ea5a3f261e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3279ce4382680fc19b1a89ea5a3f261e">&#9670;&nbsp;</a></span>CredEnumerate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL CredEnumerate </td>
+          <td>(</td>
+          <td class="paramtype">LPCTSTR&#160;</td>
+          <td class="paramname"><em>Filter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>Flags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD *&#160;</td>
+          <td class="paramname"><em>Count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; PCREDENTIAL[], <a class="el" href="structwinstd_1_1_cred_free__delete.html">winstd::CredFree_delete</a>&lt; PCREDENTIAL[]&gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>cCredentials</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enumerates the credentials from the user's credential set. The credential set used is the one associated with the logon session of the current token. The token must not have the user's SID disabled. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa374794.aspx">CredEnumerate function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga66f305cb6a0bf6d4f2c6f2f49180df9b" name="ga66f305cb6a0bf6d4f2c6f2f49180df9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga66f305cb6a0bf6d4f2c6f2f49180df9b">&#9670;&nbsp;</a></span>CredProtectA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL CredProtectA </td>
+          <td>(</td>
+          <td class="paramtype">BOOL&#160;</td>
+          <td class="paramname"><em>fAsSelf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>pszCredentials</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>cchCredentials</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sProtectedCredentials</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CRED_PROTECTION_TYPE *&#160;</td>
+          <td class="paramname"><em>ProtectionType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Encrypts the specified credentials so that only the current security context can decrypt them. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa374803.aspx">CredProtect function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gaa140d15e40f91b075ad1fa69429a0922" name="gaa140d15e40f91b075ad1fa69429a0922"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa140d15e40f91b075ad1fa69429a0922">&#9670;&nbsp;</a></span>CredProtectW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL CredProtectW </td>
+          <td>(</td>
+          <td class="paramtype">BOOL&#160;</td>
+          <td class="paramname"><em>fAsSelf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>pszCredentials</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>cchCredentials</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sProtectedCredentials</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CRED_PROTECTION_TYPE *&#160;</td>
+          <td class="paramname"><em>ProtectionType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Encrypts the specified credentials so that only the current security context can decrypt them. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa374803.aspx">CredProtect function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga289617e5856f3f4fd18b86754726407b" name="ga289617e5856f3f4fd18b86754726407b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga289617e5856f3f4fd18b86754726407b">&#9670;&nbsp;</a></span>CredUnprotectA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL CredUnprotectA </td>
+          <td>(</td>
+          <td class="paramtype">BOOL&#160;</td>
+          <td class="paramname"><em>fAsSelf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>pszProtectedCredentials</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>cchCredentials</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sCredentials</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Decrypts credentials that were previously encrypted by using the CredProtect function. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa375186.aspx">CredUnprotect function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gac5fc6137d0a5f7c4bc713676e08a214e" name="gac5fc6137d0a5f7c4bc713676e08a214e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac5fc6137d0a5f7c4bc713676e08a214e">&#9670;&nbsp;</a></span>CredUnprotectW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL CredUnprotectW </td>
+          <td>(</td>
+          <td class="paramtype">BOOL&#160;</td>
+          <td class="paramname"><em>fAsSelf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>pszProtectedCredentials</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>cchCredentials</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sCredentials</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Decrypts credentials that were previously encrypted by using the CredProtect function. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa375186.aspx">CredUnprotect function</a> </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 15:02:05 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Mon Mar 7 2022 09:10:52 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

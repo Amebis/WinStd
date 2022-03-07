@@ -64,7 +64,8 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">WLAN API</div></div>
 </div><!--header-->
 <div class="contents">
@@ -83,13 +84,123 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1wlan__handle.html">winstd::wlan_handle</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">WLAN handle wrapper.  <a href="classwinstd_1_1wlan__handle.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaf621eeb252e56982bc063a629bee30c7"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gaf621eeb252e56982bc063a629bee30c7"><td class="memTemplItemLeft" align="right" valign="top">static DWORD&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_w_l_a_n_a_p_i.html#gaf621eeb252e56982bc063a629bee30c7">WlanReasonCodeToString</a> (DWORD dwReasonCode, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue, __reserved PVOID pReserved)</td></tr>
+<tr class="memdesc:gaf621eeb252e56982bc063a629bee30c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a string that describes a specified reason code and stores it in a std::wstring string.  <a href="group___win_std_w_l_a_n_a_p_i.html#gaf621eeb252e56982bc063a629bee30c7">More...</a><br /></td></tr>
+<tr class="separator:gaf621eeb252e56982bc063a629bee30c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2d1669a80ed12f13ffa780048076c586"><td class="memItemLeft" align="right" valign="top">static DWORD&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_w_l_a_n_a_p_i.html#ga2d1669a80ed12f13ffa780048076c586">WlanOpenHandle</a> (DWORD dwClientVersion, PVOID pReserved, PDWORD pdwNegotiatedVersion, <a class="el" href="classwinstd_1_1wlan__handle.html">winstd::wlan_handle</a> &amp;handle)</td></tr>
+<tr class="memdesc:ga2d1669a80ed12f13ffa780048076c586"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a connection to the server.  <a href="group___win_std_w_l_a_n_a_p_i.html#ga2d1669a80ed12f13ffa780048076c586">More...</a><br /></td></tr>
+<tr class="separator:ga2d1669a80ed12f13ffa780048076c586"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p >Integrates WinStd classes with Microsoft WLAN API. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga2d1669a80ed12f13ffa780048076c586" name="ga2d1669a80ed12f13ffa780048076c586"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2d1669a80ed12f13ffa780048076c586">&#9670;&nbsp;</a></span>WlanOpenHandle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static DWORD WlanOpenHandle </td>
+          <td>(</td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwClientVersion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PVOID&#160;</td>
+          <td class="paramname"><em>pReserved</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PDWORD&#160;</td>
+          <td class="paramname"><em>pdwNegotiatedVersion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classwinstd_1_1wlan__handle.html">winstd::wlan_handle</a> &amp;&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Opens a connection to the server. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms706759.aspx">WlanOpenHandle function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gaf621eeb252e56982bc063a629bee30c7" name="gaf621eeb252e56982bc063a629bee30c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf621eeb252e56982bc063a629bee30c7">&#9670;&nbsp;</a></span>WlanReasonCodeToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static DWORD WlanReasonCodeToString </td>
+          <td>(</td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwReasonCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">__reserved PVOID&#160;</td>
+          <td class="paramname"><em>pReserved</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves a string that describes a specified reason code and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms706768.aspx">WlanReasonCodeToString function</a></dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Since Wlanapi.dll is not always present, the <code>pfnWlanReasonCodeToString</code> pointer to <code><a class="el" href="group___win_std_w_l_a_n_a_p_i.html#gaf621eeb252e56982bc063a629bee30c7" title="Retrieves a string that describes a specified reason code and stores it in a std::wstring string.">WlanReasonCodeToString()</a></code> function must be loaded dynamically. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 15:02:05 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Mon Mar 7 2022 09:10:52 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

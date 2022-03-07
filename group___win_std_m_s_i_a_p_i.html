@@ -63,18 +63,586 @@ $(function() {
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Microsoft Installer API</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Integrates WinStd classes with Microsoft Installer API.  
 <a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga7a5853cf74ed8adb1b5cd1289c39e385"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga7a5853cf74ed8adb1b5cd1289c39e385"><td class="memTemplItemLeft" align="right" valign="top">static UINT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_m_s_i_a_p_i.html#ga7a5853cf74ed8adb1b5cd1289c39e385">MsiGetPropertyA</a> (MSIHANDLE hInstall, LPCSTR szName, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sValue)</td></tr>
+<tr class="memdesc:ga7a5853cf74ed8adb1b5cd1289c39e385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value for an installer property and stores it in a std::wstring string.  <a href="group___win_std_m_s_i_a_p_i.html#ga7a5853cf74ed8adb1b5cd1289c39e385">More...</a><br /></td></tr>
+<tr class="separator:ga7a5853cf74ed8adb1b5cd1289c39e385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga32e20a17013eb7660fda19f2b1de389d"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga32e20a17013eb7660fda19f2b1de389d"><td class="memTemplItemLeft" align="right" valign="top">static UINT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_m_s_i_a_p_i.html#ga32e20a17013eb7660fda19f2b1de389d">MsiGetPropertyW</a> (MSIHANDLE hInstall, LPCWSTR szName, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue)</td></tr>
+<tr class="memdesc:ga32e20a17013eb7660fda19f2b1de389d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value for an installer property and stores it in a std::wstring string.  <a href="group___win_std_m_s_i_a_p_i.html#ga32e20a17013eb7660fda19f2b1de389d">More...</a><br /></td></tr>
+<tr class="separator:ga32e20a17013eb7660fda19f2b1de389d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaedc818f42d945e54f6956c928b3ffc29"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gaedc818f42d945e54f6956c928b3ffc29"><td class="memTemplItemLeft" align="right" valign="top">static UINT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_m_s_i_a_p_i.html#gaedc818f42d945e54f6956c928b3ffc29">MsiRecordGetStringA</a> (MSIHANDLE hRecord, unsigned int iField, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sValue)</td></tr>
+<tr class="memdesc:gaedc818f42d945e54f6956c928b3ffc29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the string value of a record field and stores it in a std::wstring string.  <a href="group___win_std_m_s_i_a_p_i.html#gaedc818f42d945e54f6956c928b3ffc29">More...</a><br /></td></tr>
+<tr class="separator:gaedc818f42d945e54f6956c928b3ffc29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga487c38b4353054a4e518ca01d1397cf6"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga487c38b4353054a4e518ca01d1397cf6"><td class="memTemplItemLeft" align="right" valign="top">static UINT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_m_s_i_a_p_i.html#ga487c38b4353054a4e518ca01d1397cf6">MsiRecordGetStringW</a> (MSIHANDLE hRecord, unsigned int iField, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue)</td></tr>
+<tr class="memdesc:ga487c38b4353054a4e518ca01d1397cf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the string value of a record field and stores it in a std::wstring string.  <a href="group___win_std_m_s_i_a_p_i.html#ga487c38b4353054a4e518ca01d1397cf6">More...</a><br /></td></tr>
+<tr class="separator:ga487c38b4353054a4e518ca01d1397cf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7cb245425b74bdf9b89c754636486f0c"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga7cb245425b74bdf9b89c754636486f0c"><td class="memTemplItemLeft" align="right" valign="top">static UINT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_m_s_i_a_p_i.html#ga7cb245425b74bdf9b89c754636486f0c">MsiFormatRecordA</a> (MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sValue)</td></tr>
+<tr class="memdesc:ga7cb245425b74bdf9b89c754636486f0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats record field data and properties using a format string and stores it in a std::wstring string.  <a href="group___win_std_m_s_i_a_p_i.html#ga7cb245425b74bdf9b89c754636486f0c">More...</a><br /></td></tr>
+<tr class="separator:ga7cb245425b74bdf9b89c754636486f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga016f87f038892fe3121a2dd5232468d2"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga016f87f038892fe3121a2dd5232468d2"><td class="memTemplItemLeft" align="right" valign="top">static UINT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_m_s_i_a_p_i.html#ga016f87f038892fe3121a2dd5232468d2">MsiFormatRecordW</a> (MSIHANDLE hInstall, MSIHANDLE hRecord, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue)</td></tr>
+<tr class="memdesc:ga016f87f038892fe3121a2dd5232468d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats record field data and properties using a format string and stores it in a std::wstring string.  <a href="group___win_std_m_s_i_a_p_i.html#ga016f87f038892fe3121a2dd5232468d2">More...</a><br /></td></tr>
+<tr class="separator:ga016f87f038892fe3121a2dd5232468d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga83052d8dfbdf437cc45e6a4b46357036"><td class="memTemplParams" colspan="2">template&lt;class _Ty , class _Ax &gt; </td></tr>
+<tr class="memitem:ga83052d8dfbdf437cc45e6a4b46357036"><td class="memTemplItemLeft" align="right" valign="top">static UINT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_m_s_i_a_p_i.html#ga83052d8dfbdf437cc45e6a4b46357036">MsiRecordReadStream</a> (MSIHANDLE hRecord, unsigned int iField, std::vector&lt; _Ty, _Ax &gt; &amp;binData)</td></tr>
+<tr class="memdesc:ga83052d8dfbdf437cc45e6a4b46357036"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads bytes from a record stream field into a std::vector buffer.  <a href="group___win_std_m_s_i_a_p_i.html#ga83052d8dfbdf437cc45e6a4b46357036">More...</a><br /></td></tr>
+<tr class="separator:ga83052d8dfbdf437cc45e6a4b46357036"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga340ee7efbd658e2d6ecfb199c41856bc"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga340ee7efbd658e2d6ecfb199c41856bc"><td class="memTemplItemLeft" align="right" valign="top">static UINT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_m_s_i_a_p_i.html#ga340ee7efbd658e2d6ecfb199c41856bc">MsiGetTargetPathA</a> (MSIHANDLE hInstall, LPCSTR szFolder, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sValue)</td></tr>
+<tr class="memdesc:ga340ee7efbd658e2d6ecfb199c41856bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the full target path for a folder in the Directory table and stores it in a std::wstring string.  <a href="group___win_std_m_s_i_a_p_i.html#ga340ee7efbd658e2d6ecfb199c41856bc">More...</a><br /></td></tr>
+<tr class="separator:ga340ee7efbd658e2d6ecfb199c41856bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51696a19fb4b748eed04fa3b6a8f9eca"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga51696a19fb4b748eed04fa3b6a8f9eca"><td class="memTemplItemLeft" align="right" valign="top">static UINT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_m_s_i_a_p_i.html#ga51696a19fb4b748eed04fa3b6a8f9eca">MsiGetTargetPathW</a> (MSIHANDLE hInstall, LPCWSTR szFolder, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue)</td></tr>
+<tr class="memdesc:ga51696a19fb4b748eed04fa3b6a8f9eca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the full target path for a folder in the Directory table and stores it in a std::wstring string.  <a href="group___win_std_m_s_i_a_p_i.html#ga51696a19fb4b748eed04fa3b6a8f9eca">More...</a><br /></td></tr>
+<tr class="separator:ga51696a19fb4b748eed04fa3b6a8f9eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41c26288267e69f5bba73f9b125bf2a3"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga41c26288267e69f5bba73f9b125bf2a3"><td class="memTemplItemLeft" align="right" valign="top">static INSTALLSTATE&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_m_s_i_a_p_i.html#ga41c26288267e69f5bba73f9b125bf2a3">MsiGetComponentPathA</a> (LPCSTR szProduct, LPCSTR szComponent, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sValue)</td></tr>
+<tr class="memdesc:ga41c26288267e69f5bba73f9b125bf2a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the full path to an installed component. If the key path for the component is a registry key then the registry key is returned.  <a href="group___win_std_m_s_i_a_p_i.html#ga41c26288267e69f5bba73f9b125bf2a3">More...</a><br /></td></tr>
+<tr class="separator:ga41c26288267e69f5bba73f9b125bf2a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4be55d9d370a31e064787675c518c58"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gac4be55d9d370a31e064787675c518c58"><td class="memTemplItemLeft" align="right" valign="top">static INSTALLSTATE&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_m_s_i_a_p_i.html#gac4be55d9d370a31e064787675c518c58">MsiGetComponentPathW</a> (LPCWSTR szProduct, LPCWSTR szComponent, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue)</td></tr>
+<tr class="memdesc:gac4be55d9d370a31e064787675c518c58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the full path to an installed component. If the key path for the component is a registry key then the registry key is returned.  <a href="group___win_std_m_s_i_a_p_i.html#gac4be55d9d370a31e064787675c518c58">More...</a><br /></td></tr>
+<tr class="separator:gac4be55d9d370a31e064787675c518c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p >Integrates WinStd classes with Microsoft Installer API. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga7cb245425b74bdf9b89c754636486f0c" name="ga7cb245425b74bdf9b89c754636486f0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7cb245425b74bdf9b89c754636486f0c">&#9670;&nbsp;</a></span>MsiFormatRecordA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static UINT MsiFormatRecordA </td>
+          <td>(</td>
+          <td class="paramtype">MSIHANDLE&#160;</td>
+          <td class="paramname"><em>hInstall</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">MSIHANDLE&#160;</td>
+          <td class="paramname"><em>hRecord</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Formats record field data and properties using a format string and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/aa370109.aspx">MsiFormatRecord function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga016f87f038892fe3121a2dd5232468d2" name="ga016f87f038892fe3121a2dd5232468d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga016f87f038892fe3121a2dd5232468d2">&#9670;&nbsp;</a></span>MsiFormatRecordW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static UINT MsiFormatRecordW </td>
+          <td>(</td>
+          <td class="paramtype">MSIHANDLE&#160;</td>
+          <td class="paramname"><em>hInstall</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">MSIHANDLE&#160;</td>
+          <td class="paramname"><em>hRecord</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Formats record field data and properties using a format string and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/aa370109.aspx">MsiFormatRecord function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga41c26288267e69f5bba73f9b125bf2a3" name="ga41c26288267e69f5bba73f9b125bf2a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga41c26288267e69f5bba73f9b125bf2a3">&#9670;&nbsp;</a></span>MsiGetComponentPathA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static INSTALLSTATE MsiGetComponentPathA </td>
+          <td>(</td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>szProduct</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>szComponent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the full path to an installed component. If the key path for the component is a registry key then the registry key is returned. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa370112.aspx">MsiGetComponentPath function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gac4be55d9d370a31e064787675c518c58" name="gac4be55d9d370a31e064787675c518c58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac4be55d9d370a31e064787675c518c58">&#9670;&nbsp;</a></span>MsiGetComponentPathW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static INSTALLSTATE MsiGetComponentPathW </td>
+          <td>(</td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>szProduct</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>szComponent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the full path to an installed component. If the key path for the component is a registry key then the registry key is returned. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa370112.aspx">MsiGetComponentPath function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga7a5853cf74ed8adb1b5cd1289c39e385" name="ga7a5853cf74ed8adb1b5cd1289c39e385"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7a5853cf74ed8adb1b5cd1289c39e385">&#9670;&nbsp;</a></span>MsiGetPropertyA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static UINT MsiGetPropertyA </td>
+          <td>(</td>
+          <td class="paramtype">MSIHANDLE&#160;</td>
+          <td class="paramname"><em>hInstall</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>szName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the value for an installer property and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/aa370134.aspx">MsiGetProperty function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga32e20a17013eb7660fda19f2b1de389d" name="ga32e20a17013eb7660fda19f2b1de389d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga32e20a17013eb7660fda19f2b1de389d">&#9670;&nbsp;</a></span>MsiGetPropertyW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static UINT MsiGetPropertyW </td>
+          <td>(</td>
+          <td class="paramtype">MSIHANDLE&#160;</td>
+          <td class="paramname"><em>hInstall</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>szName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the value for an installer property and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/aa370134.aspx">MsiGetProperty function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga340ee7efbd658e2d6ecfb199c41856bc" name="ga340ee7efbd658e2d6ecfb199c41856bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga340ee7efbd658e2d6ecfb199c41856bc">&#9670;&nbsp;</a></span>MsiGetTargetPathA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static UINT MsiGetTargetPathA </td>
+          <td>(</td>
+          <td class="paramtype">MSIHANDLE&#160;</td>
+          <td class="paramname"><em>hInstall</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>szFolder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the full target path for a folder in the Directory table and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/aa370303.aspx">MsiGetTargetPath function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga51696a19fb4b748eed04fa3b6a8f9eca" name="ga51696a19fb4b748eed04fa3b6a8f9eca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga51696a19fb4b748eed04fa3b6a8f9eca">&#9670;&nbsp;</a></span>MsiGetTargetPathW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static UINT MsiGetTargetPathW </td>
+          <td>(</td>
+          <td class="paramtype">MSIHANDLE&#160;</td>
+          <td class="paramname"><em>hInstall</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>szFolder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the full target path for a folder in the Directory table and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/aa370303.aspx">MsiGetTargetPath function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gaedc818f42d945e54f6956c928b3ffc29" name="gaedc818f42d945e54f6956c928b3ffc29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaedc818f42d945e54f6956c928b3ffc29">&#9670;&nbsp;</a></span>MsiRecordGetStringA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static UINT MsiRecordGetStringA </td>
+          <td>(</td>
+          <td class="paramtype">MSIHANDLE&#160;</td>
+          <td class="paramname"><em>hRecord</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>iField</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the string value of a record field and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/aa370368.aspx">MsiRecordGetString function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga487c38b4353054a4e518ca01d1397cf6" name="ga487c38b4353054a4e518ca01d1397cf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga487c38b4353054a4e518ca01d1397cf6">&#9670;&nbsp;</a></span>MsiRecordGetStringW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static UINT MsiRecordGetStringW </td>
+          <td>(</td>
+          <td class="paramtype">MSIHANDLE&#160;</td>
+          <td class="paramname"><em>hRecord</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>iField</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the string value of a record field and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/aa370368.aspx">MsiRecordGetString function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga83052d8dfbdf437cc45e6a4b46357036" name="ga83052d8dfbdf437cc45e6a4b46357036"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga83052d8dfbdf437cc45e6a4b46357036">&#9670;&nbsp;</a></span>MsiRecordReadStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Ty , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static UINT MsiRecordReadStream </td>
+          <td>(</td>
+          <td class="paramtype">MSIHANDLE&#160;</td>
+          <td class="paramname"><em>hRecord</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>iField</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; _Ty, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>binData</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reads bytes from a record stream field into a std::vector buffer. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/aa370370.aspx">MsiRecordReadStream function</a> </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 15:02:05 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Mon Mar 7 2022 09:10:52 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

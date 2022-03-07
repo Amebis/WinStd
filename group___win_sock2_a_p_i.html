@@ -65,7 +65,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">WinSock2 API</div></div>
 </div><!--header-->
 <div class="contents">
@@ -91,13 +92,125 @@ Typedefs</h2></td></tr>
 typedef <a class="el" href="classwinstd_1_1addrinfo.html">addrinfo</a>&#160;</td><td class="memItemRight" valign="bottom"><b>winstd::taddrinfo</b></td></tr>
 <tr class="memdesc:ga73a783d5ebf3d1af2a565cb78062b5b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multi-byte / Wide-character SID wrapper class (according to _UNICODE) <br /></td></tr>
 <tr class="separator:ga73a783d5ebf3d1af2a565cb78062b5b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gae9f6e09e2e81a57135dc30bc999d27af"><td class="memItemLeft" align="right" valign="top">static INT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_sock2_a_p_i.html#gae9f6e09e2e81a57135dc30bc999d27af">GetAddrInfoA</a> (PCSTR pNodeName, PCSTR pServiceName, const ADDRINFOA *pHints, <a class="el" href="classwinstd_1_1addrinfo.html">winstd::addrinfo</a> &amp;result)</td></tr>
+<tr class="memdesc:gae9f6e09e2e81a57135dc30bc999d27af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides protocol-independent translation from a host name to an address.  <a href="group___win_sock2_a_p_i.html#gae9f6e09e2e81a57135dc30bc999d27af">More...</a><br /></td></tr>
+<tr class="separator:gae9f6e09e2e81a57135dc30bc999d27af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad222deae09d76241e018a2e350aa1ec9"><td class="memItemLeft" align="right" valign="top">static INT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_sock2_a_p_i.html#gad222deae09d76241e018a2e350aa1ec9">GetAddrInfoW</a> (PCWSTR pNodeName, PCWSTR pServiceName, const ADDRINFOW *pHints, <a class="el" href="classwinstd_1_1waddrinfo.html">winstd::waddrinfo</a> &amp;result)</td></tr>
+<tr class="memdesc:gad222deae09d76241e018a2e350aa1ec9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides protocol-independent translation from a host name to an address.  <a href="group___win_sock2_a_p_i.html#gad222deae09d76241e018a2e350aa1ec9">More...</a><br /></td></tr>
+<tr class="separator:gad222deae09d76241e018a2e350aa1ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p >Integrates WinStd classes with Microsoft WinSock2 API. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gae9f6e09e2e81a57135dc30bc999d27af" name="gae9f6e09e2e81a57135dc30bc999d27af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae9f6e09e2e81a57135dc30bc999d27af">&#9670;&nbsp;</a></span>GetAddrInfoA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static INT GetAddrInfoA </td>
+          <td>(</td>
+          <td class="paramtype">PCSTR&#160;</td>
+          <td class="paramname"><em>pNodeName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PCSTR&#160;</td>
+          <td class="paramname"><em>pServiceName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const ADDRINFOA *&#160;</td>
+          <td class="paramname"><em>pHints</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classwinstd_1_1addrinfo.html">winstd::addrinfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Provides protocol-independent translation from a host name to an address. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-getaddrinfow">GetAddrInfoW function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gad222deae09d76241e018a2e350aa1ec9" name="gad222deae09d76241e018a2e350aa1ec9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad222deae09d76241e018a2e350aa1ec9">&#9670;&nbsp;</a></span>GetAddrInfoW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static INT GetAddrInfoW </td>
+          <td>(</td>
+          <td class="paramtype">PCWSTR&#160;</td>
+          <td class="paramname"><em>pNodeName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PCWSTR&#160;</td>
+          <td class="paramname"><em>pServiceName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const ADDRINFOW *&#160;</td>
+          <td class="paramname"><em>pHints</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classwinstd_1_1waddrinfo.html">winstd::waddrinfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Provides protocol-independent translation from a host name to an address. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-getaddrinfow">GetAddrInfoW function</a> </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 15:02:05 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Mon Mar 7 2022 09:10:52 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

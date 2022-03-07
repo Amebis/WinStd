@@ -66,7 +66,8 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Windows API</div></div>
 </div><!--header-->
 <div class="contents">
@@ -127,10 +128,10 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gad08dfb2a0d1254918a2a4ed45061a50d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gad08dfb2a0d1254918a2a4ed45061a50d">GuidToString</a>&#160;&#160;&#160;GuidToStringA</td></tr>
+<tr class="memitem:gad08dfb2a0d1254918a2a4ed45061a50d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gad08dfb2a0d1254918a2a4ed45061a50d">GuidToString</a>&#160;&#160;&#160;<a class="el" href="group___win_std_win_a_p_i.html#ga2ec9f457e182c451486333fa0a994313">GuidToStringA</a></td></tr>
 <tr class="memdesc:gad08dfb2a0d1254918a2a4ed45061a50d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats GUID and stores it in a std::wstring string.  <a href="group___win_std_win_a_p_i.html#gad08dfb2a0d1254918a2a4ed45061a50d">More...</a><br /></td></tr>
 <tr class="separator:gad08dfb2a0d1254918a2a4ed45061a50d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab9c35127ac48f8d941a5354b1a1b7abe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gab9c35127ac48f8d941a5354b1a1b7abe">StringToGuid</a>&#160;&#160;&#160;StringToGuidA</td></tr>
+<tr class="memitem:gab9c35127ac48f8d941a5354b1a1b7abe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gab9c35127ac48f8d941a5354b1a1b7abe">StringToGuid</a>&#160;&#160;&#160;<a class="el" href="group___win_std_win_a_p_i.html#ga0a3545c7b4d6509b77a9a156e882f32c">StringToGuidA</a></td></tr>
 <tr class="memdesc:gab9c35127ac48f8d941a5354b1a1b7abe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses string with GUID and stores it to GUID.  <a href="group___win_std_win_a_p_i.html#gab9c35127ac48f8d941a5354b1a1b7abe">More...</a><br /></td></tr>
 <tr class="separator:gab9c35127ac48f8d941a5354b1a1b7abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -154,6 +155,195 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga8aad78395ff021f46a34e51816038d20"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classwinstd_1_1win__handle.html">win_handle</a>&lt; NULL &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga8aad78395ff021f46a34e51816038d20">winstd::event</a></td></tr>
 <tr class="memdesc:ga8aad78395ff021f46a34e51816038d20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event handle wrapper.  <a href="group___win_std_win_a_p_i.html#ga8aad78395ff021f46a34e51816038d20">More...</a><br /></td></tr>
 <tr class="separator:ga8aad78395ff021f46a34e51816038d20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga6934cae7e0b3133206b8324e4372e1cc"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga6934cae7e0b3133206b8324e4372e1cc"><td class="memTemplItemLeft" align="right" valign="top">static DWORD&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga6934cae7e0b3133206b8324e4372e1cc">GetModuleFileNameA</a> (HMODULE hModule, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sValue) noexcept</td></tr>
+<tr class="memdesc:ga6934cae7e0b3133206b8324e4372e1cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the fully qualified path for the file that contains the specified module and stores it in a std::wstring string.  <a href="group___win_std_win_a_p_i.html#ga6934cae7e0b3133206b8324e4372e1cc">More...</a><br /></td></tr>
+<tr class="separator:ga6934cae7e0b3133206b8324e4372e1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51dfe8b12845850282f4d120e51e80fa"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga51dfe8b12845850282f4d120e51e80fa"><td class="memTemplItemLeft" align="right" valign="top">static DWORD&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga51dfe8b12845850282f4d120e51e80fa">GetModuleFileNameW</a> (HMODULE hModule, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue) noexcept</td></tr>
+<tr class="memdesc:ga51dfe8b12845850282f4d120e51e80fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the fully qualified path for the file that contains the specified module and stores it in a std::wstring string.  <a href="group___win_std_win_a_p_i.html#ga51dfe8b12845850282f4d120e51e80fa">More...</a><br /></td></tr>
+<tr class="separator:ga51dfe8b12845850282f4d120e51e80fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga11fd1f3e9a51e636f6e0f060e604c1aa"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga11fd1f3e9a51e636f6e0f060e604c1aa"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga11fd1f3e9a51e636f6e0f060e604c1aa">GetWindowTextA</a> (HWND hWnd, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sValue) noexcept</td></tr>
+<tr class="memdesc:ga11fd1f3e9a51e636f6e0f060e604c1aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the text of the specified window's title bar (if it has one) into a std::wstring string.  <a href="group___win_std_win_a_p_i.html#ga11fd1f3e9a51e636f6e0f060e604c1aa">More...</a><br /></td></tr>
+<tr class="separator:ga11fd1f3e9a51e636f6e0f060e604c1aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacab04e9e5cbbc759fe83cf70fb891acc"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gacab04e9e5cbbc759fe83cf70fb891acc"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gacab04e9e5cbbc759fe83cf70fb891acc">GetWindowTextW</a> (HWND hWnd, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue) noexcept</td></tr>
+<tr class="memdesc:gacab04e9e5cbbc759fe83cf70fb891acc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the text of the specified window's title bar (if it has one) into a std::wstring string.  <a href="group___win_std_win_a_p_i.html#gacab04e9e5cbbc759fe83cf70fb891acc">More...</a><br /></td></tr>
+<tr class="separator:gacab04e9e5cbbc759fe83cf70fb891acc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga195210dac36b34baa0e616c86bb2b147"><td class="memTemplParams" colspan="2">template&lt;class _Ty , class _Ax &gt; </td></tr>
+<tr class="memitem:ga195210dac36b34baa0e616c86bb2b147"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga195210dac36b34baa0e616c86bb2b147">GetFileVersionInfoA</a> (LPCSTR lptstrFilename, __reserved DWORD dwHandle, std::vector&lt; _Ty, _Ax &gt; &amp;aValue) noexcept</td></tr>
+<tr class="memdesc:ga195210dac36b34baa0e616c86bb2b147"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves version information for the specified file and stores it in a std::vector buffer.  <a href="group___win_std_win_a_p_i.html#ga195210dac36b34baa0e616c86bb2b147">More...</a><br /></td></tr>
+<tr class="separator:ga195210dac36b34baa0e616c86bb2b147"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7dbb645a5381e6e7bba37429d3de2d51"><td class="memTemplParams" colspan="2">template&lt;class _Ty , class _Ax &gt; </td></tr>
+<tr class="memitem:ga7dbb645a5381e6e7bba37429d3de2d51"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga7dbb645a5381e6e7bba37429d3de2d51">GetFileVersionInfoW</a> (LPCWSTR lptstrFilename, __reserved DWORD dwHandle, std::vector&lt; _Ty, _Ax &gt; &amp;aValue) noexcept</td></tr>
+<tr class="memdesc:ga7dbb645a5381e6e7bba37429d3de2d51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves version information for the specified file and stores it in a std::vector buffer.  <a href="group___win_std_win_a_p_i.html#ga7dbb645a5381e6e7bba37429d3de2d51">More...</a><br /></td></tr>
+<tr class="separator:ga7dbb645a5381e6e7bba37429d3de2d51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07fbe3c3b5aceaf3442a26fc3b6ce4b0"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga07fbe3c3b5aceaf3442a26fc3b6ce4b0"><td class="memTemplItemLeft" align="right" valign="top">static DWORD&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga07fbe3c3b5aceaf3442a26fc3b6ce4b0">ExpandEnvironmentStringsA</a> (LPCSTR lpSrc, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sValue) noexcept</td></tr>
+<tr class="memdesc:ga07fbe3c3b5aceaf3442a26fc3b6ce4b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expands environment-variable strings, replaces them with the values defined for the current user, and stores it in a std::wstring string.  <a href="group___win_std_win_a_p_i.html#ga07fbe3c3b5aceaf3442a26fc3b6ce4b0">More...</a><br /></td></tr>
+<tr class="separator:ga07fbe3c3b5aceaf3442a26fc3b6ce4b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2e379fa7f86f101bff21d2c10b7d430"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gad2e379fa7f86f101bff21d2c10b7d430"><td class="memTemplItemLeft" align="right" valign="top">static DWORD&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gad2e379fa7f86f101bff21d2c10b7d430">ExpandEnvironmentStringsW</a> (LPCWSTR lpSrc, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue) noexcept</td></tr>
+<tr class="memdesc:gad2e379fa7f86f101bff21d2c10b7d430"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expands environment-variable strings, replaces them with the values defined for the current user, and stores it in a std::wstring string.  <a href="group___win_std_win_a_p_i.html#gad2e379fa7f86f101bff21d2c10b7d430">More...</a><br /></td></tr>
+<tr class="separator:gad2e379fa7f86f101bff21d2c10b7d430"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ec9f457e182c451486333fa0a994313"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga2ec9f457e182c451486333fa0a994313"><td class="memTemplItemLeft" align="right" valign="top">static VOID&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga2ec9f457e182c451486333fa0a994313">GuidToStringA</a> (LPCGUID lpGuid, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;str) noexcept</td></tr>
+<tr class="memdesc:ga2ec9f457e182c451486333fa0a994313"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats GUID and stores it in a std::wstring string.  <a href="group___win_std_win_a_p_i.html#ga2ec9f457e182c451486333fa0a994313">More...</a><br /></td></tr>
+<tr class="separator:ga2ec9f457e182c451486333fa0a994313"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8dcada3be8a9e8c0d2f0db263c2a5e3"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gad8dcada3be8a9e8c0d2f0db263c2a5e3"><td class="memTemplItemLeft" align="right" valign="top">static VOID&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gad8dcada3be8a9e8c0d2f0db263c2a5e3">GuidToStringW</a> (LPCGUID lpGuid, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;str) noexcept</td></tr>
+<tr class="memdesc:gad8dcada3be8a9e8c0d2f0db263c2a5e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats GUID and stores it in a std::wstring string.  <a href="group___win_std_win_a_p_i.html#gad8dcada3be8a9e8c0d2f0db263c2a5e3">More...</a><br /></td></tr>
+<tr class="separator:gad8dcada3be8a9e8c0d2f0db263c2a5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a3545c7b4d6509b77a9a156e882f32c"><td class="memItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga0a3545c7b4d6509b77a9a156e882f32c">StringToGuidA</a> (LPCSTR lpszGuid, LPGUID lpGuid, LPCSTR *lpszGuidEnd=NULL) noexcept</td></tr>
+<tr class="memdesc:ga0a3545c7b4d6509b77a9a156e882f32c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses string with GUID and stores it to GUID.  <a href="group___win_std_win_a_p_i.html#ga0a3545c7b4d6509b77a9a156e882f32c">More...</a><br /></td></tr>
+<tr class="separator:ga0a3545c7b4d6509b77a9a156e882f32c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3411488c7daa5c8e03b2ad34764914aa"><td class="memItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga3411488c7daa5c8e03b2ad34764914aa">StringToGuidW</a> (LPCWSTR lpszGuid, LPGUID lpGuid, LPCWSTR *lpszGuidEnd=NULL) noexcept</td></tr>
+<tr class="memdesc:ga3411488c7daa5c8e03b2ad34764914aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses string with GUID and stores it to GUID.  <a href="group___win_std_win_a_p_i.html#ga3411488c7daa5c8e03b2ad34764914aa">More...</a><br /></td></tr>
+<tr class="separator:ga3411488c7daa5c8e03b2ad34764914aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac91030c0badd322d3c64663ceab77b7a"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gac91030c0badd322d3c64663ceab77b7a"><td class="memTemplItemLeft" align="right" valign="top">static LSTATUS&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gac91030c0badd322d3c64663ceab77b7a">RegQueryStringValue</a> (HKEY hReg, LPCSTR pszName, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sValue) noexcept</td></tr>
+<tr class="memdesc:gac91030c0badd322d3c64663ceab77b7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queries for a string value in the registry and stores it in a std::string string.  <a href="group___win_std_win_a_p_i.html#gac91030c0badd322d3c64663ceab77b7a">More...</a><br /></td></tr>
+<tr class="separator:gac91030c0badd322d3c64663ceab77b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef0a2e894cd51e0003498958008ef825"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gaef0a2e894cd51e0003498958008ef825"><td class="memTemplItemLeft" align="right" valign="top">static LSTATUS&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gaef0a2e894cd51e0003498958008ef825">RegQueryStringValue</a> (HKEY hReg, LPCWSTR pszName, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue) noexcept</td></tr>
+<tr class="memdesc:gaef0a2e894cd51e0003498958008ef825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queries for a string value in the registry and stores it in a std::wstring string.  <a href="group___win_std_win_a_p_i.html#gaef0a2e894cd51e0003498958008ef825">More...</a><br /></td></tr>
+<tr class="separator:gaef0a2e894cd51e0003498958008ef825"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac75dca7a4e87365ca7021edd82509584"><td class="memTemplParams" colspan="2">template&lt;class _Ty , class _Ax &gt; </td></tr>
+<tr class="memitem:gac75dca7a4e87365ca7021edd82509584"><td class="memTemplItemLeft" align="right" valign="top">static LSTATUS&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gac75dca7a4e87365ca7021edd82509584">RegQueryValueExA</a> (HKEY hKey, LPCSTR lpValueName, __reserved LPDWORD lpReserved, LPDWORD lpType, std::vector&lt; _Ty, _Ax &gt; &amp;aData) noexcept</td></tr>
+<tr class="memdesc:gac75dca7a4e87365ca7021edd82509584"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the type and data for the specified value name associated with an open registry key and stores the data in a std::vector buffer.  <a href="group___win_std_win_a_p_i.html#gac75dca7a4e87365ca7021edd82509584">More...</a><br /></td></tr>
+<tr class="separator:gac75dca7a4e87365ca7021edd82509584"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78f02613f20cc234aad4e1b4726db9ea"><td class="memTemplParams" colspan="2">template&lt;class _Ty , class _Ax &gt; </td></tr>
+<tr class="memitem:ga78f02613f20cc234aad4e1b4726db9ea"><td class="memTemplItemLeft" align="right" valign="top">static LSTATUS&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga78f02613f20cc234aad4e1b4726db9ea">RegQueryValueExW</a> (HKEY hKey, LPCWSTR lpValueName, __reserved LPDWORD lpReserved, LPDWORD lpType, std::vector&lt; _Ty, _Ax &gt; &amp;aData) noexcept</td></tr>
+<tr class="memdesc:ga78f02613f20cc234aad4e1b4726db9ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the type and data for the specified value name associated with an open registry key and stores the data in a std::vector buffer.  <a href="group___win_std_win_a_p_i.html#ga78f02613f20cc234aad4e1b4726db9ea">More...</a><br /></td></tr>
+<tr class="separator:ga78f02613f20cc234aad4e1b4726db9ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8baffb9a05cbfe1e198c47e0a1e2cf88"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga8baffb9a05cbfe1e198c47e0a1e2cf88"><td class="memTemplItemLeft" align="right" valign="top">static LSTATUS&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga8baffb9a05cbfe1e198c47e0a1e2cf88">RegLoadMUIStringA</a> (HKEY hKey, LPCSTR pszValue, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sOut, DWORD Flags, LPCSTR pszDirectory) noexcept</td></tr>
+<tr class="memdesc:ga8baffb9a05cbfe1e198c47e0a1e2cf88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the specified string from the specified key and subkey, and stores it in a std::wstring string.  <a href="group___win_std_win_a_p_i.html#ga8baffb9a05cbfe1e198c47e0a1e2cf88">More...</a><br /></td></tr>
+<tr class="separator:ga8baffb9a05cbfe1e198c47e0a1e2cf88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f9a3593107d5333f057570a76e04a57"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga3f9a3593107d5333f057570a76e04a57"><td class="memTemplItemLeft" align="right" valign="top">static LSTATUS&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga3f9a3593107d5333f057570a76e04a57">RegLoadMUIStringW</a> (HKEY hKey, LPCWSTR pszValue, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sOut, DWORD Flags, LPCWSTR pszDirectory) noexcept</td></tr>
+<tr class="memdesc:ga3f9a3593107d5333f057570a76e04a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the specified string from the specified key and subkey, and stores it in a std::wstring string.  <a href="group___win_std_win_a_p_i.html#ga3f9a3593107d5333f057570a76e04a57">More...</a><br /></td></tr>
+<tr class="separator:ga3f9a3593107d5333f057570a76e04a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf5eed22d7c5d7a89334dbe1e04e2656"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gabf5eed22d7c5d7a89334dbe1e04e2656"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gabf5eed22d7c5d7a89334dbe1e04e2656">WideCharToMultiByte</a> (UINT CodePage, DWORD dwFlags, LPCWSTR lpWideCharStr, int cchWideChar, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sMultiByteStr, LPCSTR lpDefaultChar, LPBOOL lpUsedDefaultChar) noexcept</td></tr>
+<tr class="memdesc:gabf5eed22d7c5d7a89334dbe1e04e2656"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.  <a href="group___win_std_win_a_p_i.html#gabf5eed22d7c5d7a89334dbe1e04e2656">More...</a><br /></td></tr>
+<tr class="separator:gabf5eed22d7c5d7a89334dbe1e04e2656"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ab082dc4cba91b23c4364a125f2f778"><td class="memTemplParams" colspan="2">template&lt;class _Ax &gt; </td></tr>
+<tr class="memitem:ga9ab082dc4cba91b23c4364a125f2f778"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga9ab082dc4cba91b23c4364a125f2f778">WideCharToMultiByte</a> (UINT CodePage, DWORD dwFlags, LPCWSTR lpWideCharStr, int cchWideChar, std::vector&lt; char, _Ax &gt; &amp;sMultiByteStr, LPCSTR lpDefaultChar, LPBOOL lpUsedDefaultChar) noexcept</td></tr>
+<tr class="memdesc:ga9ab082dc4cba91b23c4364a125f2f778"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a UTF-16 (wide character) string to a std::vector. The new character vector is not necessarily from a multibyte character set.  <a href="group___win_std_win_a_p_i.html#ga9ab082dc4cba91b23c4364a125f2f778">More...</a><br /></td></tr>
+<tr class="separator:ga9ab082dc4cba91b23c4364a125f2f778"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2eee7ccbf8faa628b303df158b67fb2b"><td class="memTemplParams" colspan="2">template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </td></tr>
+<tr class="memitem:ga2eee7ccbf8faa628b303df158b67fb2b"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga2eee7ccbf8faa628b303df158b67fb2b">WideCharToMultiByte</a> (UINT CodePage, DWORD dwFlags, std::basic_string&lt; wchar_t, _Traits1, _Ax1 &gt; sWideCharStr, std::basic_string&lt; char, _Traits2, _Ax2 &gt; &amp;sMultiByteStr, LPCSTR lpDefaultChar, LPBOOL lpUsedDefaultChar) noexcept</td></tr>
+<tr class="memdesc:ga2eee7ccbf8faa628b303df158b67fb2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.  <a href="group___win_std_win_a_p_i.html#ga2eee7ccbf8faa628b303df158b67fb2b">More...</a><br /></td></tr>
+<tr class="separator:ga2eee7ccbf8faa628b303df158b67fb2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04f5e27a0e2066c85d7a421fe4e4c462"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga04f5e27a0e2066c85d7a421fe4e4c462"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga04f5e27a0e2066c85d7a421fe4e4c462">SecureWideCharToMultiByte</a> (UINT CodePage, DWORD dwFlags, LPCWSTR lpWideCharStr, int cchWideChar, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sMultiByteStr, LPCSTR lpDefaultChar, LPBOOL lpUsedDefaultChar) noexcept</td></tr>
+<tr class="memdesc:ga04f5e27a0e2066c85d7a421fe4e4c462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.  <a href="group___win_std_win_a_p_i.html#ga04f5e27a0e2066c85d7a421fe4e4c462">More...</a><br /></td></tr>
+<tr class="separator:ga04f5e27a0e2066c85d7a421fe4e4c462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a0accb3a54ae0ed34944fd483e0c329"><td class="memTemplParams" colspan="2">template&lt;class _Ax &gt; </td></tr>
+<tr class="memitem:ga1a0accb3a54ae0ed34944fd483e0c329"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga1a0accb3a54ae0ed34944fd483e0c329">SecureWideCharToMultiByte</a> (UINT CodePage, DWORD dwFlags, LPCWSTR lpWideCharStr, int cchWideChar, std::vector&lt; char, _Ax &gt; &amp;sMultiByteStr, LPCSTR lpDefaultChar, LPBOOL lpUsedDefaultChar) noexcept</td></tr>
+<tr class="memdesc:ga1a0accb3a54ae0ed34944fd483e0c329"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a UTF-16 (wide character) string to a std::vector. The new character vector is not necessarily from a multibyte character set.  <a href="group___win_std_win_a_p_i.html#ga1a0accb3a54ae0ed34944fd483e0c329">More...</a><br /></td></tr>
+<tr class="separator:ga1a0accb3a54ae0ed34944fd483e0c329"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05ac1b43a241f1bbcbf1440cf26c6335"><td class="memTemplParams" colspan="2">template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </td></tr>
+<tr class="memitem:ga05ac1b43a241f1bbcbf1440cf26c6335"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga05ac1b43a241f1bbcbf1440cf26c6335">SecureWideCharToMultiByte</a> (UINT CodePage, DWORD dwFlags, std::basic_string&lt; wchar_t, _Traits1, _Ax1 &gt; sWideCharStr, std::basic_string&lt; char, _Traits2, _Ax2 &gt; &amp;sMultiByteStr, LPCSTR lpDefaultChar, LPBOOL lpUsedDefaultChar) noexcept</td></tr>
+<tr class="memdesc:ga05ac1b43a241f1bbcbf1440cf26c6335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.  <a href="group___win_std_win_a_p_i.html#ga05ac1b43a241f1bbcbf1440cf26c6335">More...</a><br /></td></tr>
+<tr class="separator:ga05ac1b43a241f1bbcbf1440cf26c6335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a92ed50a4e4cdaea5d470a52291098c"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga1a92ed50a4e4cdaea5d470a52291098c"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga1a92ed50a4e4cdaea5d470a52291098c">MultiByteToWideChar</a> (UINT CodePage, DWORD dwFlags, LPCSTR lpMultiByteStr, int cbMultiByte, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sWideCharStr) noexcept</td></tr>
+<tr class="memdesc:ga1a92ed50a4e4cdaea5d470a52291098c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.  <a href="group___win_std_win_a_p_i.html#ga1a92ed50a4e4cdaea5d470a52291098c">More...</a><br /></td></tr>
+<tr class="separator:ga1a92ed50a4e4cdaea5d470a52291098c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb4d134b8910610678988196480a29cc"><td class="memTemplParams" colspan="2">template&lt;class _Ax &gt; </td></tr>
+<tr class="memitem:gaeb4d134b8910610678988196480a29cc"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gaeb4d134b8910610678988196480a29cc">MultiByteToWideChar</a> (UINT CodePage, DWORD dwFlags, LPCSTR lpMultiByteStr, int cbMultiByte, std::vector&lt; wchar_t, _Ax &gt; &amp;sWideCharStr) noexcept</td></tr>
+<tr class="memdesc:gaeb4d134b8910610678988196480a29cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a character string to a UTF-16 (wide character) std::vector. The character vector is not necessarily from a multibyte character set.  <a href="group___win_std_win_a_p_i.html#gaeb4d134b8910610678988196480a29cc">More...</a><br /></td></tr>
+<tr class="separator:gaeb4d134b8910610678988196480a29cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5fe48d031512d6acbd14095b6d4e182d"><td class="memTemplParams" colspan="2">template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </td></tr>
+<tr class="memitem:ga5fe48d031512d6acbd14095b6d4e182d"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga5fe48d031512d6acbd14095b6d4e182d">MultiByteToWideChar</a> (UINT CodePage, DWORD dwFlags, const std::basic_string&lt; char, _Traits1, _Ax1 &gt; &amp;sMultiByteStr, std::basic_string&lt; wchar_t, _Traits2, _Ax2 &gt; &amp;sWideCharStr) noexcept</td></tr>
+<tr class="memdesc:ga5fe48d031512d6acbd14095b6d4e182d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.  <a href="group___win_std_win_a_p_i.html#ga5fe48d031512d6acbd14095b6d4e182d">More...</a><br /></td></tr>
+<tr class="separator:ga5fe48d031512d6acbd14095b6d4e182d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab02484a16fea41e3d9a5c64c2ee1da1a"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gab02484a16fea41e3d9a5c64c2ee1da1a"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gab02484a16fea41e3d9a5c64c2ee1da1a">SecureMultiByteToWideChar</a> (UINT CodePage, DWORD dwFlags, LPCSTR lpMultiByteStr, int cbMultiByte, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sWideCharStr) noexcept</td></tr>
+<tr class="memdesc:gab02484a16fea41e3d9a5c64c2ee1da1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.  <a href="group___win_std_win_a_p_i.html#gab02484a16fea41e3d9a5c64c2ee1da1a">More...</a><br /></td></tr>
+<tr class="separator:gab02484a16fea41e3d9a5c64c2ee1da1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa15c8edc525c24109fafea640cdedfcb"><td class="memTemplParams" colspan="2">template&lt;class _Ax &gt; </td></tr>
+<tr class="memitem:gaa15c8edc525c24109fafea640cdedfcb"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gaa15c8edc525c24109fafea640cdedfcb">SecureMultiByteToWideChar</a> (UINT CodePage, DWORD dwFlags, LPCSTR lpMultiByteStr, int cbMultiByte, std::vector&lt; wchar_t, _Ax &gt; &amp;sWideCharStr) noexcept</td></tr>
+<tr class="memdesc:gaa15c8edc525c24109fafea640cdedfcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a character string to a UTF-16 (wide character) std::vector. The character vector is not necessarily from a multibyte character set.  <a href="group___win_std_win_a_p_i.html#gaa15c8edc525c24109fafea640cdedfcb">More...</a><br /></td></tr>
+<tr class="separator:gaa15c8edc525c24109fafea640cdedfcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9aaaa6113374b6cbad241626819d06c9"><td class="memTemplParams" colspan="2">template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </td></tr>
+<tr class="memitem:ga9aaaa6113374b6cbad241626819d06c9"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga9aaaa6113374b6cbad241626819d06c9">SecureMultiByteToWideChar</a> (UINT CodePage, DWORD dwFlags, const std::basic_string&lt; char, _Traits1, _Ax1 &gt; &amp;sMultiByteStr, std::basic_string&lt; wchar_t, _Traits2, _Ax2 &gt; &amp;sWideCharStr) noexcept</td></tr>
+<tr class="memdesc:ga9aaaa6113374b6cbad241626819d06c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.  <a href="group___win_std_win_a_p_i.html#ga9aaaa6113374b6cbad241626819d06c9">More...</a><br /></td></tr>
+<tr class="separator:ga9aaaa6113374b6cbad241626819d06c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga006d35d0a588fa18614030e4e4487b91"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga006d35d0a588fa18614030e4e4487b91"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga006d35d0a588fa18614030e4e4487b91">NormalizeString</a> (NORM_FORM NormForm, LPCWSTR lpSrcString, int cwSrcLength, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sDstString) noexcept</td></tr>
+<tr class="memdesc:ga006d35d0a588fa18614030e4e4487b91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normalizes characters of a text string according to Unicode 4.0 TR#15.  <a href="group___win_std_win_a_p_i.html#ga006d35d0a588fa18614030e4e4487b91">More...</a><br /></td></tr>
+<tr class="separator:ga006d35d0a588fa18614030e4e4487b91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadcb43067e0a63745adf10b68dafbfb7c"><td class="memTemplParams" colspan="2">template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </td></tr>
+<tr class="memitem:gadcb43067e0a63745adf10b68dafbfb7c"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gadcb43067e0a63745adf10b68dafbfb7c">NormalizeString</a> (NORM_FORM NormForm, const std::basic_string&lt; wchar_t, _Traits1, _Ax1 &gt; &amp;sSrcString, std::basic_string&lt; wchar_t, _Traits2, _Ax2 &gt; &amp;sDstString) noexcept</td></tr>
+<tr class="memdesc:gadcb43067e0a63745adf10b68dafbfb7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normalizes characters of a text string according to Unicode 4.0 TR#15.  <a href="group___win_std_win_a_p_i.html#gadcb43067e0a63745adf10b68dafbfb7c">More...</a><br /></td></tr>
+<tr class="separator:gadcb43067e0a63745adf10b68dafbfb7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga141a51b128dac2b7b0b0f5fddc91fdaf"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga141a51b128dac2b7b0b0f5fddc91fdaf"><td class="memTemplItemLeft" align="right" valign="top">static int WINAPI&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga141a51b128dac2b7b0b0f5fddc91fdaf">LoadStringA</a> (HINSTANCE hInstance, UINT uID, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sBuffer) noexcept</td></tr>
+<tr class="memdesc:ga141a51b128dac2b7b0b0f5fddc91fdaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a string resource from the executable file associated with a specified module.  <a href="group___win_std_win_a_p_i.html#ga141a51b128dac2b7b0b0f5fddc91fdaf">More...</a><br /></td></tr>
+<tr class="separator:ga141a51b128dac2b7b0b0f5fddc91fdaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6c4d84d20f78aac00fe314a7d35d8b48"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga6c4d84d20f78aac00fe314a7d35d8b48"><td class="memTemplItemLeft" align="right" valign="top">static int WINAPI&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga6c4d84d20f78aac00fe314a7d35d8b48">LoadStringW</a> (HINSTANCE hInstance, UINT uID, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sBuffer) noexcept</td></tr>
+<tr class="memdesc:ga6c4d84d20f78aac00fe314a7d35d8b48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a string resource from the executable file associated with a specified module.  <a href="group___win_std_win_a_p_i.html#ga6c4d84d20f78aac00fe314a7d35d8b48">More...</a><br /></td></tr>
+<tr class="separator:ga6c4d84d20f78aac00fe314a7d35d8b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4bcdb27022cf775035520bc749cbc84"><td class="memItemLeft" align="right" valign="top">static VOID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gae4bcdb27022cf775035520bc749cbc84">OutputDebugStrV</a> (LPCSTR lpOutputString, va_list arg) noexcept</td></tr>
+<tr class="memdesc:gae4bcdb27022cf775035520bc749cbc84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats and sends a string to the debugger for display.  <a href="group___win_std_win_a_p_i.html#gae4bcdb27022cf775035520bc749cbc84">More...</a><br /></td></tr>
+<tr class="separator:gae4bcdb27022cf775035520bc749cbc84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae399b26e1670d999125e1332e03e9f70"><td class="memItemLeft" align="right" valign="top">static VOID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gae399b26e1670d999125e1332e03e9f70">OutputDebugStrV</a> (LPCWSTR lpOutputString, va_list arg) noexcept</td></tr>
+<tr class="memdesc:gae399b26e1670d999125e1332e03e9f70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats and sends a string to the debugger for display.  <a href="group___win_std_win_a_p_i.html#gae399b26e1670d999125e1332e03e9f70">More...</a><br /></td></tr>
+<tr class="separator:gae399b26e1670d999125e1332e03e9f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9742ac3627448c97ece59127536bb830"><td class="memItemLeft" align="right" valign="top">static VOID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga9742ac3627448c97ece59127536bb830">OutputDebugStr</a> (LPCSTR lpOutputString,...) noexcept</td></tr>
+<tr class="memdesc:ga9742ac3627448c97ece59127536bb830"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats and sends a string to the debugger for display.  <a href="group___win_std_win_a_p_i.html#ga9742ac3627448c97ece59127536bb830">More...</a><br /></td></tr>
+<tr class="separator:ga9742ac3627448c97ece59127536bb830"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ccdeb31db4cf3a93f6b8bcf78636f7b"><td class="memItemLeft" align="right" valign="top">static VOID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga2ccdeb31db4cf3a93f6b8bcf78636f7b">OutputDebugStr</a> (LPCWSTR lpOutputString,...) noexcept</td></tr>
+<tr class="memdesc:ga2ccdeb31db4cf3a93f6b8bcf78636f7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats and sends a string to the debugger for display.  <a href="group___win_std_win_a_p_i.html#ga2ccdeb31db4cf3a93f6b8bcf78636f7b">More...</a><br /></td></tr>
+<tr class="separator:ga2ccdeb31db4cf3a93f6b8bcf78636f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacacc28dcab4a8e45fadccdb51993e40b"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gacacc28dcab4a8e45fadccdb51993e40b"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gacacc28dcab4a8e45fadccdb51993e40b">GetDateFormatA</a> (LCID Locale, DWORD dwFlags, const SYSTEMTIME *lpDate, LPCSTR lpFormat, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sDate) noexcept</td></tr>
+<tr class="memdesc:gacacc28dcab4a8e45fadccdb51993e40b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a date as a date string for a locale specified by the locale identifier. The function formats either a specified date or the local system date.  <a href="group___win_std_win_a_p_i.html#gacacc28dcab4a8e45fadccdb51993e40b">More...</a><br /></td></tr>
+<tr class="separator:gacacc28dcab4a8e45fadccdb51993e40b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a9b892bd42f7de12e7e17e89e10fb01"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga6a9b892bd42f7de12e7e17e89e10fb01"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga6a9b892bd42f7de12e7e17e89e10fb01">GetDateFormatW</a> (LCID Locale, DWORD dwFlags, const SYSTEMTIME *lpDate, LPCWSTR lpFormat, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sDate) noexcept</td></tr>
+<tr class="memdesc:ga6a9b892bd42f7de12e7e17e89e10fb01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a date as a date string for a locale specified by the locale identifier. The function formats either a specified date or the local system date.  <a href="group___win_std_win_a_p_i.html#ga6a9b892bd42f7de12e7e17e89e10fb01">More...</a><br /></td></tr>
+<tr class="separator:ga6a9b892bd42f7de12e7e17e89e10fb01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga494161e98275f571eff0da1d34e80145"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga494161e98275f571eff0da1d34e80145"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga494161e98275f571eff0da1d34e80145">LookupAccountSidA</a> (LPCSTR lpSystemName, PSID lpSid, std::basic_string&lt; char, _Traits, _Ax &gt; *sName, std::basic_string&lt; char, _Traits, _Ax &gt; *sReferencedDomainName, PSID_NAME_USE peUse) noexcept</td></tr>
+<tr class="memdesc:ga494161e98275f571eff0da1d34e80145"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the name of the account for this SID and the name of the first domain on which this SID is found.  <a href="group___win_std_win_a_p_i.html#ga494161e98275f571eff0da1d34e80145">More...</a><br /></td></tr>
+<tr class="separator:ga494161e98275f571eff0da1d34e80145"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55cf815e26d149f0032f1a1c5160fac4"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga55cf815e26d149f0032f1a1c5160fac4"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga55cf815e26d149f0032f1a1c5160fac4">LookupAccountSidW</a> (LPCWSTR lpSystemName, PSID lpSid, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; *sName, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; *sReferencedDomainName, PSID_NAME_USE peUse) noexcept</td></tr>
+<tr class="memdesc:ga55cf815e26d149f0032f1a1c5160fac4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the name of the account for this SID and the name of the first domain on which this SID is found.  <a href="group___win_std_win_a_p_i.html#ga55cf815e26d149f0032f1a1c5160fac4">More...</a><br /></td></tr>
+<tr class="separator:ga55cf815e26d149f0032f1a1c5160fac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga75b761473822ee6e9cf336d28b30b073"><td class="memTemplParams" colspan="2">template&lt;class _Ty &gt; </td></tr>
+<tr class="memitem:ga75b761473822ee6e9cf336d28b30b073"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga75b761473822ee6e9cf336d28b30b073">GetTokenInformation</a> (HANDLE TokenHandle, TOKEN_INFORMATION_CLASS TokenInformationClass, std::unique_ptr&lt; _Ty &gt; &amp;TokenInformation) noexcept</td></tr>
+<tr class="memdesc:ga75b761473822ee6e9cf336d28b30b073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a specified type of information about an access token. The calling process must have appropriate access rights to obtain the information.  <a href="group___win_std_win_a_p_i.html#ga75b761473822ee6e9cf336d28b30b073">More...</a><br /></td></tr>
+<tr class="separator:ga75b761473822ee6e9cf336d28b30b073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9961177e8dd38279bcec5ecef6f8c1e8"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga9961177e8dd38279bcec5ecef6f8c1e8"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga9961177e8dd38279bcec5ecef6f8c1e8">QueryFullProcessImageNameA</a> (HANDLE hProcess, DWORD dwFlags, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sExeName)</td></tr>
+<tr class="memdesc:ga9961177e8dd38279bcec5ecef6f8c1e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the full name of the executable image for the specified process.  <a href="group___win_std_win_a_p_i.html#ga9961177e8dd38279bcec5ecef6f8c1e8">More...</a><br /></td></tr>
+<tr class="separator:ga9961177e8dd38279bcec5ecef6f8c1e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac1c1969a1b4df932b7f0dab529ffc4aa"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gac1c1969a1b4df932b7f0dab529ffc4aa"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#gac1c1969a1b4df932b7f0dab529ffc4aa">QueryFullProcessImageNameW</a> (HANDLE hProcess, DWORD dwFlags, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sExeName)</td></tr>
+<tr class="memdesc:gac1c1969a1b4df932b7f0dab529ffc4aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the full name of the executable image for the specified process.  <a href="group___win_std_win_a_p_i.html#gac1c1969a1b4df932b7f0dab529ffc4aa">More...</a><br /></td></tr>
+<tr class="separator:gac1c1969a1b4df932b7f0dab529ffc4aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1cba8a6da4757b79b5e416be149dc923"><td class="memItemLeft" align="right" valign="top">static LSTATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga1cba8a6da4757b79b5e416be149dc923">RegCreateKeyExA</a> (HKEY hKey, LPCSTR lpSubKey, DWORD Reserved, LPSTR lpClass, DWORD dwOptions, REGSAM samDesired, CONST LPSECURITY_ATTRIBUTES lpSecurityAttributes, <a class="el" href="classwinstd_1_1reg__key.html">winstd::reg_key</a> &amp;result, LPDWORD lpdwDisposition)</td></tr>
+<tr class="memdesc:ga1cba8a6da4757b79b5e416be149dc923"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the specified registry key. If the key already exists, the function opens it.  <a href="group___win_std_win_a_p_i.html#ga1cba8a6da4757b79b5e416be149dc923">More...</a><br /></td></tr>
+<tr class="separator:ga1cba8a6da4757b79b5e416be149dc923"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga131fdda112e5cbfd123718153d925932"><td class="memItemLeft" align="right" valign="top">static LSTATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga131fdda112e5cbfd123718153d925932">RegCreateKeyExW</a> (HKEY hKey, LPCWSTR lpSubKey, DWORD Reserved, LPWSTR lpClass, DWORD dwOptions, REGSAM samDesired, CONST LPSECURITY_ATTRIBUTES lpSecurityAttributes, <a class="el" href="classwinstd_1_1reg__key.html">winstd::reg_key</a> &amp;result, LPDWORD lpdwDisposition)</td></tr>
+<tr class="memdesc:ga131fdda112e5cbfd123718153d925932"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the specified registry key. If the key already exists, the function opens it.  <a href="group___win_std_win_a_p_i.html#ga131fdda112e5cbfd123718153d925932">More...</a><br /></td></tr>
+<tr class="separator:ga131fdda112e5cbfd123718153d925932"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2974136cb4530867e14434fb05712b92"><td class="memItemLeft" align="right" valign="top">static LSTATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga2974136cb4530867e14434fb05712b92">RegOpenKeyExA</a> (HKEY hKey, LPCSTR lpSubKey, DWORD ulOptions, REGSAM samDesired, <a class="el" href="classwinstd_1_1reg__key.html">winstd::reg_key</a> &amp;result)</td></tr>
+<tr class="memdesc:ga2974136cb4530867e14434fb05712b92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the specified registry key.  <a href="group___win_std_win_a_p_i.html#ga2974136cb4530867e14434fb05712b92">More...</a><br /></td></tr>
+<tr class="separator:ga2974136cb4530867e14434fb05712b92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c61d837a3d96ca9dad3a73df03bf8e4"><td class="memItemLeft" align="right" valign="top">static LSTATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga2c61d837a3d96ca9dad3a73df03bf8e4">RegOpenKeyExW</a> (HKEY hKey, LPCWSTR lpSubKey, DWORD ulOptions, REGSAM samDesired, <a class="el" href="classwinstd_1_1reg__key.html">winstd::reg_key</a> &amp;result)</td></tr>
+<tr class="memdesc:ga2c61d837a3d96ca9dad3a73df03bf8e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the specified registry key.  <a href="group___win_std_win_a_p_i.html#ga2c61d837a3d96ca9dad3a73df03bf8e4">More...</a><br /></td></tr>
+<tr class="separator:ga2c61d837a3d96ca9dad3a73df03bf8e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p >Integrates WinStd classes with Microsoft Windows API. </p>
@@ -165,7 +355,7 @@ Typedefs</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define GuidToString&#160;&#160;&#160;GuidToStringA</td>
+          <td class="memname">#define GuidToString&#160;&#160;&#160;<a class="el" href="group___win_std_win_a_p_i.html#ga2ec9f457e182c451486333fa0a994313">GuidToStringA</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -188,7 +378,7 @@ Typedefs</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define StringToGuid&#160;&#160;&#160;StringToGuidA</td>
+          <td class="memname">#define StringToGuid&#160;&#160;&#160;<a class="el" href="group___win_std_win_a_p_i.html#ga0a3545c7b4d6509b77a9a156e882f32c">StringToGuidA</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -315,10 +505,2700 @@ Typedefs</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga07fbe3c3b5aceaf3442a26fc3b6ce4b0" name="ga07fbe3c3b5aceaf3442a26fc3b6ce4b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga07fbe3c3b5aceaf3442a26fc3b6ce4b0">&#9670;&nbsp;</a></span>ExpandEnvironmentStringsA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static DWORD ExpandEnvironmentStringsA </td>
+          <td>(</td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Expands environment-variable strings, replaces them with the values defined for the current user, and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx">ExpandEnvironmentStrings function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gad2e379fa7f86f101bff21d2c10b7d430" name="gad2e379fa7f86f101bff21d2c10b7d430"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad2e379fa7f86f101bff21d2c10b7d430">&#9670;&nbsp;</a></span>ExpandEnvironmentStringsW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static DWORD ExpandEnvironmentStringsW </td>
+          <td>(</td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Expands environment-variable strings, replaces them with the values defined for the current user, and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx">ExpandEnvironmentStrings function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gacacc28dcab4a8e45fadccdb51993e40b" name="gacacc28dcab4a8e45fadccdb51993e40b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacacc28dcab4a8e45fadccdb51993e40b">&#9670;&nbsp;</a></span>GetDateFormatA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int GetDateFormatA </td>
+          <td>(</td>
+          <td class="paramtype">LCID&#160;</td>
+          <td class="paramname"><em>Locale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const SYSTEMTIME *&#160;</td>
+          <td class="paramname"><em>lpDate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sDate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Formats a date as a date string for a locale specified by the locale identifier. The function formats either a specified date or the local system date. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd318086.aspx">GetDateFormat function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga6a9b892bd42f7de12e7e17e89e10fb01" name="ga6a9b892bd42f7de12e7e17e89e10fb01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6a9b892bd42f7de12e7e17e89e10fb01">&#9670;&nbsp;</a></span>GetDateFormatW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int GetDateFormatW </td>
+          <td>(</td>
+          <td class="paramtype">LCID&#160;</td>
+          <td class="paramname"><em>Locale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const SYSTEMTIME *&#160;</td>
+          <td class="paramname"><em>lpDate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sDate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Formats a date as a date string for a locale specified by the locale identifier. The function formats either a specified date or the local system date. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd318086.aspx">GetDateFormat function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga195210dac36b34baa0e616c86bb2b147" name="ga195210dac36b34baa0e616c86bb2b147"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga195210dac36b34baa0e616c86bb2b147">&#9670;&nbsp;</a></span>GetFileVersionInfoA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Ty , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL GetFileVersionInfoA </td>
+          <td>(</td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lptstrFilename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">__reserved DWORD&#160;</td>
+          <td class="paramname"><em>dwHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; _Ty, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>aValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves version information for the specified file and stores it in a std::vector buffer. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms647003.aspx">GetFileVersionInfo function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga7dbb645a5381e6e7bba37429d3de2d51" name="ga7dbb645a5381e6e7bba37429d3de2d51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7dbb645a5381e6e7bba37429d3de2d51">&#9670;&nbsp;</a></span>GetFileVersionInfoW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Ty , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL GetFileVersionInfoW </td>
+          <td>(</td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lptstrFilename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">__reserved DWORD&#160;</td>
+          <td class="paramname"><em>dwHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; _Ty, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>aValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves version information for the specified file and stores it in a std::vector buffer. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms647003.aspx">GetFileVersionInfo function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga6934cae7e0b3133206b8324e4372e1cc" name="ga6934cae7e0b3133206b8324e4372e1cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6934cae7e0b3133206b8324e4372e1cc">&#9670;&nbsp;</a></span>GetModuleFileNameA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static DWORD GetModuleFileNameA </td>
+          <td>(</td>
+          <td class="paramtype">HMODULE&#160;</td>
+          <td class="paramname"><em>hModule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the fully qualified path for the file that contains the specified module and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms683197.aspx">GetModuleFileName function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga51dfe8b12845850282f4d120e51e80fa" name="ga51dfe8b12845850282f4d120e51e80fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga51dfe8b12845850282f4d120e51e80fa">&#9670;&nbsp;</a></span>GetModuleFileNameW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static DWORD GetModuleFileNameW </td>
+          <td>(</td>
+          <td class="paramtype">HMODULE&#160;</td>
+          <td class="paramname"><em>hModule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the fully qualified path for the file that contains the specified module and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms683197.aspx">GetModuleFileName function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga75b761473822ee6e9cf336d28b30b073" name="ga75b761473822ee6e9cf336d28b30b073"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga75b761473822ee6e9cf336d28b30b073">&#9670;&nbsp;</a></span>GetTokenInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Ty &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL GetTokenInformation </td>
+          <td>(</td>
+          <td class="paramtype">HANDLE&#160;</td>
+          <td class="paramname"><em>TokenHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TOKEN_INFORMATION_CLASS&#160;</td>
+          <td class="paramname"><em>TokenInformationClass</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; _Ty &gt; &amp;&#160;</td>
+          <td class="paramname"><em>TokenInformation</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves a specified type of information about an access token. The calling process must have appropriate access rights to obtain the information. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa446671.aspx">GetTokenInformation function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga11fd1f3e9a51e636f6e0f060e604c1aa" name="ga11fd1f3e9a51e636f6e0f060e604c1aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga11fd1f3e9a51e636f6e0f060e604c1aa">&#9670;&nbsp;</a></span>GetWindowTextA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int GetWindowTextA </td>
+          <td>(</td>
+          <td class="paramtype">HWND&#160;</td>
+          <td class="paramname"><em>hWnd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Copies the text of the specified window's title bar (if it has one) into a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms633520.aspx">GetWindowText function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gacab04e9e5cbbc759fe83cf70fb891acc" name="gacab04e9e5cbbc759fe83cf70fb891acc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacab04e9e5cbbc759fe83cf70fb891acc">&#9670;&nbsp;</a></span>GetWindowTextW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int GetWindowTextW </td>
+          <td>(</td>
+          <td class="paramtype">HWND&#160;</td>
+          <td class="paramname"><em>hWnd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Copies the text of the specified window's title bar (if it has one) into a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms633520.aspx">GetWindowText function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga2ec9f457e182c451486333fa0a994313" name="ga2ec9f457e182c451486333fa0a994313"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2ec9f457e182c451486333fa0a994313">&#9670;&nbsp;</a></span>GuidToStringA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static VOID GuidToStringA </td>
+          <td>(</td>
+          <td class="paramtype">LPCGUID&#160;</td>
+          <td class="paramname"><em>lpGuid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>str</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Formats GUID and stores it in a std::wstring string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lpGuid</td><td>Pointer to GUID </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">str</td><td>String to store the result to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gad8dcada3be8a9e8c0d2f0db263c2a5e3" name="gad8dcada3be8a9e8c0d2f0db263c2a5e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad8dcada3be8a9e8c0d2f0db263c2a5e3">&#9670;&nbsp;</a></span>GuidToStringW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static VOID GuidToStringW </td>
+          <td>(</td>
+          <td class="paramtype">LPCGUID&#160;</td>
+          <td class="paramname"><em>lpGuid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>str</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Formats GUID and stores it in a std::wstring string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lpGuid</td><td>Pointer to GUID </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">str</td><td>String to store the result to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga141a51b128dac2b7b0b0f5fddc91fdaf" name="ga141a51b128dac2b7b0b0f5fddc91fdaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga141a51b128dac2b7b0b0f5fddc91fdaf">&#9670;&nbsp;</a></span>LoadStringA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int WINAPI LoadStringA </td>
+          <td>(</td>
+          <td class="paramtype">HINSTANCE&#160;</td>
+          <td class="paramname"><em>hInstance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>uID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sBuffer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads a string resource from the executable file associated with a specified module. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms647486.aspx">LoadString function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga6c4d84d20f78aac00fe314a7d35d8b48" name="ga6c4d84d20f78aac00fe314a7d35d8b48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6c4d84d20f78aac00fe314a7d35d8b48">&#9670;&nbsp;</a></span>LoadStringW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int WINAPI LoadStringW </td>
+          <td>(</td>
+          <td class="paramtype">HINSTANCE&#160;</td>
+          <td class="paramname"><em>hInstance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>uID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sBuffer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads a string resource from the executable file associated with a specified module. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms647486.aspx">LoadString function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga494161e98275f571eff0da1d34e80145" name="ga494161e98275f571eff0da1d34e80145"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga494161e98275f571eff0da1d34e80145">&#9670;&nbsp;</a></span>LookupAccountSidA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL LookupAccountSidA </td>
+          <td>(</td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpSystemName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PSID&#160;</td>
+          <td class="paramname"><em>lpSid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; *&#160;</td>
+          <td class="paramname"><em>sName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; *&#160;</td>
+          <td class="paramname"><em>sReferencedDomainName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PSID_NAME_USE&#160;</td>
+          <td class="paramname"><em>peUse</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the name of the account for this SID and the name of the first domain on which this SID is found. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa379166.aspx">LookupAccountSid function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga55cf815e26d149f0032f1a1c5160fac4" name="ga55cf815e26d149f0032f1a1c5160fac4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga55cf815e26d149f0032f1a1c5160fac4">&#9670;&nbsp;</a></span>LookupAccountSidW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL LookupAccountSidW </td>
+          <td>(</td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpSystemName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PSID&#160;</td>
+          <td class="paramname"><em>lpSid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; *&#160;</td>
+          <td class="paramname"><em>sName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; *&#160;</td>
+          <td class="paramname"><em>sReferencedDomainName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PSID_NAME_USE&#160;</td>
+          <td class="paramname"><em>peUse</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the name of the account for this SID and the name of the first domain on which this SID is found. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa379166.aspx">LookupAccountSid function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga5fe48d031512d6acbd14095b6d4e182d" name="ga5fe48d031512d6acbd14095b6d4e182d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5fe48d031512d6acbd14095b6d4e182d">&#9670;&nbsp;</a></span>MultiByteToWideChar() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int MultiByteToWideChar </td>
+          <td>(</td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>CodePage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::basic_string&lt; char, _Traits1, _Ax1 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sMultiByteStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits2, _Ax2 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sWideCharStr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx">MultiByteToWideChar function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga1a92ed50a4e4cdaea5d470a52291098c" name="ga1a92ed50a4e4cdaea5d470a52291098c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1a92ed50a4e4cdaea5d470a52291098c">&#9670;&nbsp;</a></span>MultiByteToWideChar() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int MultiByteToWideChar </td>
+          <td>(</td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>CodePage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpMultiByteStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cbMultiByte</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sWideCharStr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx">MultiByteToWideChar function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gaeb4d134b8910610678988196480a29cc" name="gaeb4d134b8910610678988196480a29cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeb4d134b8910610678988196480a29cc">&#9670;&nbsp;</a></span>MultiByteToWideChar() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int MultiByteToWideChar </td>
+          <td>(</td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>CodePage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpMultiByteStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cbMultiByte</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; wchar_t, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sWideCharStr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maps a character string to a UTF-16 (wide character) std::vector. The character vector is not necessarily from a multibyte character set. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx">MultiByteToWideChar function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gadcb43067e0a63745adf10b68dafbfb7c" name="gadcb43067e0a63745adf10b68dafbfb7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadcb43067e0a63745adf10b68dafbfb7c">&#9670;&nbsp;</a></span>NormalizeString() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int NormalizeString </td>
+          <td>(</td>
+          <td class="paramtype">NORM_FORM&#160;</td>
+          <td class="paramname"><em>NormForm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::basic_string&lt; wchar_t, _Traits1, _Ax1 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sSrcString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits2, _Ax2 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sDstString</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Normalizes characters of a text string according to Unicode 4.0 TR#15. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-normalizestring">NormalizeString function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga006d35d0a588fa18614030e4e4487b91" name="ga006d35d0a588fa18614030e4e4487b91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga006d35d0a588fa18614030e4e4487b91">&#9670;&nbsp;</a></span>NormalizeString() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int NormalizeString </td>
+          <td>(</td>
+          <td class="paramtype">NORM_FORM&#160;</td>
+          <td class="paramname"><em>NormForm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpSrcString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cwSrcLength</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sDstString</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Normalizes characters of a text string according to Unicode 4.0 TR#15. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-normalizestring">NormalizeString function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga9742ac3627448c97ece59127536bb830" name="ga9742ac3627448c97ece59127536bb830"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9742ac3627448c97ece59127536bb830">&#9670;&nbsp;</a></span>OutputDebugStr() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static VOID OutputDebugStr </td>
+          <td>(</td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpOutputString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Formats and sends a string to the debugger for display. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx">OutputDebugString function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga2ccdeb31db4cf3a93f6b8bcf78636f7b" name="ga2ccdeb31db4cf3a93f6b8bcf78636f7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2ccdeb31db4cf3a93f6b8bcf78636f7b">&#9670;&nbsp;</a></span>OutputDebugStr() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static VOID OutputDebugStr </td>
+          <td>(</td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpOutputString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Formats and sends a string to the debugger for display. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx">OutputDebugString function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gae4bcdb27022cf775035520bc749cbc84" name="gae4bcdb27022cf775035520bc749cbc84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae4bcdb27022cf775035520bc749cbc84">&#9670;&nbsp;</a></span>OutputDebugStrV() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static VOID OutputDebugStrV </td>
+          <td>(</td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpOutputString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">va_list&#160;</td>
+          <td class="paramname"><em>arg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Formats and sends a string to the debugger for display. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx">OutputDebugString function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gae399b26e1670d999125e1332e03e9f70" name="gae399b26e1670d999125e1332e03e9f70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae399b26e1670d999125e1332e03e9f70">&#9670;&nbsp;</a></span>OutputDebugStrV() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static VOID OutputDebugStrV </td>
+          <td>(</td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpOutputString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">va_list&#160;</td>
+          <td class="paramname"><em>arg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Formats and sends a string to the debugger for display. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363362.aspx">OutputDebugString function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga9961177e8dd38279bcec5ecef6f8c1e8" name="ga9961177e8dd38279bcec5ecef6f8c1e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9961177e8dd38279bcec5ecef6f8c1e8">&#9670;&nbsp;</a></span>QueryFullProcessImageNameA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL QueryFullProcessImageNameA </td>
+          <td>(</td>
+          <td class="paramtype">HANDLE&#160;</td>
+          <td class="paramname"><em>hProcess</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sExeName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the full name of the executable image for the specified process. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-queryfullprocessimagenamea">QueryFullProcessImageNameA function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gac1c1969a1b4df932b7f0dab529ffc4aa" name="gac1c1969a1b4df932b7f0dab529ffc4aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac1c1969a1b4df932b7f0dab529ffc4aa">&#9670;&nbsp;</a></span>QueryFullProcessImageNameW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL QueryFullProcessImageNameW </td>
+          <td>(</td>
+          <td class="paramtype">HANDLE&#160;</td>
+          <td class="paramname"><em>hProcess</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sExeName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the full name of the executable image for the specified process. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-queryfullprocessimagenamew">QueryFullProcessImageNameW function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga1cba8a6da4757b79b5e416be149dc923" name="ga1cba8a6da4757b79b5e416be149dc923"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1cba8a6da4757b79b5e416be149dc923">&#9670;&nbsp;</a></span>RegCreateKeyExA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static LSTATUS RegCreateKeyExA </td>
+          <td>(</td>
+          <td class="paramtype">HKEY&#160;</td>
+          <td class="paramname"><em>hKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpSubKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>Reserved</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPSTR&#160;</td>
+          <td class="paramname"><em>lpClass</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwOptions</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">REGSAM&#160;</td>
+          <td class="paramname"><em>samDesired</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CONST LPSECURITY_ATTRIBUTES&#160;</td>
+          <td class="paramname"><em>lpSecurityAttributes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classwinstd_1_1reg__key.html">winstd::reg_key</a> &amp;&#160;</td>
+          <td class="paramname"><em>result</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPDWORD&#160;</td>
+          <td class="paramname"><em>lpdwDisposition</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates the specified registry key. If the key already exists, the function opens it. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724844.aspx">RegCreateKeyEx function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga131fdda112e5cbfd123718153d925932" name="ga131fdda112e5cbfd123718153d925932"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga131fdda112e5cbfd123718153d925932">&#9670;&nbsp;</a></span>RegCreateKeyExW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static LSTATUS RegCreateKeyExW </td>
+          <td>(</td>
+          <td class="paramtype">HKEY&#160;</td>
+          <td class="paramname"><em>hKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpSubKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>Reserved</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPWSTR&#160;</td>
+          <td class="paramname"><em>lpClass</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwOptions</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">REGSAM&#160;</td>
+          <td class="paramname"><em>samDesired</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CONST LPSECURITY_ATTRIBUTES&#160;</td>
+          <td class="paramname"><em>lpSecurityAttributes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classwinstd_1_1reg__key.html">winstd::reg_key</a> &amp;&#160;</td>
+          <td class="paramname"><em>result</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPDWORD&#160;</td>
+          <td class="paramname"><em>lpdwDisposition</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates the specified registry key. If the key already exists, the function opens it. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724844.aspx">RegCreateKeyEx function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga8baffb9a05cbfe1e198c47e0a1e2cf88" name="ga8baffb9a05cbfe1e198c47e0a1e2cf88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8baffb9a05cbfe1e198c47e0a1e2cf88">&#9670;&nbsp;</a></span>RegLoadMUIStringA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static LSTATUS RegLoadMUIStringA </td>
+          <td>(</td>
+          <td class="paramtype">HKEY&#160;</td>
+          <td class="paramname"><em>hKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>pszValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sOut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>Flags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>pszDirectory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads the specified string from the specified key and subkey, and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724890.aspx">RegLoadMUIString function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga3f9a3593107d5333f057570a76e04a57" name="ga3f9a3593107d5333f057570a76e04a57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3f9a3593107d5333f057570a76e04a57">&#9670;&nbsp;</a></span>RegLoadMUIStringW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static LSTATUS RegLoadMUIStringW </td>
+          <td>(</td>
+          <td class="paramtype">HKEY&#160;</td>
+          <td class="paramname"><em>hKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>pszValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sOut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>Flags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>pszDirectory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads the specified string from the specified key and subkey, and stores it in a std::wstring string. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724890.aspx">RegLoadMUIString function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga2974136cb4530867e14434fb05712b92" name="ga2974136cb4530867e14434fb05712b92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2974136cb4530867e14434fb05712b92">&#9670;&nbsp;</a></span>RegOpenKeyExA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static LSTATUS RegOpenKeyExA </td>
+          <td>(</td>
+          <td class="paramtype">HKEY&#160;</td>
+          <td class="paramname"><em>hKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpSubKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>ulOptions</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">REGSAM&#160;</td>
+          <td class="paramname"><em>samDesired</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classwinstd_1_1reg__key.html">winstd::reg_key</a> &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Opens the specified registry key. </p>
+<dl class="section return"><dt>Returns</dt><dd><ul>
+<li>true when creation succeeds;</li>
+<li>false when creation fails. For extended error information, call <code>GetLastError()</code>.</li>
+</ul>
+</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724897.aspx">RegOpenKeyEx function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga2c61d837a3d96ca9dad3a73df03bf8e4" name="ga2c61d837a3d96ca9dad3a73df03bf8e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2c61d837a3d96ca9dad3a73df03bf8e4">&#9670;&nbsp;</a></span>RegOpenKeyExW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static LSTATUS RegOpenKeyExW </td>
+          <td>(</td>
+          <td class="paramtype">HKEY&#160;</td>
+          <td class="paramname"><em>hKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpSubKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>ulOptions</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">REGSAM&#160;</td>
+          <td class="paramname"><em>samDesired</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classwinstd_1_1reg__key.html">winstd::reg_key</a> &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Opens the specified registry key. </p>
+<dl class="section return"><dt>Returns</dt><dd><ul>
+<li>true when creation succeeds;</li>
+<li>false when creation fails. For extended error information, call <code>GetLastError()</code>.</li>
+</ul>
+</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724897.aspx">RegOpenKeyEx function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gac91030c0badd322d3c64663ceab77b7a" name="gac91030c0badd322d3c64663ceab77b7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac91030c0badd322d3c64663ceab77b7a">&#9670;&nbsp;</a></span>RegQueryStringValue() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static LSTATUS RegQueryStringValue </td>
+          <td>(</td>
+          <td class="paramtype">HKEY&#160;</td>
+          <td class="paramname"><em>hReg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>pszName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Queries for a string value in the registry and stores it in a std::string string. </p>
+<p ><code>REG_EXPAND_SZ</code> are expanded using <code>ExpandEnvironmentStrings()</code> before storing to sValue.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hReg</td><td>A handle to an open registry key. The key must have been opened with the KEY_QUERY_VALUE access right. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pszName</td><td>The name of the registry value. If lpValueName is NULL or an empty string, "", the function retrieves the type and data for the key's unnamed or default value, if any. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">sValue</td><td>String to store the value to</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><ul>
+<li><code>ERROR_SUCCESS</code> when query succeeds;</li>
+<li><code>ERROR_INVALID_DATA</code> when the registy value type is not <code>REG_SZ</code>, <code>REG_MULTI_SZ</code>, or <code>REG_EXPAND_SZ</code>;</li>
+<li><code>ERROR_OUTOFMEMORY</code> when the memory allocation for the sValue buffer fails;</li>
+<li>Error code when query fails. See <code>RegQueryValueEx()</code> for the list of error codes.</li>
+</ul>
+</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx">RegQueryValueEx function</a> </dd>
+<dd>
+<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx">ExpandEnvironmentStrings function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gaef0a2e894cd51e0003498958008ef825" name="gaef0a2e894cd51e0003498958008ef825"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaef0a2e894cd51e0003498958008ef825">&#9670;&nbsp;</a></span>RegQueryStringValue() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static LSTATUS RegQueryStringValue </td>
+          <td>(</td>
+          <td class="paramtype">HKEY&#160;</td>
+          <td class="paramname"><em>hReg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>pszName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Queries for a string value in the registry and stores it in a std::wstring string. </p>
+<p ><code>REG_EXPAND_SZ</code> are expanded using <code>ExpandEnvironmentStrings()</code> before storing to sValue.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hReg</td><td>A handle to an open registry key. The key must have been opened with the KEY_QUERY_VALUE access right. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pszName</td><td>The name of the registry value. If lpValueName is NULL or an empty string, "", the function retrieves the type and data for the key's unnamed or default value, if any. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">sValue</td><td>String to store the value to</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><ul>
+<li><code>ERROR_SUCCESS</code> when query succeeds;</li>
+<li><code>ERROR_INVALID_DATA</code> when the registy value type is not <code>REG_SZ</code>, <code>REG_MULTI_SZ</code>, or <code>REG_EXPAND_SZ</code>;</li>
+<li><code>ERROR_OUTOFMEMORY</code> when the memory allocation for the sValue buffer fails;</li>
+<li>Error code when query fails. See <code>RegQueryValueEx()</code> for the list of error codes.</li>
+</ul>
+</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx">RegQueryValueEx function</a> </dd>
+<dd>
+<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx">ExpandEnvironmentStrings function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gac75dca7a4e87365ca7021edd82509584" name="gac75dca7a4e87365ca7021edd82509584"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac75dca7a4e87365ca7021edd82509584">&#9670;&nbsp;</a></span>RegQueryValueExA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Ty , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static LSTATUS RegQueryValueExA </td>
+          <td>(</td>
+          <td class="paramtype">HKEY&#160;</td>
+          <td class="paramname"><em>hKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpValueName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">__reserved LPDWORD&#160;</td>
+          <td class="paramname"><em>lpReserved</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPDWORD&#160;</td>
+          <td class="paramname"><em>lpType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; _Ty, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>aData</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the type and data for the specified value name associated with an open registry key and stores the data in a std::vector buffer. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx">RegQueryValueEx function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga78f02613f20cc234aad4e1b4726db9ea" name="ga78f02613f20cc234aad4e1b4726db9ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga78f02613f20cc234aad4e1b4726db9ea">&#9670;&nbsp;</a></span>RegQueryValueExW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Ty , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static LSTATUS RegQueryValueExW </td>
+          <td>(</td>
+          <td class="paramtype">HKEY&#160;</td>
+          <td class="paramname"><em>hKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpValueName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">__reserved LPDWORD&#160;</td>
+          <td class="paramname"><em>lpReserved</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPDWORD&#160;</td>
+          <td class="paramname"><em>lpType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; _Ty, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>aData</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the type and data for the specified value name associated with an open registry key and stores the data in a std::vector buffer. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724911.aspx">RegQueryValueEx function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga9aaaa6113374b6cbad241626819d06c9" name="ga9aaaa6113374b6cbad241626819d06c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9aaaa6113374b6cbad241626819d06c9">&#9670;&nbsp;</a></span>SecureMultiByteToWideChar() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int SecureMultiByteToWideChar </td>
+          <td>(</td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>CodePage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::basic_string&lt; char, _Traits1, _Ax1 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sMultiByteStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits2, _Ax2 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sWideCharStr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set. </p>
+<dl class="section note"><dt>Note</dt><dd>This function cleans all internal buffers using SecureZeroMemory() before returning.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx">MultiByteToWideChar function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gab02484a16fea41e3d9a5c64c2ee1da1a" name="gab02484a16fea41e3d9a5c64c2ee1da1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab02484a16fea41e3d9a5c64c2ee1da1a">&#9670;&nbsp;</a></span>SecureMultiByteToWideChar() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int SecureMultiByteToWideChar </td>
+          <td>(</td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>CodePage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpMultiByteStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cbMultiByte</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sWideCharStr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set. </p>
+<dl class="section note"><dt>Note</dt><dd>This function cleans all internal buffers using SecureZeroMemory() before returning.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx">MultiByteToWideChar function</a> </dd></dl>
+
+</div>
+</div>
+<a id="gaa15c8edc525c24109fafea640cdedfcb" name="gaa15c8edc525c24109fafea640cdedfcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa15c8edc525c24109fafea640cdedfcb">&#9670;&nbsp;</a></span>SecureMultiByteToWideChar() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int SecureMultiByteToWideChar </td>
+          <td>(</td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>CodePage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpMultiByteStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cbMultiByte</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; wchar_t, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sWideCharStr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maps a character string to a UTF-16 (wide character) std::vector. The character vector is not necessarily from a multibyte character set. </p>
+<dl class="section note"><dt>Note</dt><dd>This function cleans all internal buffers using SecureZeroMemory() before returning.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx">MultiByteToWideChar function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga04f5e27a0e2066c85d7a421fe4e4c462" name="ga04f5e27a0e2066c85d7a421fe4e4c462"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga04f5e27a0e2066c85d7a421fe4e4c462">&#9670;&nbsp;</a></span>SecureWideCharToMultiByte() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int SecureWideCharToMultiByte </td>
+          <td>(</td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>CodePage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpWideCharStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cchWideChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sMultiByteStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpDefaultChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPBOOL&#160;</td>
+          <td class="paramname"><em>lpUsedDefaultChar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set. </p>
+<dl class="section note"><dt>Note</dt><dd>This function cleans all internal buffers using SecureZeroMemory() before returning.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx">WideCharToMultiByte function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga1a0accb3a54ae0ed34944fd483e0c329" name="ga1a0accb3a54ae0ed34944fd483e0c329"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1a0accb3a54ae0ed34944fd483e0c329">&#9670;&nbsp;</a></span>SecureWideCharToMultiByte() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int SecureWideCharToMultiByte </td>
+          <td>(</td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>CodePage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpWideCharStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cchWideChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; char, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sMultiByteStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpDefaultChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPBOOL&#160;</td>
+          <td class="paramname"><em>lpUsedDefaultChar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maps a UTF-16 (wide character) string to a std::vector. The new character vector is not necessarily from a multibyte character set. </p>
+<dl class="section note"><dt>Note</dt><dd>This function cleans all internal buffers using SecureZeroMemory() before returning.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx">WideCharToMultiByte function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga05ac1b43a241f1bbcbf1440cf26c6335" name="ga05ac1b43a241f1bbcbf1440cf26c6335"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga05ac1b43a241f1bbcbf1440cf26c6335">&#9670;&nbsp;</a></span>SecureWideCharToMultiByte() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int SecureWideCharToMultiByte </td>
+          <td>(</td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>CodePage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits1, _Ax1 &gt;&#160;</td>
+          <td class="paramname"><em>sWideCharStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits2, _Ax2 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sMultiByteStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpDefaultChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPBOOL&#160;</td>
+          <td class="paramname"><em>lpUsedDefaultChar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set. </p>
+<dl class="section note"><dt>Note</dt><dd>This function cleans all internal buffers using SecureZeroMemory() before returning.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx">WideCharToMultiByte function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga0a3545c7b4d6509b77a9a156e882f32c" name="ga0a3545c7b4d6509b77a9a156e882f32c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0a3545c7b4d6509b77a9a156e882f32c">&#9670;&nbsp;</a></span>StringToGuidA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL StringToGuidA </td>
+          <td>(</td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpszGuid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPGUID&#160;</td>
+          <td class="paramname"><em>lpGuid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR *&#160;</td>
+          <td class="paramname"><em>lpszGuidEnd</em> = <code>NULL</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses string with GUID and stores it to GUID. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lpszGuid</td><td>String with GUID </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">lpGuid</td><td>GUID to store the result to </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">lpszGuidEnd</td><td>If non-NULL the pointer to the end of parsed GUID within <code>lpszGuid</code> is returned</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><ul>
+<li><code>TRUE</code> if GUID successfuly parsed;</li>
+<li><code>FALSE</code> otherwise. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga3411488c7daa5c8e03b2ad34764914aa" name="ga3411488c7daa5c8e03b2ad34764914aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3411488c7daa5c8e03b2ad34764914aa">&#9670;&nbsp;</a></span>StringToGuidW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL StringToGuidW </td>
+          <td>(</td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpszGuid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPGUID&#160;</td>
+          <td class="paramname"><em>lpGuid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR *&#160;</td>
+          <td class="paramname"><em>lpszGuidEnd</em> = <code>NULL</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses string with GUID and stores it to GUID. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lpszGuid</td><td>String with GUID </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">lpGuid</td><td>GUID to store the result to </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">lpszGuidEnd</td><td>If non-NULL the pointer to the end of parsed GUID within <code>lpszGuid</code> is returned</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><ul>
+<li><code>TRUE</code> if GUID successfuly parsed;</li>
+<li><code>FALSE</code> otherwise. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="gabf5eed22d7c5d7a89334dbe1e04e2656" name="gabf5eed22d7c5d7a89334dbe1e04e2656"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabf5eed22d7c5d7a89334dbe1e04e2656">&#9670;&nbsp;</a></span>WideCharToMultiByte() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int WideCharToMultiByte </td>
+          <td>(</td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>CodePage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpWideCharStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cchWideChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sMultiByteStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpDefaultChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPBOOL&#160;</td>
+          <td class="paramname"><em>lpUsedDefaultChar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx">WideCharToMultiByte function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga9ab082dc4cba91b23c4364a125f2f778" name="ga9ab082dc4cba91b23c4364a125f2f778"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9ab082dc4cba91b23c4364a125f2f778">&#9670;&nbsp;</a></span>WideCharToMultiByte() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int WideCharToMultiByte </td>
+          <td>(</td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>CodePage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>lpWideCharStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cchWideChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; char, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sMultiByteStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpDefaultChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPBOOL&#160;</td>
+          <td class="paramname"><em>lpUsedDefaultChar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maps a UTF-16 (wide character) string to a std::vector. The new character vector is not necessarily from a multibyte character set. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx">WideCharToMultiByte function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga2eee7ccbf8faa628b303df158b67fb2b" name="ga2eee7ccbf8faa628b303df158b67fb2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2eee7ccbf8faa628b303df158b67fb2b">&#9670;&nbsp;</a></span>WideCharToMultiByte() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int WideCharToMultiByte </td>
+          <td>(</td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>CodePage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits1, _Ax1 &gt;&#160;</td>
+          <td class="paramname"><em>sWideCharStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits2, _Ax2 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sMultiByteStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPCSTR&#160;</td>
+          <td class="paramname"><em>lpDefaultChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPBOOL&#160;</td>
+          <td class="paramname"><em>lpUsedDefaultChar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx">WideCharToMultiByte function</a> </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 15:02:05 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Mon Mar 7 2022 09:10:52 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

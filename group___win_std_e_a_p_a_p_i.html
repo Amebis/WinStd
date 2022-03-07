@@ -66,7 +66,9 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Extensible Authentication Protocol API</div></div>
 </div><!--header-->
 <div class="contents">
@@ -150,6 +152,22 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga50f5584ca708165f43cec42c42243315"><td class="mdescLeft">&#160;</td><td class="mdescRight">EAP method numbers.  <a href="group___win_std_e_a_p_a_p_i.html#ga50f5584ca708165f43cec42c42243315">More...</a><br /></td></tr>
 <tr class="separator:ga50f5584ca708165f43cec42c42243315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga4fac0d35e8ca3fa63c53f85a9d10fa80"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_e_a_p_a_p_i.html#ga4fac0d35e8ca3fa63c53f85a9d10fa80">operator==</a> (const EAP_METHOD_TYPE &amp;a, const EAP_METHOD_TYPE &amp;b) noexcept</td></tr>
+<tr class="memdesc:ga4fac0d35e8ca3fa63c53f85a9d10fa80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are EAP method types equal?  <a href="group___win_std_e_a_p_a_p_i.html#ga4fac0d35e8ca3fa63c53f85a9d10fa80">More...</a><br /></td></tr>
+<tr class="separator:ga4fac0d35e8ca3fa63c53f85a9d10fa80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac742802fadd5c08227ed40026c21524a"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_e_a_p_a_p_i.html#gac742802fadd5c08227ed40026c21524a">operator!=</a> (const EAP_METHOD_TYPE &amp;a, const EAP_METHOD_TYPE &amp;b) noexcept</td></tr>
+<tr class="memdesc:gac742802fadd5c08227ed40026c21524a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are EAP method types non-equal?  <a href="group___win_std_e_a_p_a_p_i.html#gac742802fadd5c08227ed40026c21524a">More...</a><br /></td></tr>
+<tr class="separator:gac742802fadd5c08227ed40026c21524a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:gaeeb21f5241c6b605b67c3e6e4128f972"><td class="memItemLeft" align="right" valign="top"><a id="gaeeb21f5241c6b605b67c3e6e4128f972" name="gaeeb21f5241c6b605b67c3e6e4128f972"></a>
+static const EAP_ATTRIBUTE&#160;</td><td class="memItemRight" valign="bottom"><b>winstd::blank_eap_attr</b> = {}</td></tr>
+<tr class="memdesc:gaeeb21f5241c6b605b67c3e6e4128f972"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blank EAP attribute. <br /></td></tr>
+<tr class="separator:gaeeb21f5241c6b605b67c3e6e4128f972"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p >Integrates WinStd classes with Microsoft EAP API. </p>
@@ -219,10 +237,111 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gac742802fadd5c08227ed40026c21524a" name="gac742802fadd5c08227ed40026c21524a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac742802fadd5c08227ed40026c21524a">&#9670;&nbsp;</a></span>operator!=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool operator!= </td>
+          <td>(</td>
+          <td class="paramtype">const EAP_METHOD_TYPE &amp;&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const EAP_METHOD_TYPE &amp;&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Are EAP method types non-equal? </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>First EAP method type </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Second EAP method type</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><ul>
+<li>Non zero when <code>a</code> is not equal to <code>b</code>;</li>
+<li>Zero otherwise. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga4fac0d35e8ca3fa63c53f85a9d10fa80" name="ga4fac0d35e8ca3fa63c53f85a9d10fa80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4fac0d35e8ca3fa63c53f85a9d10fa80">&#9670;&nbsp;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool operator== </td>
+          <td>(</td>
+          <td class="paramtype">const EAP_METHOD_TYPE &amp;&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const EAP_METHOD_TYPE &amp;&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Are EAP method types equal? </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>First EAP method type </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Second EAP method type</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><ul>
+<li>Non zero when <code>a</code> is equal to <code>b</code>;</li>
+<li>Zero otherwise. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 15:02:05 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Mon Mar 7 2022 09:10:52 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>
