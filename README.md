@@ -1,6 +1,6 @@
 ﻿# WinStd
 
-Provides additional templates and function helpers for Windows API using Standard C++ in Microsoft Visual C++ 2017-2019
+Provides templates and function helpers for Windows Win32 API using Standard C++ in Microsoft Visual C++ 2017-2019
 
 ## Features
 
@@ -8,11 +8,9 @@ Provides additional templates and function helpers for Windows API using Standar
 
 This project does not require building. Just `#include` individual files from this repository into your source code and get started.
 
-### Lightweight Classes
+### Memory and Resource Helper Classes
 
-...to simplify Windows allocated memory and resources focused on their release to prevent leakage
-
-The classes provide unified create methods and free destructors. They are like _smart-pointers_ for various Windows resources. Once created, you use the class instance as a snap-in replacement for pointers/handles parameters in the standard Win32 API functions.
+Simplify memory and resource management. The classes release memory and resources automatically. They are like _smart-pointers_ for various Windows resources. Once created, you use the class instance as a snap-in replacement for pointers/handles parameters in the standard Win32 API function calls.
 
 #### Example
 
@@ -25,8 +23,6 @@ m_note_icon->SetIcon(wxLoadIconFromResource(lib_shell32, MAKEINTRESOURCE(48)));
 ```
 
 ### Functions and Templates
-
-...to extend standard Win32 API functions for variable-size outputs
 
 Different Win32 API functions have different ways of returning variable-sized data. Getting tired of carefully studying MSDN for each particular Win32 API function how to preallocate the output memory correctly? We too...
 
@@ -43,7 +39,7 @@ std::cout << response.c_str() << std::endl;
 
 ### String Formatters
 
-...for those situations where one must quckly compose a temporary string using `sprintf()` or `FormatMessage()`
+For those situations where one must quckly compose a temporary string using `sprintf()` or `FormatMessage()`. Or, convert a GUID to a string on the fly.
 
 #### Example
 
@@ -55,6 +51,10 @@ if (dwMaxSendPacketSize < sizeof(EapPacket))
             sizeof(EapPacket) + 1,
             dwMaxSendPacketSize));
 ```
+
+## What WinStd Is Not
+
+WinStd is not trying to be a full-fledged object-oriented framework on top of Win32 API. We have Microsoft to publish those once every few years - and obsolete it when they loose interest. WinStd aims at augmenting Win32 API with a little bit of help from C++.
 
 ## Usage
 
@@ -79,3 +79,5 @@ void main()
 An auto-generated documentation is [here](https://amebis.github.io/WinStd/).
 
 More examples and use-cases can be found in [GÉANTLink](https://github.com/Amebis/GEANTLink) and [ZRCola](https://github.com/Amebis/ZRCola) projects source code. They make heavy use of WinStd.
+
+This is a one-man project for the time being, so the Win32 API support is far from complete. It is added as needed. Contributions are welcome.

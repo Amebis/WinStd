@@ -4,13 +4,7 @@
     Copyright © 2016 GÉANT
 */
 
-/// \file
-/// Provides helper templates for Windows COM object manipulation
-///
-/// \defgroup WinStdCOM COM object management
-///
-/// Provides helper templates for Windows COM object manipulation
-///
+/// \defgroup WinStdCOM COM Object Management
 
 #pragma once
 

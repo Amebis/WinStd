@@ -4,11 +4,7 @@
     Copyright © 2016 GÉANT
 */
 
-/// \file
-/// Integrates WinStd classes with Microsoft Setup API
-///
 /// \defgroup SetupAPI Setup API
-/// Integrates WinStd classes with Microsoft Setup API
 
 #pragma once
 

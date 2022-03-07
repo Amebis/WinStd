@@ -4,11 +4,7 @@
     Copyright © 2016 GÉANT
 */
 
-/// \file
-/// Integrates WinStd classes with Microsoft WLAN API
-///
 /// \defgroup WinStdWLANAPI WLAN API
-/// Integrates WinStd classes with Microsoft WLAN API
 
 #pragma once
 

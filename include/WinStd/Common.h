@@ -16,14 +16,9 @@
 #include <string>
 #include <vector>
 
-/// \file
-/// General API
-///
 /// \defgroup WinStdGeneral General
-/// General API
 ///
 /// \defgroup WinStdStrFormat String Formatting
-/// Formatted string generation
 ///
 /// \par Example
 /// \code
@@ -33,13 +28,10 @@
 /// \endcode
 ///
 /// \defgroup WinStdSysHandles System Handles
-/// Simplifies work with object handles of various type
 ///
 /// \defgroup WinStdExceptions Exceptions
-/// Additional exceptions
 ///
 /// \defgroup WinStdMemSanitize Auto-sanitize Memory Management
-/// Sanitizes memory before dismissed
 
 /// \addtogroup WinStdGeneral
 /// @{

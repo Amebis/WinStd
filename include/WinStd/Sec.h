@@ -4,11 +4,7 @@
     Copyright © 2016 GÉANT
 */
 
-/// \file
-/// Integrates WinStd classes with Microsoft Security API
-///
 /// \defgroup WinStdSecurityAPI Security API
-/// Integrates WinStd classes with Microsoft Security API
 
 #pragma once
 

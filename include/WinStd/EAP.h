@@ -4,11 +4,7 @@
     Copyright © 2016 GÉANT
 */
 
-/// \file
-/// Integrates WinStd classes with Microsoft EAP API
-///
 /// \defgroup WinStdEAPAPI Extensible Authentication Protocol API
-/// Integrates WinStd classes with Microsoft EAP API
 
 #pragma once
 

@@ -3,11 +3,7 @@
     Copyright © 1991-2022 Amebis
 */
 
-/// \file
-/// Integrates WinStd classes with Microsoft Windows GDI
-///
 /// \defgroup WinStdGdiAPI GDI API
-/// Integrates WinStd classes with Microsoft Windows GDI
 
 #pragma once
 

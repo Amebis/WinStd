@@ -4,11 +4,7 @@
     Copyright © 2016 GÉANT
 */
 
-/// \file
-/// Integrates WinStd classes with Event Tracing for Windows API
-///
 /// \defgroup WinStdETWAPI Event Tracing for Windows API
-/// Integrates WinStd classes with Event Tracing for Windows API
 
 #pragma once
 
