@@ -21,7 +21,7 @@ var searchData=
   ['credprotectw_18',['CredProtectW',['../group___win_std_cred_a_p_i.html#gaa140d15e40f91b075ad1fa69429a0922',1,'Cred.h']]],
   ['credunprotecta_19',['CredUnprotectA',['../group___win_std_cred_a_p_i.html#ga289617e5856f3f4fd18b86754726407b',1,'Cred.h']]],
   ['credunprotectw_20',['CredUnprotectW',['../group___win_std_cred_a_p_i.html#gac5fc6137d0a5f7c4bc713676e08a214e',1,'Cred.h']]],
-  ['critical_5fsection_21',['critical_section',['../classwinstd_1_1critical__section.html#aa8875ee96e273ba72e86457fe0f4c768',1,'winstd::critical_section']]],
+  ['critical_5fsection_21',['critical_section',['../classwinstd_1_1critical__section.html#a0f4fe7bc76838757d20967dd79dd7b2c',1,'winstd::critical_section']]],
   ['cryptacquirecontexta_22',['CryptAcquireContextA',['../group___win_std_crypto_a_p_i.html#ga54a61f3b9b1ddc10544d7156184a9c51',1,'Crypt.h']]],
   ['cryptacquirecontextw_23',['CryptAcquireContextW',['../group___win_std_crypto_a_p_i.html#gaa4a362230b1471ad35e4072a8d506ad4',1,'Crypt.h']]],
   ['cryptcreatehash_24',['CryptCreateHash',['../group___win_std_crypto_a_p_i.html#ga947da720e2b4c51947e06f9489cf71eb',1,'Crypt.h']]],

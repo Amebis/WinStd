@@ -29,7 +29,7 @@ var searchData=
   ['credprotectw_26',['CredProtectW',['../group___win_std_cred_a_p_i.html#gaa140d15e40f91b075ad1fa69429a0922',1,'Cred.h']]],
   ['credunprotecta_27',['CredUnprotectA',['../group___win_std_cred_a_p_i.html#ga289617e5856f3f4fd18b86754726407b',1,'Cred.h']]],
   ['credunprotectw_28',['CredUnprotectW',['../group___win_std_cred_a_p_i.html#gac5fc6137d0a5f7c4bc713676e08a214e',1,'Cred.h']]],
-  ['critical_5fsection_29',['critical_section',['../classwinstd_1_1critical__section.html#aa8875ee96e273ba72e86457fe0f4c768',1,'winstd::critical_section::critical_section()'],['../classwinstd_1_1critical__section.html',1,'winstd::critical_section']]],
+  ['critical_5fsection_29',['critical_section',['../classwinstd_1_1critical__section.html#a0f4fe7bc76838757d20967dd79dd7b2c',1,'winstd::critical_section::critical_section()'],['../classwinstd_1_1critical__section.html',1,'winstd::critical_section']]],
   ['crypt_5fhash_30',['crypt_hash',['../classwinstd_1_1crypt__hash.html',1,'winstd']]],
   ['crypt_5fkey_31',['crypt_key',['../classwinstd_1_1crypt__key.html',1,'winstd']]],
   ['crypt_5fprov_32',['crypt_prov',['../classwinstd_1_1crypt__prov.html',1,'winstd']]],
