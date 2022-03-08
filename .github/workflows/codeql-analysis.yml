@@ -55,7 +55,7 @@ jobs:
       with:
         architecture: x64
 
-    - run: msbuild WinStd.sln -t:Build -p:Configuration=Release -p:Platform=x64
+    - run: msbuild UnitTests\UnitTests.sln -t:Build -p:Configuration=Release -p:Platform=x64
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
