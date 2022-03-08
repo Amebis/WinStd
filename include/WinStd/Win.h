@@ -1519,13 +1519,9 @@ namespace winstd
         ///
         /// \sa [InitializeCriticalSection function](https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-initializecriticalsection)
         ///
-        critical_section()
+        critical_section() noexcept
         {
-            __try {
-                InitializeCriticalSection(&m_data);
-            } __except(EXCEPTION_EXECUTE_HANDLER) {
-                throw std::runtime_error("InitializeCriticalSection failed");
-            }
+            InitializeCriticalSection(&m_data);
         }
 
         ///
