@@ -1428,6 +1428,7 @@ namespace winstd
     /// File handle wrapper
     ///
     /// \sa [CreateFile function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx)
+    /// \sa [CreateNamedPipe function](https://docs.microsoft.com/en-us/windows/win32/api/namedpipeapi/nf-namedpipeapi-createnamedpipew)
     ///
     typedef win_handle<INVALID_HANDLE_VALUE> file;
 
@@ -2259,10 +2260,6 @@ static LSTATUS RegOpenKeyExA(
 
 ///
 /// Opens the specified registry key.
-///
-/// \return
-/// - true when creation succeeds;
-/// - false when creation fails. For extended error information, call `GetLastError()`.
 ///
 /// \sa [RegOpenKeyEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724897.aspx)
 ///
