@@ -15,6 +15,7 @@
 #include <WinStd/ETW.h>
 #include <WinStd/GDI.h>
 #include <WinStd/MSI.h>
+#include <WinStd/SDDL.h>
 #include <WinStd/Sec.h>
 #include <WinStd/SetupAPI.h>
 #include <WinStd/Shell.h>
