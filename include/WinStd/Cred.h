@@ -194,21 +194,37 @@ namespace winstd
 /// \addtogroup WinStdCredAPI
 /// @{
 
-///
-/// Enumerates the credentials from the user's credential set. The credential set used is the one associated with the logon session of the current token. The token must not have the user's SID disabled.
-///
-/// \sa [CredEnumerate function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374794.aspx)
-///
-#pragma warning(suppress: 4505) // Don't warn on unused code
-static BOOL CredEnumerate(_In_z_ LPCTSTR Filter, _Reserved_ DWORD Flags, _Out_ DWORD *Count, _Inout_ std::unique_ptr<PCREDENTIAL[], winstd::CredFree_delete<PCREDENTIAL[]> > &cCredentials) noexcept
+#pragma warning(push)
+#pragma warning(disable: 4505) // Don't warn on unused code
+
+/// @copydoc CredEnumerateW()
+static BOOL CredEnumerateA(_In_z_ LPCSTR Filter, _Reserved_ DWORD Flags, _Out_ DWORD *Count, _Inout_ std::unique_ptr<PCREDENTIALA[], winstd::CredFree_delete<PCREDENTIALA[]> > &cCredentials) noexcept
 {
-    PCREDENTIAL *pCredentials;
-    if (CredEnumerate(Filter, Flags, Count, &pCredentials)) {
+    PCREDENTIALA *pCredentials;
+    if (CredEnumerateA(Filter, Flags, Count, &pCredentials)) {
         cCredentials.reset(pCredentials);
         return TRUE;
     }
 
     return FALSE;
 }
+
+///
+/// Enumerates the credentials from the user's credential set. The credential set used is the one associated with the logon session of the current token. The token must not have the user's SID disabled.
+///
+/// \sa [CredEnumerate function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374794.aspx)
+///
+static BOOL CredEnumerateW(_In_z_ LPCWSTR Filter, _Reserved_ DWORD Flags, _Out_ DWORD *Count, _Inout_ std::unique_ptr<PCREDENTIALW[], winstd::CredFree_delete<PCREDENTIALW[]> > &cCredentials) noexcept
+{
+    PCREDENTIALW *pCredentials;
+    if (CredEnumerateW(Filter, Flags, Count, &pCredentials)) {
+        cCredentials.reset(pCredentials);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+#pragma warning(pop)
 
 /// @}
