@@ -2192,6 +2192,37 @@ namespace winstd
         }
     };
 
+    ///
+    /// SC_HANDLE wrapper class
+    ///
+    class sc_handle : public handle<SC_HANDLE, NULL>
+    {
+        WINSTD_HANDLE_IMPL(sc_handle, NULL)
+
+    public:
+        ///
+        /// Closes an open object handle.
+        ///
+        /// \sa [CloseServiceHandle function](https://docs.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-closeservicehandle)
+        ///
+        virtual ~sc_handle()
+        {
+            if (m_h != invalid)
+                free_internal();
+        }
+
+    protected:
+        ///
+        /// Closes an open object handle.
+        ///
+        /// \sa [CloseServiceHandle function](https://docs.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-closeservicehandle)
+        ///
+        void free_internal() noexcept override
+        {
+            CloseServiceHandle(m_h);
+        }
+    };
+
     /// @}
 }
 
