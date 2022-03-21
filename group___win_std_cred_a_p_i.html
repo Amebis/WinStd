@@ -97,14 +97,17 @@ Functions</h2></td></tr>
 <tr class="memitem:gac5fc6137d0a5f7c4bc713676e08a214e"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_cred_a_p_i.html#gac5fc6137d0a5f7c4bc713676e08a214e">CredUnprotectW</a> (BOOL fAsSelf, LPCWSTR pszProtectedCredentials, DWORD cchCredentials, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sCredentials)</td></tr>
 <tr class="memdesc:gac5fc6137d0a5f7c4bc713676e08a214e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts credentials that were previously encrypted by using the CredProtect function.  <a href="group___win_std_cred_a_p_i.html#gac5fc6137d0a5f7c4bc713676e08a214e">More...</a><br /></td></tr>
 <tr class="separator:gac5fc6137d0a5f7c4bc713676e08a214e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3279ce4382680fc19b1a89ea5a3f261e"><td class="memItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_cred_a_p_i.html#ga3279ce4382680fc19b1a89ea5a3f261e">CredEnumerate</a> (LPCTSTR Filter, DWORD Flags, DWORD *Count, std::unique_ptr&lt; PCREDENTIAL[], <a class="el" href="structwinstd_1_1_cred_free__delete.html">winstd::CredFree_delete</a>&lt; PCREDENTIAL[]&gt; &gt; &amp;cCredentials) noexcept</td></tr>
-<tr class="memdesc:ga3279ce4382680fc19b1a89ea5a3f261e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerates the credentials from the user's credential set. The credential set used is the one associated with the logon session of the current token. The token must not have the user's SID disabled.  <a href="group___win_std_cred_a_p_i.html#ga3279ce4382680fc19b1a89ea5a3f261e">More...</a><br /></td></tr>
-<tr class="separator:ga3279ce4382680fc19b1a89ea5a3f261e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d7c3256a227574ba9e726a1e020fceb"><td class="memItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_cred_a_p_i.html#ga6d7c3256a227574ba9e726a1e020fceb">CredEnumerateA</a> (LPCSTR Filter, DWORD Flags, DWORD *Count, std::unique_ptr&lt; PCREDENTIALA[], <a class="el" href="structwinstd_1_1_cred_free__delete.html">winstd::CredFree_delete</a>&lt; PCREDENTIALA[]&gt; &gt; &amp;cCredentials) noexcept</td></tr>
+<tr class="memdesc:ga6d7c3256a227574ba9e726a1e020fceb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerates the credentials from the user's credential set. The credential set used is the one associated with the logon session of the current token. The token must not have the user's SID disabled.  <a href="group___win_std_cred_a_p_i.html#ga6d7c3256a227574ba9e726a1e020fceb">More...</a><br /></td></tr>
+<tr class="separator:ga6d7c3256a227574ba9e726a1e020fceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71e6a2a069cd781252492021d70843da"><td class="memItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_cred_a_p_i.html#ga71e6a2a069cd781252492021d70843da">CredEnumerateW</a> (LPCWSTR Filter, DWORD Flags, DWORD *Count, std::unique_ptr&lt; PCREDENTIALW[], <a class="el" href="structwinstd_1_1_cred_free__delete.html">winstd::CredFree_delete</a>&lt; PCREDENTIALW[]&gt; &gt; &amp;cCredentials) noexcept</td></tr>
+<tr class="memdesc:ga71e6a2a069cd781252492021d70843da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerates the credentials from the user's credential set. The credential set used is the one associated with the logon session of the current token. The token must not have the user's SID disabled.  <a href="group___win_std_cred_a_p_i.html#ga71e6a2a069cd781252492021d70843da">More...</a><br /></td></tr>
+<tr class="separator:ga71e6a2a069cd781252492021d70843da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga3279ce4382680fc19b1a89ea5a3f261e" name="ga3279ce4382680fc19b1a89ea5a3f261e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3279ce4382680fc19b1a89ea5a3f261e">&#9670;&nbsp;</a></span>CredEnumerate()</h2>
+<a id="ga6d7c3256a227574ba9e726a1e020fceb" name="ga6d7c3256a227574ba9e726a1e020fceb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6d7c3256a227574ba9e726a1e020fceb">&#9670;&nbsp;</a></span>CredEnumerateA()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -113,9 +116,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static BOOL CredEnumerate </td>
+          <td class="memname">static BOOL CredEnumerateA </td>
           <td>(</td>
-          <td class="paramtype">LPCTSTR&#160;</td>
+          <td class="paramtype">LPCSTR&#160;</td>
           <td class="paramname"><em>Filter</em>, </td>
         </tr>
         <tr>
@@ -133,7 +136,58 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; PCREDENTIAL[], <a class="el" href="structwinstd_1_1_cred_free__delete.html">winstd::CredFree_delete</a>&lt; PCREDENTIAL[]&gt; &gt; &amp;&#160;</td>
+          <td class="paramtype">std::unique_ptr&lt; PCREDENTIALA[], <a class="el" href="structwinstd_1_1_cred_free__delete.html">winstd::CredFree_delete</a>&lt; PCREDENTIALA[]&gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>cCredentials</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enumerates the credentials from the user's credential set. The credential set used is the one associated with the logon session of the current token. The token must not have the user's SID disabled. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa374794.aspx">CredEnumerate function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga71e6a2a069cd781252492021d70843da" name="ga71e6a2a069cd781252492021d70843da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga71e6a2a069cd781252492021d70843da">&#9670;&nbsp;</a></span>CredEnumerateW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL CredEnumerateW </td>
+          <td>(</td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>Filter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>Flags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD *&#160;</td>
+          <td class="paramname"><em>Count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; PCREDENTIALW[], <a class="el" href="structwinstd_1_1_cred_free__delete.html">winstd::CredFree_delete</a>&lt; PCREDENTIALW[]&gt; &gt; &amp;&#160;</td>
           <td class="paramname"><em>cCredentials</em>&#160;</td>
         </tr>
         <tr>
@@ -381,7 +435,7 @@ template&lt;class _Traits , class _Ax &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 8 2022 18:46:43 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Mon Mar 21 2022 13:17:06 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

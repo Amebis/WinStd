@@ -122,6 +122,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1event__log.html">winstd::event_log</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event log handle wrapper.  <a href="classwinstd_1_1event__log.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1sc__handle.html">winstd::sc_handle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SC_HANDLE wrapper class.  <a href="classwinstd_1_1sc__handle.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
@@ -429,7 +432,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>File handle wrapper. </p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx">CreateFile function</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx">CreateFile function</a> </dd>
+<dd>
+<a href="https://docs.microsoft.com/en-us/windows/win32/api/namedpipeapi/nf-namedpipeapi-createnamedpipew">CreateNamedPipe function</a> </dd></dl>
 
 </div>
 </div>
@@ -2167,11 +2172,6 @@ template&lt;class _Traits , class _Ax &gt; </div>
 </div><div class="memdoc">
 
 <p>Opens the specified registry key. </p>
-<dl class="section return"><dt>Returns</dt><dd><ul>
-<li>true when creation succeeds;</li>
-<li>false when creation fails. For extended error information, call <code>GetLastError()</code>.</li>
-</ul>
-</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724897.aspx">RegOpenKeyEx function</a> </dd></dl>
 
 </div>
@@ -2229,11 +2229,6 @@ template&lt;class _Traits , class _Ax &gt; </div>
 </div><div class="memdoc">
 
 <p>Opens the specified registry key. </p>
-<dl class="section return"><dt>Returns</dt><dd><ul>
-<li>true when creation succeeds;</li>
-<li>false when creation fails. For extended error information, call <code>GetLastError()</code>.</li>
-</ul>
-</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724897.aspx">RegOpenKeyEx function</a> </dd></dl>
 
 </div>
@@ -3194,7 +3189,7 @@ template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </div
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 8 2022 18:46:43 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Mon Mar 21 2022 13:17:06 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>
