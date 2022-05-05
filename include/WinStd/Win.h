@@ -550,7 +550,7 @@ static LSTATUS RegQueryValueExA(_In_ HKEY hKey, _In_opt_z_ LPCSTR lpValueName, _
     } else if (lResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap and retry.
         aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        lResult = RegQueryValueExA(hKey, lpValueName, lpReserved, NULL, aData.data(), &dwSize);
+        lResult = RegQueryValueExA(hKey, lpValueName, lpReserved, NULL, reinterpret_cast<LPBYTE>(aData.data()), &dwSize);
     }
 
     return lResult;
@@ -577,7 +577,7 @@ static LSTATUS RegQueryValueExW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR lpValueName, 
     } else if (lResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap and retry.
         aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        lResult = RegQueryValueExW(hKey, lpValueName, lpReserved, NULL, aData.data(), &dwSize);
+        lResult = RegQueryValueExW(hKey, lpValueName, lpReserved, NULL, reinterpret_cast<LPBYTE>(aData.data()), &dwSize);
     }
 
     return lResult;

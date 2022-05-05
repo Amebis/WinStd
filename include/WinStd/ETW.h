@@ -40,7 +40,7 @@ static _Success_(return == ERROR_SUCCESS) ULONG TdhGetProperty(_In_ PEVENT_RECOR
         if (ulSize) {
             // Query property value.
             aData.resize((ulSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-            ulResult = TdhGetProperty(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, ulSize, reinterpret_cast<LPBYTE>(aData.data()));
+            ulResult = TdhGetProperty(pEvent, TdhContextCount, pTdhContext, PropertyDataCount, pPropertyData, ulSize, reinterpret_cast<PBYTE>(aData.data()));
         } else {
             // Property value size is zero.
             aData.clear();

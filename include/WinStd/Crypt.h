@@ -68,7 +68,7 @@ static _Success_(return != 0) BOOL WINAPI CertGetCertificateContextProperty(_In_
         return TRUE;
     } else if (GetLastError() == ERROR_MORE_DATA) {
         aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        if (CertGetCertificateContextProperty(pCertContext, dwPropId, (BYTE*)aData.data(), &dwSize))
+        if (CertGetCertificateContextProperty(pCertContext, dwPropId, aData.data(), &dwSize))
             return TRUE;
     }
 
@@ -93,7 +93,7 @@ static _Success_(return != 0) BOOL CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_
         return TRUE;
     } else if (GetLastError() == ERROR_MORE_DATA) {
         aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        if (CryptGetHashParam(hHash, dwParam, (BYTE*)aData.data(), &dwSize, dwFlags))
+        if (CryptGetHashParam(hHash, dwParam, reinterpret_cast<BYTE*>(aData.data()), &dwSize, dwFlags))
             return TRUE;
     }
 
@@ -130,7 +130,7 @@ static _Success_(return != 0) BOOL CryptGetKeyParam(_In_ HCRYPTKEY hKey, _In_ DW
         return TRUE;
     } else if (GetLastError() == ERROR_MORE_DATA) {
         aData.resize((dwSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        if (CryptGetKeyParam(hKey, dwParam, (BYTE*)aData.data(), &dwSize, dwFlags))
+        if (CryptGetKeyParam(hKey, dwParam, reinterpret_cast<BYTE*>(aData.data()), &dwSize, dwFlags))
             return TRUE;
     }
 
@@ -161,7 +161,7 @@ static _Success_(return != 0) BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRY
 
     if (CryptExportKey(hKey, hExpKey, dwBlobType, dwFlags, NULL, &dwKeyBLOBSize)) {
         aData.resize((dwKeyBLOBSize + sizeof(_Ty) - 1) / sizeof(_Ty));
-        if (CryptExportKey(hKey, hExpKey, dwBlobType, dwFlags, aData.data(), &dwKeyBLOBSize))
+        if (CryptExportKey(hKey, hExpKey, dwBlobType, dwFlags, reinterpret_cast<BYTE*>(aData.data()), &dwKeyBLOBSize))
             return TRUE;
     }
 
@@ -184,7 +184,7 @@ static _Success_(return != 0) BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HC
 
     if (dwBufLen) {
         aData.resize(dwBufLen);
-        if (CryptEncrypt(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &dwEncLen, dwBufLen)) {
+        if (CryptEncrypt(hKey, hHash, Final, dwFlags, reinterpret_cast<BYTE*>(aData.data()), &dwEncLen, dwBufLen)) {
             // Encryption succeeded.
             assert(dwEncLen <= dwBufLen);
             if (dwEncLen < dwBufLen)
@@ -203,7 +203,7 @@ static _Success_(return != 0) BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HC
         // Encrypted data will be longer. Reserve more space and retry.
         aData.resize(((dwBufLen = dwEncLen) + sizeof(_Ty) - 1) / sizeof(_Ty));
         dwEncLen = dwDataLen;
-        if (CryptEncrypt(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &dwEncLen, dwBufLen)) {
+        if (CryptEncrypt(hKey, hHash, Final, dwFlags, reinterpret_cast<BYTE*>(aData.data()), &dwEncLen, dwBufLen)) {
             // Encryption succeeded.
             assert(dwEncLen <= dwBufLen);
             if (dwEncLen < dwBufLen)
@@ -228,7 +228,7 @@ static _Success_(return != 0) BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HC
 {
     DWORD dwDataLen = (DWORD)(aData.size() * sizeof(_Ty));
 
-    if (CryptDecrypt(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &dwDataLen)) {
+    if (CryptDecrypt(hKey, hHash, Final, dwFlags, reinterpret_cast<BYTE*>(aData.data()), &dwDataLen)) {
         // Decryption succeeded.
         aData.resize((dwDataLen + sizeof(_Ty) - 1) / sizeof(_Ty));
         return TRUE;
