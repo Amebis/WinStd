@@ -537,7 +537,7 @@ $(function() {
 <div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lResult == ERROR_MORE_DATA) {</div>
 <div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span>        <span class="comment">// Allocate buffer on heap and retry.</span></div>
 <div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span>        aData.resize((dwSize + <span class="keyword">sizeof</span>(_Ty) - 1) / <span class="keyword">sizeof</span>(_Ty));</div>
-<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>        lResult = <a class="code hl_function" href="group___win_std_win_a_p_i.html#gac75dca7a4e87365ca7021edd82509584">RegQueryValueExA</a>(hKey, lpValueName, lpReserved, NULL, aData.data(), &amp;dwSize);</div>
+<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>        lResult = <a class="code hl_function" href="group___win_std_win_a_p_i.html#gac75dca7a4e87365ca7021edd82509584">RegQueryValueExA</a>(hKey, lpValueName, lpReserved, NULL, <span class="keyword">reinterpret_cast&lt;</span>LPBYTE<span class="keyword">&gt;</span>(aData.data()), &amp;dwSize);</div>
 <div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>    }</div>
 <div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span> </div>
 <div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span>    <span class="keywordflow">return</span> lResult;</div>
@@ -559,7 +559,7 @@ $(function() {
 <div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lResult == ERROR_MORE_DATA) {</div>
 <div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span>        <span class="comment">// Allocate buffer on heap and retry.</span></div>
 <div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>        aData.resize((dwSize + <span class="keyword">sizeof</span>(_Ty) - 1) / <span class="keyword">sizeof</span>(_Ty));</div>
-<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span>        lResult = <a class="code hl_function" href="group___win_std_win_a_p_i.html#ga78f02613f20cc234aad4e1b4726db9ea">RegQueryValueExW</a>(hKey, lpValueName, lpReserved, NULL, aData.data(), &amp;dwSize);</div>
+<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span>        lResult = <a class="code hl_function" href="group___win_std_win_a_p_i.html#ga78f02613f20cc234aad4e1b4726db9ea">RegQueryValueExW</a>(hKey, lpValueName, lpReserved, NULL, <span class="keyword">reinterpret_cast&lt;</span>LPBYTE<span class="keyword">&gt;</span>(aData.data()), &amp;dwSize);</div>
 <div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span>    }</div>
 <div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span> </div>
 <div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span>    <span class="keywordflow">return</span> lResult;</div>
@@ -1919,7 +1919,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 21 2022 13:17:06 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Thu May 5 2022 11:37:54 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

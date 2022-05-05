@@ -126,7 +126,7 @@ $(function() {
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keywordflow">return</span> TRUE;</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (GetLastError() == ERROR_MORE_DATA) {</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        aData.resize((dwSize + <span class="keyword">sizeof</span>(_Ty) - 1) / <span class="keyword">sizeof</span>(_Ty));</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#ga0f4039aa2a795b7a73e5fb07f3742378">CertGetCertificateContextProperty</a>(pCertContext, dwPropId, (BYTE*)aData.data(), &amp;dwSize))</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#ga0f4039aa2a795b7a73e5fb07f3742378">CertGetCertificateContextProperty</a>(pCertContext, dwPropId, aData.data(), &amp;dwSize))</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="keywordflow">return</span> TRUE;</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    }</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
@@ -146,7 +146,7 @@ $(function() {
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        <span class="keywordflow">return</span> TRUE;</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (GetLastError() == ERROR_MORE_DATA) {</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        aData.resize((dwSize + <span class="keyword">sizeof</span>(_Ty) - 1) / <span class="keyword">sizeof</span>(_Ty));</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#ga231b40581fbe230fdc82d4f473f2e43f">CryptGetHashParam</a>(hHash, dwParam, (BYTE*)aData.data(), &amp;dwSize, dwFlags))</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#ga231b40581fbe230fdc82d4f473f2e43f">CryptGetHashParam</a>(hHash, dwParam, <span class="keyword">reinterpret_cast&lt;</span>BYTE*<span class="keyword">&gt;</span>(aData.data()), &amp;dwSize, dwFlags))</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            <span class="keywordflow">return</span> TRUE;</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    }</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
@@ -173,7 +173,7 @@ $(function() {
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        <span class="keywordflow">return</span> TRUE;</div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (GetLastError() == ERROR_MORE_DATA) {</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        aData.resize((dwSize + <span class="keyword">sizeof</span>(_Ty) - 1) / <span class="keyword">sizeof</span>(_Ty));</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#ga782fd6fda714da07b5e687b80fc6f443">CryptGetKeyParam</a>(hKey, dwParam, (BYTE*)aData.data(), &amp;dwSize, dwFlags))</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#ga782fd6fda714da07b5e687b80fc6f443">CryptGetKeyParam</a>(hKey, dwParam, <span class="keyword">reinterpret_cast&lt;</span>BYTE*<span class="keyword">&gt;</span>(aData.data()), &amp;dwSize, dwFlags))</div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            <span class="keywordflow">return</span> TRUE;</div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    }</div>
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
@@ -194,7 +194,7 @@ $(function() {
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#ga72ee7a873236f55ff0cb56d46e4ff0a6">CryptExportKey</a>(hKey, hExpKey, dwBlobType, dwFlags, NULL, &amp;dwKeyBLOBSize)) {</div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        aData.resize((dwKeyBLOBSize + <span class="keyword">sizeof</span>(_Ty) - 1) / <span class="keyword">sizeof</span>(_Ty));</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#ga72ee7a873236f55ff0cb56d46e4ff0a6">CryptExportKey</a>(hKey, hExpKey, dwBlobType, dwFlags, aData.data(), &amp;dwKeyBLOBSize))</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#ga72ee7a873236f55ff0cb56d46e4ff0a6">CryptExportKey</a>(hKey, hExpKey, dwBlobType, dwFlags, <span class="keyword">reinterpret_cast&lt;</span>BYTE*<span class="keyword">&gt;</span>(aData.data()), &amp;dwKeyBLOBSize))</div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            <span class="keywordflow">return</span> TRUE;</div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    }</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
@@ -212,7 +212,7 @@ $(function() {
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <span class="keywordflow">if</span> (dwBufLen) {</div>
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        aData.resize(dwBufLen);</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#gabd30cb0e884c2c88c3e4f3321ea5efff">CryptEncrypt</a>(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &amp;dwEncLen, dwBufLen)) {</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#gabd30cb0e884c2c88c3e4f3321ea5efff">CryptEncrypt</a>(hKey, hHash, Final, dwFlags, <span class="keyword">reinterpret_cast&lt;</span>BYTE*<span class="keyword">&gt;</span>(aData.data()), &amp;dwEncLen, dwBufLen)) {</div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            <span class="comment">// Encryption succeeded.</span></div>
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            assert(dwEncLen &lt;= dwBufLen);</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>            <span class="keywordflow">if</span> (dwEncLen &lt; dwBufLen)</div>
@@ -231,7 +231,7 @@ $(function() {
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        <span class="comment">// Encrypted data will be longer. Reserve more space and retry.</span></div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        aData.resize(((dwBufLen = dwEncLen) + <span class="keyword">sizeof</span>(_Ty) - 1) / <span class="keyword">sizeof</span>(_Ty));</div>
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        dwEncLen = dwDataLen;</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#gabd30cb0e884c2c88c3e4f3321ea5efff">CryptEncrypt</a>(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &amp;dwEncLen, dwBufLen)) {</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#gabd30cb0e884c2c88c3e4f3321ea5efff">CryptEncrypt</a>(hKey, hHash, Final, dwFlags, <span class="keyword">reinterpret_cast&lt;</span>BYTE*<span class="keyword">&gt;</span>(aData.data()), &amp;dwEncLen, dwBufLen)) {</div>
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>            <span class="comment">// Encryption succeeded.</span></div>
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>            assert(dwEncLen &lt;= dwBufLen);</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>            <span class="keywordflow">if</span> (dwEncLen &lt; dwBufLen)</div>
@@ -251,7 +251,7 @@ $(function() {
 <div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>{</div>
 <div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    DWORD dwDataLen = (DWORD)(aData.size() * <span class="keyword">sizeof</span>(_Ty));</div>
 <div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#gae93b1a49d6eafd5c7d8abe48ee97faf8">CryptDecrypt</a>(hKey, hHash, Final, dwFlags, (BYTE*)aData.data(), &amp;dwDataLen)) {</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="group___win_std_crypto_a_p_i.html#gae93b1a49d6eafd5c7d8abe48ee97faf8">CryptDecrypt</a>(hKey, hHash, Final, dwFlags, <span class="keyword">reinterpret_cast&lt;</span>BYTE*<span class="keyword">&gt;</span>(aData.data()), &amp;dwDataLen)) {</div>
 <div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        <span class="comment">// Decryption succeeded.</span></div>
 <div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        aData.resize((dwDataLen + <span class="keyword">sizeof</span>(_Ty) - 1) / <span class="keyword">sizeof</span>(_Ty));</div>
 <div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        <span class="keywordflow">return</span> TRUE;</div>
@@ -732,7 +732,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 21 2022 13:17:05 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Thu May 5 2022 11:37:54 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>
