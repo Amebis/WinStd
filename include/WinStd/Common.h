@@ -477,25 +477,9 @@ namespace winstd
     }
 
     ///
-    /// Helper function template for returning pointers to std::unique_ptr
-    /// (specialization for arrays)
-    ///
-    /// \param[inout] owner  Original owner of the pointer
-    ///
-    /// \returns A helper wrapper class to handle returning a reference to the pointer
-    ///
-    template<class _Ty, class _Dx>
-    ref_unique_ptr<_Ty[], _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept
-    {
-        return ref_unique_ptr<_Ty[], _Dx>(owner);
-    }
-
-    ///
     /// Helper class for returning pointers to std::unique_ptr
     /// (specialization for arrays)
     ///
-    #pragma warning(push)
-    #pragma warning(disable: 26432) // Copy constructor and assignment operator are also present, but not detected by code analysis as they are using base type source object reference.
     template<class _Ty, class _Dx>
     class ref_unique_ptr<_Ty[], _Dx>
     {
@@ -511,23 +495,6 @@ namespace winstd
         {}
 
         ///
-        /// Takes ownership of the pointer
-        ///
-        /// \param[inout] owner  Object to attach helper to
-        ///
-        /// \returns Reference to this object
-        ///
-        ref_unique_ptr& operator=(_Inout_ std::unique_ptr<_Ty[], _Dx> &owner) noexcept
-        {
-            if (this != &other) {
-                m_own = owner;
-                m_ptr = owner.release();
-            }
-
-            return *this;
-        }
-
-        ///
         /// Moves object
         ///
         /// \param[inout] other  Source object
@@ -537,24 +504,6 @@ namespace winstd
             m_ptr(other.m_ptr)
         {
             other.m_ptr = nullptr;
-        }
-
-        ///
-        /// Moves object
-        ///
-        /// \param[inout] other  Source object
-        ///
-        /// \returns Reference to this object
-        ///
-        ref_unique_ptr& operator=(_Inout_ ref_unique_ptr<_Ty[], _Dx> &&other)
-        {
-            if (this != &other) {
-                m_own = other.m_own;
-                m_ptr = other.m_ptr;
-                other.m_ptr = nullptr;
-            }
-
-            return *this;
         }
 
         ///
@@ -590,7 +539,20 @@ namespace winstd
         std::unique_ptr<_Ty[], _Dx> &m_own;   ///< Original owner of the pointer
         _Ty                         *m_ptr;   ///< Pointer
     };
-    #pragma warning(pop)
+
+    ///
+    /// Helper function template for returning pointers to std::unique_ptr
+    /// (specialization for arrays)
+    ///
+    /// \param[inout] owner  Original owner of the pointer
+    ///
+    /// \returns A helper wrapper class to handle returning a reference to the pointer
+    ///
+    template<class _Ty, class _Dx>
+    ref_unique_ptr<_Ty[], _Dx> get_ptr(_Inout_ std::unique_ptr<_Ty[], _Dx>& owner) noexcept
+    {
+        return ref_unique_ptr<_Ty[], _Dx>(owner);
+    }
 
     /// @}
 
