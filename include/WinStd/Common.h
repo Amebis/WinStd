@@ -684,11 +684,14 @@ namespace winstd
         }
 
         ///
-        /// Tests if the object handle is INVAL.
+        /// Tests if the object handle is invalid.
         ///
         /// \return
-        /// - Non zero when object handle is INVAL;
+        /// - Non zero when object handle is invalid;
         /// - Zero otherwise.
+        ///
+        /// \note Implementing `operator bool() const` would be correct C++ approach here. Unfortunately, it would produce ambiguities where `bool` and `handle_type` are polymorphed.
+        /// Use `!!` to test if the object handle is valid.
         ///
         bool operator!() const
         {
