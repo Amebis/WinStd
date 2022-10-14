@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Common.h"
+#include <tlhelp32.h>
 #include <string>
 #include <vector>
 
@@ -1815,9 +1816,40 @@ namespace winstd
     };
 
     ///
+    /// Base class for thread impersonation of another security context
+    ///
+    class impersonator
+    {
+    public:
+        ///
+        /// Construct the impersonator
+        ///
+        impersonator() noexcept : m_cookie(FALSE) {}
+
+        ///
+        /// Reverts to current user and destructs the impersonator
+        ///
+        /// \sa [RevertToSelf function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379317.aspx)
+        ///
+        virtual ~impersonator()
+        {
+            if (m_cookie)
+                RevertToSelf();
+        }
+
+        ///
+        /// Did impersonation succeed?
+        ///
+        operator bool () const { return m_cookie; }
+
+    protected:
+        BOOL m_cookie; ///< Did impersonation succeed?
+    };
+
+    ///
     /// Lets the calling thread impersonate the security context of a logged-on user
     ///
-    class user_impersonator
+    class user_impersonator : public impersonator
     {
         WINSTD_NONCOPYABLE(user_impersonator)
         WINSTD_NONMOVABLE(user_impersonator)
@@ -1834,20 +1866,64 @@ namespace winstd
         {
             m_cookie = hToken && ImpersonateLoggedOnUser(hToken);
         }
+    };
 
+    ///
+    /// Lets the calling thread impersonate the security context of the SYSTEM user
+    ///
+    class system_impersonator : public impersonator
+    {
+        WINSTD_NONCOPYABLE(system_impersonator)
+        WINSTD_NONMOVABLE(system_impersonator)
+
+    public:
         ///
-        /// Reverts to current user and destructs the impersonator
+        /// Construct the impersonator and impersonates the SYSTEM user
         ///
-        /// \sa [RevertToSelf function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379317.aspx)
-        ///
-        virtual ~user_impersonator()
+        system_impersonator() noexcept
         {
-            if (m_cookie)
-                RevertToSelf();
-        }
+            TOKEN_PRIVILEGES privileges = { 1, {{{ 0, 0 }, SE_PRIVILEGE_ENABLED }} };
+            if (!LookupPrivilegeValue(NULL, SE_DEBUG_NAME, &privileges.Privileges[0].Luid) ||
+                !ImpersonateSelf(SecurityImpersonation))
+                return;
 
-    protected:
-        BOOL m_cookie; ///< Did impersonation succeed?
+            {
+                HANDLE h;
+                if (!OpenThreadToken(GetCurrentThread(), TOKEN_ADJUST_PRIVILEGES, FALSE, &h))
+                    goto revert;
+                win_handle<INVALID_HANDLE_VALUE> thread_token(h);
+                if (!AdjustTokenPrivileges(thread_token, FALSE, &privileges, sizeof(privileges), NULL, NULL))
+                    goto revert;
+                process_snapshot process_snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+                if (!process_snapshot)
+                    goto revert;
+                PROCESSENTRY32 entry = { sizeof(PROCESSENTRY32) };
+                if (!Process32First(process_snapshot, &entry))
+                    goto revert;
+                while (_tcsicmp(entry.szExeFile, TEXT("winlogon.exe")) != 0)
+                    if (!Process32Next(process_snapshot, &entry))
+                        goto revert;
+                process winlogon_process = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, entry.th32ProcessID);
+                if (!winlogon_process)
+                    goto revert;
+                if (!OpenProcessToken(winlogon_process, TOKEN_IMPERSONATE | TOKEN_DUPLICATE, &h))
+                    goto revert;
+                win_handle<INVALID_HANDLE_VALUE> winlogon_token(h);
+                if (!DuplicateToken(winlogon_token, SecurityImpersonation, &h))
+                    goto revert;
+                win_handle<INVALID_HANDLE_VALUE> duplicated_token(h);
+                if (!SetThreadToken(NULL, duplicated_token))
+                    goto revert;
+            }
+
+            m_cookie = TRUE;
+            return;
+
+        revert:
+            DWORD dwResult = GetLastError();
+            RevertToSelf();
+            SetLastError(dwResult);
+        }
     };
 
     ///
@@ -2306,6 +2382,21 @@ static LSTATUS RegOpenKeyExW(
     if (s == ERROR_SUCCESS)
         result.attach(h);
     return s;
+}
+
+///
+/// Opens the access token associated with a process
+///
+/// \sa [OpenProcessToken function](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openprocesstoken)
+///
+static BOOL OpenProcessToken(_In_ HANDLE ProcessHandle, _In_ DWORD DesiredAccess, _Inout_ winstd::win_handle<NULL> &TokenHandle)
+{
+    HANDLE h;
+    if (OpenProcessToken(ProcessHandle, DesiredAccess, &h)) {
+        TokenHandle.attach(h);
+        return TRUE;
+    }
+    return FALSE;
 }
 
 #pragma warning(pop)

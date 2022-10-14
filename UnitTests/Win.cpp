@@ -37,5 +37,21 @@ namespace UnitTests
 			if (!lib_shell32)
 				Assert::Fail(L"LoadLibraryEx failed");
 		}
+
+		TEST_METHOD(system_impersonator)
+		{
+			winstd::win_handle<NULL> processToken;
+			if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY | TOKEN_DUPLICATE, processToken))
+				Assert::Fail(L"OpenProcessToken failed");
+			DWORD isElevated, dwLength;
+			if (!GetTokenInformation(processToken, TokenElevation, &isElevated, sizeof(isElevated), &dwLength))
+				Assert::Fail(L"GetTokenInformation failed");
+			winstd::system_impersonator system_impersonator;
+			// SYSTEM impersonation works in elevated processes only.
+			if (dwLength == sizeof(isElevated) && isElevated)
+				Assert::IsTrue(system_impersonator);
+			else
+				Assert::IsTrue(!system_impersonator && GetLastError() == ERROR_ACCESS_DENIED);
+		}
 	};
 }
