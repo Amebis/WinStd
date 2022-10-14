@@ -87,7 +87,7 @@ namespace winstd
 #if (NTDDI_VERSION >= NTDDI_WINXPSP2) || (_WIN32_WINNT >= 0x0502)
 
     ///
-    /// SID wrapper class
+    /// ADDRINFOA wrapper class
     ///
     /// \sa [GetAddrInfoA function](https://docs.microsoft.com/en-us/windows/win32/api/ws2tcpip/nf-ws2tcpip-getaddrinfo)
     ///
@@ -120,7 +120,7 @@ namespace winstd
     };
 
     ///
-    /// SID wrapper class
+    /// ADDRINFOW wrapper class
     ///
     /// \sa [GetAddrInfoW function](https://docs.microsoft.com/en-us/windows/desktop/api/ws2tcpip/nf-ws2tcpip-getaddrinfow)
     ///
@@ -153,7 +153,7 @@ namespace winstd
     };
 
     ///
-    /// Multi-byte / Wide-character SID wrapper class (according to _UNICODE)
+    /// Multi-byte / Wide-character ADDRINFO wrapper class (according to _UNICODE)
     ///
 #ifdef _UNICODE
     typedef waddrinfo taddrinfo;
