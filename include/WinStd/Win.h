@@ -2414,6 +2414,21 @@ static BOOL OpenProcessToken(_In_ HANDLE ProcessHandle, _In_ DWORD DesiredAccess
     return FALSE;
 }
 
+///
+/// Creates a new access token that duplicates an existing token. This function can create either a primary token or an impersonation token.
+///
+/// \sa [DuplicateTokenEx function](https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-duplicatetokenex)
+///
+static BOOL DuplicateTokenEx(_In_ HANDLE hExistingToken, _In_ DWORD dwDesiredAccess, _In_opt_ LPSECURITY_ATTRIBUTES lpTokenAttributes, _In_ SECURITY_IMPERSONATION_LEVEL ImpersonationLevel, _In_ TOKEN_TYPE TokenType, _Inout_ winstd::win_handle<NULL> &NewToken)
+{
+    HANDLE h;
+    if (DuplicateTokenEx(hExistingToken, dwDesiredAccess, lpTokenAttributes, ImpersonationLevel, TokenType, &h)) {
+        NewToken.attach(h);
+        return TRUE;
+    }
+    return FALSE;
+}
+
 #pragma warning(pop)
 
 /// @}

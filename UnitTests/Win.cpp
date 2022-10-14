@@ -37,6 +37,27 @@ namespace UnitTests
 			Assert::IsTrue(::CreateWellKnownSid(WinBuiltinAdministratorsSid, NULL, sid));
 		}
 
+		TEST_METHOD(DuplicateTokenEx)
+		{
+			winstd::win_handle<NULL> processToken;
+			Assert::IsTrue(::OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY | TOKEN_DUPLICATE, processToken));
+			winstd::win_handle<NULL> token;
+			Assert::IsTrue(::DuplicateTokenEx(processToken, TOKEN_QUERY | TOKEN_IMPERSONATE, NULL, SecurityIdentification, TokenImpersonation, &token));
+		}
+
+		TEST_METHOD(CheckTokenMembership)
+		{
+			std::unique_ptr<SID> sid;
+			Assert::IsTrue(::CreateWellKnownSid(WinBuiltinAdministratorsSid, NULL, sid));
+			winstd::win_handle<NULL> processToken;
+			Assert::IsTrue(::OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY | TOKEN_DUPLICATE, processToken));
+			winstd::win_handle<NULL> token;
+			Assert::IsTrue(::DuplicateTokenEx(processToken, TOKEN_QUERY | TOKEN_IMPERSONATE, NULL, SecurityIdentification, TokenImpersonation, &token));
+			BOOL bIsMember = 0xcdcdcdcd;
+			Assert::IsTrue(::CheckTokenMembership(token, sid.get(), &bIsMember));
+			Assert::IsTrue(bIsMember == TRUE || bIsMember == FALSE);
+		}
+
 		TEST_METHOD(library)
 		{
 			winstd::library lib_shell32(LoadLibraryEx(_T("shell32.dll"), NULL, LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_IMAGE_RESOURCE));
