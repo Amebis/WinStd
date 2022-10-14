@@ -1247,24 +1247,20 @@ static _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystem
 ///
 static _Success_(return != FALSE) BOOL CreateWellKnownSid(_In_ WELL_KNOWN_SID_TYPE WellKnownSidType, _In_opt_ PSID DomainSid, _Inout_ std::unique_ptr<SID> &Sid)
 {
-    BYTE szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(BYTE)];
+    BYTE szStackBuffer[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize = sizeof(szStackBuffer);
 
-    // Try with stack buffer first.
     if (CreateWellKnownSid(WellKnownSidType, DomainSid, szStackBuffer, &dwSize)) {
-        // Copy from stack.
+        // The stack buffer was big enough to retrieve complete data. Alloc and copy.
         Sid.reset((SID*)new BYTE[dwSize]);
         memcpy(Sid.get(), szStackBuffer, dwSize);
         return TRUE;
-    }
-    for (;;) {
-        if (GetLastError() != ERROR_INSUFFICIENT_BUFFER)
-            return FALSE;
-        // Allocate on heap and retry.
+    } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // The stack buffer was too small to retrieve complete data. Alloc and retry.
         Sid.reset((SID*)new BYTE[dwSize]);
-        if (CreateWellKnownSid(WellKnownSidType, DomainSid, Sid.get(), &dwSize))
-            return TRUE;
-    }
+        return CreateWellKnownSid(WellKnownSidType, DomainSid, Sid.get(), &dwSize);
+    } else
+        return FALSE;
 }
 
 ///
@@ -1275,17 +1271,17 @@ static _Success_(return != FALSE) BOOL CreateWellKnownSid(_In_ WELL_KNOWN_SID_TY
 template<class _Ty>
 static _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, _In_ TOKEN_INFORMATION_CLASS TokenInformationClass, _Out_ std::unique_ptr<_Ty> &TokenInformation) noexcept
 {
-    BYTE szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(BYTE)];
+    BYTE szStackBuffer[WINSTD_STACK_BUFFER_BYTES];
     DWORD dwSize;
 
     if (GetTokenInformation(TokenHandle, TokenInformationClass, szStackBuffer, sizeof(szStackBuffer), &dwSize)) {
         // The stack buffer was big enough to retrieve complete data. Alloc and copy.
-        TokenInformation.reset((_Ty*)(new BYTE[dwSize / sizeof(BYTE)]));
+        TokenInformation.reset((_Ty*)(new BYTE[dwSize]));
         memcpy(TokenInformation.get(), szStackBuffer, dwSize);
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // The stack buffer was too small to retrieve complete data. Alloc and retry.
-        TokenInformation.reset((_Ty*)(new BYTE[dwSize / sizeof(BYTE)]));
+        TokenInformation.reset((_Ty*)(new BYTE[dwSize]));
         return GetTokenInformation(TokenHandle, TokenInformationClass, TokenInformation.get(), dwSize, &dwSize);
     } else
         return FALSE;
