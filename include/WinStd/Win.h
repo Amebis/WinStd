@@ -1281,19 +1281,11 @@ static _Success_(return != 0) BOOL GetTokenInformation(_In_ HANDLE TokenHandle, 
     if (GetTokenInformation(TokenHandle, TokenInformationClass, szStackBuffer, sizeof(szStackBuffer), &dwSize)) {
         // The stack buffer was big enough to retrieve complete data. Alloc and copy.
         TokenInformation.reset((_Ty*)(new BYTE[dwSize / sizeof(BYTE)]));
-        if (!TokenInformation) {
-            SetLastError(ERROR_OUTOFMEMORY);
-            return FALSE;
-        }
         memcpy(TokenInformation.get(), szStackBuffer, dwSize);
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // The stack buffer was too small to retrieve complete data. Alloc and retry.
         TokenInformation.reset((_Ty*)(new BYTE[dwSize / sizeof(BYTE)]));
-        if (!TokenInformation) {
-            SetLastError(ERROR_OUTOFMEMORY);
-            return FALSE;
-        }
         return GetTokenInformation(TokenHandle, TokenInformationClass, TokenInformation.get(), dwSize, &dwSize);
     } else
         return FALSE;
