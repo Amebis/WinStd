@@ -31,6 +31,12 @@ namespace UnitTests
 			}
 		}
 
+		TEST_METHOD(CreateWellKnownSid)
+		{
+			std::unique_ptr<SID> sid;
+			Assert::IsTrue(::CreateWellKnownSid(WinBuiltinAdministratorsSid, NULL, sid));
+		}
+
 		TEST_METHOD(library)
 		{
 			winstd::library lib_shell32(LoadLibraryEx(_T("shell32.dll"), NULL, LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_IMAGE_RESOURCE));

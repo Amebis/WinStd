@@ -1241,6 +1241,33 @@ static _Success_(return != 0) BOOL LookupAccountSidW(_In_opt_z_ LPCWSTR lpSystem
 }
 
 ///
+/// Creates a SID for predefined aliases.
+///
+/// \sa [CreateWellKnownSid function](https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-createwellknownsid)
+///
+static _Success_(return != FALSE) BOOL CreateWellKnownSid(_In_ WELL_KNOWN_SID_TYPE WellKnownSidType, _In_opt_ PSID DomainSid, _Inout_ std::unique_ptr<SID> &Sid)
+{
+    BYTE szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(BYTE)];
+    DWORD dwSize = sizeof(szStackBuffer);
+
+    // Try with stack buffer first.
+    if (CreateWellKnownSid(WellKnownSidType, DomainSid, szStackBuffer, &dwSize)) {
+        // Copy from stack.
+        Sid.reset((SID*)new BYTE[dwSize]);
+        memcpy(Sid.get(), szStackBuffer, dwSize);
+        return TRUE;
+    }
+    for (;;) {
+        if (GetLastError() != ERROR_INSUFFICIENT_BUFFER)
+            return FALSE;
+        // Allocate on heap and retry.
+        Sid.reset((SID*)new BYTE[dwSize]);
+        if (CreateWellKnownSid(WellKnownSidType, DomainSid, Sid.get(), &dwSize))
+            return TRUE;
+    }
+}
+
+///
 /// Retrieves a specified type of information about an access token. The calling process must have appropriate access rights to obtain the information.
 ///
 /// \sa [GetTokenInformation function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa446671.aspx)
