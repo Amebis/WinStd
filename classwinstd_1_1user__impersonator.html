@@ -76,7 +76,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classwinstd_1_1user__impersonator-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">winstd::user_impersonator Class Reference<div class="ingroups"><a class="el" href="group___win_std_win_a_p_i.html">Windows API</a></div></div></div>
 </div><!--header-->
@@ -86,22 +85,41 @@ $(function() {
  <a href="classwinstd_1_1user__impersonator.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_win_8h_source.html">WinStd/Win.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for winstd::user_impersonator:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classwinstd_1_1user__impersonator.png" usemap="#winstd::user_5Fimpersonator_map" alt=""/>
+  <map id="winstd::user_5Fimpersonator_map" name="winstd::user_5Fimpersonator_map">
+<area href="classwinstd_1_1impersonator.html" title="Base class for thread impersonation of another security context." alt="winstd::impersonator" shape="rect" coords="0,0,158,24"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a843ed65fc3673b6620a81e6883c1de34"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1user__impersonator.html#a843ed65fc3673b6620a81e6883c1de34">user_impersonator</a> (HANDLE hToken) noexcept</td></tr>
 <tr class="memdesc:a843ed65fc3673b6620a81e6883c1de34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the impersonator and impersonates the given user.  <a href="classwinstd_1_1user__impersonator.html#a843ed65fc3673b6620a81e6883c1de34">More...</a><br /></td></tr>
 <tr class="separator:a843ed65fc3673b6620a81e6883c1de34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a986ca1cabf89b994f1634feb911c26a6"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1user__impersonator.html#a986ca1cabf89b994f1634feb911c26a6">~user_impersonator</a> ()</td></tr>
-<tr class="memdesc:a986ca1cabf89b994f1634feb911c26a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverts to current user and destructs the impersonator.  <a href="classwinstd_1_1user__impersonator.html#a986ca1cabf89b994f1634feb911c26a6">More...</a><br /></td></tr>
-<tr class="separator:a986ca1cabf89b994f1634feb911c26a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classwinstd_1_1impersonator"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classwinstd_1_1impersonator')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classwinstd_1_1impersonator.html">winstd::impersonator</a></td></tr>
+<tr class="memitem:a6d6a8f6446fd2f5bc2120318164f0eac inherit pub_methods_classwinstd_1_1impersonator"><td class="memItemLeft" align="right" valign="top"><a id="a6d6a8f6446fd2f5bc2120318164f0eac" name="a6d6a8f6446fd2f5bc2120318164f0eac"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>impersonator</b> () noexcept</td></tr>
+<tr class="memdesc:a6d6a8f6446fd2f5bc2120318164f0eac inherit pub_methods_classwinstd_1_1impersonator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the impersonator. <br /></td></tr>
+<tr class="separator:a6d6a8f6446fd2f5bc2120318164f0eac inherit pub_methods_classwinstd_1_1impersonator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a272883abcb25c9563ca5b919c0d9d71d inherit pub_methods_classwinstd_1_1impersonator"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1impersonator.html#a272883abcb25c9563ca5b919c0d9d71d">~impersonator</a> ()</td></tr>
+<tr class="memdesc:a272883abcb25c9563ca5b919c0d9d71d inherit pub_methods_classwinstd_1_1impersonator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverts to current user and destructs the impersonator.  <a href="classwinstd_1_1impersonator.html#a272883abcb25c9563ca5b919c0d9d71d">More...</a><br /></td></tr>
+<tr class="separator:a272883abcb25c9563ca5b919c0d9d71d inherit pub_methods_classwinstd_1_1impersonator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c295840090719079dbf5e5b691e6c3e inherit pub_methods_classwinstd_1_1impersonator"><td class="memItemLeft" align="right" valign="top"><a id="a0c295840090719079dbf5e5b691e6c3e" name="a0c295840090719079dbf5e5b691e6c3e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator bool</b> () const</td></tr>
+<tr class="memdesc:a0c295840090719079dbf5e5b691e6c3e inherit pub_methods_classwinstd_1_1impersonator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Did impersonation succeed? <br /></td></tr>
+<tr class="separator:a0c295840090719079dbf5e5b691e6c3e inherit pub_methods_classwinstd_1_1impersonator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a28b0a9c7d1759b2be3ae3deb960a287c"><td class="memItemLeft" align="right" valign="top"><a id="a28b0a9c7d1759b2be3ae3deb960a287c" name="a28b0a9c7d1759b2be3ae3deb960a287c"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_attribs_classwinstd_1_1impersonator"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classwinstd_1_1impersonator')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classwinstd_1_1impersonator.html">winstd::impersonator</a></td></tr>
+<tr class="memitem:acf82d1c062fce491af05b7e89c09d3f2 inherit pro_attribs_classwinstd_1_1impersonator"><td class="memItemLeft" align="right" valign="top"><a id="acf82d1c062fce491af05b7e89c09d3f2" name="acf82d1c062fce491af05b7e89c09d3f2"></a>
 BOOL&#160;</td><td class="memItemRight" valign="bottom"><b>m_cookie</b></td></tr>
-<tr class="memdesc:a28b0a9c7d1759b2be3ae3deb960a287c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Did impersonation succeed? <br /></td></tr>
-<tr class="separator:a28b0a9c7d1759b2be3ae3deb960a287c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:acf82d1c062fce491af05b7e89c09d3f2 inherit pro_attribs_classwinstd_1_1impersonator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Did impersonation succeed? <br /></td></tr>
+<tr class="separator:acf82d1c062fce491af05b7e89c09d3f2 inherit pro_attribs_classwinstd_1_1impersonator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Lets the calling thread impersonate the security context of a logged-on user. </p>
@@ -141,41 +159,13 @@ BOOL&#160;</td><td class="memItemRight" valign="bottom"><b>m_cookie</b></td></tr
 
 </div>
 </div>
-<a id="a986ca1cabf89b994f1634feb911c26a6" name="a986ca1cabf89b994f1634feb911c26a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a986ca1cabf89b994f1634feb911c26a6">&#9670;&#160;</a></span>~user_impersonator()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual winstd::user_impersonator::~user_impersonator </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reverts to current user and destructs the impersonator. </p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa379317.aspx">RevertToSelf function</a> </dd></dl>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/WinStd/<a class="el" href="_win_8h_source.html">Win.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Oct 13 2022 10:40:24 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+Generated on Mon Oct 17 2022 07:17:20 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
 </small></address>
 </body>
 </html>

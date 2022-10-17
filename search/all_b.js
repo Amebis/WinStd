@@ -1,7 +1,7 @@
 var searchData=
 [
   ['m_5fattrib_0',['m_attrib',['../classwinstd_1_1sec__context.html#a8a211355b63585e9cc633639d801a13f',1,'winstd::sec_context']]],
-  ['m_5fcookie_1',['m_cookie',['../classwinstd_1_1actctx__activator.html#ab3556f1baf628459929c8c394341a9a6',1,'winstd::actctx_activator::m_cookie()'],['../classwinstd_1_1console__ctrl__handler.html#ae46848a80c517f95fc3fd7c1ee832134',1,'winstd::console_ctrl_handler::m_cookie()'],['../classwinstd_1_1user__impersonator.html#a28b0a9c7d1759b2be3ae3deb960a287c',1,'winstd::user_impersonator::m_cookie()']]],
+  ['m_5fcookie_1',['m_cookie',['../classwinstd_1_1actctx__activator.html#ab3556f1baf628459929c8c394341a9a6',1,'winstd::actctx_activator::m_cookie()'],['../classwinstd_1_1console__ctrl__handler.html#ae46848a80c517f95fc3fd7c1ee832134',1,'winstd::console_ctrl_handler::m_cookie()'],['../classwinstd_1_1impersonator.html#acf82d1c062fce491af05b7e89c09d3f2',1,'winstd::impersonator::m_cookie()']]],
   ['m_5fdata_2',['m_data',['../classwinstd_1_1sanitizing__blob.html#a38187ccd591a6a7cfa4a9d0a6f6f7701',1,'winstd::sanitizing_blob::m_data()'],['../classwinstd_1_1critical__section.html#a55b9b9e7f38b94cd5c3fc15a319a6719',1,'winstd::critical_section::m_data()']]],
   ['m_5fdesc_3',['m_desc',['../classwinstd_1_1event__fn__auto__ret.html#a23fa88c6a7aea86536cc0e4bee2746cf',1,'winstd::event_fn_auto_ret']]],
   ['m_5fenable_5ffilter_5fdesc_4',['m_enable_filter_desc',['../classwinstd_1_1event__trace__enabler.html#a358d20e2dbbc7dcaccbe8d3d303cc3c4',1,'winstd::event_trace_enabler']]],

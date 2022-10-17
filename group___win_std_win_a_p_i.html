@@ -108,8 +108,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1actctx__activator.html">winstd::actctx_activator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates given activation context in constructor and deactivates it in destructor.  <a href="classwinstd_1_1actctx__activator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1impersonator.html">winstd::impersonator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for thread impersonation of another security context.  <a href="classwinstd_1_1impersonator.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1user__impersonator.html">winstd::user_impersonator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lets the calling thread impersonate the security context of a logged-on user.  <a href="classwinstd_1_1user__impersonator.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1system__impersonator.html">winstd::system_impersonator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lets the calling thread impersonate the security context of the SYSTEM user.  <a href="classwinstd_1_1system__impersonator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1console__ctrl__handler.html">winstd::console_ctrl_handler</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Console control handler stack management.  <a href="classwinstd_1_1console__ctrl__handler.html#details">More...</a><br /></td></tr>
@@ -327,6 +333,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga55cf815e26d149f0032f1a1c5160fac4"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga55cf815e26d149f0032f1a1c5160fac4">LookupAccountSidW</a> (LPCWSTR lpSystemName, PSID lpSid, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; *sName, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; *sReferencedDomainName, PSID_NAME_USE peUse) noexcept</td></tr>
 <tr class="memdesc:ga55cf815e26d149f0032f1a1c5160fac4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the name of the account for this SID and the name of the first domain on which this SID is found.  <a href="group___win_std_win_a_p_i.html#ga55cf815e26d149f0032f1a1c5160fac4">More...</a><br /></td></tr>
 <tr class="separator:ga55cf815e26d149f0032f1a1c5160fac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b1c9ae28988d31bb03abefb32af5642"><td class="memItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga6b1c9ae28988d31bb03abefb32af5642">CreateWellKnownSid</a> (WELL_KNOWN_SID_TYPE WellKnownSidType, PSID DomainSid, std::unique_ptr&lt; SID &gt; &amp;Sid)</td></tr>
+<tr class="memdesc:ga6b1c9ae28988d31bb03abefb32af5642"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a SID for predefined aliases.  <a href="group___win_std_win_a_p_i.html#ga6b1c9ae28988d31bb03abefb32af5642">More...</a><br /></td></tr>
+<tr class="separator:ga6b1c9ae28988d31bb03abefb32af5642"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga75b761473822ee6e9cf336d28b30b073"><td class="memTemplParams" colspan="2">template&lt;class _Ty &gt; </td></tr>
 <tr class="memitem:ga75b761473822ee6e9cf336d28b30b073"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga75b761473822ee6e9cf336d28b30b073">GetTokenInformation</a> (HANDLE TokenHandle, TOKEN_INFORMATION_CLASS TokenInformationClass, std::unique_ptr&lt; _Ty &gt; &amp;TokenInformation) noexcept</td></tr>
 <tr class="memdesc:ga75b761473822ee6e9cf336d28b30b073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a specified type of information about an access token. The calling process must have appropriate access rights to obtain the information.  <a href="group___win_std_win_a_p_i.html#ga75b761473822ee6e9cf336d28b30b073">More...</a><br /></td></tr>
@@ -351,6 +360,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2c61d837a3d96ca9dad3a73df03bf8e4"><td class="memItemLeft" align="right" valign="top">static LSTATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga2c61d837a3d96ca9dad3a73df03bf8e4">RegOpenKeyExW</a> (HKEY hKey, LPCWSTR lpSubKey, DWORD ulOptions, REGSAM samDesired, <a class="el" href="classwinstd_1_1reg__key.html">winstd::reg_key</a> &amp;result)</td></tr>
 <tr class="memdesc:ga2c61d837a3d96ca9dad3a73df03bf8e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the specified registry key.  <a href="group___win_std_win_a_p_i.html#ga2c61d837a3d96ca9dad3a73df03bf8e4">More...</a><br /></td></tr>
 <tr class="separator:ga2c61d837a3d96ca9dad3a73df03bf8e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga44eef1254def39a039cf838e1035c724"><td class="memItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga44eef1254def39a039cf838e1035c724">OpenProcessToken</a> (HANDLE ProcessHandle, DWORD DesiredAccess, <a class="el" href="classwinstd_1_1win__handle.html">winstd::win_handle</a>&lt; NULL &gt; &amp;TokenHandle)</td></tr>
+<tr class="memdesc:ga44eef1254def39a039cf838e1035c724"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the access token associated with a process.  <a href="group___win_std_win_a_p_i.html#ga44eef1254def39a039cf838e1035c724">More...</a><br /></td></tr>
+<tr class="separator:ga44eef1254def39a039cf838e1035c724"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga760bb977738a422eabd9a226eb5acdb4"><td class="memItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga760bb977738a422eabd9a226eb5acdb4">DuplicateTokenEx</a> (HANDLE hExistingToken, DWORD dwDesiredAccess, LPSECURITY_ATTRIBUTES lpTokenAttributes, SECURITY_IMPERSONATION_LEVEL ImpersonationLevel, TOKEN_TYPE TokenType, <a class="el" href="classwinstd_1_1win__handle.html">winstd::win_handle</a>&lt; NULL &gt; &amp;NewToken)</td></tr>
+<tr class="memdesc:ga760bb977738a422eabd9a226eb5acdb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new access token that duplicates an existing token. This function can create either a primary token or an impersonation token.  <a href="group___win_std_win_a_p_i.html#ga760bb977738a422eabd9a226eb5acdb4">More...</a><br /></td></tr>
+<tr class="separator:ga760bb977738a422eabd9a226eb5acdb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -514,6 +529,114 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga6b1c9ae28988d31bb03abefb32af5642" name="ga6b1c9ae28988d31bb03abefb32af5642"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6b1c9ae28988d31bb03abefb32af5642">&#9670;&#160;</a></span>CreateWellKnownSid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL CreateWellKnownSid </td>
+          <td>(</td>
+          <td class="paramtype">WELL_KNOWN_SID_TYPE&#160;</td>
+          <td class="paramname"><em>WellKnownSidType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PSID&#160;</td>
+          <td class="paramname"><em>DomainSid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; SID &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Sid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a SID for predefined aliases. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-createwellknownsid">CreateWellKnownSid function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga760bb977738a422eabd9a226eb5acdb4" name="ga760bb977738a422eabd9a226eb5acdb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga760bb977738a422eabd9a226eb5acdb4">&#9670;&#160;</a></span>DuplicateTokenEx()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL DuplicateTokenEx </td>
+          <td>(</td>
+          <td class="paramtype">HANDLE&#160;</td>
+          <td class="paramname"><em>hExistingToken</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>dwDesiredAccess</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPSECURITY_ATTRIBUTES&#160;</td>
+          <td class="paramname"><em>lpTokenAttributes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SECURITY_IMPERSONATION_LEVEL&#160;</td>
+          <td class="paramname"><em>ImpersonationLevel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TOKEN_TYPE&#160;</td>
+          <td class="paramname"><em>TokenType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classwinstd_1_1win__handle.html">winstd::win_handle</a>&lt; NULL &gt; &amp;&#160;</td>
+          <td class="paramname"><em>NewToken</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new access token that duplicates an existing token. This function can create either a primary token or an impersonation token. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-duplicatetokenex">DuplicateTokenEx function</a> </dd></dl>
+
+</div>
+</div>
 <a id="ga07fbe3c3b5aceaf3442a26fc3b6ce4b0" name="ga07fbe3c3b5aceaf3442a26fc3b6ce4b0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga07fbe3c3b5aceaf3442a26fc3b6ce4b0">&#9670;&#160;</a></span>ExpandEnvironmentStringsA()</h2>
 
@@ -1593,6 +1716,51 @@ template&lt;class _Traits , class _Ax &gt; </div>
 
 <p>Normalizes characters of a text string according to Unicode 4.0 TR#15. </p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-normalizestring">NormalizeString function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga44eef1254def39a039cf838e1035c724" name="ga44eef1254def39a039cf838e1035c724"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga44eef1254def39a039cf838e1035c724">&#9670;&#160;</a></span>OpenProcessToken()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL OpenProcessToken </td>
+          <td>(</td>
+          <td class="paramtype">HANDLE&#160;</td>
+          <td class="paramname"><em>ProcessHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>DesiredAccess</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classwinstd_1_1win__handle.html">winstd::win_handle</a>&lt; NULL &gt; &amp;&#160;</td>
+          <td class="paramname"><em>TokenHandle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Opens the access token associated with a process. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openprocesstoken">OpenProcessToken function</a> </dd></dl>
 
 </div>
 </div>
@@ -3196,7 +3364,7 @@ template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </div
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Oct 13 2022 10:40:23 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+Generated on Mon Oct 17 2022 07:17:19 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
 </small></address>
 </body>
 </html>

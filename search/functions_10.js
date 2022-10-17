@@ -19,5 +19,6 @@ var searchData=
   ['status_16',['status',['../classwinstd_1_1setup__driver__info__list__builder.html#ae9c062e82afc1ee1eda5926a0567637e',1,'winstd::setup_driver_info_list_builder::status()'],['../classwinstd_1_1dc__selector.html#aacb4060094f2c4b1747ffa76455b235d',1,'winstd::dc_selector::status()'],['../classwinstd_1_1event__trace__enabler.html#a726b84e91002da1243d512c37a060293',1,'winstd::event_trace_enabler::status()'],['../classwinstd_1_1com__initializer.html#ac3c997f810e8439096d8ca14fecb5b7d',1,'winstd::com_initializer::status()']]],
   ['string_5fguid_17',['string_guid',['../classwinstd_1_1string__guid.html#a507ceea48ffeccc4179239dfb5f4cdb2',1,'winstd::string_guid']]],
   ['stringtoguida_18',['StringToGuidA',['../group___win_std_win_a_p_i.html#ga0a3545c7b4d6509b77a9a156e882f32c',1,'Win.h']]],
-  ['stringtoguidw_19',['StringToGuidW',['../group___win_std_win_a_p_i.html#ga3411488c7daa5c8e03b2ad34764914aa',1,'Win.h']]]
+  ['stringtoguidw_19',['StringToGuidW',['../group___win_std_win_a_p_i.html#ga3411488c7daa5c8e03b2ad34764914aa',1,'Win.h']]],
+  ['system_5fimpersonator_20',['system_impersonator',['../classwinstd_1_1system__impersonator.html#a5e46322f6b3a64e74b6e711cc9dd059b',1,'winstd::system_impersonator']]]
 ];

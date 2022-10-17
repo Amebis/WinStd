@@ -797,6 +797,16 @@ $(function() {
 <div class="line"><a id="l01081" name="l01081"></a><span class="lineno"> 1081</span>    <span class="keywordflow">return</span> hr;</div>
 <div class="line"><a id="l01082" name="l01082"></a><span class="lineno"> 1082</span>}</div>
 <div class="line"><a id="l01083" name="l01083"></a><span class="lineno"> 1083</span> </div>
+<div class="line"><a id="l01089" name="l01089"></a><span class="lineno"> 1089</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a id="l01090" name="l01090"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1"> 1090</a></span><span class="keyword">static</span> _Check_return_ HRESULT <a class="code hl_function" href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1">CoGetObject</a>(_In_ LPCWSTR pszName, _In_opt_ BIND_OPTS* pBindOptions, _In_ REFIID riid, _Inout_ <a class="code hl_class" href="classwinstd_1_1com__obj.html">winstd::com_obj&lt;T&gt;</a>&amp; v)</div>
+<div class="line"><a id="l01091" name="l01091"></a><span class="lineno"> 1091</span>{</div>
+<div class="line"><a id="l01092" name="l01092"></a><span class="lineno"> 1092</span>    T* ppv;</div>
+<div class="line"><a id="l01093" name="l01093"></a><span class="lineno"> 1093</span>    HRESULT hr = <a class="code hl_function" href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1">CoGetObject</a>(pszName, pBindOptions, riid, (LPVOID*)&amp;ppv);</div>
+<div class="line"><a id="l01094" name="l01094"></a><span class="lineno"> 1094</span>    <span class="keywordflow">if</span> (SUCCEEDED(hr))</div>
+<div class="line"><a id="l01095" name="l01095"></a><span class="lineno"> 1095</span>        v.attach(ppv);</div>
+<div class="line"><a id="l01096" name="l01096"></a><span class="lineno"> 1096</span>    <span class="keywordflow">return</span> hr;</div>
+<div class="line"><a id="l01097" name="l01097"></a><span class="lineno"> 1097</span>}</div>
+<div class="line"><a id="l01098" name="l01098"></a><span class="lineno"> 1098</span> </div>
 <div class="ttc" id="aclasswinstd_1_1bstr_html"><div class="ttname"><a href="classwinstd_1_1bstr.html">winstd::bstr</a></div><div class="ttdoc">BSTR string wrapper.</div><div class="ttdef"><b>Definition:</b> COM.h:179</div></div>
 <div class="ttc" id="aclasswinstd_1_1bstr_html_a16c6d6d9c6d1494ed278e74f9f83ccff"><div class="ttname"><a href="classwinstd_1_1bstr.html#a16c6d6d9c6d1494ed278e74f9f83ccff">winstd::bstr::bstr</a></div><div class="ttdeci">bstr(LPCOLESTR src) noexcept</div><div class="ttdoc">Constructs BSTR from OLE string.</div><div class="ttdef"><b>Definition:</b> COM.h:186</div></div>
 <div class="ttc" id="aclasswinstd_1_1bstr_html_a317d3e0783e7d3de7cc6516964ea3f5e"><div class="ttname"><a href="classwinstd_1_1bstr.html#a317d3e0783e7d3de7cc6516964ea3f5e">winstd::bstr::~bstr</a></div><div class="ttdeci">virtual ~bstr()</div><div class="ttdoc">Destroys the string.</div><div class="ttdef"><b>Definition:</b> COM.h:213</div></div>
@@ -889,6 +899,7 @@ $(function() {
 <div class="ttc" id="aclasswinstd_1_1variant_html_af5e22f4158921eb49c2207335d7c7593"><div class="ttname"><a href="classwinstd_1_1variant.html#af5e22f4158921eb49c2207335d7c7593">winstd::variant::operator=</a></div><div class="ttdeci">variant &amp; operator=(IDispatch *pSrc)</div><div class="ttdoc">Copy from IDispatch.</div><div class="ttdef"><b>Definition:</b> COM.h:714</div></div>
 <div class="ttc" id="aclasswinstd_1_1variant_html_af86e9a10fd9dbe6e18b33a59d04f3b44"><div class="ttname"><a href="classwinstd_1_1variant.html#af86e9a10fd9dbe6e18b33a59d04f3b44">winstd::variant::operator=</a></div><div class="ttdeci">variant &amp; operator=(unsigned long *pnSrc) noexcept</div><div class="ttdoc">Copy from unsigned long reference.</div><div class="ttdef"><b>Definition:</b> COM.h:818</div></div>
 <div class="ttc" id="aclasswinstd_1_1variant_html_aff536ecc3c3a074fea648b7c60522a83"><div class="ttname"><a href="classwinstd_1_1variant.html#aff536ecc3c3a074fea648b7c60522a83">winstd::variant::operator=</a></div><div class="ttdeci">variant &amp; operator=(const VARIANT &amp;varSrc)</div><div class="ttdoc">Copy from another VARIANT.</div><div class="ttdef"><b>Definition:</b> COM.h:493</div></div>
+<div class="ttc" id="agroup___win_std_c_o_m_html_ga825b73e9a34b1f496c577a951441b6f1"><div class="ttname"><a href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1">CoGetObject</a></div><div class="ttdeci">static _Check_return_ HRESULT CoGetObject(LPCWSTR pszName, BIND_OPTS *pBindOptions, REFIID riid, winstd::com_obj&lt; T &gt; &amp;v)</div><div class="ttdoc">Converts a display name into a moniker that identifies the object named, and then binds to the object...</div><div class="ttdef"><b>Definition:</b> COM.h:1090</div></div>
 <div class="ttc" id="agroup___win_std_c_o_m_html_gaa05e677aa01b9b1f2f8b58571532c965"><div class="ttname"><a href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965">CoCreateInstance</a></div><div class="ttdeci">static _Check_return_ HRESULT CoCreateInstance(REFCLSID rclsid, LPUNKNOWN pUnkOuter, DWORD dwClsContext, winstd::com_obj&lt; T &gt; &amp;v)</div><div class="ttdoc">Creates and default-initializes a single object of the class associated with a specified CLSID.</div><div class="ttdef"><b>Definition:</b> COM.h:1075</div></div>
 <div class="ttc" id="agroup___win_std_general_html_ga11254c72ad33a6e0f5de31db708f784c"><div class="ttname"><a href="group___win_std_general.html#ga11254c72ad33a6e0f5de31db708f784c">WINSTD_NONCOPYABLE</a></div><div class="ttdeci">#define WINSTD_NONCOPYABLE(C)</div><div class="ttdoc">Declares a class as non-copyable.</div><div class="ttdef"><b>Definition:</b> Common.h:66</div></div>
 <div class="ttc" id="agroup___win_std_general_html_gac91fa8d79c860b1fdbba65b6a322f760"><div class="ttname"><a href="group___win_std_general.html#gac91fa8d79c860b1fdbba65b6a322f760">WINSTD_NONMOVABLE</a></div><div class="ttdeci">#define WINSTD_NONMOVABLE(C)</div><div class="ttdoc">Declares a class as non-movable.</div><div class="ttdef"><b>Definition:</b> Common.h:74</div></div>
@@ -900,7 +911,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Oct 13 2022 10:40:23 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+Generated on Mon Oct 17 2022 07:17:19 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
 </small></address>
 </body>
 </html>

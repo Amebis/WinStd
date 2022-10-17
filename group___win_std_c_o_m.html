@@ -101,6 +101,10 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa05e677aa01b9b1f2f8b58571532c965"><td class="memTemplItemLeft" align="right" valign="top">static _Check_return_ HRESULT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965">CoCreateInstance</a> (REFCLSID rclsid, LPUNKNOWN pUnkOuter, DWORD dwClsContext, <a class="el" href="classwinstd_1_1com__obj.html">winstd::com_obj</a>&lt; T &gt; &amp;v)</td></tr>
 <tr class="memdesc:gaa05e677aa01b9b1f2f8b58571532c965"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and default-initializes a single object of the class associated with a specified CLSID.  <a href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965">More...</a><br /></td></tr>
 <tr class="separator:gaa05e677aa01b9b1f2f8b58571532c965"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga825b73e9a34b1f496c577a951441b6f1"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ga825b73e9a34b1f496c577a951441b6f1"><td class="memTemplItemLeft" align="right" valign="top">static _Check_return_ HRESULT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1">CoGetObject</a> (LPCWSTR pszName, BIND_OPTS *pBindOptions, REFIID riid, <a class="el" href="classwinstd_1_1com__obj.html">winstd::com_obj</a>&lt; T &gt; &amp;v)</td></tr>
+<tr class="memdesc:ga825b73e9a34b1f496c577a951441b6f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a display name into a moniker that identifies the object named, and then binds to the object identified by the moniker.  <a href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1">More...</a><br /></td></tr>
+<tr class="separator:ga825b73e9a34b1f496c577a951441b6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
@@ -157,10 +161,63 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a id="ga825b73e9a34b1f496c577a951441b6f1" name="ga825b73e9a34b1f496c577a951441b6f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga825b73e9a34b1f496c577a951441b6f1">&#9670;&#160;</a></span>CoGetObject()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static _Check_return_ HRESULT CoGetObject </td>
+          <td>(</td>
+          <td class="paramtype">LPCWSTR&#160;</td>
+          <td class="paramname"><em>pszName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">BIND_OPTS *&#160;</td>
+          <td class="paramname"><em>pBindOptions</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">REFIID&#160;</td>
+          <td class="paramname"><em>riid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classwinstd_1_1com__obj.html">winstd::com_obj</a>&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>v</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a display name into a moniker that identifies the object named, and then binds to the object identified by the moniker. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://learn.microsoft.com/en-us/windows/win32/api/objbase/nf-objbase-cogetobject">CoGetObject function</a> </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Oct 13 2022 10:40:23 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+Generated on Mon Oct 17 2022 07:17:19 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
 </small></address>
 </body>
 </html>
