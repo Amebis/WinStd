@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Common.h"
+#include <AclAPI.h>
 #include <tlhelp32.h>
 #include <string>
 #include <vector>
@@ -2442,6 +2443,30 @@ static BOOL AllocateAndInitializeSid(_In_ PSID_IDENTIFIER_AUTHORITY pIdentifierA
         return TRUE;
     }
     return FALSE;
+}
+
+/// @copydoc SetEntriesInAclW()
+static DWORD SetEntriesInAclA(_In_ ULONG cCountOfExplicitEntries, _In_reads_opt_(cCountOfExplicitEntries) PEXPLICIT_ACCESS_A pListOfExplicitEntries, _In_opt_ PACL OldAcl, _Inout_ std::unique_ptr<ACL, winstd::LocalFree_delete<ACL>>& Acl)
+{
+    PACL h;
+    DWORD dwResult = SetEntriesInAclA(cCountOfExplicitEntries, pListOfExplicitEntries, OldAcl, &h);
+    if (dwResult == ERROR_SUCCESS)
+        Acl.reset(h);
+    return ERROR_SUCCESS;
+}
+
+///
+/// Creates a new access control list (ACL) by merging new access control or audit control information into an existing ACL structure.
+///
+/// \sa [SetEntriesInAclW function](https://learn.microsoft.com/en-us/windows/win32/api/aclapi/nf-aclapi-setentriesinaclw)
+///
+static DWORD SetEntriesInAclW(_In_ ULONG cCountOfExplicitEntries, _In_reads_opt_(cCountOfExplicitEntries) PEXPLICIT_ACCESS_W pListOfExplicitEntries, _In_opt_ PACL OldAcl, _Inout_ std::unique_ptr<ACL, winstd::LocalFree_delete<ACL>>& Acl)
+{
+    PACL h;
+    DWORD dwResult = SetEntriesInAclW(cCountOfExplicitEntries, pListOfExplicitEntries, OldAcl, &h);
+    if (dwResult == ERROR_SUCCESS)
+        Acl.reset(h);
+    return ERROR_SUCCESS;
 }
 
 #pragma warning(pop)

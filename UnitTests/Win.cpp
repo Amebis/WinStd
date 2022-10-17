@@ -81,18 +81,27 @@ namespace UnitTests
 				Assert::IsTrue(!system_impersonator && GetLastError() == ERROR_ACCESS_DENIED);
 		}
 
-		TEST_METHOD(AllocateAndInitializeSid)
+		TEST_METHOD(ACLsAndSIDs)
 		{
+			vector<EXPLICIT_ACCESS> eas;
+			eas.reserve(3);
+
 			SID_IDENTIFIER_AUTHORITY SIDAuthWorld = SECURITY_WORLD_SID_AUTHORITY;
 			winstd::security_id pSIDEveryone;
 			Assert::IsTrue(::AllocateAndInitializeSid(&SIDAuthWorld, 1, SECURITY_WORLD_RID, 0, 0, 0, 0, 0, 0, 0, pSIDEveryone));
+			eas.push_back(EXPLICIT_ACCESS{ GENERIC_READ, SET_ACCESS, NO_INHERITANCE, { NULL, NO_MULTIPLE_TRUSTEE, TRUSTEE_IS_SID, TRUSTEE_IS_WELL_KNOWN_GROUP, (LPTSTR)(PSID)pSIDEveryone } });
 
 			SID_IDENTIFIER_AUTHORITY SIDAuthNT = SECURITY_NT_AUTHORITY;
 			winstd::security_id pSIDSystem;
 			Assert::IsTrue(::AllocateAndInitializeSid(&SIDAuthNT, 1, SECURITY_LOCAL_SYSTEM_RID, 0, 0, 0, 0, 0, 0, 0, pSIDSystem));
+			eas.push_back(EXPLICIT_ACCESS{ GENERIC_ALL, SET_ACCESS, NO_INHERITANCE, { NULL, NO_MULTIPLE_TRUSTEE, TRUSTEE_IS_SID, TRUSTEE_IS_WELL_KNOWN_GROUP, (LPTSTR)(PSID)pSIDSystem } });
 
 			winstd::security_id pSIDAdmin;
 			Assert::IsTrue(::AllocateAndInitializeSid(&SIDAuthNT, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, pSIDAdmin));
+			eas.push_back(EXPLICIT_ACCESS{ GENERIC_ALL, SET_ACCESS, NO_INHERITANCE, { NULL, NO_MULTIPLE_TRUSTEE, TRUSTEE_IS_SID, TRUSTEE_IS_GROUP, (LPTSTR)(PSID)pSIDAdmin } });
+
+			unique_ptr<ACL, winstd::LocalFree_delete<ACL>> acl;
+			Assert::AreEqual<DWORD>(ERROR_SUCCESS, ::SetEntriesInAcl((ULONG)eas.size(), eas.data(), NULL, acl));
 		}
 	};
 }
