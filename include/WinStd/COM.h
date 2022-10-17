@@ -1081,4 +1081,19 @@ static _Check_return_ HRESULT CoCreateInstance(_In_ REFCLSID rclsid, _In_opt_ LP
     return hr;
 }
 
+///
+/// Converts a display name into a moniker that identifies the object named, and then binds to the object identified by the moniker.
+///
+/// \sa [CoGetObject function](https://learn.microsoft.com/en-us/windows/win32/api/objbase/nf-objbase-cogetobject)
+///
+template <class T>
+static _Check_return_ HRESULT CoGetObject(_In_ LPCWSTR pszName, _In_opt_ BIND_OPTS* pBindOptions, _In_ REFIID riid, _Inout_ winstd::com_obj<T>& v)
+{
+    T* ppv;
+    HRESULT hr = CoGetObject(pszName, pBindOptions, riid, (LPVOID*)&ppv);
+    if (SUCCEEDED(hr))
+        v.attach(ppv);
+    return hr;
+}
+
 /// @}
