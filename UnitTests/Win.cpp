@@ -80,5 +80,19 @@ namespace UnitTests
 			else
 				Assert::IsTrue(!system_impersonator && GetLastError() == ERROR_ACCESS_DENIED);
 		}
+
+		TEST_METHOD(AllocateAndInitializeSid)
+		{
+			SID_IDENTIFIER_AUTHORITY SIDAuthWorld = SECURITY_WORLD_SID_AUTHORITY;
+			winstd::security_id pSIDEveryone;
+			Assert::IsTrue(::AllocateAndInitializeSid(&SIDAuthWorld, 1, SECURITY_WORLD_RID, 0, 0, 0, 0, 0, 0, 0, pSIDEveryone));
+
+			SID_IDENTIFIER_AUTHORITY SIDAuthNT = SECURITY_NT_AUTHORITY;
+			winstd::security_id pSIDSystem;
+			Assert::IsTrue(::AllocateAndInitializeSid(&SIDAuthNT, 1, SECURITY_LOCAL_SYSTEM_RID, 0, 0, 0, 0, 0, 0, 0, pSIDSystem));
+
+			winstd::security_id pSIDAdmin;
+			Assert::IsTrue(::AllocateAndInitializeSid(&SIDAuthNT, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, pSIDAdmin));
+		}
 	};
 }

@@ -2429,6 +2429,21 @@ static BOOL DuplicateTokenEx(_In_ HANDLE hExistingToken, _In_ DWORD dwDesiredAcc
     return FALSE;
 }
 
+///
+/// Allocates and initializes a security identifier (SID) with up to eight subauthorities.
+///
+/// \sa [AllocateAndInitializeSid function](https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-allocateandinitializesid)
+///
+static BOOL AllocateAndInitializeSid(_In_ PSID_IDENTIFIER_AUTHORITY pIdentifierAuthority, _In_ BYTE nSubAuthorityCount, _In_ DWORD nSubAuthority0, _In_ DWORD nSubAuthority1, _In_ DWORD nSubAuthority2, _In_ DWORD nSubAuthority3, _In_ DWORD nSubAuthority4, _In_ DWORD nSubAuthority5, _In_ DWORD nSubAuthority6, _In_ DWORD nSubAuthority7, _Inout_ winstd::security_id& Sid)
+{
+    PSID h;
+    if (AllocateAndInitializeSid(pIdentifierAuthority, nSubAuthorityCount, nSubAuthority0, nSubAuthority1, nSubAuthority2, nSubAuthority3, nSubAuthority4, nSubAuthority5, nSubAuthority6, nSubAuthority7, &h)) {
+        Sid.attach(h);
+        return TRUE;
+    }
+    return FALSE;
+}
+
 #pragma warning(pop)
 
 /// @}
