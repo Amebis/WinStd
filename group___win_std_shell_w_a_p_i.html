@@ -86,6 +86,14 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2bb4436e8e3b7452b48d01cbb18bc818"><td class="memTemplItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_shell_w_a_p_i.html#ga2bb4436e8e3b7452b48d01cbb18bc818">PathCanonicalizeW</a> (std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue, LPCWSTR pszPath)</td></tr>
 <tr class="memdesc:ga2bb4436e8e3b7452b48d01cbb18bc818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simplifies a path by removing navigation elements such as "." and ".." to produce a direct, well-formed path, and stores it in a std::wstring string.  <a href="group___win_std_shell_w_a_p_i.html#ga2bb4436e8e3b7452b48d01cbb18bc818">More...</a><br /></td></tr>
 <tr class="separator:ga2bb4436e8e3b7452b48d01cbb18bc818"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1ba3f71c61d6d0c7cb611f3cdc193a8"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gaa1ba3f71c61d6d0c7cb611f3cdc193a8"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_shell_w_a_p_i.html#gaa1ba3f71c61d6d0c7cb611f3cdc193a8">PathRemoveBackslashA</a> (std::basic_string&lt; char, _Traits, _Ax &gt; &amp;sValue)</td></tr>
+<tr class="memdesc:gaa1ba3f71c61d6d0c7cb611f3cdc193a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the trailing backslash from a given path.   <a href="group___win_std_shell_w_a_p_i.html#gaa1ba3f71c61d6d0c7cb611f3cdc193a8">More...</a><br /></td></tr>
+<tr class="separator:gaa1ba3f71c61d6d0c7cb611f3cdc193a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5784e817cc8d4a8e45199e871f61da6c"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga5784e817cc8d4a8e45199e871f61da6c"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_shell_w_a_p_i.html#ga5784e817cc8d4a8e45199e871f61da6c">PathRemoveBackslashW</a> (std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;sValue)</td></tr>
+<tr class="memdesc:ga5784e817cc8d4a8e45199e871f61da6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the trailing backslash from a given path.  <a href="group___win_std_shell_w_a_p_i.html#ga5784e817cc8d4a8e45199e871f61da6c">More...</a><br /></td></tr>
+<tr class="separator:ga5784e817cc8d4a8e45199e871f61da6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
@@ -171,10 +179,72 @@ template&lt;class _Traits , class _Ax &gt; </div>
 
 </div>
 </div>
+<a id="gaa1ba3f71c61d6d0c7cb611f3cdc193a8" name="gaa1ba3f71c61d6d0c7cb611f3cdc193a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa1ba3f71c61d6d0c7cb611f3cdc193a8">&#9670;&#160;</a></span>PathRemoveBackslashA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void PathRemoveBackslashA </td>
+          <td>(</td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes the trailing backslash from a given path.  </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathremovebackslashw">PathRemoveBackslashW function</a>  </dd></dl>
+
+</div>
+</div>
+<a id="ga5784e817cc8d4a8e45199e871f61da6c" name="ga5784e817cc8d4a8e45199e871f61da6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5784e817cc8d4a8e45199e871f61da6c">&#9670;&#160;</a></span>PathRemoveBackslashW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void PathRemoveBackslashW </td>
+          <td>(</td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sValue</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes the trailing backslash from a given path. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathremovebackslashw">PathRemoveBackslashW function</a> </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 17 2022 07:17:19 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+Generated on Tue Oct 18 2022 09:31:59 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
 </small></address>
 </body>
 </html>

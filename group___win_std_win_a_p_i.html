@@ -366,6 +366,15 @@ Functions</h2></td></tr>
 <tr class="memitem:ga760bb977738a422eabd9a226eb5acdb4"><td class="memItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga760bb977738a422eabd9a226eb5acdb4">DuplicateTokenEx</a> (HANDLE hExistingToken, DWORD dwDesiredAccess, LPSECURITY_ATTRIBUTES lpTokenAttributes, SECURITY_IMPERSONATION_LEVEL ImpersonationLevel, TOKEN_TYPE TokenType, <a class="el" href="classwinstd_1_1win__handle.html">winstd::win_handle</a>&lt; NULL &gt; &amp;NewToken)</td></tr>
 <tr class="memdesc:ga760bb977738a422eabd9a226eb5acdb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new access token that duplicates an existing token. This function can create either a primary token or an impersonation token.  <a href="group___win_std_win_a_p_i.html#ga760bb977738a422eabd9a226eb5acdb4">More...</a><br /></td></tr>
 <tr class="separator:ga760bb977738a422eabd9a226eb5acdb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga588f0eb22a9ea276dc2c72d44f44781a"><td class="memItemLeft" align="right" valign="top">static BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga588f0eb22a9ea276dc2c72d44f44781a">AllocateAndInitializeSid</a> (PSID_IDENTIFIER_AUTHORITY pIdentifierAuthority, BYTE nSubAuthorityCount, DWORD nSubAuthority0, DWORD nSubAuthority1, DWORD nSubAuthority2, DWORD nSubAuthority3, DWORD nSubAuthority4, DWORD nSubAuthority5, DWORD nSubAuthority6, DWORD nSubAuthority7, <a class="el" href="classwinstd_1_1security__id.html">winstd::security_id</a> &amp;Sid)</td></tr>
+<tr class="memdesc:ga588f0eb22a9ea276dc2c72d44f44781a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates and initializes a security identifier (SID) with up to eight subauthorities.  <a href="group___win_std_win_a_p_i.html#ga588f0eb22a9ea276dc2c72d44f44781a">More...</a><br /></td></tr>
+<tr class="separator:ga588f0eb22a9ea276dc2c72d44f44781a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78c62cf670ca44d4cd25fb838dfd06e8"><td class="memItemLeft" align="right" valign="top">static DWORD&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga78c62cf670ca44d4cd25fb838dfd06e8">SetEntriesInAclA</a> (ULONG cCountOfExplicitEntries, PEXPLICIT_ACCESS_A pListOfExplicitEntries, PACL OldAcl, std::unique_ptr&lt; ACL, <a class="el" href="structwinstd_1_1_local_free__delete.html">winstd::LocalFree_delete</a>&lt; ACL &gt; &gt; &amp;Acl)</td></tr>
+<tr class="memdesc:ga78c62cf670ca44d4cd25fb838dfd06e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new access control list (ACL) by merging new access control or audit control information into an existing ACL structure.   <a href="group___win_std_win_a_p_i.html#ga78c62cf670ca44d4cd25fb838dfd06e8">More...</a><br /></td></tr>
+<tr class="separator:ga78c62cf670ca44d4cd25fb838dfd06e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga473c00779893dfff195afab022a3113e"><td class="memItemLeft" align="right" valign="top">static DWORD&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_win_a_p_i.html#ga473c00779893dfff195afab022a3113e">SetEntriesInAclW</a> (ULONG cCountOfExplicitEntries, PEXPLICIT_ACCESS_W pListOfExplicitEntries, PACL OldAcl, std::unique_ptr&lt; ACL, <a class="el" href="structwinstd_1_1_local_free__delete.html">winstd::LocalFree_delete</a>&lt; ACL &gt; &gt; &amp;Acl)</td></tr>
+<tr class="memdesc:ga473c00779893dfff195afab022a3113e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new access control list (ACL) by merging new access control or audit control information into an existing ACL structure.  <a href="group___win_std_win_a_p_i.html#ga473c00779893dfff195afab022a3113e">More...</a><br /></td></tr>
+<tr class="separator:ga473c00779893dfff195afab022a3113e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -529,6 +538,99 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga588f0eb22a9ea276dc2c72d44f44781a" name="ga588f0eb22a9ea276dc2c72d44f44781a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga588f0eb22a9ea276dc2c72d44f44781a">&#9670;&#160;</a></span>AllocateAndInitializeSid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BOOL AllocateAndInitializeSid </td>
+          <td>(</td>
+          <td class="paramtype">PSID_IDENTIFIER_AUTHORITY&#160;</td>
+          <td class="paramname"><em>pIdentifierAuthority</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">BYTE&#160;</td>
+          <td class="paramname"><em>nSubAuthorityCount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>nSubAuthority0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>nSubAuthority1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>nSubAuthority2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>nSubAuthority3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>nSubAuthority4</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>nSubAuthority5</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>nSubAuthority6</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD&#160;</td>
+          <td class="paramname"><em>nSubAuthority7</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classwinstd_1_1security__id.html">winstd::security_id</a> &amp;&#160;</td>
+          <td class="paramname"><em>Sid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Allocates and initializes a security identifier (SID) with up to eight subauthorities. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-allocateandinitializesid">AllocateAndInitializeSid function</a> </dd></dl>
+
+</div>
+</div>
 <a id="ga6b1c9ae28988d31bb03abefb32af5642" name="ga6b1c9ae28988d31bb03abefb32af5642"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga6b1c9ae28988d31bb03abefb32af5642">&#9670;&#160;</a></span>CreateWellKnownSid()</h2>
 
@@ -3040,6 +3142,108 @@ template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </div
 
 </div>
 </div>
+<a id="ga78c62cf670ca44d4cd25fb838dfd06e8" name="ga78c62cf670ca44d4cd25fb838dfd06e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga78c62cf670ca44d4cd25fb838dfd06e8">&#9670;&#160;</a></span>SetEntriesInAclA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static DWORD SetEntriesInAclA </td>
+          <td>(</td>
+          <td class="paramtype">ULONG&#160;</td>
+          <td class="paramname"><em>cCountOfExplicitEntries</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PEXPLICIT_ACCESS_A&#160;</td>
+          <td class="paramname"><em>pListOfExplicitEntries</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PACL&#160;</td>
+          <td class="paramname"><em>OldAcl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; ACL, <a class="el" href="structwinstd_1_1_local_free__delete.html">winstd::LocalFree_delete</a>&lt; ACL &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Acl</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new access control list (ACL) by merging new access control or audit control information into an existing ACL structure.  </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://learn.microsoft.com/en-us/windows/win32/api/aclapi/nf-aclapi-setentriesinaclw">SetEntriesInAclW function</a>  </dd></dl>
+
+</div>
+</div>
+<a id="ga473c00779893dfff195afab022a3113e" name="ga473c00779893dfff195afab022a3113e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga473c00779893dfff195afab022a3113e">&#9670;&#160;</a></span>SetEntriesInAclW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static DWORD SetEntriesInAclW </td>
+          <td>(</td>
+          <td class="paramtype">ULONG&#160;</td>
+          <td class="paramname"><em>cCountOfExplicitEntries</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PEXPLICIT_ACCESS_W&#160;</td>
+          <td class="paramname"><em>pListOfExplicitEntries</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PACL&#160;</td>
+          <td class="paramname"><em>OldAcl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; ACL, <a class="el" href="structwinstd_1_1_local_free__delete.html">winstd::LocalFree_delete</a>&lt; ACL &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Acl</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new access control list (ACL) by merging new access control or audit control information into an existing ACL structure. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://learn.microsoft.com/en-us/windows/win32/api/aclapi/nf-aclapi-setentriesinaclw">SetEntriesInAclW function</a> </dd></dl>
+
+</div>
+</div>
 <a id="ga0a3545c7b4d6509b77a9a156e882f32c" name="ga0a3545c7b4d6509b77a9a156e882f32c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga0a3545c7b4d6509b77a9a156e882f32c">&#9670;&#160;</a></span>StringToGuidA()</h2>
 
@@ -3364,7 +3568,7 @@ template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </div
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 17 2022 07:17:19 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+Generated on Tue Oct 18 2022 09:31:59 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
 </small></address>
 </body>
 </html>
