@@ -134,7 +134,7 @@ static UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
 
 /// @copydoc MsiFormatRecordW()
 template<class _Traits, class _Ax>
-static UINT MsiFormatRecordA(_In_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord, _Inout_ std::basic_string<char, _Traits, _Ax> &sValue)
+static UINT MsiFormatRecordA(_In_opt_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord, _Inout_ std::basic_string<char, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
@@ -166,7 +166,7 @@ static UINT MsiFormatRecordA(_In_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord, _I
 /// \sa [MsiFormatRecord function](https://msdn.microsoft.com/en-us/library/aa370109.aspx)
 ///
 template<class _Traits, class _Ax>
-static UINT MsiFormatRecordW(_In_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sValue)
+static UINT MsiFormatRecordW(_In_opt_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sValue)
 {
     wchar_t szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
     DWORD dwSize = _countof(szStackBuffer);
