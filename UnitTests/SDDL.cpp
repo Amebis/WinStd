@@ -19,6 +19,7 @@ namespace UnitTests
 			Assert::IsTrue(ConvertStringSecurityDescriptorToSecurityDescriptorW(L"O:BAD:PAI(A;;FA;;;BA)", SDDL_REVISION_1, sa, NULL));
 			Assert::IsNotNull(sa.lpSecurityDescriptor);
 			winstd::security_attributes sa2(move(sa));
+#pragma warning(suppress: 26800) // That's exactly what we are testing here: if the object is in a sane state after being moved from.
 			Assert::IsNull(sa.lpSecurityDescriptor);
 			Assert::IsNotNull(sa2.lpSecurityDescriptor);
 		}
