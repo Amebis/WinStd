@@ -1,6 +1,6 @@
 ﻿# WinStd
 
-Provides templates and function helpers for Windows Win32 API using Standard C++ in Microsoft Visual C++ 2017-2019
+Provides templates and function helpers for Windows Win32 API using Standard C++ in Microsoft Visual C++ 2017-2022
 
 ## Features
 
