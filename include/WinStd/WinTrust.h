@@ -35,7 +35,7 @@ namespace winstd
         {
             const LONG lResult = WinVerifyTrust(m_hwnd, &m_action, &m_wtd);
             if (lResult != ERROR_SUCCESS)
-                throw win_runtime_error(lResult, "WinVerifyTrust failed.");
+                throw win_runtime_error(lResult, "WinVerifyTrust failed");
         }
 
         ///

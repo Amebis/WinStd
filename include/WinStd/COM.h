@@ -276,7 +276,7 @@ namespace winstd
             vt = VT_EMPTY;
             const HRESULT hr = VariantCopy(this, &varSrc);
             if (FAILED(hr))
-                throw winstd::com_runtime_error(hr, "VariantCopy failed.");
+                throw winstd::com_runtime_error(hr, "VariantCopy failed");
         }
 
         ///
@@ -472,7 +472,7 @@ namespace winstd
             LPSAFEARRAY pCopy;
             const HRESULT hr = SafeArrayCopy(const_cast<LPSAFEARRAY>(pSrc), &pCopy);
             if (FAILED(hr))
-                throw winstd::com_runtime_error(hr, "SafeArrayCopy failed.");
+                throw winstd::com_runtime_error(hr, "SafeArrayCopy failed");
 
             SafeArrayGetVartype(const_cast<LPSAFEARRAY>(pSrc), &vt);
             vt |= VT_ARRAY;
@@ -495,7 +495,7 @@ namespace winstd
             if (this != &varSrc) {
                 const HRESULT hr = VariantCopy(this, &varSrc);
                 if (FAILED(hr))
-                    throw winstd::com_runtime_error(hr, "VariantCopy failed.");
+                    throw winstd::com_runtime_error(hr, "VariantCopy failed");
             }
             return *this;
         }

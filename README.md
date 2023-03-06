@@ -47,7 +47,7 @@ For those situations where one must quckly compose a temporary string using `spr
 if (dwMaxSendPacketSize < sizeof(EapPacket))
     throw std::invalid_argument(
         winstd::string_printf(
-            "Maximum packet size too small (minimum: %zu, available: %u).",
+            "Maximum packet size too small (minimum: %zu, available: %u)",
             sizeof(EapPacket) + 1,
             dwMaxSendPacketSize));
 ```
