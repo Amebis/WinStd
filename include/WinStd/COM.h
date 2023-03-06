@@ -93,7 +93,9 @@ namespace winstd
         com_obj(_In_ _Other *other)
         {
             assert(other);
-            other->QueryInterface(__uuidof(T), (void**)&m_h);
+            HRESULT hr = other->QueryInterface(__uuidof(T), (void**)&m_h);
+            if (FAILED(hr))
+                throw com_runtime_error(hr, "QueryInterface failed");
         }
 
         ///
@@ -104,7 +106,9 @@ namespace winstd
         template <class _Other>
         com_obj(_In_ com_obj<_Other> &other)
         {
-            other->QueryInterface(__uuidof(T), (void**)&m_h);
+            HRESULT hr = other->QueryInterface(__uuidof(T), (void**)&m_h);
+            if (FAILED(hr))
+                throw com_runtime_error(hr, "QueryInterface failed");
         }
 
         ///
@@ -183,26 +187,32 @@ namespace winstd
         ///
         /// Constructs BSTR from OLE string
         ///
-        bstr(_In_ LPCOLESTR src) noexcept
+        bstr(_In_ LPCOLESTR src)
         {
             m_h = SysAllocString(src);
+            if (!m_h)
+                throw std::bad_alloc();
         }
 
         ///
         /// Constructs BSTR from OLE string with length
         ///
-        bstr(_In_ LPCOLESTR src, _In_ UINT len) noexcept
+        bstr(_In_ LPCOLESTR src, _In_ UINT len)
         {
             m_h = SysAllocStringLen(src, len);
+            if (!m_h)
+                throw std::bad_alloc();
         }
 
         ///
         /// Constructs BSTR from std::basic_string
         ///
         template<class _Traits, class _Ax>
-        bstr(_In_ const std::basic_string<wchar_t, _Traits, _Ax> &src) noexcept
+        bstr(_In_ const std::basic_string<wchar_t, _Traits, _Ax> &src)
         {
             m_h = SysAllocStringLen(src.c_str(), (UINT)src.length());
+            if (!m_h)
+                throw std::bad_alloc();
         }
 
         ///
@@ -880,7 +890,7 @@ namespace winstd
         ///
         /// Copy from SAFEARRAY
         ///
-        variant& operator=(_In_ const SAFEARRAY *pSrc) noexcept
+        variant& operator=(_In_ const SAFEARRAY *pSrc)
         {
             assert(pSrc != NULL);
             VariantClear(this);
@@ -891,10 +901,9 @@ namespace winstd
                 SafeArrayGetVartype(const_cast<LPSAFEARRAY>(pSrc), &vt);
                 vt |= VT_ARRAY;
                 parray = pCopy;
-            } else
-                assert(0);
-
-            return *this;
+                return *this;
+            }
+            throw com_runtime_error(hr, "SafeArrayCopy failed");
         }
 
     public:
