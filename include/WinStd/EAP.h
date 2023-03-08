@@ -231,7 +231,6 @@ namespace winstd
             dwLength = a.dwLength;
             if (a.dwLength) {
                 pValue = new BYTE[a.dwLength];
-                assert(pValue);
                 memcpy(pValue, a.pValue, a.dwLength);
             } else
                 pValue = NULL;
