@@ -401,6 +401,72 @@ namespace winstd
     };
 
     ///
+    /// Deleter for unique_ptr using GlobalFree
+    ///
+    struct GlobalFree_delete
+    {
+        ///
+        /// Default construct
+        ///
+        GlobalFree_delete() {}
+
+        ///
+        /// Delete a pointer
+        ///
+        /// \sa [GlobalFree function](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-globalfree)
+        ///
+        void operator()(HGLOBAL _Ptr) const
+        {
+            GlobalFree(_Ptr);
+        }
+    };
+
+    ///
+    /// Context scope automatic GlobalAlloc (un)access
+    ///
+    template <class T>
+    class globalmem_accessor
+    {
+        WINSTD_NONCOPYABLE(globalmem_accessor)
+        WINSTD_NONMOVABLE(globalmem_accessor)
+
+    public:
+        ///
+        /// Locks a global memory object and returns a pointer to the first byte of the object's memory block.
+        ///
+        /// \sa [SafeArrayAccessData function](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-globallock)
+        ///
+        globalmem_accessor(_In_ HGLOBAL hMem) : m_h(hMem)
+        {
+            m_data = (T*)GlobalLock(hMem);
+            if (!m_data)
+                throw win_runtime_error("GlobalLock failed");
+        }
+
+        ///
+        /// Decrements the lock count associated with a memory object.
+        ///
+        /// \sa [GlobalUnlock function](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-globalunlock)
+        ///
+        virtual ~globalmem_accessor()
+        {
+            GlobalUnlock(m_h);
+        }
+
+        ///
+        /// Return data pointer.
+        ///
+        T* data() const noexcept
+        {
+            return m_data;
+        }
+
+    protected:
+        HGLOBAL m_h;  ///< memory handle
+        T* m_data;    ///< memory pointer
+    };
+
+    ///
     /// Helper class for returning pointers to std::unique_ptr
     ///
     template<class _Ty, class _Dx>
