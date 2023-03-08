@@ -370,8 +370,9 @@ namespace winstd
         ///
         /// \sa [CertDuplicateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376045.aspx)
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const noexcept override
+        handle_type duplicate_internal(_In_ handle_type h) const override
         {
+            // As per doc, this only increases refcounter. Should never fail.
             return CertDuplicateCertificateContext(h);
         }
     };
@@ -415,10 +416,11 @@ namespace winstd
         ///
         /// \return Duplicated certificate chain context handle
         ///
-        /// \sa [CertDuplicateCertificateContext function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa376045.aspx)
+        /// \sa [CertDuplicateCertificateChain function](https://learn.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-certduplicatecertificatechain)
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const noexcept override
+        handle_type duplicate_internal(_In_ handle_type h) const override
         {
+            // As per doc, this only increases refcounter. Should never fail.
             return CertDuplicateCertificateChain(h);
         }
     };
@@ -531,10 +533,12 @@ namespace winstd
         ///
         /// \sa [CryptDuplicateHash function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379919.aspx)
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const noexcept override
+        handle_type duplicate_internal(_In_ handle_type h) const override
         {
             handle_type hNew;
-            return CryptDuplicateHash(h, NULL, 0, &hNew) ? hNew : invalid;
+            if (CryptDuplicateHash(h, NULL, 0, &hNew))
+                return hNew;
+            throw win_runtime_error("CryptDuplicateHash failed");
         }
     };
 
@@ -652,10 +656,12 @@ namespace winstd
         ///
         /// \sa [CryptDuplicateKey function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379920.aspx)
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const noexcept override
+        handle_type duplicate_internal(_In_ handle_type h) const override
         {
             handle_type hNew;
-            return CryptDuplicateKey(h, NULL, 0, &hNew) ? hNew : invalid;
+            if (CryptDuplicateKey(h, NULL, 0, &hNew))
+                return hNew;
+            throw win_runtime_error("CryptDuplicateKey failed");
         }
     };
 

@@ -854,7 +854,7 @@ namespace winstd
         ///
         /// \param[inout] h  A reference of another object
         ///
-        dplhandle<handle_type, INVAL>(_In_ const dplhandle<handle_type, INVAL> &h) noexcept : handle<handle_type, INVAL>(duplicate_internal(h.m_h))
+        dplhandle<handle_type, INVAL>(_In_ const dplhandle<handle_type, INVAL> &h) : handle<handle_type, INVAL>(duplicate_internal(h.m_h))
         {
         }
 
@@ -888,13 +888,11 @@ namespace winstd
             if (this != std::addressof(h)) {
                 if (h.m_h != invalid) {
                     handle_type h_new = duplicate_internal(h.m_h);
-                    if (h_new != invalid) {
-                        if (m_h != invalid)
-                            free_internal();
 
-                        m_h = h_new;
-                    } else
-                        assert(0); // Could not duplicate the handle
+                    if (m_h != invalid)
+                        free_internal();
+
+                    m_h = h_new;
                 } else {
                     if (m_h != invalid)
                         free_internal();
@@ -932,27 +930,24 @@ namespace winstd
         ///
         /// \param[in] h  Object handle of existing object
         ///
-        /// \return
-        /// - true when duplication succeeds;
-        /// - false when duplication fails. In case of failure obtaining the extended error information is object type specific (for example: `GetLastError()`).
-        ///
-        bool attach_duplicated(_In_opt_ handle_type h)
+        void attach_duplicated(_In_opt_ handle_type h)
         {
             if (m_h != invalid)
                 free_internal();
 
-            return h != invalid ? (m_h = duplicate_internal(h)) != invalid : (m_h = invalid, true);
+            m_h = h != invalid ? duplicate_internal(h) : invalid;
         }
 
     protected:
         ///
         /// Abstract member function that must be implemented by child classes to do the actual object handle duplication.
+        /// On failure, it should throw appropriate exception describing the cause, rather than return an invalid handle.
         ///
         /// \param[in] h  Object handle of existing object
         ///
         /// \return Duplicated object handle
         ///
-        virtual handle_type duplicate_internal(_In_ handle_type h) const noexcept = 0;
+        virtual handle_type duplicate_internal(_In_ handle_type h) const = 0;
     };
 
     /// @}

@@ -271,13 +271,10 @@ namespace winstd
                 dwLength = a.dwLength;
                 if (a.dwLength) {
                     BYTE *pValueNew = new BYTE[a.dwLength];
-                    if (pValueNew) {
-                        if (pValue)
-                            delete [] pValue;
-                        memcpy(pValueNew, a.pValue, a.dwLength);
-                        pValue = pValueNew;
-                    } else
-                        assert(0); // Could not allocate memory
+                    if (pValue)
+                        delete [] pValue;
+                    memcpy(pValueNew, a.pValue, a.dwLength);
+                    pValue = pValueNew;
                 } else
                     pValue = NULL;
             }
@@ -472,16 +469,15 @@ namespace winstd
         ///
         /// Duplicates the EAP packet.
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const noexcept override
+        handle_type duplicate_internal(_In_ handle_type h) const override
         {
             const WORD n = ntohs(*reinterpret_cast<WORD*>(h->Length));
             handle_type h2 = static_cast<handle_type>(HeapAlloc(GetProcessHeap(), 0, n));
-            if (h2 == NULL) {
-                SetLastError(ERROR_OUTOFMEMORY);
-                return NULL;
+            if (h2 != invalid) {
+                memcpy(h2, h, n);
+                return h2;
             }
-            memcpy(h2, h, n);
-            return h2;
+            throw std::bad_alloc();
         }
     };
 

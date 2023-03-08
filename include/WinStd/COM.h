@@ -184,7 +184,7 @@ namespace winstd
         ///
         /// \return Duplicated object handle
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const noexcept override
+        handle_type duplicate_internal(_In_ handle_type h) const override
         {
             h->AddRef();
             return h;
@@ -271,9 +271,12 @@ namespace winstd
         ///
         /// \sa [SysAllocString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms221458.aspx)
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const noexcept override
+        handle_type duplicate_internal(_In_ handle_type h) const override
         {
-            return SysAllocStringLen(h, SysStringLen(h));
+            handle_type h_new = SysAllocStringLen(h, SysStringLen(h));
+            if (h_new != invalid)
+                return h_new;
+            throw std::bad_alloc();
         }
     };
 
