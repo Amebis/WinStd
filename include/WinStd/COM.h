@@ -85,6 +85,21 @@ namespace winstd
 
     public:
         ///
+        /// Creates a new instance of a class
+        ///
+        /// \sa [CoCreateInstance function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms686615.aspx)
+        ///
+        com_obj(
+            _In_ REFCLSID rclsid,
+            _In_opt_ LPUNKNOWN pUnkOuter,
+            _In_ DWORD dwClsContext)
+        {
+            HRESULT hr = CoCreateInstance(rclsid, pUnkOuter, dwClsContext, __uuidof(T), (LPVOID*)&m_h);
+            if (FAILED(hr))
+                throw com_runtime_error(hr, "CoCreateInstance failed");
+        }
+
+        ///
         /// Queries the object for another interface and creates new class with it
         ///
         /// \sa [IUnknown::QueryInterface method](https://msdn.microsoft.com/en-us/library/windows/desktop/ms682521.aspx)
