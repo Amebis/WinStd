@@ -23,11 +23,12 @@ var searchData=
   ['handle_3c_20pctxthandle_2c_20null_20_3e_20',['handle&lt; PCtxtHandle, NULL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
   ['handle_3c_20psid_2c_20null_20_3e_21',['handle&lt; PSID, NULL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
   ['handle_3c_20reghandle_2c_20null_20_3e_22',['handle&lt; REGHANDLE, NULL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
-  ['handle_3c_20sc_5fhandle_2c_20null_20_3e_23',['handle&lt; SC_HANDLE, NULL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
-  ['handle_3c_20t_20_2a_2c_20inval_20_3e_24',['handle&lt; T *, INVAL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
-  ['handle_3c_20t_2c_20null_20_3e_25',['handle&lt; T, NULL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
-  ['handle_3c_20tracehandle_2c_200_20_3e_26',['handle&lt; TRACEHANDLE, 0 &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
-  ['handle_3c_20tracehandle_2c_20invalid_5fprocesstrace_5fhandle_20_3e_27',['handle&lt; TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
-  ['heap_28',['heap',['../classwinstd_1_1heap.html',1,'winstd']]],
-  ['heap_5fallocator_29',['heap_allocator',['../classwinstd_1_1heap__allocator.html',1,'winstd']]]
+  ['handle_3c_20safearray_20_2a_2c_20inval_20_3e_23',['handle&lt; SAFEARRAY *, INVAL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
+  ['handle_3c_20sc_5fhandle_2c_20null_20_3e_24',['handle&lt; SC_HANDLE, NULL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
+  ['handle_3c_20t_20_2a_2c_20inval_20_3e_25',['handle&lt; T *, INVAL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
+  ['handle_3c_20t_2c_20null_20_3e_26',['handle&lt; T, NULL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
+  ['handle_3c_20tracehandle_2c_200_20_3e_27',['handle&lt; TRACEHANDLE, 0 &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
+  ['handle_3c_20tracehandle_2c_20invalid_5fprocesstrace_5fhandle_20_3e_28',['handle&lt; TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
+  ['heap_29',['heap',['../classwinstd_1_1heap.html',1,'winstd']]],
+  ['heap_5fallocator_30',['heap_allocator',['../classwinstd_1_1heap__allocator.html',1,'winstd']]]
 ];

@@ -10,5 +10,6 @@ var searchData=
   ['dplhandle_3c_20hcryptkey_2c_20null_20_3e_7',['dplhandle&lt; HCRYPTKEY, NULL &gt;',['../classwinstd_1_1dplhandle.html',1,'winstd']]],
   ['dplhandle_3c_20pccert_5fchain_5fcontext_2c_20null_20_3e_8',['dplhandle&lt; PCCERT_CHAIN_CONTEXT, NULL &gt;',['../classwinstd_1_1dplhandle.html',1,'winstd']]],
   ['dplhandle_3c_20pccert_5fcontext_2c_20null_20_3e_9',['dplhandle&lt; PCCERT_CONTEXT, NULL &gt;',['../classwinstd_1_1dplhandle.html',1,'winstd']]],
-  ['dplhandle_3c_20t_20_2a_2c_20null_20_3e_10',['dplhandle&lt; T *, NULL &gt;',['../classwinstd_1_1dplhandle.html',1,'winstd']]]
+  ['dplhandle_3c_20safearray_20_2a_2c_20null_20_3e_10',['dplhandle&lt; SAFEARRAY *, NULL &gt;',['../classwinstd_1_1dplhandle.html',1,'winstd']]],
+  ['dplhandle_3c_20t_20_2a_2c_20null_20_3e_11',['dplhandle&lt; T *, NULL &gt;',['../classwinstd_1_1dplhandle.html',1,'winstd']]]
 ];

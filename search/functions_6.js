@@ -12,6 +12,8 @@ var searchData=
   ['gettokeninformation_9',['GetTokenInformation',['../group___win_std_win_a_p_i.html#ga75b761473822ee6e9cf336d28b30b073',1,'Win.h']]],
   ['getwindowtexta_10',['GetWindowTextA',['../group___win_std_win_a_p_i.html#ga11fd1f3e9a51e636f6e0f060e604c1aa',1,'Win.h']]],
   ['getwindowtextw_11',['GetWindowTextW',['../group___win_std_win_a_p_i.html#gacab04e9e5cbbc759fe83cf70fb891acc',1,'Win.h']]],
-  ['guidtostringa_12',['GuidToStringA',['../group___win_std_win_a_p_i.html#ga2ec9f457e182c451486333fa0a994313',1,'Win.h']]],
-  ['guidtostringw_13',['GuidToStringW',['../group___win_std_win_a_p_i.html#gad8dcada3be8a9e8c0d2f0db263c2a5e3',1,'Win.h']]]
+  ['globalfree_5fdelete_12',['GlobalFree_delete',['../structwinstd_1_1_global_free__delete.html#a07068a1b6ecc0628d16fc4a5d22d69a1',1,'winstd::GlobalFree_delete']]],
+  ['globalmem_5faccessor_13',['globalmem_accessor',['../classwinstd_1_1globalmem__accessor.html#a7c13c963c94e5aa17dd67943c27b02c0',1,'winstd::globalmem_accessor']]],
+  ['guidtostringa_14',['GuidToStringA',['../group___win_std_win_a_p_i.html#ga2ec9f457e182c451486333fa0a994313',1,'Win.h']]],
+  ['guidtostringw_15',['GuidToStringW',['../group___win_std_win_a_p_i.html#gad8dcada3be8a9e8c0d2f0db263c2a5e3',1,'Win.h']]]
 ];
