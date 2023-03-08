@@ -1034,6 +1034,100 @@ namespace winstd
     #pragma warning(pop)
 
     ///
+    /// SAFEARRAY string wrapper
+    ///
+    class safearray : public dplhandle<SAFEARRAY*, NULL>
+    {
+        WINSTD_DPLHANDLE_IMPL(safearray, NULL)
+
+    public:
+        ///
+        /// Destroys the array
+        ///
+        /// \sa [SafeArrayDestroy function](https://learn.microsoft.com/en-us/windows/win32/api/oleauto/nf-oleauto-safearraydestroy)
+        ///
+        virtual ~safearray()
+        {
+            if (m_h != invalid)
+                free_internal();
+        }
+
+    protected:
+        ///
+        /// Destroys the array
+        ///
+        /// \sa [SafeArrayDestroy function](https://learn.microsoft.com/en-us/windows/win32/api/oleauto/nf-oleauto-safearraydestroy)
+        ///
+        void free_internal() noexcept override
+        {
+            SafeArrayDestroy(m_h);
+        }
+
+        ///
+        /// Duplicates the array
+        ///
+        /// \param[in] h  Existing array
+        ///
+        /// \return Duplicated array
+        ///
+        /// \sa [SysAllocString function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms221458.aspx)
+        ///
+        handle_type duplicate_internal(_In_ handle_type h) const override
+        {
+            handle_type h_new;
+            HRESULT hr = SafeArrayCopy(h, &h_new);
+            if (SUCCEEDED(hr))
+                return h_new;
+            throw com_runtime_error(hr, "SafeArrayCopy failed");
+        }
+    };
+
+    ///
+    /// Context scope automatic SAFEARRAY (un)access
+    ///
+    template <class T>
+    class safearray_accessor
+    {
+        WINSTD_NONCOPYABLE(safearray_accessor)
+        WINSTD_NONMOVABLE(safearray_accessor)
+
+    public:
+        ///
+        /// Increments the lock count of an array, and retrieves a pointer to the array data.
+        ///
+        /// \sa [SafeArrayAccessData function](https://learn.microsoft.com/en-us/windows/win32/api/oleauto/nf-oleauto-safearrayaccessdata)
+        ///
+        safearray_accessor(_In_ SAFEARRAY* psa) : m_sa(psa)
+        {
+            HRESULT hr = SafeArrayAccessData(psa, (void HUGEP**)&m_data);
+            if (FAILED(hr))
+                throw com_runtime_error(hr, "SafeArrayAccessData failed");
+        }
+
+        ///
+        /// Decrements the lock count of an array.
+        ///
+        /// \sa [CoUninitialize function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms688715.aspx)
+        ///
+        virtual ~safearray_accessor()
+        {
+            SafeArrayUnaccessData(m_sa);
+        }
+
+        ///
+        /// Return SAFEARRAY data pointer.
+        ///
+        T HUGEP* data() const noexcept
+        {
+            return m_data;
+        }
+
+    protected:
+        SAFEARRAY* m_sa; ///< SAFEARRAY
+        T HUGEP* m_data; ///< SAFEARRAY data
+    };
+
+    ///
     /// Context scope automatic COM (un)initialization
     ///
     class com_initializer
