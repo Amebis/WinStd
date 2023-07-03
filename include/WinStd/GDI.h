@@ -47,6 +47,37 @@ namespace winstd
     };
 
     ///
+    /// Windows HICON wrapper class
+    ///
+    class icon : public handle<HICON, NULL>
+    {
+        WINSTD_HANDLE_IMPL(icon, NULL)
+
+    public:
+        ///
+        /// Closes an open object handle.
+        ///
+        /// \sa [DestroyIcon function](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-destroyicon)
+        ///
+        virtual ~icon()
+        {
+            if (m_h != invalid)
+                free_internal();
+        }
+
+    protected:
+        ///
+        /// Closes an open object handle.
+        ///
+        /// \sa [DestroyIcon function](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-destroyicon)
+        ///
+        void free_internal() noexcept override
+        {
+            DestroyIcon(m_h);
+        }
+    };
+
+    ///
     /// Device context wrapper class
     ///
     class dc : public handle<HDC, NULL>
