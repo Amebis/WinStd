@@ -225,9 +225,10 @@ namespace winstd
         template<class _Traits, class _Ax>
         bstr(_In_ const std::basic_string<OLECHAR, _Traits, _Ax> &src)
         {
-            if (src.length() >= UINT_MAX)
-                throw std::invalid_argument("String too long");
-            m_h = SysAllocStringLen(src.c_str(), (UINT)src.length());
+            size_t len = src.length();
+            if (len > UINT_MAX)
+                throw std::invalid_argument("string too long");
+            m_h = SysAllocStringLen(src.c_str(), static_cast<UINT>(len));
             if (!m_h)
                 throw std::bad_alloc();
         }

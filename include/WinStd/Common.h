@@ -8,6 +8,7 @@
 
 #include <Windows.h>
 #include <assert.h>
+#include <intsafe.h>
 #include <stdarg.h>
 #include <tchar.h>
 #include <iostream>
@@ -202,6 +203,42 @@ typedef const BYTE *LPCBYTE;
 #pragma warning(disable: 4995)
 #pragma warning(disable: 4996)
 #pragma warning(disable: 4505) // Don't warn on unused code
+
+#ifdef _WIN64
+inline ULONGLONG ULongLongMult(ULONGLONG a, ULONGLONG b)
+{
+    ULONGLONG result;
+    if (SUCCEEDED(ULongLongMult(a, b, &result)))
+        return result;
+    throw std::invalid_argument("multiply overflow");
+}
+#else
+inline SIZE_T SIZETMult(SIZE_T a, SIZE_T b)
+{
+    SIZE_T result;
+    if (SUCCEEDED(SIZETMult(a, b, &result)))
+        return result;
+    throw std::invalid_argument("multiply overflow");
+}
+#endif
+
+#ifdef _WIN64
+inline ULONGLONG ULongLongAdd(ULONGLONG a, ULONGLONG b)
+{
+    ULONGLONG result;
+    if (SUCCEEDED(ULongLongAdd(a, b, &result)))
+        return result;
+    throw std::invalid_argument("add overflow");
+}
+#else
+inline SIZE_T SIZETAdd(SIZE_T a, SIZE_T b)
+{
+    SIZE_T result;
+    if (SUCCEEDED(SIZETAdd(a, b, &result)))
+        return result;
+    throw std::invalid_argument("add overflow");
+}
+#endif
 
 /// \addtogroup WinStdStrFormat
 /// @{

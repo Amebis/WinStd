@@ -176,9 +176,14 @@ static _Success_(return != 0) BOOL CryptExportKey(_In_ HCRYPTKEY hKey, _In_ HCRY
 template<class _Ty, class _Ax>
 static _Success_(return != 0) BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
 {
+    SIZE_T
+        sDataLen = SIZETMult(aData.size(), sizeof(_Ty)),
+        sBufLen  = SIZETMult(aData.capacity(), sizeof(_Ty));
+    if (sDataLen > DWORD_MAX || sBufLen > DWORD_MAX)
+        throw std::invalid_argument("Data too big");
     DWORD
-        dwDataLen = (DWORD)(aData.size()     * sizeof(_Ty)),
-        dwBufLen  = (DWORD)(aData.capacity() * sizeof(_Ty)),
+        dwDataLen = static_cast<DWORD>(sDataLen),
+        dwBufLen  = static_cast<DWORD>(sBufLen),
         dwEncLen  = dwDataLen,
         dwResult;
 
@@ -226,7 +231,10 @@ static _Success_(return != 0) BOOL CryptEncrypt(_In_ HCRYPTKEY hKey, _In_opt_ HC
 template<class _Ty, class _Ax>
 static _Success_(return != 0) BOOL CryptDecrypt(_In_ HCRYPTKEY hKey, _In_opt_ HCRYPTHASH hHash, _In_ BOOL Final, _In_ DWORD dwFlags, _Inout_ std::vector<_Ty, _Ax> &aData)
 {
-    DWORD dwDataLen = (DWORD)(aData.size() * sizeof(_Ty));
+    SIZE_T sDataLen = SIZETMult(aData.size(), sizeof(_Ty));
+    if (sDataLen > DWORD_MAX)
+        throw std::invalid_argument("Data too big");
+    DWORD dwDataLen = static_cast<DWORD>(sDataLen);
 
     if (CryptDecrypt(hKey, hHash, Final, dwFlags, reinterpret_cast<BYTE*>(aData.data()), &dwDataLen)) {
         // Decryption succeeded.

@@ -177,21 +177,23 @@ static _Success_(return != 0) BOOL GetFileVersionInfoW(_In_z_ LPCWSTR lptstrFile
 
 /// @copydoc ExpandEnvironmentStringsW()
 template<class _Traits, class _Ax>
-static _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Out_ std::basic_string<char, _Traits, _Ax> &sValue) noexcept
+static _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSrc, _Out_ std::basic_string<char, _Traits, _Ax> &sValue)
 {
     assert(0); // TODO: Test this code.
 
-    for (DWORD dwSizeOut = (DWORD)strlen(lpSrc) + 0x100;;) {
-        DWORD dwSizeIn = dwSizeOut;
+    for (SIZE_T sSizeOut = SIZETAdd(strlen(lpSrc), 0x100);;) {
+        if (sSizeOut > DWORD_MAX)
+            throw std::invalid_argument("String too big");
+        DWORD dwSizeIn = static_cast<DWORD>(sSizeOut);
         std::unique_ptr<char[]> szBuffer(new char[(size_t)dwSizeIn + 2]); // Note: ANSI version requires one extra char.
-        dwSizeOut = ::ExpandEnvironmentStringsA(lpSrc, szBuffer.get(), dwSizeIn);
-        if (dwSizeOut == 0) {
+        sSizeOut = ::ExpandEnvironmentStringsA(lpSrc, szBuffer.get(), dwSizeIn);
+        if (sSizeOut == 0) {
             // Error or zero-length input.
             break;
-        } else if (dwSizeOut <= dwSizeIn) {
+        } else if (sSizeOut <= dwSizeIn) {
             // The buffer was sufficient.
-            sValue.assign(szBuffer.get(), dwSizeOut - 1);
-            return dwSizeOut;
+            sValue.assign(szBuffer.get(), sSizeOut - 1);
+            return static_cast<DWORD>(sSizeOut);
         }
     }
 
@@ -205,19 +207,21 @@ static _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSr
 /// \sa [ExpandEnvironmentStrings function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms724265.aspx)
 ///
 template<class _Traits, class _Ax>
-static _Success_(return != 0) DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue) noexcept
+static _Success_(return != 0) DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpSrc, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue)
 {
-    for (DWORD dwSizeOut = (DWORD)wcslen(lpSrc) + 0x100;;) {
-        DWORD dwSizeIn = dwSizeOut;
+    for (SIZE_T sSizeOut = SIZETAdd(wcslen(lpSrc), 0x100);;) {
+        if (sSizeOut > DWORD_MAX)
+            throw std::invalid_argument("String too big");
+        DWORD dwSizeIn = static_cast<DWORD>(sSizeOut);
         std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[(size_t)dwSizeIn + 1]);
-        dwSizeOut = ::ExpandEnvironmentStringsW(lpSrc, szBuffer.get(), dwSizeIn);
-        if (dwSizeOut == 0) {
+        sSizeOut = ::ExpandEnvironmentStringsW(lpSrc, szBuffer.get(), dwSizeIn);
+        if (sSizeOut == 0) {
             // Error or zero-length input.
             break;
-        } else if (dwSizeOut <= dwSizeIn) {
+        } else if (sSizeOut <= dwSizeIn) {
             // The buffer was sufficient.
-            sValue.assign(szBuffer.get(), dwSizeOut - 1);
-            return dwSizeOut;
+            sValue.assign(szBuffer.get(), sSizeOut - 1);
+            return static_cast<DWORD>(sSizeOut);
         }
     }
 

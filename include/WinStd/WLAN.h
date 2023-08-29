@@ -33,23 +33,25 @@ extern DWORD (WINAPI *pfnWlanReasonCodeToString)(__in DWORD dwReasonCode, __in D
 template<class _Traits, class _Ax>
 static DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sValue, __reserved PVOID pReserved)
 {
-    DWORD dwSize = 0;
+    SIZE_T sSize = 0;
 
     if (!::pfnWlanReasonCodeToString)
         return ERROR_CALL_NOT_IMPLEMENTED;
 
     for (;;) {
         // Increment size and allocate buffer.
-        dwSize += 1024;
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwSize]);
+        sSize = SIZETAdd(sSize, 1024);
+        if (sSize > DWORD_MAX)
+            throw std::runtime_exception("Data too big");
+        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[sSize]);
 
         // Try!
-        DWORD dwResult = ::pfnWlanReasonCodeToString(dwReasonCode, dwSize, szBuffer.get(), pReserved);
+        DWORD dwResult = ::pfnWlanReasonCodeToString(dwReasonCode, static_cast<DWORD>(sSize), szBuffer.get(), pReserved);
         if (dwResult == ERROR_SUCCESS) {
-            DWORD dwLength = (DWORD)wcsnlen(szBuffer.get(), dwSize);
-            if (dwLength < dwSize - 1) {
+            SIZE_T sLength = wcsnlen(szBuffer.get(), sSize);
+            if (sLength < sSize - 1) {
                 // Buffer was long enough.
-                sValue.assign(szBuffer.get(), dwLength);
+                sValue.assign(szBuffer.get(), sLength);
                 return ERROR_SUCCESS;
             }
         } else {
