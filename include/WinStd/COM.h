@@ -1,4 +1,4 @@
-﻿/*
+/*
     SPDX-License-Identifier: MIT
     Copyright © 1991-2023 Amebis
     Copyright © 2016 GÉANT
@@ -202,7 +202,7 @@ namespace winstd
         ///
         /// Constructs BSTR from OLE string
         ///
-        bstr(_In_ LPCOLESTR src)
+        bstr(_In_opt_z_ LPCOLESTR src)
         {
             m_h = SysAllocString(src);
             if (!m_h)
@@ -212,7 +212,7 @@ namespace winstd
         ///
         /// Constructs BSTR from OLE string with length
         ///
-        bstr(_In_ LPCOLESTR src, _In_ UINT len)
+        bstr(_In_reads_opt_(len) LPCOLESTR src, _In_ UINT len)
         {
             m_h = SysAllocStringLen(src, len);
             if (!m_h)
@@ -223,8 +223,10 @@ namespace winstd
         /// Constructs BSTR from std::basic_string
         ///
         template<class _Traits, class _Ax>
-        bstr(_In_ const std::basic_string<wchar_t, _Traits, _Ax> &src)
+        bstr(_In_ const std::basic_string<OLECHAR, _Traits, _Ax> &src)
         {
+            if (src.length() >= UINT_MAX)
+                throw std::invalid_argument("String too long");
             m_h = SysAllocStringLen(src.c_str(), (UINT)src.length());
             if (!m_h)
                 throw std::bad_alloc();
