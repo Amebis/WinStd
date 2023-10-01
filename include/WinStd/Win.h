@@ -1,4 +1,4 @@
-/*
+﻿/*
     SPDX-License-Identifier: MIT
     Copyright © 1991-2023 Amebis
     Copyright © 2016 GÉANT
