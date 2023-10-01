@@ -1,4 +1,4 @@
-﻿/*
+/*
     SPDX-License-Identifier: MIT
     Copyright © 1991-2023 Amebis
     Copyright © 2016 GÉANT
@@ -1440,6 +1440,13 @@ namespace winstd
     /// \sa [CreateToolhelp32Snapshot function](https://docs.microsoft.com/en-us/windows/win32/api/tlhelp32/nf-tlhelp32-createtoolhelp32snapshot)
     ///
     typedef win_handle<INVALID_HANDLE_VALUE> process_snapshot;
+
+    ///
+    /// Mutex handle wrapper
+    ///
+    /// \sa [CreateMutexW function](https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createmutexw)
+    ///
+    typedef win_handle<NULL> mutex;
 
     ///
     /// File handle wrapper
