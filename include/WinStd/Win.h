@@ -2476,6 +2476,36 @@ static DWORD SetEntriesInAclW(_In_ ULONG cCountOfExplicitEntries, _In_reads_opt_
     return ERROR_SUCCESS;
 }
 
+///
+/// Retrieves the thread preferred UI languages for the current thread.
+///
+/// \sa [GetThreadPreferredUILanguages function](https://learn.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-getthreadpreferreduilanguages)
+///
+template<class _Traits, class _Ax>
+_Success_(return != 0) BOOL GetThreadPreferredUILanguages(_In_ DWORD dwFlags, _Out_ PULONG pulNumLanguages, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sValue)
+{
+    wchar_t szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
+    ULONG ulSize = _countof(szStackBuffer);
+
+    // Try with stack buffer first.
+    if (GetThreadPreferredUILanguages(dwFlags, pulNumLanguages, szStackBuffer, &ulSize)) {
+        // Copy from stack.
+        sValue.assign(szStackBuffer, ulSize - 1);
+        return TRUE;
+    } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query required size.
+        ulSize = 0;
+        GetThreadPreferredUILanguages(dwFlags, pulNumLanguages, NULL, &ulSize);
+        // Allocate on heap and retry.
+        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[ulSize]);
+        if (GetThreadPreferredUILanguages(dwFlags, pulNumLanguages, szBuffer.get(), &ulSize)) {
+            sValue.assign(szBuffer.get(), ulSize - 1);
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
 #pragma warning(pop)
 
 /// @}
