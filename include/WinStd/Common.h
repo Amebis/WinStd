@@ -1056,7 +1056,7 @@ namespace winstd
         }
 
         ///
-        /// Returns the Windows error number
+        /// Returns the error number
         ///
         error_type number() const
         {

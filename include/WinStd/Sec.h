@@ -31,17 +31,15 @@ static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std:
         // Copy from stack.
         sName.assign(szStackBuffer, ulSize);
         return TRUE;
-    } else {
-        if (::GetLastError() == ERROR_MORE_DATA) {
-            // Allocate buffer on heap and retry.
-            std::unique_ptr<char[]> szBuffer(new char[ulSize]);
-            if (::GetUserNameExA(NameFormat, szBuffer.get(), &ulSize)) {
-                sName.assign(szBuffer.get(), ulSize);
-                return TRUE;
-            }
+    }
+    if (::GetLastError() == ERROR_MORE_DATA) {
+        // Allocate buffer on heap and retry.
+        std::unique_ptr<char[]> szBuffer(new char[ulSize]);
+        if (::GetUserNameExA(NameFormat, szBuffer.get(), &ulSize)) {
+            sName.assign(szBuffer.get(), ulSize);
+            return TRUE;
         }
     }
-
     return FALSE;
 }
 
@@ -63,17 +61,15 @@ static BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std:
         // Copy from stack.
         sName.assign(szStackBuffer, ulSize);
         return TRUE;
-    } else {
-        if (::GetLastError() == ERROR_MORE_DATA) {
-            // Allocate buffer on heap and retry.
-            std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[ulSize]);
-            if (::GetUserNameExW(NameFormat, szBuffer.get(), &ulSize)) {
-                sName.assign(szBuffer.get(), ulSize);
-                return TRUE;
-            }
+    }
+    if (::GetLastError() == ERROR_MORE_DATA) {
+        // Allocate buffer on heap and retry.
+        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[ulSize]);
+        if (::GetUserNameExW(NameFormat, szBuffer.get(), &ulSize)) {
+            sName.assign(szBuffer.get(), ulSize);
+            return TRUE;
         }
     }
-
     return FALSE;
 }
 
