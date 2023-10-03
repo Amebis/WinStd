@@ -291,6 +291,354 @@ static int sprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _
 }
 
 ///
+/// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
+///
+/// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
+///
+template<class _Traits, class _Ax>
+static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
+{
+    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(CHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
+    if (cch) {
+        // Copy from stack. Be careful not to include zero terminator.
+        sMultiByteStr.assign(szStackBuffer, cchWideChar != -1 ? strnlen(szStackBuffer, cch) : (size_t)cch - 1);
+    }
+    else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
+        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.assign(szBuffer.get(), cchWideChar != -1 ? strnlen(szBuffer.get(), cch) : (size_t)cch - 1);
+    }
+
+    return cch;
+}
+
+///
+/// Maps a UTF-16 (wide character) string to a std::vector. The new character vector is not necessarily from a multibyte character set.
+///
+/// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
+///
+template<class _Ax>
+static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
+{
+    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(CHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
+    if (cch) {
+        // Copy from stack.
+        sMultiByteStr.assign(szStackBuffer, szStackBuffer + cch);
+    }
+    else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.resize(cch);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, sMultiByteStr.data(), cch, lpDefaultChar, lpUsedDefaultChar);
+    }
+
+    return cch;
+}
+
+///
+/// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
+///
+/// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
+///
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
+static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
+{
+    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(CHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
+    if (cch) {
+        // Copy from stack.
+        sMultiByteStr.assign(szStackBuffer, cch);
+    }
+    else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), NULL, 0, lpDefaultChar, lpUsedDefaultChar);
+        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.assign(szBuffer.get(), cch);
+    }
+
+    return cch;
+}
+
+///
+/// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
+///
+/// \note This function cleans all internal buffers using SecureZeroMemory() before returning.
+///
+/// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
+///
+template<class _Traits, class _Ax>
+static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::basic_string<char, _Traits, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
+{
+    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(CHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
+    if (cch) {
+        // Copy from stack. Be careful not to include zero terminator.
+        sMultiByteStr.assign(szStackBuffer, cchWideChar != -1 ? strnlen(szStackBuffer, cch) : (size_t)cch - 1);
+    }
+    else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
+        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.assign(szBuffer.get(), cchWideChar != -1 ? strnlen(szBuffer.get(), cch) : (size_t)cch - 1);
+        SecureZeroMemory(szBuffer.get(), sizeof(CHAR) * cch);
+    }
+
+    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
+
+    return cch;
+}
+
+///
+/// Maps a UTF-16 (wide character) string to a std::vector. The new character vector is not necessarily from a multibyte character set.
+///
+/// \note This function cleans all internal buffers using SecureZeroMemory() before returning.
+///
+/// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
+///
+template<class _Ax>
+static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cchWideChar) LPCWSTR lpWideCharStr, _In_ int cchWideChar, _Out_ std::vector<char, _Ax> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
+{
+    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(CHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
+    if (cch) {
+        // Copy from stack.
+        sMultiByteStr.assign(szStackBuffer, szStackBuffer + cch);
+    }
+    else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.resize(cch);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, sMultiByteStr.data(), cch, lpDefaultChar, lpUsedDefaultChar);
+    }
+
+    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
+
+    return cch;
+}
+
+///
+/// Maps a UTF-16 (wide character) string to a std::string. The new character string is not necessarily from a multibyte character set.
+///
+/// \note This function cleans all internal buffers using SecureZeroMemory() before returning.
+///
+/// \sa [WideCharToMultiByte function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130.aspx)
+///
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
+static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, _In_ DWORD dwFlags, _Out_ std::basic_string<wchar_t, _Traits1, _Ax1> sWideCharStr, _Out_ std::basic_string<char, _Traits2, _Ax2> &sMultiByteStr, _In_opt_z_ LPCSTR lpDefaultChar, _Out_opt_ LPBOOL lpUsedDefaultChar) noexcept
+{
+    CHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(CHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szStackBuffer, _countof(szStackBuffer), lpDefaultChar, lpUsedDefaultChar);
+    if (cch) {
+        // Copy from stack.
+        sMultiByteStr.assign(szStackBuffer, cch);
+    }
+    else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), NULL, 0, lpDefaultChar, lpUsedDefaultChar);
+        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.assign(szBuffer.get(), cch);
+        SecureZeroMemory(szBuffer.get(), sizeof(CHAR) * cch);
+    }
+
+    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
+
+    return cch;
+}
+
+///
+/// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
+///
+/// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
+///
+template<class _Traits, class _Ax>
+static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
+    if (cch) {
+        // Copy from stack.
+        sWideCharStr.assign(szStackBuffer, cbMultiByte != -1 ? wcsnlen(szStackBuffer, cch) : (size_t)cch - 1);
+    }
+    else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
+        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szBuffer.get(), cch);
+        sWideCharStr.assign(szBuffer.get(), cbMultiByte != -1 ? wcsnlen(szBuffer.get(), cch) : (size_t)cch - 1);
+    }
+
+    return cch;
+}
+
+///
+/// Maps a character string to a UTF-16 (wide character) std::vector. The character vector is not necessarily from a multibyte character set.
+///
+/// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
+///
+template<class _Ax>
+static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
+    if (cch) {
+        // Copy from stack.
+        sWideCharStr.assign(szStackBuffer, szStackBuffer + cch);
+    }
+    else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
+        sWideCharStr.resize(cch);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, sWideCharStr.data(), cch);
+    }
+
+    return cch;
+}
+
+///
+/// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
+///
+/// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
+///
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
+static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szStackBuffer, _countof(szStackBuffer));
+    if (cch) {
+        // Copy from stack.
+        sWideCharStr.assign(szStackBuffer, cch);
+    }
+    else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), NULL, 0);
+        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szBuffer.get(), cch);
+        sWideCharStr.assign(szBuffer.get(), cch);
+    }
+
+    return cch;
+}
+
+///
+/// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
+///
+/// \note This function cleans all internal buffers using SecureZeroMemory() before returning.
+///
+/// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
+///
+template<class _Traits, class _Ax>
+static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::basic_string<wchar_t, _Traits, _Ax> &sWideCharStr) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
+    if (cch) {
+        // Copy from stack.
+        sWideCharStr.assign(szStackBuffer, cbMultiByte != -1 ? wcsnlen(szStackBuffer, cch) : (size_t)cch - 1);
+    }
+    else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
+        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szBuffer.get(), cch);
+        sWideCharStr.assign(szBuffer.get(), cbMultiByte != -1 ? wcsnlen(szBuffer.get(), cch) : (size_t)cch - 1);
+        SecureZeroMemory(szBuffer.get(), sizeof(WCHAR) * cch);
+    }
+
+    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
+
+    return cch;
+}
+
+///
+/// Maps a character string to a UTF-16 (wide character) std::vector. The character vector is not necessarily from a multibyte character set.
+///
+/// \note This function cleans all internal buffers using SecureZeroMemory() before returning.
+///
+/// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
+///
+template<class _Ax>
+static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_z_count_(cbMultiByte) LPCSTR lpMultiByteStr, _In_ int cbMultiByte, _Out_ std::vector<wchar_t, _Ax> &sWideCharStr) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szStackBuffer, _countof(szStackBuffer));
+    if (cch) {
+        // Copy from stack.
+        sWideCharStr.assign(szStackBuffer, szStackBuffer + cch);
+    }
+    else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
+        sWideCharStr.resize(cch);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, sWideCharStr.data(), cch);
+    }
+
+    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
+
+    return cch;
+}
+
+///
+/// Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.
+///
+/// \note This function cleans all internal buffers using SecureZeroMemory() before returning.
+///
+/// \sa [MultiByteToWideChar function](https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072.aspx)
+///
+template<class _Traits1, class _Ax1, class _Traits2, class _Ax2>
+static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, _In_ DWORD dwFlags, _In_ const std::basic_string<char, _Traits1, _Ax1> &sMultiByteStr, _Out_ std::basic_string<wchar_t, _Traits2, _Ax2> &sWideCharStr) noexcept
+{
+    WCHAR szStackBuffer[WINSTD_STACK_BUFFER_BYTES / sizeof(WCHAR)];
+
+    // Try to convert to stack buffer first.
+    int cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szStackBuffer, _countof(szStackBuffer));
+    if (cch) {
+        // Copy from stack.
+        sWideCharStr.assign(szStackBuffer, cch);
+    }
+    else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+        // Query the required output size. Allocate buffer. Then convert again.
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), NULL, 0);
+        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szBuffer.get(), cch);
+        sWideCharStr.assign(szBuffer.get(), cch);
+        SecureZeroMemory(szBuffer.get(), sizeof(WCHAR) * cch);
+    }
+
+    SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
+
+    return cch;
+}
+
+///
 /// Formats a message string.
 ///
 /// \sa [FormatMessage function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms679351.aspx)
@@ -1077,11 +1425,18 @@ namespace winstd
         /// Constructs an exception
         ///
         /// \param[in] num Windows error code
+        ///
+        win_runtime_error(_In_ error_type num) : num_runtime_error<DWORD>(num, message(num))
+        {}
+
+        ///
+        /// Constructs an exception
+        ///
+        /// \param[in] num Windows error code
         /// \param[in] msg Error message
         ///
-        win_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<DWORD>(num, msg)
-        {
-        }
+        win_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<DWORD>(num, msg + ": " + message(num))
+        {}
 
         ///
         /// Constructs an exception
@@ -1089,41 +1444,49 @@ namespace winstd
         /// \param[in] num  Windows error code
         /// \param[in] msg  Error message
         ///
-        win_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<DWORD>(num, msg)
-        {
-        }
+        win_runtime_error(_In_ error_type num, _In_z_ const char *msg) : num_runtime_error<DWORD>(num, std::string(msg) + ": " + message(num))
+        {}
+
+        ///
+        /// Constructs an exception using `GetLastError()`
+        ///
+        win_runtime_error() : num_runtime_error<DWORD>(GetLastError(), message(GetLastError()))
+        {}
 
         ///
         /// Constructs an exception using `GetLastError()`
         ///
         /// \param[in] msg  Error message
         ///
-        win_runtime_error(_In_ const std::string& msg) : num_runtime_error<DWORD>(GetLastError(), msg)
-        {
-        }
+        win_runtime_error(_In_ const std::string& msg) : num_runtime_error<DWORD>(GetLastError(), msg + ": " + message(GetLastError()))
+        {}
 
         ///
         /// Constructs an exception using `GetLastError()`
         ///
         /// \param[in] msg  Error message
         ///
-        win_runtime_error(_In_opt_z_ const char *msg = nullptr) : num_runtime_error<DWORD>(GetLastError(), msg)
-        {
-        }
+        win_runtime_error(_In_z_ const char *msg) : num_runtime_error<DWORD>(GetLastError(), std::string(msg) + ": " + message(GetLastError()))
+        {}
 
+    protected:
         ///
         /// Returns a user-readable Windows error message
         ///
         /// \sa [FormatMessage function](https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-formatmessage)
         ///
-        tstring msg(_In_opt_ DWORD dwLanguageId = 0) const
+        static std::string message(_In_ error_type num, _In_opt_ DWORD dwLanguageId = 0)
         {
-            tstring str;
-            if (FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, 0, m_num, dwLanguageId, str, NULL)) {
+            error_type runtime_num = GetLastError();
+            std::wstring wstr;
+            if (FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, 0, num, dwLanguageId, wstr, NULL)) {
                 // Stock Windows error messages contain CRLF. Well... Trim all the trailing white space.
-                str.erase(str.find_last_not_of(_T(" \t\n\r\f\v")) + 1);
+                wstr.erase(wstr.find_last_not_of(L" \t\n\r\f\v") + 1);
             } else
-                sprintf(str, m_num >= 0x10000 ? _T("Error 0x%X") : _T("Error %u"), m_num);
+                sprintf(wstr, num >= 0x10000 ? L"Error 0x%X" : L"Error %u", num);
+            std::string str;
+            WideCharToMultiByte(CP_UTF8, 0, wstr, str, NULL, NULL);
+            SetLastError(runtime_num);
             return str;
         }
     };

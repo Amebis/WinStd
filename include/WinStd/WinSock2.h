@@ -28,11 +28,9 @@ namespace winstd
         /// Constructs an exception
         ///
         /// \param[in] num  WinSock2 error code
-        /// \param[in] msg  Error message
         ///
-        ws2_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<int>(num, msg)
-        {
-        }
+        ws2_runtime_error(_In_ error_type num) : num_runtime_error<int>(num, message(num))
+        {}
 
         ///
         /// Constructs an exception
@@ -40,41 +38,57 @@ namespace winstd
         /// \param[in] num  WinSock2 error code
         /// \param[in] msg  Error message
         ///
-        ws2_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<int>(num, msg)
-        {
-        }
+        ws2_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<int>(num, msg + ": " + message(num))
+        {}
+
+        ///
+        /// Constructs an exception
+        ///
+        /// \param[in] num  WinSock2 error code
+        /// \param[in] msg  Error message
+        ///
+        ws2_runtime_error(_In_ error_type num, _In_z_ const char *msg) : num_runtime_error<int>(num, std::string(msg) + ": " + message(num))
+        {}
+
+        ///
+        /// Constructs an exception using `WSAGetLastError()`
+        ///
+        ws2_runtime_error() : num_runtime_error<int>(WSAGetLastError(), message(WSAGetLastError()))
+        {}
 
         ///
         /// Constructs an exception using `WSAGetLastError()`
         ///
         /// \param[in] msg  Error message
         ///
-        ws2_runtime_error(_In_ const std::string& msg) : num_runtime_error<int>(WSAGetLastError(), msg)
-        {
-        }
+        ws2_runtime_error(_In_ const std::string& msg) : num_runtime_error<int>(WSAGetLastError(), msg + ": " + message(WSAGetLastError()))
+        {}
 
         ///
         /// Constructs an exception using `WSAGetLastError()`
         ///
         /// \param[in] msg  Error message
         ///
-        ws2_runtime_error(_In_opt_z_ const char *msg = nullptr) : num_runtime_error<int>(WSAGetLastError(), msg)
-        {
-        }
+        ws2_runtime_error(_In_z_ const char *msg) : num_runtime_error<int>(WSAGetLastError(), std::string(msg) + ": " + message(WSAGetLastError()))
+        {}
 
+    protected:
         ///
         /// Returns a user-readable Windows error message
         ///
         /// \sa [FormatMessage function](https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-formatmessage)
         ///
-        tstring msg(_In_opt_ DWORD dwLanguageId = 0) const
+        static std::string message(_In_ error_type num, _In_opt_ DWORD dwLanguageId = 0)
         {
-            tstring str;
-            if (FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, 0, m_num, dwLanguageId, str, NULL)) {
+            std::wstring wstr;
+            if (FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, 0, num, dwLanguageId, wstr, NULL)) {
                 // Stock Windows error messages contain CRLF. Well... Trim all the trailing white space.
-                str.erase(str.find_last_not_of(_T(" \t\n\r\f\v")) + 1);
-            } else
-                sprintf(str, m_num >= 0x10000 ? _T("Error 0x%X") : _T("Error %u"), m_num);
+                wstr.erase(wstr.find_last_not_of(L" \t\n\r\f\v") + 1);
+            }
+            else
+                sprintf(wstr, num >= 0x10000 ? L"Error 0x%X" : L"Error %u", num);
+            std::string str;
+            WideCharToMultiByte(CP_UTF8, 0, wstr, str, NULL, NULL);
             return str;
         }
     };
