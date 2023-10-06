@@ -107,8 +107,7 @@ namespace winstd
         sec_credentials(_In_opt_ handle_type h, _In_ const TimeStamp expires) :
             m_expires(expires),
             handle(h)
-        {
-        }
+        {}
 
         ///
         /// Move constructor
@@ -118,8 +117,7 @@ namespace winstd
         sec_credentials(_Inout_ sec_credentials &&h) noexcept :
             m_expires(std::move(h.m_expires)),
             handle<PCredHandle, NULL>(std::move(h))
-        {
-        }
+        {}
 
         ///
         /// Frees the security credentials.
@@ -216,8 +214,7 @@ namespace winstd
             m_attrib (std::move(h.m_attrib )),
             m_expires(std::move(h.m_expires)),
             handle<PCtxtHandle, NULL>(std::move(h))
-        {
-        }
+        {}
 
         ///
         /// Frees the security context.
@@ -364,8 +361,7 @@ namespace winstd
         /// \param[in] msg  Error message
         ///
         sec_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<SECURITY_STATUS>(num, msg)
-        {
-        }
+        {}
 
         ///
         /// Constructs an exception
@@ -374,8 +370,7 @@ namespace winstd
         /// \param[in] msg  Error message
         ///
         sec_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<SECURITY_STATUS>(num, msg)
-        {
-        }
+        {}
 
         ///
         /// Copies an exception
@@ -383,8 +378,7 @@ namespace winstd
         /// \param[in] other  Exception to copy from
         ///
         sec_runtime_error(const sec_runtime_error &other) : num_runtime_error<SECURITY_STATUS>(other)
-        {
-        }
+        {}
     };
 
     /// @}

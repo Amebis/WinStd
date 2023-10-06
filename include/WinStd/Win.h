@@ -11,6 +11,7 @@
 #include "Common.h"
 #include <AclAPI.h>
 #include <tlhelp32.h>
+#include <winsvc.h>
 #include <string>
 #include <vector>
 
