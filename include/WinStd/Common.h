@@ -786,7 +786,7 @@ namespace winstd
         ///
         globalmem_accessor(_In_ HGLOBAL hMem) : m_h(hMem)
         {
-            m_data = (T*)GlobalLock(hMem);
+            m_data = reinterpret_cast<T*>(GlobalLock(hMem));
             if (!m_data)
                 throw win_runtime_error("GlobalLock failed");
         }
