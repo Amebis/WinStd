@@ -1615,6 +1615,34 @@ namespace winstd
     };
 
     ///
+    /// Clipboard management
+    ///
+    class clipboard_opener
+    {
+    public:
+        ///
+        /// Opens the clipboard for examination and prevents other applications from modifying the clipboard content
+        ///
+        /// \sa [OpenClipboard function](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-openclipboard)
+        ///
+        clipboard_opener(_In_opt_ HWND hWndNewOwner = NULL)
+        {
+            if (!OpenClipboard(hWndNewOwner))
+                throw win_runtime_error("OpenClipboard failed");
+        }
+
+        ///
+        /// Closes the clipboard
+        ///
+        /// \sa [CloseClipboard function](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-closeclipboard)
+        ///
+        virtual ~clipboard_opener()
+        {
+            CloseClipboard();
+        }
+    };
+
+    ///
     /// Console control handler stack management
     ///
     class console_ctrl_handler
