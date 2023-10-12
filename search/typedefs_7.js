@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['pointer_0',['pointer',['../classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd',1,'winstd::heap_allocator']]],
-  ['process_1',['process',['../group___win_std_win_a_p_i.html#gac5db2a322de45a52343ca98bbec302df',1,'winstd']]],
-  ['process_5fsnapshot_2',['process_snapshot',['../group___win_std_win_a_p_i.html#ga59cd7dece6bf5649013f07c929547e80',1,'winstd']]]
+  ['other_0',['other',['../structwinstd_1_1sanitizing__allocator_1_1rebind.html#a6a195ba8f7b42d8e82304efb08e18679',1,'winstd::sanitizing_allocator::rebind::other'],['../structwinstd_1_1heap__allocator_1_1rebind.html#a7916519ada01914c23461a64334ff331',1,'winstd::heap_allocator::rebind::other']]]
 ];

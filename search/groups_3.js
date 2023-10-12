@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['gdi_20api_0',['GDI API',['../group___win_std_gdi_a_p_i.html',1,'']]],
-  ['general_1',['General',['../group___win_std_general.html',1,'']]]
+  ['for_20windows_20api_0',['Event Tracing for Windows API',['../group___win_std_e_t_w_a_p_i.html',1,'']]],
+  ['formatting_1',['String Formatting',['../group___win_std_str_format.html',1,'']]]
 ];
