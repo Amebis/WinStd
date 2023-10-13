@@ -1370,6 +1370,75 @@ namespace winstd
     /// @{
 
     ///
+    /// Loads exception message string from resources and converts it to UTF-8.
+    ///
+    /// \param[in] hModule    Module to load resource string from
+    /// \param[in] nId        Resource string ID number
+    /// \param[in] wLanguage  Resource string language
+    ///
+    /// \return Loaded string in UTF-8 encoding. As std::exception messages may only be char*, we use UTF-8 by convention.
+    ///
+    inline std::string load_msg_from_res(_In_opt_ HMODULE hModule, _In_ UINT nId, _In_ WORD wLanguage)
+    {
+        std::string sResult;
+        HRSRC hFoundRes = FindResourceExW(hModule, MAKEINTRESOURCEW(6), MAKEINTRESOURCEW(nId), wLanguage);
+        if (hFoundRes) {
+            DWORD dwSize = SizeofResource(hModule, hFoundRes);
+            if (dwSize) {
+                HGLOBAL hLoadedRes = LoadResource(hModule, hFoundRes);
+                if (hLoadedRes) {
+                    LPCWSTR szMessage = reinterpret_cast<LPCWSTR>(LockResource(hLoadedRes));
+                    if (szMessage) {
+                        WideCharToMultiByte(CP_UTF8, 0, szMessage, dwSize / sizeof(*szMessage), sResult, NULL, NULL);
+                        return sResult;
+                    } else
+                        SetLastError(ERROR_LOCK_FAILED);
+                }
+            }
+        }
+        sprintf(sResult, "msg %u", nId);
+        return sResult;
+    }
+
+    ///
+    /// Loads exception message sprintf template from resources, formats it and converts it to UTF-8.
+    ///
+    /// \param[in] hModule    Module to load resource string from
+    /// \param[in] nId        Resource string ID number
+    /// \param[in] wLanguage  Resource string language
+    ///
+    /// \return Loaded string in UTF-8 encoding. As std::exception messages may only be char*, we use UTF-8 by convention.
+    ///
+    inline std::string fmt_msg_from_res(_In_opt_ HMODULE hModule, _In_ UINT nId, _In_ WORD wLanguage, ...)
+    {
+        std::string sResult;
+        HRSRC hFoundRes = FindResourceExW(hModule, MAKEINTRESOURCEW(6), MAKEINTRESOURCEW(nId), wLanguage);
+        if (hFoundRes) {
+            DWORD dwSize = SizeofResource(hModule, hFoundRes);
+            if (dwSize) {
+                HGLOBAL hLoadedRes = LoadResource(hModule, hFoundRes);
+                if (hLoadedRes) {
+                    LPCWSTR szFormat = reinterpret_cast<LPCWSTR>(LockResource(hLoadedRes));
+                    if (szFormat) {
+                        dwSize /= sizeof(*szFormat);
+                        assert(wcsnlen(szFormat, dwSize) < dwSize); // Resource strings must be zero-terminated to make strings directly usable with sprintf.
+                        va_list arg;
+                        va_start(arg, wLanguage);
+                        std::wstring sMessage;
+                        vsprintf(sMessage, szFormat, arg);
+                        va_end(arg);
+                        WideCharToMultiByte(CP_UTF8, 0, sMessage, sResult, NULL, NULL);
+                        return sResult;
+                    } else
+                        SetLastError(ERROR_LOCK_FAILED);
+                }
+            }
+        }
+        sprintf(sResult, "msg %u", nId);
+        return sResult;
+    }
+
+    ///
     /// Numerical runtime error
     ///
     template <typename _Tn>
@@ -1471,7 +1540,8 @@ namespace winstd
 
     protected:
         ///
-        /// Returns a user-readable Windows error message
+        /// Returns a user-readable Windows error message.
+        /// As std::exception messages may only be char*, we use UTF-8 by convention.
         ///
         /// \sa [FormatMessage function](https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-formatmessage)
         ///
