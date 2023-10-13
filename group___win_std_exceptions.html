@@ -71,7 +71,8 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Exceptions</div></div>
 </div><!--header-->
 <div class="contents">
@@ -93,12 +94,134 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1sec__runtime__error.html">winstd::sec_runtime_error</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Security runtime error.  <a href="classwinstd_1_1sec__runtime__error.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga707a2297f021e381a6ed3751c0aaff92" id="r_ga707a2297f021e381a6ed3751c0aaff92"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_exceptions.html#ga707a2297f021e381a6ed3751c0aaff92">winstd::load_msg_from_res</a> (HMODULE hModule, UINT nId, WORD wLanguage)</td></tr>
+<tr class="memdesc:ga707a2297f021e381a6ed3751c0aaff92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads exception message string from resources and converts it to UTF-8.  <br /></td></tr>
+<tr class="separator:ga707a2297f021e381a6ed3751c0aaff92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9207e32a583388faba2af5927e4d7968" id="r_ga9207e32a583388faba2af5927e4d7968"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_exceptions.html#ga9207e32a583388faba2af5927e4d7968">winstd::fmt_msg_from_res</a> (HMODULE hModule, UINT nId, WORD wLanguage,...)</td></tr>
+<tr class="memdesc:ga9207e32a583388faba2af5927e4d7968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads exception message sprintf template from resources, formats it and converts it to UTF-8.  <br /></td></tr>
+<tr class="separator:ga9207e32a583388faba2af5927e4d7968"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga9207e32a583388faba2af5927e4d7968" name="ga9207e32a583388faba2af5927e4d7968"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9207e32a583388faba2af5927e4d7968">&#9670;&#160;</a></span>fmt_msg_from_res()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string winstd::fmt_msg_from_res </td>
+          <td>(</td>
+          <td class="paramtype">HMODULE&#160;</td>
+          <td class="paramname"><em>hModule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>nId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">WORD&#160;</td>
+          <td class="paramname"><em>wLanguage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads exception message sprintf template from resources, formats it and converts it to UTF-8. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hModule</td><td>Module to load resource string from </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nId</td><td>Resource string ID number </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">wLanguage</td><td>Resource string language</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Loaded string in UTF-8 encoding. As std::exception messages may only be char*, we use UTF-8 by convention. </dd></dl>
+
+</div>
+</div>
+<a id="ga707a2297f021e381a6ed3751c0aaff92" name="ga707a2297f021e381a6ed3751c0aaff92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga707a2297f021e381a6ed3751c0aaff92">&#9670;&#160;</a></span>load_msg_from_res()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string winstd::load_msg_from_res </td>
+          <td>(</td>
+          <td class="paramtype">HMODULE&#160;</td>
+          <td class="paramname"><em>hModule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UINT&#160;</td>
+          <td class="paramname"><em>nId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">WORD&#160;</td>
+          <td class="paramname"><em>wLanguage</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads exception message string from resources and converts it to UTF-8. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hModule</td><td>Module to load resource string from </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nId</td><td>Resource string ID number </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">wLanguage</td><td>Resource string language</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Loaded string in UTF-8 encoding. As std::exception messages may only be char*, we use UTF-8 by convention. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Oct 12 2023 11:52:36 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Fri Oct 13 2023 09:57:24 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
