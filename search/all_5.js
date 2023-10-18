@@ -32,7 +32,7 @@ var searchData=
   ['event_5ftrace_5fenabler_29',['event_trace_enabler',['../classwinstd_1_1event__trace__enabler.html#a8666ba08639a65fa01eb64c4855d68a3',1,'winstd::event_trace_enabler::event_trace_enabler(const event_session &amp;session, LPCGUID ProviderId, UCHAR Level, ULONGLONG MatchAnyKeyword=0, ULONGLONG MatchAllKeyword=0, ULONG EnableProperty=0, PEVENT_FILTER_DESCRIPTOR EnableFilterDesc=NULL)'],['../classwinstd_1_1event__trace__enabler.html#a50ce2e4286dbfc133c7f4a4762b65a05',1,'winstd::event_trace_enabler::event_trace_enabler(LPCGUID SourceId, TRACEHANDLE TraceHandle, LPCGUID ProviderId, UCHAR Level, ULONGLONG MatchAnyKeyword=0, ULONGLONG MatchAllKeyword=0, ULONG EnableProperty=0, PEVENT_FILTER_DESCRIPTOR EnableFilterDesc=NULL)'],['../classwinstd_1_1event__trace__enabler.html',1,'winstd::event_trace_enabler']]],
   ['example_30',['example',['../index.html#autotoc_md4',1,'Example'],['../index.html#autotoc_md6',1,'Example'],['../index.html#autotoc_md8',1,'Example']]],
   ['exceptions_31',['Exceptions',['../group___win_std_exceptions.html',1,'']]],
-  ['expandenvironmentstringsa_32',['ExpandEnvironmentStringsA',['../group___win_std_win_a_p_i.html#ga07fbe3c3b5aceaf3442a26fc3b6ce4b0',1,'Win.h']]],
-  ['expandenvironmentstringsw_33',['ExpandEnvironmentStringsW',['../group___win_std_win_a_p_i.html#gad2e379fa7f86f101bff21d2c10b7d430',1,'Win.h']]],
+  ['expandenvironmentstringsa_32',['ExpandEnvironmentStringsA',['../group___win_std_win_a_p_i.html#gaa221c59f3872964ad57fb6626d36e394',1,'Win.h']]],
+  ['expandenvironmentstringsw_33',['ExpandEnvironmentStringsW',['../group___win_std_win_a_p_i.html#ga088118fb47c75907356463e00e8fc2ec',1,'Win.h']]],
   ['extensible_20authentication_20protocol_20api_34',['Extensible Authentication Protocol API',['../group___win_std_e_a_p_a_p_i.html',1,'']]]
 ];
