@@ -85,7 +85,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base template class to support string formatting using <code>printf()</code> style templates.  <a href="classwinstd_1_1basic__string__printf.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1basic__string__msg.html">winstd::basic_string_msg&lt; _Elem, _Traits, _Ax &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base template class to support string formatting using <code><a class="el" href="group___win_std_str_format.html#ga78bf19793ce080f2826f56f228d64623" title="Formats a message string.">FormatMessage()</a></code> style templates.  <a href="classwinstd_1_1basic__string__msg.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base template class to support string formatting using <code>FormatMessage()</code> style templates.  <a href="classwinstd_1_1basic__string__msg.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1basic__string__guid.html">winstd::basic_string_guid&lt; _Elem, _Traits, _Ax &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base template class to support converting GUID to string.  <a href="classwinstd_1_1basic__string__guid.html#details">More...</a><br /></td></tr>
@@ -139,11 +139,11 @@ typedef <a class="el" href="group___win_std_str_format.html#ga9dda7a9a763b666f6f
 <tr class="separator:gab805ccda115191833fb01ba4457f208a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae63195e25e08e2b3d9a9b9c2987f5740" id="r_gae63195e25e08e2b3d9a9b9c2987f5740"><td class="memItemLeft" align="right" valign="top"><a id="gae63195e25e08e2b3d9a9b9c2987f5740" name="gae63195e25e08e2b3d9a9b9c2987f5740"></a>
 typedef <a class="el" href="classwinstd_1_1basic__string__msg.html">basic_string_msg</a>&lt; char, std::char_traits&lt; char &gt;, std::allocator&lt; char &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>winstd::string_msg</b></td></tr>
-<tr class="memdesc:gae63195e25e08e2b3d9a9b9c2987f5740"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single-byte character implementation of a class to support string formatting using <code><a class="el" href="group___win_std_str_format.html#ga78bf19793ce080f2826f56f228d64623" title="Formats a message string.">FormatMessage()</a></code> style templates. <br /></td></tr>
+<tr class="memdesc:gae63195e25e08e2b3d9a9b9c2987f5740"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single-byte character implementation of a class to support string formatting using <code>FormatMessage()</code> style templates. <br /></td></tr>
 <tr class="separator:gae63195e25e08e2b3d9a9b9c2987f5740"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga52a88ab19a1a96f778dbf7a2938bc98f" id="r_ga52a88ab19a1a96f778dbf7a2938bc98f"><td class="memItemLeft" align="right" valign="top"><a id="ga52a88ab19a1a96f778dbf7a2938bc98f" name="ga52a88ab19a1a96f778dbf7a2938bc98f"></a>
 typedef <a class="el" href="classwinstd_1_1basic__string__msg.html">basic_string_msg</a>&lt; wchar_t, std::char_traits&lt; wchar_t &gt;, std::allocator&lt; wchar_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>winstd::wstring_msg</b></td></tr>
-<tr class="memdesc:ga52a88ab19a1a96f778dbf7a2938bc98f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wide character implementation of a class to support string formatting using <code><a class="el" href="group___win_std_str_format.html#ga78bf19793ce080f2826f56f228d64623" title="Formats a message string.">FormatMessage()</a></code> style templates. <br /></td></tr>
+<tr class="memdesc:ga52a88ab19a1a96f778dbf7a2938bc98f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wide character implementation of a class to support string formatting using <code>FormatMessage()</code> style templates. <br /></td></tr>
 <tr class="separator:ga52a88ab19a1a96f778dbf7a2938bc98f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf47f07aac0b4c8ef47cf42216ab17f1b" id="r_gaf47f07aac0b4c8ef47cf42216ab17f1b"><td class="memItemLeft" align="right" valign="top"><a id="gaf47f07aac0b4c8ef47cf42216ab17f1b" name="gaf47f07aac0b4c8ef47cf42216ab17f1b"></a>
 typedef <a class="el" href="group___win_std_str_format.html#gae63195e25e08e2b3d9a9b9c2987f5740">string_msg</a>&#160;</td><td class="memItemRight" valign="bottom"><b>winstd::tstring_msg</b></td></tr>
@@ -218,14 +218,14 @@ Functions</h2></td></tr>
 <tr class="memitem:ga9aaaa6113374b6cbad241626819d06c9"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_str_format.html#ga9aaaa6113374b6cbad241626819d06c9">SecureMultiByteToWideChar</a> (UINT CodePage, DWORD dwFlags, const std::basic_string&lt; char, _Traits1, _Ax1 &gt; &amp;sMultiByteStr, std::basic_string&lt; wchar_t, _Traits2, _Ax2 &gt; &amp;sWideCharStr) noexcept</td></tr>
 <tr class="memdesc:ga9aaaa6113374b6cbad241626819d06c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a character string to a UTF-16 (wide character) std::wstring. The character string is not necessarily from a multibyte character set.  <br /></td></tr>
 <tr class="separator:ga9aaaa6113374b6cbad241626819d06c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78bf19793ce080f2826f56f228d64623" id="r_ga78bf19793ce080f2826f56f228d64623"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
-<tr class="memitem:ga78bf19793ce080f2826f56f228d64623"><td class="memTemplItemLeft" align="right" valign="top">static DWORD&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_str_format.html#ga78bf19793ce080f2826f56f228d64623">FormatMessage</a> (DWORD dwFlags, LPCVOID lpSource, DWORD dwMessageId, DWORD dwLanguageId, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;str, va_list *Arguments)</td></tr>
-<tr class="memdesc:ga78bf19793ce080f2826f56f228d64623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a message string.  <br /></td></tr>
-<tr class="separator:ga78bf19793ce080f2826f56f228d64623"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebf39378c982c5116ea0110a69eb2f75" id="r_gaebf39378c982c5116ea0110a69eb2f75"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
-<tr class="memitem:gaebf39378c982c5116ea0110a69eb2f75"><td class="memTemplItemLeft" align="right" valign="top">static DWORD&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_str_format.html#gaebf39378c982c5116ea0110a69eb2f75">FormatMessage</a> (DWORD dwFlags, LPCVOID lpSource, DWORD dwMessageId, DWORD dwLanguageId, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;str, va_list *Arguments)</td></tr>
-<tr class="memdesc:gaebf39378c982c5116ea0110a69eb2f75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a message string.  <br /></td></tr>
-<tr class="separator:gaebf39378c982c5116ea0110a69eb2f75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3ab80b358b64033b6345e3c931381e9d" id="r_ga3ab80b358b64033b6345e3c931381e9d"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga3ab80b358b64033b6345e3c931381e9d"><td class="memTemplItemLeft" align="right" valign="top">static DWORD&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_str_format.html#ga3ab80b358b64033b6345e3c931381e9d">FormatMessageA</a> (DWORD dwFlags, LPCVOID lpSource, DWORD dwMessageId, DWORD dwLanguageId, std::basic_string&lt; char, _Traits, _Ax &gt; &amp;str, va_list *Arguments)</td></tr>
+<tr class="memdesc:ga3ab80b358b64033b6345e3c931381e9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a message string.  <br /></td></tr>
+<tr class="separator:ga3ab80b358b64033b6345e3c931381e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2bcca64d8cc35866abf8bccc33dbf01b" id="r_ga2bcca64d8cc35866abf8bccc33dbf01b"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:ga2bcca64d8cc35866abf8bccc33dbf01b"><td class="memTemplItemLeft" align="right" valign="top">static DWORD&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___win_std_str_format.html#ga2bcca64d8cc35866abf8bccc33dbf01b">FormatMessageW</a> (DWORD dwFlags, LPCVOID lpSource, DWORD dwMessageId, DWORD dwLanguageId, std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;str, va_list *Arguments)</td></tr>
+<tr class="memdesc:ga2bcca64d8cc35866abf8bccc33dbf01b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a message string.  <br /></td></tr>
+<tr class="separator:ga2bcca64d8cc35866abf8bccc33dbf01b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="comment">// Please note the PCSTR typecasting invokes an operator to return</span></div>
@@ -252,8 +252,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga78bf19793ce080f2826f56f228d64623" name="ga78bf19793ce080f2826f56f228d64623"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga78bf19793ce080f2826f56f228d64623">&#9670;&#160;</a></span>FormatMessage() <span class="overload">[1/2]</span></h2>
+<a id="ga3ab80b358b64033b6345e3c931381e9d" name="ga3ab80b358b64033b6345e3c931381e9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3ab80b358b64033b6345e3c931381e9d">&#9670;&#160;</a></span>FormatMessageA()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -264,7 +264,7 @@ template&lt;class _Traits , class _Ax &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static DWORD FormatMessage </td>
+          <td class="memname">static DWORD FormatMessageA </td>
           <td>(</td>
           <td class="paramtype">DWORD&#160;</td>
           <td class="paramname"><em>dwFlags</em>, </td>
@@ -317,8 +317,8 @@ template&lt;class _Traits , class _Ax &gt; </div>
 
 </div>
 </div>
-<a id="gaebf39378c982c5116ea0110a69eb2f75" name="gaebf39378c982c5116ea0110a69eb2f75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaebf39378c982c5116ea0110a69eb2f75">&#9670;&#160;</a></span>FormatMessage() <span class="overload">[2/2]</span></h2>
+<a id="ga2bcca64d8cc35866abf8bccc33dbf01b" name="ga2bcca64d8cc35866abf8bccc33dbf01b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2bcca64d8cc35866abf8bccc33dbf01b">&#9670;&#160;</a></span>FormatMessageW()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -329,7 +329,7 @@ template&lt;class _Traits , class _Ax &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static DWORD FormatMessage </td>
+          <td class="memname">static DWORD FormatMessageW </td>
           <td>(</td>
           <td class="paramtype">DWORD&#160;</td>
           <td class="paramname"><em>dwFlags</em>, </td>
@@ -1376,7 +1376,7 @@ template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </div
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 18 2023 10:37:19 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Wed Oct 18 2023 11:44:07 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
