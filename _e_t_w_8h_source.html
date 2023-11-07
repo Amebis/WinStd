@@ -459,7 +459,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="foldopen" id="foldopen00491" data-start="{" data-end="};">
 <div class="line"><a id="l00491" name="l00491"></a><span class="lineno"><a class="line" href="classwinstd_1_1event__provider.html">  491</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classwinstd_1_1event__provider.html">event_provider</a> : <span class="keyword">public</span> <a class="code hl_class" href="classwinstd_1_1handle.html">handle</a>&lt;REGHANDLE, NULL&gt;</div>
 <div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span>    {</div>
-<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>        <a class="code hl_define" href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a>(<a class="code hl_class" href="classwinstd_1_1event__provider.html">event_provider</a>, NULL)</div>
+<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>        <a class="code hl_define" href="group___win_std_sys_handles.html#ga51471bfe41853b66ac0f44df97cfaaa6">WINSTD_HANDLE_IMPL</a>(<a class="code hl_class" href="classwinstd_1_1event__provider.html">event_provider</a>, REGHANDLE, NULL)</div>
 <div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span> </div>
 <div class="line"><a id="l00495" name="l00495"></a><span class="lineno">  495</span>    <span class="keyword">public</span>:</div>
 <div class="foldopen" id="foldopen00501" data-start="{" data-end="}">
@@ -761,7 +761,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="foldopen" id="foldopen00905" data-start="{" data-end="};">
 <div class="line"><a id="l00905" name="l00905"></a><span class="lineno"><a class="line" href="classwinstd_1_1event__trace.html">  905</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classwinstd_1_1event__trace.html">event_trace</a> : <span class="keyword">public</span> <a class="code hl_class" href="classwinstd_1_1handle.html">handle</a>&lt;TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE&gt;</div>
 <div class="line"><a id="l00906" name="l00906"></a><span class="lineno">  906</span>    {</div>
-<div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span>        <a class="code hl_define" href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a>(<a class="code hl_class" href="classwinstd_1_1event__trace.html">event_trace</a>, INVALID_PROCESSTRACE_HANDLE)</div>
+<div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span>        <a class="code hl_define" href="group___win_std_sys_handles.html#ga51471bfe41853b66ac0f44df97cfaaa6">WINSTD_HANDLE_IMPL</a>(<a class="code hl_class" href="classwinstd_1_1event__trace.html">event_trace</a>, TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE)</div>
 <div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span> </div>
 <div class="line"><a id="l00909" name="l00909"></a><span class="lineno">  909</span>    <span class="keyword">public</span>:</div>
 <div class="foldopen" id="foldopen00915" data-start="{" data-end="}">
@@ -1146,12 +1146,12 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="agroup___win_std_general_html_ga11254c72ad33a6e0f5de31db708f784c"><div class="ttname"><a href="group___win_std_general.html#ga11254c72ad33a6e0f5de31db708f784c">WINSTD_NONCOPYABLE</a></div><div class="ttdeci">#define WINSTD_NONCOPYABLE(C)</div><div class="ttdoc">Declares a class as non-copyable.</div><div class="ttdef"><b>Definition</b> Common.h:67</div></div>
 <div class="ttc" id="agroup___win_std_general_html_ga3ca39107a61bbcd05f901898ec584986"><div class="ttname"><a href="group___win_std_general.html#ga3ca39107a61bbcd05f901898ec584986">WINSTD_STACK_BUFFER_BYTES</a></div><div class="ttdeci">#define WINSTD_STACK_BUFFER_BYTES</div><div class="ttdoc">Size of the stack buffer in bytes used for initial system function call.</div><div class="ttdef"><b>Definition</b> Common.h:94</div></div>
 <div class="ttc" id="agroup___win_std_str_format_html_ga583555761f3d01787d5e5f0226472f4e"><div class="ttname"><a href="group___win_std_str_format.html#ga583555761f3d01787d5e5f0226472f4e">vsprintf</a></div><div class="ttdeci">static int vsprintf(std::basic_string&lt; _Elem, _Traits, _Ax &gt; &amp;str, const _Elem *format, va_list arg)</div><div class="ttdoc">Formats string using printf().</div><div class="ttdef"><b>Definition</b> Common.h:288</div></div>
-<div class="ttc" id="agroup___win_std_sys_handles_html_ga419efffd12b5c96abc8a275ba375ca60"><div class="ttname"><a href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a></div><div class="ttdeci">#define WINSTD_HANDLE_IMPL(C, INVAL)</div><div class="ttdoc">Implements default constructors and operators to prevent their auto-generation by compiler.</div><div class="ttdef"><b>Definition</b> Common.h:164</div></div>
+<div class="ttc" id="agroup___win_std_sys_handles_html_ga51471bfe41853b66ac0f44df97cfaaa6"><div class="ttname"><a href="group___win_std_sys_handles.html#ga51471bfe41853b66ac0f44df97cfaaa6">WINSTD_HANDLE_IMPL</a></div><div class="ttdeci">#define WINSTD_HANDLE_IMPL(C, T, INVAL)</div><div class="ttdoc">Implements default constructors and operators to prevent their auto-generation by compiler.</div><div class="ttdef"><b>Definition</b> Common.h:164</div></div>
 <div class="ttc" id="agroup___win_std_sys_handles_html_gacf43e306968474166474090690857e1c"><div class="ttname"><a href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">winstd::handle&lt; REGHANDLE, NULL &gt;::invalid</a></div><div class="ttdeci">static const REGHANDLE invalid</div><div class="ttdoc">Invalid handle value.</div><div class="ttdef"><b>Definition</b> Common.h:1030</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 18 2023 11:44:07 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Tue Nov 7 2023 08:37:31 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

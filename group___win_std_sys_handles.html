@@ -89,12 +89,12 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga419efffd12b5c96abc8a275ba375ca60" id="r_ga419efffd12b5c96abc8a275ba375ca60"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a>(C,  INVAL)</td></tr>
-<tr class="memdesc:ga419efffd12b5c96abc8a275ba375ca60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements default constructors and operators to prevent their auto-generation by compiler.  <br /></td></tr>
-<tr class="separator:ga419efffd12b5c96abc8a275ba375ca60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2768b80bcf124e3127f0b7fe64395adb" id="r_ga2768b80bcf124e3127f0b7fe64395adb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_sys_handles.html#ga2768b80bcf124e3127f0b7fe64395adb">WINSTD_DPLHANDLE_IMPL</a>(C,  INVAL)</td></tr>
-<tr class="memdesc:ga2768b80bcf124e3127f0b7fe64395adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements default constructors and operators to prevent their auto-generation by compiler.  <br /></td></tr>
-<tr class="separator:ga2768b80bcf124e3127f0b7fe64395adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51471bfe41853b66ac0f44df97cfaaa6" id="r_ga51471bfe41853b66ac0f44df97cfaaa6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_sys_handles.html#ga51471bfe41853b66ac0f44df97cfaaa6">WINSTD_HANDLE_IMPL</a>(C,  T,  INVAL)</td></tr>
+<tr class="memdesc:ga51471bfe41853b66ac0f44df97cfaaa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements default constructors and operators to prevent their auto-generation by compiler.  <br /></td></tr>
+<tr class="separator:ga51471bfe41853b66ac0f44df97cfaaa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga08a7da8215842be9aaacae90bc8a1b62" id="r_ga08a7da8215842be9aaacae90bc8a1b62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___win_std_sys_handles.html#ga08a7da8215842be9aaacae90bc8a1b62">WINSTD_DPLHANDLE_IMPL</a>(C,  T,  INVAL)</td></tr>
+<tr class="memdesc:ga08a7da8215842be9aaacae90bc8a1b62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements default constructors and operators to prevent their auto-generation by compiler.  <br /></td></tr>
+<tr class="separator:ga08a7da8215842be9aaacae90bc8a1b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -105,8 +105,8 @@ static const T&#160;</td><td class="memItemRight" valign="bottom"><b>winstd::han
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ga2768b80bcf124e3127f0b7fe64395adb" name="ga2768b80bcf124e3127f0b7fe64395adb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2768b80bcf124e3127f0b7fe64395adb">&#9670;&#160;</a></span>WINSTD_DPLHANDLE_IMPL</h2>
+<a id="ga08a7da8215842be9aaacae90bc8a1b62" name="ga08a7da8215842be9aaacae90bc8a1b62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga08a7da8215842be9aaacae90bc8a1b62">&#9670;&#160;</a></span>WINSTD_DPLHANDLE_IMPL</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -121,40 +121,7 @@ static const T&#160;</td><td class="memItemRight" valign="bottom"><b>winstd::han
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">INVAL&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>: \</div>
-<div class="line">       C        (                              ) noexcept                                                            {                                                                       } \</div>
-<div class="line">       C        (_In_opt_       handle_type   h) noexcept : dplhandle&lt;handle_type, INVAL&gt;(                   h     ) {                                                                       } \</div>
-<div class="line">       C        (_In_     <span class="keyword">const</span> C            &amp;h) noexcept : dplhandle&lt;handle_type, INVAL&gt;(duplicate_internal(h.m_h)) {                                                                       } \</div>
-<div class="line">       C        (_Inout_        C           &amp;&amp;h) noexcept : dplhandle&lt;handle_type, INVAL&gt;(std::move         (h    )) {                                                                       } \</div>
-<div class="line">    C&amp; operator=(_In_opt_       handle_type   h) <span class="keyword">noexcept</span>                                                            { dplhandle&lt;handle_type, INVAL&gt;::operator=(          h ); <span class="keywordflow">return</span> *<span class="keyword">this</span>; } \</div>
-<div class="line">    C&amp; operator=(_In_     <span class="keyword">const</span> C            &amp;h) <span class="keyword">noexcept</span>                                                            { dplhandle&lt;handle_type, INVAL&gt;::operator=(          h ); <span class="keywordflow">return</span> *<span class="keyword">this</span>; } \</div>
-<div class="line">    C&amp; operator=(_Inout_        C           &amp;&amp;h) <span class="keyword">noexcept</span>                                                            { dplhandle&lt;handle_type, INVAL&gt;::operator=(std::move(h)); <span class="keywordflow">return</span> *<span class="keyword">this</span>; } \</div>
-<div class="line"><span class="keyword">private</span>:</div>
-</div><!-- fragment -->
-<p>Implements default constructors and operators to prevent their auto-generation by compiler. </p>
-
-</div>
-</div>
-<a id="ga419efffd12b5c96abc8a275ba375ca60" name="ga419efffd12b5c96abc8a275ba375ca60"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga419efffd12b5c96abc8a275ba375ca60">&#9670;&#160;</a></span>WINSTD_HANDLE_IMPL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define WINSTD_HANDLE_IMPL</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">C, </td>
+          <td class="paramname">T, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -170,11 +137,56 @@ static const T&#160;</td><td class="memItemRight" valign="bottom"><b>winstd::han
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>: \</div>
-<div class="line">       C        (                        ) noexcept                                            {                                                                    } \</div>
-<div class="line">       C        (_In_opt_ handle_type   h) noexcept : handle&lt;handle_type, INVAL&gt;(          h ) {                                                                    } \</div>
-<div class="line">       C        (_Inout_  C           &amp;&amp;h) noexcept : handle&lt;handle_type, INVAL&gt;(std::move(h)) {                                                                    } \</div>
-<div class="line">    C&amp; operator=(_In_opt_ handle_type   h) <span class="keyword">noexcept</span>                                            { handle&lt;handle_type, INVAL&gt;::operator=(          h ); <span class="keywordflow">return</span> *<span class="keyword">this</span>; } \</div>
-<div class="line">    C&amp; operator=(_Inout_  C           &amp;&amp;h) <span class="keyword">noexcept</span>                                            { handle&lt;handle_type, INVAL&gt;::operator=(std::move(h)); <span class="keywordflow">return</span> *<span class="keyword">this</span>; } \</div>
+<div class="line">       C        (                    ) noexcept                                                  {} \</div>
+<div class="line">       C        (_In_opt_       T   h) noexcept : dplhandle&lt;T, INVAL&gt;(                   h     ) {} \</div>
+<div class="line">       C        (_In_     <span class="keyword">const</span> C  &amp;h) noexcept : dplhandle&lt;T, INVAL&gt;(duplicate_internal(h.m_h)) {} \</div>
+<div class="line">       C        (_Inout_        C &amp;&amp;h) noexcept : dplhandle&lt;T, INVAL&gt;(std::move         (h    )) {} \</div>
+<div class="line">    C&amp; operator=(_In_opt_       T   h) <span class="keyword">noexcept</span>                                                  { dplhandle&lt;T, INVAL&gt;::operator=(          h ); <span class="keywordflow">return</span> *<span class="keyword">this</span>; } \</div>
+<div class="line">    C&amp; operator=(_In_     <span class="keyword">const</span> C  &amp;h) <span class="keyword">noexcept</span>                                                  { dplhandle&lt;T, INVAL&gt;::operator=(          h ); <span class="keywordflow">return</span> *<span class="keyword">this</span>; } \</div>
+<div class="line">    C&amp; operator=(_Inout_        C &amp;&amp;h) <span class="keyword">noexcept</span>                                                  { dplhandle&lt;T, INVAL&gt;::operator=(std::move(h)); <span class="keywordflow">return</span> *<span class="keyword">this</span>; } \</div>
+<div class="line"><span class="keyword">private</span>:</div>
+</div><!-- fragment -->
+<p>Implements default constructors and operators to prevent their auto-generation by compiler. </p>
+
+</div>
+</div>
+<a id="ga51471bfe41853b66ac0f44df97cfaaa6" name="ga51471bfe41853b66ac0f44df97cfaaa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga51471bfe41853b66ac0f44df97cfaaa6">&#9670;&#160;</a></span>WINSTD_HANDLE_IMPL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WINSTD_HANDLE_IMPL</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">C, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">T, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">INVAL&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>: \</div>
+<div class="line">       C        (              ) noexcept                                  {} \</div>
+<div class="line">       C        (_In_opt_ T   h) noexcept : handle&lt;T, INVAL&gt;(          h ) {} \</div>
+<div class="line">       C        (_Inout_  C &amp;&amp;h) noexcept : handle&lt;T, INVAL&gt;(std::move(h)) {} \</div>
+<div class="line">    C&amp; operator=(_In_opt_ T   h) <span class="keyword">noexcept</span>                                  { handle&lt;T, INVAL&gt;::operator=(          h ); <span class="keywordflow">return</span> *<span class="keyword">this</span>; } \</div>
+<div class="line">    C&amp; operator=(_Inout_  C &amp;&amp;h) <span class="keyword">noexcept</span>                                  { handle&lt;T, INVAL&gt;::operator=(std::move(h)); <span class="keywordflow">return</span> *<span class="keyword">this</span>; } \</div>
 <div class="line">WINSTD_NONCOPYABLE(C)</div>
 </div><!-- fragment -->
 <p>Implements default constructors and operators to prevent their auto-generation by compiler. </p>
@@ -184,7 +196,7 @@ static const T&#160;</td><td class="memItemRight" valign="bottom"><b>winstd::han
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 18 2023 11:44:07 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Tue Nov 7 2023 08:37:32 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -100,7 +100,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="foldopen" id="foldopen00024" data-start="{" data-end="};">
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classwinstd_1_1http.html">   24</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classwinstd_1_1http.html">http</a> : <span class="keyword">public</span> <a class="code hl_class" href="classwinstd_1_1handle.html">handle</a>&lt;HINTERNET, NULL&gt;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    {</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <a class="code hl_define" href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a>(<a class="code hl_class" href="classwinstd_1_1http.html">http</a>, NULL)</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <a class="code hl_define" href="group___win_std_sys_handles.html#ga51471bfe41853b66ac0f44df97cfaaa6">WINSTD_HANDLE_IMPL</a>(<a class="code hl_class" href="classwinstd_1_1http.html">http</a>, HINTERNET, NULL)</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">public</span>:</div>
 <div class="foldopen" id="foldopen00034" data-start="{" data-end="}">
@@ -127,12 +127,12 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclasswinstd_1_1http_html"><div class="ttname"><a href="classwinstd_1_1http.html">winstd::http</a></div><div class="ttdoc">HTTP handle wrapper class.</div><div class="ttdef"><b>Definition</b> WinHTTP.h:25</div></div>
 <div class="ttc" id="aclasswinstd_1_1http_html_a0dd8f655e3581cba346dfdc86e945580"><div class="ttname"><a href="classwinstd_1_1http.html#a0dd8f655e3581cba346dfdc86e945580">winstd::http::~http</a></div><div class="ttdeci">virtual ~http()</div><div class="ttdoc">Closes a handle to the HTTP.</div><div class="ttdef"><b>Definition</b> WinHTTP.h:34</div></div>
 <div class="ttc" id="aclasswinstd_1_1http_html_adb1a08aed51b8203b23c874e167b6248"><div class="ttname"><a href="classwinstd_1_1http.html#adb1a08aed51b8203b23c874e167b6248">winstd::http::free_internal</a></div><div class="ttdeci">void free_internal() noexcept override</div><div class="ttdoc">Closes a handle to the HTTP.</div><div class="ttdef"><b>Definition</b> WinHTTP.h:46</div></div>
-<div class="ttc" id="agroup___win_std_sys_handles_html_ga419efffd12b5c96abc8a275ba375ca60"><div class="ttname"><a href="group___win_std_sys_handles.html#ga419efffd12b5c96abc8a275ba375ca60">WINSTD_HANDLE_IMPL</a></div><div class="ttdeci">#define WINSTD_HANDLE_IMPL(C, INVAL)</div><div class="ttdoc">Implements default constructors and operators to prevent their auto-generation by compiler.</div><div class="ttdef"><b>Definition</b> Common.h:164</div></div>
+<div class="ttc" id="agroup___win_std_sys_handles_html_ga51471bfe41853b66ac0f44df97cfaaa6"><div class="ttname"><a href="group___win_std_sys_handles.html#ga51471bfe41853b66ac0f44df97cfaaa6">WINSTD_HANDLE_IMPL</a></div><div class="ttdeci">#define WINSTD_HANDLE_IMPL(C, T, INVAL)</div><div class="ttdoc">Implements default constructors and operators to prevent their auto-generation by compiler.</div><div class="ttdef"><b>Definition</b> Common.h:164</div></div>
 <div class="ttc" id="agroup___win_std_sys_handles_html_gacf43e306968474166474090690857e1c"><div class="ttname"><a href="group___win_std_sys_handles.html#gacf43e306968474166474090690857e1c">winstd::handle&lt; HINTERNET, NULL &gt;::invalid</a></div><div class="ttdeci">static const HINTERNET invalid</div><div class="ttdoc">Invalid handle value.</div><div class="ttdef"><b>Definition</b> Common.h:1030</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 18 2023 11:44:07 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Tue Nov 7 2023 08:37:31 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
