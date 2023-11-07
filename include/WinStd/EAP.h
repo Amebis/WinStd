@@ -470,9 +470,11 @@ namespace winstd
         ///
         handle_type duplicate_internal(_In_ handle_type h) const override
         {
+            assert(h);
             const WORD n = ntohs(*reinterpret_cast<WORD*>(h->Length));
             handle_type h2 = static_cast<handle_type>(HeapAlloc(GetProcessHeap(), 0, n));
             if (h2 != invalid) {
+                _Analysis_assume_(h2 != NULL); // VS2022 can't figure out `invalid` is `NULL`
                 memcpy(h2, h, n);
                 return h2;
             }
@@ -595,9 +597,26 @@ namespace winstd
         /// Constructs an exception
         ///
         /// \param[in] err  EapHost error descriptor
+        ///
+        eap_runtime_error(_In_ const EAP_ERROR &err) :
+            m_type           (err.type            ),
+            m_reason         (err.dwReasonCode    ),
+            m_root_cause_id  (err.rootCauseGuid   ),
+            m_root_cause_desc(err.pRootCauseString),
+            m_repair_id      (err.repairGuid      ),
+            m_repair_desc    (err.pRepairString   ),
+            m_help_link_id   (err.helpLinkGuid    ),
+            win_runtime_error(err.dwWinError      )
+        {
+        }
+
+        ///
+        /// Constructs an exception
+        ///
+        /// \param[in] err  EapHost error descriptor
         /// \param[in] msg  Error message
         ///
-        eap_runtime_error(_In_ const EAP_ERROR &err, _In_opt_z_ const char *msg = nullptr) :
+        eap_runtime_error(_In_ const EAP_ERROR &err, _In_z_ const char *msg) :
             m_type           (err.type            ),
             m_reason         (err.dwReasonCode    ),
             m_root_cause_id  (err.rootCauseGuid   ),
