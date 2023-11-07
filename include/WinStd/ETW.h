@@ -490,7 +490,7 @@ namespace winstd
     ///
     class event_provider : public handle<REGHANDLE, NULL>
     {
-        WINSTD_HANDLE_IMPL(event_provider, NULL)
+        WINSTD_HANDLE_IMPL(event_provider, REGHANDLE, NULL)
 
     public:
         ///
@@ -904,7 +904,7 @@ namespace winstd
     ///
     class event_trace : public handle<TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE>
     {
-        WINSTD_HANDLE_IMPL(event_trace, INVALID_PROCESSTRACE_HANDLE)
+        WINSTD_HANDLE_IMPL(event_trace, TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE)
 
     public:
         ///

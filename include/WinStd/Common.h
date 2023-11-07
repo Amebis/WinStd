@@ -161,27 +161,27 @@ private: \
 ///
 /// Implements default constructors and operators to prevent their auto-generation by compiler.
 ///
-#define WINSTD_HANDLE_IMPL(C, INVAL) \
+#define WINSTD_HANDLE_IMPL(C, T, INVAL) \
 public: \
-       C        (                        ) noexcept                                            {                                                                    } \
-       C        (_In_opt_ handle_type   h) noexcept : handle<handle_type, INVAL>(          h ) {                                                                    } \
-       C        (_Inout_  C           &&h) noexcept : handle<handle_type, INVAL>(std::move(h)) {                                                                    } \
-    C& operator=(_In_opt_ handle_type   h) noexcept                                            { handle<handle_type, INVAL>::operator=(          h ); return *this; } \
-    C& operator=(_Inout_  C           &&h) noexcept                                            { handle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
+       C        (              ) noexcept                                  {} \
+       C        (_In_opt_ T   h) noexcept : handle<T, INVAL>(          h ) {} \
+       C        (_Inout_  C &&h) noexcept : handle<T, INVAL>(std::move(h)) {} \
+    C& operator=(_In_opt_ T   h) noexcept                                  { handle<T, INVAL>::operator=(          h ); return *this; } \
+    C& operator=(_Inout_  C &&h) noexcept                                  { handle<T, INVAL>::operator=(std::move(h)); return *this; } \
 WINSTD_NONCOPYABLE(C)
 
 ///
 /// Implements default constructors and operators to prevent their auto-generation by compiler.
 ///
-#define WINSTD_DPLHANDLE_IMPL(C, INVAL) \
+#define WINSTD_DPLHANDLE_IMPL(C, T, INVAL) \
 public: \
-       C        (                              ) noexcept                                                            {                                                                       } \
-       C        (_In_opt_       handle_type   h) noexcept : dplhandle<handle_type, INVAL>(                   h     ) {                                                                       } \
-       C        (_In_     const C            &h) noexcept : dplhandle<handle_type, INVAL>(duplicate_internal(h.m_h)) {                                                                       } \
-       C        (_Inout_        C           &&h) noexcept : dplhandle<handle_type, INVAL>(std::move         (h    )) {                                                                       } \
-    C& operator=(_In_opt_       handle_type   h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
-    C& operator=(_In_     const C            &h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(          h ); return *this; } \
-    C& operator=(_Inout_        C           &&h) noexcept                                                            { dplhandle<handle_type, INVAL>::operator=(std::move(h)); return *this; } \
+       C        (                    ) noexcept                                                  {} \
+       C        (_In_opt_       T   h) noexcept : dplhandle<T, INVAL>(                   h     ) {} \
+       C        (_In_     const C  &h) noexcept : dplhandle<T, INVAL>(duplicate_internal(h.m_h)) {} \
+       C        (_Inout_        C &&h) noexcept : dplhandle<T, INVAL>(std::move         (h    )) {} \
+    C& operator=(_In_opt_       T   h) noexcept                                                  { dplhandle<T, INVAL>::operator=(          h ); return *this; } \
+    C& operator=(_In_     const C  &h) noexcept                                                  { dplhandle<T, INVAL>::operator=(          h ); return *this; } \
+    C& operator=(_Inout_        C &&h) noexcept                                                  { dplhandle<T, INVAL>::operator=(std::move(h)); return *this; } \
 private:
 
 /// @}
@@ -1951,7 +1951,7 @@ namespace winstd
         ///
         /// Deallocate object at _Ptr sanitizing its content first
         ///
-        void deallocate(_In_ pointer _Ptr, _In_ size_type _Count)
+        void deallocate(_In_ _Ty* const _Ptr, _In_ const std::size_t _Count)
         {
             // Sanitize then free.
             SecureZeroMemory(_Ptr, sizeof(_Ty) * _Count);

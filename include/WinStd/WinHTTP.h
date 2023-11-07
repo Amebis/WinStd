@@ -23,7 +23,7 @@ namespace winstd
     ///
     class http : public handle<HINTERNET, NULL>
     {
-        WINSTD_HANDLE_IMPL(http, NULL)
+        WINSTD_HANDLE_IMPL(http, HINTERNET, NULL)
 
     public:
         ///

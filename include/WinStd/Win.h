@@ -1030,7 +1030,7 @@ namespace winstd
     template<HANDLE INVALID>
     class win_handle : public handle<HANDLE, INVALID>
     {
-        WINSTD_HANDLE_IMPL(win_handle, INVALID)
+        WINSTD_HANDLE_IMPL(win_handle, HANDLE, INVALID)
 
     public:
         ///
@@ -1063,7 +1063,7 @@ namespace winstd
     ///
     class library : public handle<HMODULE, NULL>
     {
-        WINSTD_HANDLE_IMPL(library, NULL)
+        WINSTD_HANDLE_IMPL(library, HMODULE, NULL)
 
     public:
         ///
@@ -1249,7 +1249,7 @@ namespace winstd
     ///
     class find_file : public handle<HANDLE, INVALID_HANDLE_VALUE>
     {
-        WINSTD_HANDLE_IMPL(find_file, INVALID_HANDLE_VALUE)
+        WINSTD_HANDLE_IMPL(find_file, HANDLE, INVALID_HANDLE_VALUE)
 
     public:
         ///
@@ -1282,7 +1282,7 @@ namespace winstd
     ///
     class heap : public handle<HANDLE, NULL>
     {
-        WINSTD_HANDLE_IMPL(heap, NULL)
+        WINSTD_HANDLE_IMPL(heap, HANDLE, NULL)
 
     public:
         ///
@@ -1809,7 +1809,7 @@ namespace winstd
     ///
     class reg_key : public handle<HKEY, NULL>
     {
-        WINSTD_HANDLE_IMPL(reg_key, NULL)
+        WINSTD_HANDLE_IMPL(reg_key, HKEY, NULL)
 
     public:
         ///
@@ -1891,7 +1891,7 @@ namespace winstd
     ///
     class security_id : public handle<PSID, NULL>
     {
-        WINSTD_HANDLE_IMPL(security_id, NULL)
+        WINSTD_HANDLE_IMPL(security_id, PSID, NULL)
 
     public:
         ///
@@ -1962,7 +1962,7 @@ namespace winstd
     ///
     class event_log : public handle<HANDLE, NULL>
     {
-        WINSTD_HANDLE_IMPL(event_log, NULL)
+        WINSTD_HANDLE_IMPL(event_log, HANDLE, NULL)
 
     public:
         ///
@@ -1993,7 +1993,7 @@ namespace winstd
     ///
     class sc_handle : public handle<SC_HANDLE, NULL>
     {
-        WINSTD_HANDLE_IMPL(sc_handle, NULL)
+        WINSTD_HANDLE_IMPL(sc_handle, SC_HANDLE, NULL)
 
     public:
         ///

@@ -81,7 +81,7 @@ namespace winstd
     template <class T>
     class com_obj : public dplhandle<T*, NULL>
     {
-        WINSTD_DPLHANDLE_IMPL(com_obj, NULL)
+        WINSTD_DPLHANDLE_IMPL(com_obj, T*, NULL)
 
     public:
         ///
@@ -196,7 +196,7 @@ namespace winstd
     ///
     class bstr : public dplhandle<BSTR, NULL>
     {
-        WINSTD_DPLHANDLE_IMPL(bstr, NULL)
+        WINSTD_DPLHANDLE_IMPL(bstr, BSTR, NULL)
 
     public:
         ///
@@ -1041,7 +1041,7 @@ namespace winstd
     ///
     class safearray : public dplhandle<SAFEARRAY*, NULL>
     {
-        WINSTD_DPLHANDLE_IMPL(safearray, NULL)
+        WINSTD_DPLHANDLE_IMPL(safearray, SAFEARRAY*, NULL)
 
     public:
         ///

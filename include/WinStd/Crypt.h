@@ -259,7 +259,7 @@ namespace winstd
     ///
     class cert_context : public dplhandle<PCCERT_CONTEXT, NULL>
     {
-        WINSTD_DPLHANDLE_IMPL(cert_context, NULL)
+        WINSTD_DPLHANDLE_IMPL(cert_context, PCCERT_CONTEXT, NULL)
 
     public:
         ///
@@ -392,7 +392,7 @@ namespace winstd
     ///
     class cert_chain_context : public dplhandle<PCCERT_CHAIN_CONTEXT, NULL>
     {
-        WINSTD_DPLHANDLE_IMPL(cert_chain_context, NULL)
+        WINSTD_DPLHANDLE_IMPL(cert_chain_context, PCCERT_CHAIN_CONTEXT, NULL)
 
     public:
         ///
@@ -441,7 +441,7 @@ namespace winstd
     ///
     class cert_store : public handle<HCERTSTORE, NULL>
     {
-        WINSTD_HANDLE_IMPL(cert_store, NULL)
+        WINSTD_HANDLE_IMPL(cert_store, HCERTSTORE, NULL)
 
     public:
         ///
@@ -474,7 +474,7 @@ namespace winstd
     ///
     class crypt_prov : public handle<HCRYPTPROV, NULL>
     {
-        WINSTD_HANDLE_IMPL(crypt_prov, NULL)
+        WINSTD_HANDLE_IMPL(crypt_prov, HCRYPTPROV, NULL)
 
     public:
         ///
@@ -507,7 +507,7 @@ namespace winstd
     ///
     class crypt_hash : public dplhandle<HCRYPTHASH, NULL>
     {
-        WINSTD_DPLHANDLE_IMPL(crypt_hash, NULL)
+        WINSTD_DPLHANDLE_IMPL(crypt_hash, HCRYPTHASH, NULL)
 
     public:
         ///
@@ -560,7 +560,7 @@ namespace winstd
     ///
     class crypt_key : public dplhandle<HCRYPTKEY, NULL>
     {
-        WINSTD_DPLHANDLE_IMPL(crypt_key, NULL)
+        WINSTD_DPLHANDLE_IMPL(crypt_key, HCRYPTKEY, NULL)
 
     public:
         ///

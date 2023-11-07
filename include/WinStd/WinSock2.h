@@ -107,7 +107,7 @@ namespace winstd
     ///
     class addrinfo : public handle<PADDRINFOA, NULL>
     {
-        WINSTD_HANDLE_IMPL(addrinfo, NULL)
+        WINSTD_HANDLE_IMPL(addrinfo, PADDRINFOA, NULL)
 
     public:
         ///
@@ -140,7 +140,7 @@ namespace winstd
     ///
     class waddrinfo : public handle<PADDRINFOW, NULL>
     {
-        WINSTD_HANDLE_IMPL(waddrinfo, NULL)
+        WINSTD_HANDLE_IMPL(waddrinfo, PADDRINFOW, NULL)
 
     public:
         ///

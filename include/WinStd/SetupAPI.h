@@ -24,7 +24,7 @@ namespace winstd
     ///
     class setup_device_info_list : public handle<HDEVINFO, INVALID_HANDLE_VALUE>
     {
-        WINSTD_HANDLE_IMPL(setup_device_info_list, INVALID_HANDLE_VALUE)
+        WINSTD_HANDLE_IMPL(setup_device_info_list, HDEVINFO, INVALID_HANDLE_VALUE)
 
     public:
         ///
