@@ -1951,11 +1951,11 @@ namespace winstd
         ///
         /// Deallocate object at _Ptr sanitizing its content first
         ///
-        void deallocate(_In_ pointer _Ptr, _In_ size_type _Size)
+        void deallocate(_In_ pointer _Ptr, _In_ size_type _Count)
         {
             // Sanitize then free.
-            SecureZeroMemory(_Ptr, _Size);
-            _Mybase::deallocate(_Ptr, _Size);
+            SecureZeroMemory(_Ptr, sizeof(_Ty) * _Count);
+            _Mybase::deallocate(_Ptr, _Count);
         }
     };
 
