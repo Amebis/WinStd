@@ -184,7 +184,7 @@ namespace winstd
         ///
         /// \return Duplicated object handle
         ///
-        handle_type duplicate_internal(_In_ handle_type h) const override
+        T* duplicate_internal(_In_ T* h) const override
         {
             h->AddRef();
             return h;
