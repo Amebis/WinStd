@@ -1144,9 +1144,11 @@ namespace winstd
         ///
         /// \sa [CoInitialize function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms678543.aspx)
         ///
-        com_initializer(_In_opt_ LPVOID pvReserved) noexcept
+        com_initializer(_In_opt_ LPVOID pvReserved)
         {
-            m_result = CoInitialize(pvReserved);
+            HRESULT hr = CoInitialize(pvReserved);
+            if (FAILED(hr))
+                throw com_runtime_error(hr, "CoInitialize failed");
         }
 
         ///
@@ -1154,9 +1156,11 @@ namespace winstd
         ///
         /// \sa [CoInitializeEx function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms695279.aspx)
         ///
-        com_initializer(_In_opt_ LPVOID pvReserved, _In_ DWORD dwCoInit) noexcept
+        com_initializer(_In_opt_ LPVOID pvReserved, _In_ DWORD dwCoInit)
         {
-            m_result = CoInitializeEx(pvReserved, dwCoInit);
+            HRESULT hr = CoInitializeEx(pvReserved, dwCoInit);
+            if (FAILED(hr))
+                throw com_runtime_error(hr, "CoInitializeEx failed");
         }
 
         ///
@@ -1166,22 +1170,8 @@ namespace winstd
         ///
         virtual ~com_initializer()
         {
-            if (SUCCEEDED(m_result))
-                CoUninitialize();
+            CoUninitialize();
         }
-
-        ///
-        /// Return result of `CoInitialize()` call.
-        ///
-        /// \sa [CoInitialize function](https://msdn.microsoft.com/en-us/library/windows/desktop/ms678543.aspx)
-        ///
-        HRESULT status() const noexcept
-        {
-            return m_result;
-        }
-
-    protected:
-        HRESULT m_result;   ///< Result of CoInitialize call
     };
 
     /// @}
