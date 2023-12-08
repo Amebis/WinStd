@@ -1135,56 +1135,12 @@ namespace winstd
     ///
     /// Deleter for unique_ptr using UnmapViewOfFile
     ///
-    template <class _Ty> struct UnmapViewOfFile_delete
+    struct UnmapViewOfFile_delete
     {
-        typedef UnmapViewOfFile_delete<_Ty> _Myt; ///< This type
-
-        ///
-        /// Default construct
-        ///
-        UnmapViewOfFile_delete() {}
-
-        ///
-        /// Construct from another UnmapViewOfFile_delete
-        ///
-        template <class _Ty2> UnmapViewOfFile_delete(const UnmapViewOfFile_delete<_Ty2>&) {}
-
         ///
         /// Delete a pointer
         ///
-        void operator()(_Ty* _Ptr) const
-        {
-            if (!UnmapViewOfFile(_Ptr))
-                throw win_runtime_error("UnmapViewOfFile failed");
-        }
-    };
-
-    ///
-    /// Deleter for unique_ptr to array of unknown size using UnmapViewOfFile
-    ///
-    template <class _Ty> struct UnmapViewOfFile_delete<_Ty[]>
-    {
-        typedef UnmapViewOfFile_delete<_Ty> _Myt; ///< This type
-
-        ///
-        /// Default construct
-        ///
-        UnmapViewOfFile_delete() {}
-
-        ///
-        /// Delete a pointer
-        ///
-        void operator()(_Ty* _Ptr) const
-        {
-            if (!UnmapViewOfFile(_Ptr))
-                throw win_runtime_error("UnmapViewOfFile failed");
-        }
-
-        ///
-        /// Delete a pointer of another type
-        ///
-        template<class _Other>
-        void operator()(_Other*) const
+        void operator()(void* _Ptr) const
         {
             if (!UnmapViewOfFile(_Ptr))
                 throw win_runtime_error("UnmapViewOfFile failed");
