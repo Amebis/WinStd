@@ -29,7 +29,7 @@ var searchData=
   ['m_5freason_26',['m_reason',['../classwinstd_1_1eap__runtime__error.html#af7d0e9785475719f4b1b0b59c4ae49e3',1,'winstd::eap_runtime_error']]],
   ['m_5frepair_5fdesc_27',['m_repair_desc',['../classwinstd_1_1eap__runtime__error.html#a2b237993f0c860b8b0ad83416d499f18',1,'winstd::eap_runtime_error']]],
   ['m_5frepair_5fid_28',['m_repair_id',['../classwinstd_1_1eap__runtime__error.html#a526d2ae63c12d1a439d69412e7f13ec7',1,'winstd::eap_runtime_error']]],
-  ['m_5fresult_29',['m_result',['../classwinstd_1_1com__initializer.html#ae9478fd05b5b1c82e0f762c2b517155b',1,'winstd::com_initializer::m_result'],['../classwinstd_1_1event__fn__auto__ret.html#a69f1ae5c23f90aaa4da012b1eb0b8f81',1,'winstd::event_fn_auto_ret::m_result']]],
+  ['m_5fresult_29',['m_result',['../classwinstd_1_1event__fn__auto__ret.html#a69f1ae5c23f90aaa4da012b1eb0b8f81',1,'winstd::event_fn_auto_ret']]],
   ['m_5froot_5fcause_5fdesc_30',['m_root_cause_desc',['../classwinstd_1_1eap__runtime__error.html#aea17d371de31216ac0754c1ed1f0b99a',1,'winstd::eap_runtime_error']]],
   ['m_5froot_5fcause_5fid_31',['m_root_cause_id',['../classwinstd_1_1eap__runtime__error.html#a084ddacb051932c211a995872fb67b57',1,'winstd::eap_runtime_error']]],
   ['m_5fsa_32',['m_sa',['../classwinstd_1_1safearray__accessor.html#ab192244352a22d42720b312d8a5323a8',1,'winstd::safearray_accessor']]],

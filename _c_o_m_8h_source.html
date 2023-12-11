@@ -1031,66 +1031,59 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l01140" name="l01140"></a><span class="lineno"> 1140</span> </div>
 <div class="line"><a id="l01141" name="l01141"></a><span class="lineno"> 1141</span>    <span class="keyword">public</span>:</div>
 <div class="foldopen" id="foldopen01147" data-start="{" data-end="}">
-<div class="line"><a id="l01147" name="l01147"></a><span class="lineno"><a class="line" href="classwinstd_1_1com__initializer.html#a2e1dceaa4a658f2d35b93fe85d71e109"> 1147</a></span>        <a class="code hl_function" href="classwinstd_1_1com__initializer.html#a2e1dceaa4a658f2d35b93fe85d71e109">com_initializer</a>(_In_opt_ LPVOID pvReserved) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l01147" name="l01147"></a><span class="lineno"><a class="line" href="classwinstd_1_1com__initializer.html#af259d10710f44c2a649f506d17e547b5"> 1147</a></span>        <a class="code hl_function" href="classwinstd_1_1com__initializer.html#af259d10710f44c2a649f506d17e547b5">com_initializer</a>(_In_opt_ LPVOID pvReserved)</div>
 <div class="line"><a id="l01148" name="l01148"></a><span class="lineno"> 1148</span>        {</div>
-<div class="line"><a id="l01149" name="l01149"></a><span class="lineno"> 1149</span>            <a class="code hl_variable" href="classwinstd_1_1com__initializer.html#ae9478fd05b5b1c82e0f762c2b517155b">m_result</a> = CoInitialize(pvReserved);</div>
-<div class="line"><a id="l01150" name="l01150"></a><span class="lineno"> 1150</span>        }</div>
+<div class="line"><a id="l01149" name="l01149"></a><span class="lineno"> 1149</span>            HRESULT hr = CoInitialize(pvReserved);</div>
+<div class="line"><a id="l01150" name="l01150"></a><span class="lineno"> 1150</span>            <span class="keywordflow">if</span> (FAILED(hr))</div>
+<div class="line"><a id="l01151" name="l01151"></a><span class="lineno"> 1151</span>                <span class="keywordflow">throw</span> <a class="code hl_class" href="classwinstd_1_1com__runtime__error.html">com_runtime_error</a>(hr, <span class="stringliteral">&quot;CoInitialize failed&quot;</span>);</div>
+<div class="line"><a id="l01152" name="l01152"></a><span class="lineno"> 1152</span>        }</div>
 </div>
-<div class="line"><a id="l01151" name="l01151"></a><span class="lineno"> 1151</span> </div>
-<div class="foldopen" id="foldopen01157" data-start="{" data-end="}">
-<div class="line"><a id="l01157" name="l01157"></a><span class="lineno"><a class="line" href="classwinstd_1_1com__initializer.html#a20c89f6e237eb97166aac61f0dbdcbf6"> 1157</a></span>        <a class="code hl_function" href="classwinstd_1_1com__initializer.html#a20c89f6e237eb97166aac61f0dbdcbf6">com_initializer</a>(_In_opt_ LPVOID pvReserved, _In_ DWORD dwCoInit) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l01158" name="l01158"></a><span class="lineno"> 1158</span>        {</div>
-<div class="line"><a id="l01159" name="l01159"></a><span class="lineno"> 1159</span>            <a class="code hl_variable" href="classwinstd_1_1com__initializer.html#ae9478fd05b5b1c82e0f762c2b517155b">m_result</a> = CoInitializeEx(pvReserved, dwCoInit);</div>
-<div class="line"><a id="l01160" name="l01160"></a><span class="lineno"> 1160</span>        }</div>
+<div class="line"><a id="l01153" name="l01153"></a><span class="lineno"> 1153</span> </div>
+<div class="foldopen" id="foldopen01159" data-start="{" data-end="}">
+<div class="line"><a id="l01159" name="l01159"></a><span class="lineno"><a class="line" href="classwinstd_1_1com__initializer.html#a18fd45fa07a6168c8176eb4e95289119"> 1159</a></span>        <a class="code hl_function" href="classwinstd_1_1com__initializer.html#a18fd45fa07a6168c8176eb4e95289119">com_initializer</a>(_In_opt_ LPVOID pvReserved, _In_ DWORD dwCoInit)</div>
+<div class="line"><a id="l01160" name="l01160"></a><span class="lineno"> 1160</span>        {</div>
+<div class="line"><a id="l01161" name="l01161"></a><span class="lineno"> 1161</span>            HRESULT hr = CoInitializeEx(pvReserved, dwCoInit);</div>
+<div class="line"><a id="l01162" name="l01162"></a><span class="lineno"> 1162</span>            <span class="keywordflow">if</span> (FAILED(hr))</div>
+<div class="line"><a id="l01163" name="l01163"></a><span class="lineno"> 1163</span>                <span class="keywordflow">throw</span> <a class="code hl_class" href="classwinstd_1_1com__runtime__error.html">com_runtime_error</a>(hr, <span class="stringliteral">&quot;CoInitializeEx failed&quot;</span>);</div>
+<div class="line"><a id="l01164" name="l01164"></a><span class="lineno"> 1164</span>        }</div>
 </div>
-<div class="line"><a id="l01161" name="l01161"></a><span class="lineno"> 1161</span> </div>
-<div class="foldopen" id="foldopen01167" data-start="{" data-end="}">
-<div class="line"><a id="l01167" name="l01167"></a><span class="lineno"><a class="line" href="classwinstd_1_1com__initializer.html#ad53a7697dfaf83d4832f8a57a4cf00f6"> 1167</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="classwinstd_1_1com__initializer.html#ad53a7697dfaf83d4832f8a57a4cf00f6">~com_initializer</a>()</div>
-<div class="line"><a id="l01168" name="l01168"></a><span class="lineno"> 1168</span>        {</div>
-<div class="line"><a id="l01169" name="l01169"></a><span class="lineno"> 1169</span>            <span class="keywordflow">if</span> (SUCCEEDED(<a class="code hl_variable" href="classwinstd_1_1com__initializer.html#ae9478fd05b5b1c82e0f762c2b517155b">m_result</a>))</div>
-<div class="line"><a id="l01170" name="l01170"></a><span class="lineno"> 1170</span>                CoUninitialize();</div>
-<div class="line"><a id="l01171" name="l01171"></a><span class="lineno"> 1171</span>        }</div>
+<div class="line"><a id="l01165" name="l01165"></a><span class="lineno"> 1165</span> </div>
+<div class="foldopen" id="foldopen01171" data-start="{" data-end="}">
+<div class="line"><a id="l01171" name="l01171"></a><span class="lineno"><a class="line" href="classwinstd_1_1com__initializer.html#ad53a7697dfaf83d4832f8a57a4cf00f6"> 1171</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="classwinstd_1_1com__initializer.html#ad53a7697dfaf83d4832f8a57a4cf00f6">~com_initializer</a>()</div>
+<div class="line"><a id="l01172" name="l01172"></a><span class="lineno"> 1172</span>        {</div>
+<div class="line"><a id="l01173" name="l01173"></a><span class="lineno"> 1173</span>            CoUninitialize();</div>
+<div class="line"><a id="l01174" name="l01174"></a><span class="lineno"> 1174</span>        }</div>
 </div>
-<div class="line"><a id="l01172" name="l01172"></a><span class="lineno"> 1172</span> </div>
-<div class="foldopen" id="foldopen01178" data-start="{" data-end="}">
-<div class="line"><a id="l01178" name="l01178"></a><span class="lineno"><a class="line" href="classwinstd_1_1com__initializer.html#ac3c997f810e8439096d8ca14fecb5b7d"> 1178</a></span>        HRESULT <a class="code hl_function" href="classwinstd_1_1com__initializer.html#ac3c997f810e8439096d8ca14fecb5b7d">status</a>() const noexcept</div>
-<div class="line"><a id="l01179" name="l01179"></a><span class="lineno"> 1179</span>        {</div>
-<div class="line"><a id="l01180" name="l01180"></a><span class="lineno"> 1180</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="classwinstd_1_1com__initializer.html#ae9478fd05b5b1c82e0f762c2b517155b">m_result</a>;</div>
-<div class="line"><a id="l01181" name="l01181"></a><span class="lineno"> 1181</span>        }</div>
+<div class="line"><a id="l01175" name="l01175"></a><span class="lineno"> 1175</span>    };</div>
 </div>
+<div class="line"><a id="l01176" name="l01176"></a><span class="lineno"> 1176</span> </div>
+<div class="line"><a id="l01178" name="l01178"></a><span class="lineno"> 1178</span>}</div>
+<div class="line"><a id="l01179" name="l01179"></a><span class="lineno"> 1179</span> </div>
 <div class="line"><a id="l01182" name="l01182"></a><span class="lineno"> 1182</span> </div>
-<div class="line"><a id="l01183" name="l01183"></a><span class="lineno"> 1183</span>    <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l01184" name="l01184"></a><span class="lineno"><a class="line" href="classwinstd_1_1com__initializer.html#ae9478fd05b5b1c82e0f762c2b517155b"> 1184</a></span>        HRESULT <a class="code hl_variable" href="classwinstd_1_1com__initializer.html#ae9478fd05b5b1c82e0f762c2b517155b">m_result</a>;   </div>
-<div class="line"><a id="l01185" name="l01185"></a><span class="lineno"> 1185</span>    };</div>
+<div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="foldopen" id="foldopen01189" data-start="{" data-end="}">
+<div class="line"><a id="l01189" name="l01189"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965"> 1189</a></span><span class="keyword">static</span> _Check_return_ HRESULT <a class="code hl_function" href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965">CoCreateInstance</a>(_In_ REFCLSID rclsid, _In_opt_ LPUNKNOWN pUnkOuter, _In_ DWORD dwClsContext, _Inout_ <a class="code hl_class" href="classwinstd_1_1com__obj.html">winstd::com_obj&lt;T&gt;</a> &amp;v)</div>
+<div class="line"><a id="l01190" name="l01190"></a><span class="lineno"> 1190</span>{</div>
+<div class="line"><a id="l01191" name="l01191"></a><span class="lineno"> 1191</span>    T* ppv;</div>
+<div class="line"><a id="l01192" name="l01192"></a><span class="lineno"> 1192</span>    HRESULT hr = <a class="code hl_function" href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965">CoCreateInstance</a>(rclsid, pUnkOuter, dwClsContext, __uuidof(T), (LPVOID*)&amp;ppv);</div>
+<div class="line"><a id="l01193" name="l01193"></a><span class="lineno"> 1193</span>    <span class="keywordflow">if</span> (SUCCEEDED(hr))</div>
+<div class="line"><a id="l01194" name="l01194"></a><span class="lineno"> 1194</span>        v.attach(ppv);</div>
+<div class="line"><a id="l01195" name="l01195"></a><span class="lineno"> 1195</span>    <span class="keywordflow">return</span> hr;</div>
+<div class="line"><a id="l01196" name="l01196"></a><span class="lineno"> 1196</span>}</div>
 </div>
-<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span> </div>
-<div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span>}</div>
-<div class="line"><a id="l01189" name="l01189"></a><span class="lineno"> 1189</span> </div>
-<div class="line"><a id="l01192" name="l01192"></a><span class="lineno"> 1192</span> </div>
-<div class="line"><a id="l01198" name="l01198"></a><span class="lineno"> 1198</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="foldopen" id="foldopen01199" data-start="{" data-end="}">
-<div class="line"><a id="l01199" name="l01199"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965"> 1199</a></span><span class="keyword">static</span> _Check_return_ HRESULT <a class="code hl_function" href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965">CoCreateInstance</a>(_In_ REFCLSID rclsid, _In_opt_ LPUNKNOWN pUnkOuter, _In_ DWORD dwClsContext, _Inout_ <a class="code hl_class" href="classwinstd_1_1com__obj.html">winstd::com_obj&lt;T&gt;</a> &amp;v)</div>
-<div class="line"><a id="l01200" name="l01200"></a><span class="lineno"> 1200</span>{</div>
-<div class="line"><a id="l01201" name="l01201"></a><span class="lineno"> 1201</span>    T* ppv;</div>
-<div class="line"><a id="l01202" name="l01202"></a><span class="lineno"> 1202</span>    HRESULT hr = <a class="code hl_function" href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965">CoCreateInstance</a>(rclsid, pUnkOuter, dwClsContext, __uuidof(T), (LPVOID*)&amp;ppv);</div>
-<div class="line"><a id="l01203" name="l01203"></a><span class="lineno"> 1203</span>    <span class="keywordflow">if</span> (SUCCEEDED(hr))</div>
-<div class="line"><a id="l01204" name="l01204"></a><span class="lineno"> 1204</span>        v.attach(ppv);</div>
-<div class="line"><a id="l01205" name="l01205"></a><span class="lineno"> 1205</span>    <span class="keywordflow">return</span> hr;</div>
-<div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span>}</div>
+<div class="line"><a id="l01197" name="l01197"></a><span class="lineno"> 1197</span> </div>
+<div class="line"><a id="l01203" name="l01203"></a><span class="lineno"> 1203</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="foldopen" id="foldopen01204" data-start="{" data-end="}">
+<div class="line"><a id="l01204" name="l01204"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1"> 1204</a></span><span class="keyword">static</span> _Check_return_ HRESULT <a class="code hl_function" href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1">CoGetObject</a>(_In_ LPCWSTR pszName, _In_opt_ BIND_OPTS* pBindOptions, _In_ REFIID riid, _Inout_ <a class="code hl_class" href="classwinstd_1_1com__obj.html">winstd::com_obj&lt;T&gt;</a>&amp; v)</div>
+<div class="line"><a id="l01205" name="l01205"></a><span class="lineno"> 1205</span>{</div>
+<div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span>    T* ppv;</div>
+<div class="line"><a id="l01207" name="l01207"></a><span class="lineno"> 1207</span>    HRESULT hr = <a class="code hl_function" href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1">CoGetObject</a>(pszName, pBindOptions, riid, (LPVOID*)&amp;ppv);</div>
+<div class="line"><a id="l01208" name="l01208"></a><span class="lineno"> 1208</span>    <span class="keywordflow">if</span> (SUCCEEDED(hr))</div>
+<div class="line"><a id="l01209" name="l01209"></a><span class="lineno"> 1209</span>        v.attach(ppv);</div>
+<div class="line"><a id="l01210" name="l01210"></a><span class="lineno"> 1210</span>    <span class="keywordflow">return</span> hr;</div>
+<div class="line"><a id="l01211" name="l01211"></a><span class="lineno"> 1211</span>}</div>
 </div>
-<div class="line"><a id="l01207" name="l01207"></a><span class="lineno"> 1207</span> </div>
-<div class="line"><a id="l01213" name="l01213"></a><span class="lineno"> 1213</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="foldopen" id="foldopen01214" data-start="{" data-end="}">
-<div class="line"><a id="l01214" name="l01214"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1"> 1214</a></span><span class="keyword">static</span> _Check_return_ HRESULT <a class="code hl_function" href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1">CoGetObject</a>(_In_ LPCWSTR pszName, _In_opt_ BIND_OPTS* pBindOptions, _In_ REFIID riid, _Inout_ <a class="code hl_class" href="classwinstd_1_1com__obj.html">winstd::com_obj&lt;T&gt;</a>&amp; v)</div>
-<div class="line"><a id="l01215" name="l01215"></a><span class="lineno"> 1215</span>{</div>
-<div class="line"><a id="l01216" name="l01216"></a><span class="lineno"> 1216</span>    T* ppv;</div>
-<div class="line"><a id="l01217" name="l01217"></a><span class="lineno"> 1217</span>    HRESULT hr = <a class="code hl_function" href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1">CoGetObject</a>(pszName, pBindOptions, riid, (LPVOID*)&amp;ppv);</div>
-<div class="line"><a id="l01218" name="l01218"></a><span class="lineno"> 1218</span>    <span class="keywordflow">if</span> (SUCCEEDED(hr))</div>
-<div class="line"><a id="l01219" name="l01219"></a><span class="lineno"> 1219</span>        v.attach(ppv);</div>
-<div class="line"><a id="l01220" name="l01220"></a><span class="lineno"> 1220</span>    <span class="keywordflow">return</span> hr;</div>
-<div class="line"><a id="l01221" name="l01221"></a><span class="lineno"> 1221</span>}</div>
-</div>
-<div class="line"><a id="l01222" name="l01222"></a><span class="lineno"> 1222</span> </div>
+<div class="line"><a id="l01212" name="l01212"></a><span class="lineno"> 1212</span> </div>
 <div class="ttc" id="aclasswinstd_1_1bstr_html"><div class="ttname"><a href="classwinstd_1_1bstr.html">winstd::bstr</a></div><div class="ttdoc">BSTR string wrapper.</div><div class="ttdef"><b>Definition</b> COM.h:198</div></div>
 <div class="ttc" id="aclasswinstd_1_1bstr_html_a01b4deb6467c16d9d8e8e14fe6c057fa"><div class="ttname"><a href="classwinstd_1_1bstr.html#a01b4deb6467c16d9d8e8e14fe6c057fa">winstd::bstr::bstr</a></div><div class="ttdeci">bstr(LPCOLESTR src)</div><div class="ttdoc">Constructs BSTR from OLE string.</div><div class="ttdef"><b>Definition</b> COM.h:205</div></div>
 <div class="ttc" id="aclasswinstd_1_1bstr_html_a1c6f4421d370e6029dfbf71315cdedc0"><div class="ttname"><a href="classwinstd_1_1bstr.html#a1c6f4421d370e6029dfbf71315cdedc0">winstd::bstr::duplicate_internal</a></div><div class="ttdeci">handle_type duplicate_internal(handle_type h) const override</div><div class="ttdoc">Duplicates the string.</div><div class="ttdef"><b>Definition</b> COM.h:277</div></div>
@@ -1100,11 +1093,9 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclasswinstd_1_1bstr_html_aafb65f4d4ab54a13147912c2de8adc54"><div class="ttname"><a href="classwinstd_1_1bstr.html#aafb65f4d4ab54a13147912c2de8adc54">winstd::bstr::bstr</a></div><div class="ttdeci">bstr(LPCOLESTR src, UINT len)</div><div class="ttdoc">Constructs BSTR from OLE string with length.</div><div class="ttdef"><b>Definition</b> COM.h:215</div></div>
 <div class="ttc" id="aclasswinstd_1_1bstr_html_abc2160190ea71c4f9239ea9575efa9d3"><div class="ttname"><a href="classwinstd_1_1bstr.html#abc2160190ea71c4f9239ea9575efa9d3">winstd::bstr::bstr</a></div><div class="ttdeci">bstr(const std::basic_string&lt; OLECHAR, _Traits, _Ax &gt; &amp;src)</div><div class="ttdoc">Constructs BSTR from std::basic_string.</div><div class="ttdef"><b>Definition</b> COM.h:226</div></div>
 <div class="ttc" id="aclasswinstd_1_1com__initializer_html"><div class="ttname"><a href="classwinstd_1_1com__initializer.html">winstd::com_initializer</a></div><div class="ttdoc">Context scope automatic COM (un)initialization.</div><div class="ttdef"><b>Definition</b> COM.h:1137</div></div>
-<div class="ttc" id="aclasswinstd_1_1com__initializer_html_a20c89f6e237eb97166aac61f0dbdcbf6"><div class="ttname"><a href="classwinstd_1_1com__initializer.html#a20c89f6e237eb97166aac61f0dbdcbf6">winstd::com_initializer::com_initializer</a></div><div class="ttdeci">com_initializer(LPVOID pvReserved, DWORD dwCoInit) noexcept</div><div class="ttdoc">Initializes the COM library for use by the calling thread, sets the thread's concurrency model,...</div><div class="ttdef"><b>Definition</b> COM.h:1157</div></div>
-<div class="ttc" id="aclasswinstd_1_1com__initializer_html_a2e1dceaa4a658f2d35b93fe85d71e109"><div class="ttname"><a href="classwinstd_1_1com__initializer.html#a2e1dceaa4a658f2d35b93fe85d71e109">winstd::com_initializer::com_initializer</a></div><div class="ttdeci">com_initializer(LPVOID pvReserved) noexcept</div><div class="ttdoc">Initializes the COM library on the current thread and identifies the concurrency model as single-thre...</div><div class="ttdef"><b>Definition</b> COM.h:1147</div></div>
-<div class="ttc" id="aclasswinstd_1_1com__initializer_html_ac3c997f810e8439096d8ca14fecb5b7d"><div class="ttname"><a href="classwinstd_1_1com__initializer.html#ac3c997f810e8439096d8ca14fecb5b7d">winstd::com_initializer::status</a></div><div class="ttdeci">HRESULT status() const noexcept</div><div class="ttdoc">Return result of CoInitialize() call.</div><div class="ttdef"><b>Definition</b> COM.h:1178</div></div>
-<div class="ttc" id="aclasswinstd_1_1com__initializer_html_ad53a7697dfaf83d4832f8a57a4cf00f6"><div class="ttname"><a href="classwinstd_1_1com__initializer.html#ad53a7697dfaf83d4832f8a57a4cf00f6">winstd::com_initializer::~com_initializer</a></div><div class="ttdeci">virtual ~com_initializer()</div><div class="ttdoc">Uninitializes COM.</div><div class="ttdef"><b>Definition</b> COM.h:1167</div></div>
-<div class="ttc" id="aclasswinstd_1_1com__initializer_html_ae9478fd05b5b1c82e0f762c2b517155b"><div class="ttname"><a href="classwinstd_1_1com__initializer.html#ae9478fd05b5b1c82e0f762c2b517155b">winstd::com_initializer::m_result</a></div><div class="ttdeci">HRESULT m_result</div><div class="ttdoc">Result of CoInitialize call.</div><div class="ttdef"><b>Definition</b> COM.h:1184</div></div>
+<div class="ttc" id="aclasswinstd_1_1com__initializer_html_a18fd45fa07a6168c8176eb4e95289119"><div class="ttname"><a href="classwinstd_1_1com__initializer.html#a18fd45fa07a6168c8176eb4e95289119">winstd::com_initializer::com_initializer</a></div><div class="ttdeci">com_initializer(LPVOID pvReserved, DWORD dwCoInit)</div><div class="ttdoc">Initializes the COM library for use by the calling thread, sets the thread's concurrency model,...</div><div class="ttdef"><b>Definition</b> COM.h:1159</div></div>
+<div class="ttc" id="aclasswinstd_1_1com__initializer_html_ad53a7697dfaf83d4832f8a57a4cf00f6"><div class="ttname"><a href="classwinstd_1_1com__initializer.html#ad53a7697dfaf83d4832f8a57a4cf00f6">winstd::com_initializer::~com_initializer</a></div><div class="ttdeci">virtual ~com_initializer()</div><div class="ttdoc">Uninitializes COM.</div><div class="ttdef"><b>Definition</b> COM.h:1171</div></div>
+<div class="ttc" id="aclasswinstd_1_1com__initializer_html_af259d10710f44c2a649f506d17e547b5"><div class="ttname"><a href="classwinstd_1_1com__initializer.html#af259d10710f44c2a649f506d17e547b5">winstd::com_initializer::com_initializer</a></div><div class="ttdeci">com_initializer(LPVOID pvReserved)</div><div class="ttdoc">Initializes the COM library on the current thread and identifies the concurrency model as single-thre...</div><div class="ttdef"><b>Definition</b> COM.h:1147</div></div>
 <div class="ttc" id="aclasswinstd_1_1com__obj_html"><div class="ttname"><a href="classwinstd_1_1com__obj.html">winstd::com_obj</a></div><div class="ttdoc">COM object wrapper template.</div><div class="ttdef"><b>Definition</b> COM.h:83</div></div>
 <div class="ttc" id="aclasswinstd_1_1com__obj_html_a028b86f770253f74a62ca3eaebb14de5"><div class="ttname"><a href="classwinstd_1_1com__obj.html#a028b86f770253f74a62ca3eaebb14de5">winstd::com_obj::free_internal</a></div><div class="ttdeci">void free_internal() noexcept override</div><div class="ttdoc">Releases the object by decrementing reference counter.</div><div class="ttdef"><b>Definition</b> COM.h:173</div></div>
 <div class="ttc" id="aclasswinstd_1_1com__obj_html_a1983f51468452e51890a3a561d3d2627"><div class="ttname"><a href="classwinstd_1_1com__obj.html#a1983f51468452e51890a3a561d3d2627">winstd::com_obj::com_obj</a></div><div class="ttdeci">com_obj(REFCLSID rclsid, LPUNKNOWN pUnkOuter, DWORD dwClsContext)</div><div class="ttdoc">Creates a new instance of a class.</div><div class="ttdef"><b>Definition</b> COM.h:92</div></div>
@@ -1194,8 +1185,8 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclasswinstd_1_1variant_html_af5e22f4158921eb49c2207335d7c7593"><div class="ttname"><a href="classwinstd_1_1variant.html#af5e22f4158921eb49c2207335d7c7593">winstd::variant::operator=</a></div><div class="ttdeci">variant &amp; operator=(IDispatch *pSrc)</div><div class="ttdoc">Copy from IDispatch.</div><div class="ttdef"><b>Definition</b> COM.h:745</div></div>
 <div class="ttc" id="aclasswinstd_1_1variant_html_af86e9a10fd9dbe6e18b33a59d04f3b44"><div class="ttname"><a href="classwinstd_1_1variant.html#af86e9a10fd9dbe6e18b33a59d04f3b44">winstd::variant::operator=</a></div><div class="ttdeci">variant &amp; operator=(unsigned long *pnSrc) noexcept</div><div class="ttdoc">Copy from unsigned long reference.</div><div class="ttdef"><b>Definition</b> COM.h:849</div></div>
 <div class="ttc" id="aclasswinstd_1_1variant_html_aff536ecc3c3a074fea648b7c60522a83"><div class="ttname"><a href="classwinstd_1_1variant.html#aff536ecc3c3a074fea648b7c60522a83">winstd::variant::operator=</a></div><div class="ttdeci">variant &amp; operator=(const VARIANT &amp;varSrc)</div><div class="ttdoc">Copy from another VARIANT.</div><div class="ttdef"><b>Definition</b> COM.h:524</div></div>
-<div class="ttc" id="agroup___win_std_c_o_m_html_ga825b73e9a34b1f496c577a951441b6f1"><div class="ttname"><a href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1">CoGetObject</a></div><div class="ttdeci">static _Check_return_ HRESULT CoGetObject(LPCWSTR pszName, BIND_OPTS *pBindOptions, REFIID riid, winstd::com_obj&lt; T &gt; &amp;v)</div><div class="ttdoc">Converts a display name into a moniker that identifies the object named, and then binds to the object...</div><div class="ttdef"><b>Definition</b> COM.h:1214</div></div>
-<div class="ttc" id="agroup___win_std_c_o_m_html_gaa05e677aa01b9b1f2f8b58571532c965"><div class="ttname"><a href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965">CoCreateInstance</a></div><div class="ttdeci">static _Check_return_ HRESULT CoCreateInstance(REFCLSID rclsid, LPUNKNOWN pUnkOuter, DWORD dwClsContext, winstd::com_obj&lt; T &gt; &amp;v)</div><div class="ttdoc">Creates and default-initializes a single object of the class associated with a specified CLSID.</div><div class="ttdef"><b>Definition</b> COM.h:1199</div></div>
+<div class="ttc" id="agroup___win_std_c_o_m_html_ga825b73e9a34b1f496c577a951441b6f1"><div class="ttname"><a href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1">CoGetObject</a></div><div class="ttdeci">static _Check_return_ HRESULT CoGetObject(LPCWSTR pszName, BIND_OPTS *pBindOptions, REFIID riid, winstd::com_obj&lt; T &gt; &amp;v)</div><div class="ttdoc">Converts a display name into a moniker that identifies the object named, and then binds to the object...</div><div class="ttdef"><b>Definition</b> COM.h:1204</div></div>
+<div class="ttc" id="agroup___win_std_c_o_m_html_gaa05e677aa01b9b1f2f8b58571532c965"><div class="ttname"><a href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965">CoCreateInstance</a></div><div class="ttdeci">static _Check_return_ HRESULT CoCreateInstance(REFCLSID rclsid, LPUNKNOWN pUnkOuter, DWORD dwClsContext, winstd::com_obj&lt; T &gt; &amp;v)</div><div class="ttdoc">Creates and default-initializes a single object of the class associated with a specified CLSID.</div><div class="ttdef"><b>Definition</b> COM.h:1189</div></div>
 <div class="ttc" id="agroup___win_std_general_html_ga11254c72ad33a6e0f5de31db708f784c"><div class="ttname"><a href="group___win_std_general.html#ga11254c72ad33a6e0f5de31db708f784c">WINSTD_NONCOPYABLE</a></div><div class="ttdeci">#define WINSTD_NONCOPYABLE(C)</div><div class="ttdoc">Declares a class as non-copyable.</div><div class="ttdef"><b>Definition</b> Common.h:67</div></div>
 <div class="ttc" id="agroup___win_std_general_html_gac91fa8d79c860b1fdbba65b6a322f760"><div class="ttname"><a href="group___win_std_general.html#gac91fa8d79c860b1fdbba65b6a322f760">WINSTD_NONMOVABLE</a></div><div class="ttdeci">#define WINSTD_NONMOVABLE(C)</div><div class="ttdoc">Declares a class as non-movable.</div><div class="ttdef"><b>Definition</b> Common.h:75</div></div>
 <div class="ttc" id="agroup___win_std_sys_handles_html_ga08a7da8215842be9aaacae90bc8a1b62"><div class="ttname"><a href="group___win_std_sys_handles.html#ga08a7da8215842be9aaacae90bc8a1b62">WINSTD_DPLHANDLE_IMPL</a></div><div class="ttdeci">#define WINSTD_DPLHANDLE_IMPL(C, T, INVAL)</div><div class="ttdoc">Implements default constructors and operators to prevent their auto-generation by compiler.</div><div class="ttdef"><b>Definition</b> Common.h:176</div></div>
@@ -1206,7 +1197,7 @@ $(document).ready(function() { init_codefold(0); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Nov 8 2023 20:31:29 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Dec 11 2023 10:34:23 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
