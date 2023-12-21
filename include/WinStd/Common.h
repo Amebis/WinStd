@@ -1033,8 +1033,7 @@ namespace winstd
         /// Initializes a new class instance with the object handle set to INVAL.
         ///
         handle() noexcept : m_h(invalid)
-        {
-        }
+        {}
 
         ///
         /// Initializes a new class instance with an already available object handle.
@@ -1042,8 +1041,7 @@ namespace winstd
         /// \param[in] h  Initial object handle value
         ///
         handle(_In_opt_ handle_type h) noexcept : m_h(h)
-        {
-        }
+        {}
 
         ///
         /// Move constructor
@@ -1288,8 +1286,7 @@ namespace winstd
         /// Initializes a new class instance with the object handle set to INVAL.
         ///
         dplhandle() noexcept
-        {
-        }
+        {}
 
         ///
         /// Initializes a new class instance with an already available object handle.
@@ -1297,8 +1294,7 @@ namespace winstd
         /// \param[in] h  Initial object handle value
         ///
         dplhandle(_In_opt_ handle_type h) noexcept : handle<handle_type, INVAL>(h)
-        {
-        }
+        {}
 
         ///
         /// Copy constructor
@@ -1306,8 +1302,7 @@ namespace winstd
         /// \param[inout] h  A reference of another object
         ///
         dplhandle<handle_type, INVAL>(_In_ const dplhandle<handle_type, INVAL> &h) : handle<handle_type, INVAL>(duplicate_internal(h.m_h))
-        {
-        }
+        {}
 
         ///
         /// Move constructor
@@ -1315,8 +1310,7 @@ namespace winstd
         /// \param[inout] h  A rvalue reference of another object
         ///
         dplhandle<handle_type, INVAL>(_Inout_ dplhandle<handle_type, INVAL> &&h) noexcept : handle<handle_type, INVAL>(std::move(h))
-        {
-        }
+        {}
 
         ///
         /// Attaches already available object handle.
@@ -1494,8 +1488,7 @@ namespace winstd
         num_runtime_error(_In_ error_type num, _In_ const std::string& msg) :
             m_num(num),
             runtime_error(msg)
-        {
-        }
+        {}
 
         ///
         /// Constructs an exception
@@ -1506,8 +1499,7 @@ namespace winstd
         num_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) :
             m_num(num),
             runtime_error(msg)
-        {
-        }
+        {}
 
         ///
         /// Returns the error number
@@ -1858,8 +1850,7 @@ namespace winstd
         ///
         string_guid(_In_ const GUID &guid) :
             basic_string_guid<char, std::char_traits<char>, std::allocator<char> >(guid, "{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}")
-        {
-        }
+        {}
 
         /// @}
     };
@@ -1880,8 +1871,7 @@ namespace winstd
         ///
         wstring_guid(_In_ const GUID &guid) :
             basic_string_guid<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> >(guid, L"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}")
-        {
-        }
+        {}
 
         /// @}
     };
@@ -1930,23 +1920,20 @@ namespace winstd
         /// Construct default allocator
         ///
         sanitizing_allocator() noexcept : _Mybase()
-        {
-        }
+        {}
 
         ///
         /// Construct by copying
         ///
         sanitizing_allocator(_In_ const sanitizing_allocator<_Ty> &_Othr) : _Mybase(_Othr)
-        {
-        }
+        {}
 
         ///
         /// Construct from a related allocator
         ///
         template<class _Other>
         sanitizing_allocator(_In_ const sanitizing_allocator<_Other> &_Othr) noexcept : _Mybase(_Othr)
-        {
-        }
+        {}
 
         ///
         /// Deallocate object at _Ptr sanitizing its content first

@@ -727,8 +727,7 @@ namespace winstd
         /// Initializes a new empty session.
         ///
         event_session()
-        {
-        }
+        {}
 
         ///
         /// Initializes a new session with an already available object handle.
@@ -751,8 +750,7 @@ namespace winstd
         event_session(_Inout_ event_session &&other) noexcept :
             m_prop(std::move(other.m_prop)),
             handle(std::move(other))
-        {
-        }
+        {}
 
         ///
         /// Closes the session.
@@ -1073,8 +1071,7 @@ namespace winstd
             m_ep(other.m_ep),
             m_event_dest(other.m_event_dest),
             m_fn_name(other.m_fn_name)
-        {
-        }
+        {}
 
         ///
         /// Moves the object

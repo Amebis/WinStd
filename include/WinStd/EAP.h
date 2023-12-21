@@ -590,8 +590,7 @@ namespace winstd
             m_repair_desc    (err.pRepairString          ),
             m_help_link_id   (err.helpLinkGuid           ),
             win_runtime_error(err.dwWinError, msg.c_str())
-        {
-        }
+        {}
 
         ///
         /// Constructs an exception
@@ -607,8 +606,7 @@ namespace winstd
             m_repair_desc    (err.pRepairString   ),
             m_help_link_id   (err.helpLinkGuid    ),
             win_runtime_error(err.dwWinError      )
-        {
-        }
+        {}
 
         ///
         /// Constructs an exception
@@ -625,8 +623,7 @@ namespace winstd
             m_repair_desc    (err.pRepairString   ),
             m_help_link_id   (err.helpLinkGuid    ),
             win_runtime_error(err.dwWinError, msg )
-        {
-        }
+        {}
 
         ///
         /// Returns EAP method type

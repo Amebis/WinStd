@@ -32,8 +32,7 @@ namespace winstd
         /// \param[in] msg  Error message
         ///
         com_runtime_error(_In_ error_type num, _In_ const std::string& msg) : num_runtime_error<HRESULT>(num, msg)
-        {
-        }
+        {}
 
         ///
         /// Constructs an exception
@@ -42,8 +41,7 @@ namespace winstd
         /// \param[in] msg  Error message
         ///
         com_runtime_error(_In_ error_type num, _In_opt_z_ const char *msg = nullptr) : num_runtime_error<HRESULT>(num, msg)
-        {
-        }
+        {}
     };
 
     /// @}

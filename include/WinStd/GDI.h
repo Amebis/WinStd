@@ -193,8 +193,7 @@ namespace winstd
         dc_selector(_In_ HDC hdc, _In_ HGDIOBJ h) noexcept :
             m_hdc(hdc),
             m_orig(SelectObject(hdc, h))
-        {
-        }
+        {}
 
         ///
         /// Restores original object.

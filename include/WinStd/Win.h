@@ -1343,8 +1343,7 @@ namespace winstd
         /// \param[in] heap  Handle to existing heap
         ///
         heap_allocator(_In_ HANDLE heap) : m_heap(heap)
-        {
-        }
+        {}
 
         ///
         /// Constructs allocator from another type
@@ -1353,8 +1352,7 @@ namespace winstd
         ///
         template <class _Other>
         heap_allocator(_In_ const heap_allocator<_Other> &other) : m_heap(other.m_heap)
-        {
-        }
+        {}
 
         ///
         /// Allocates a new memory block
@@ -1651,8 +1649,7 @@ namespace winstd
         /// Initializes a new class instance with the memory handle set to INVAL.
         ///
         vmemory() noexcept : m_proc(NULL)
-        {
-        }
+        {}
 
         ///
         /// Initializes a new class instance with an already available object handle.
@@ -1663,8 +1660,7 @@ namespace winstd
         vmemory(_In_ handle_type h, _In_ HANDLE proc) noexcept :
             m_proc(proc),
             handle<LPVOID, NULL>(h)
-        {
-        }
+        {}
 
         ///
         /// Move constructor
@@ -1674,8 +1670,7 @@ namespace winstd
         vmemory(_Inout_ vmemory &&h) noexcept :
             m_proc(std::move(h.m_proc)),
             handle<LPVOID, NULL>(std::move(h))
-        {
-        }
+        {}
 
         ///
         /// Frees the memory.
