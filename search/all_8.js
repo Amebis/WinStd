@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['handle_0',['handle',['../classwinstd_1_1handle.html#a1b9c4f9529c9efa7d16dec8bab3b00e4',1,'winstd::handle::handle() noexcept'],['../classwinstd_1_1handle.html#a4a0f9b6caadf4a55c7bc0dcc0ce39dac',1,'winstd::handle::handle(handle_type h) noexcept'],['../classwinstd_1_1handle.html#ac52f342530bb97ce1ff255a7054547d5',1,'winstd::handle::handle(handle&lt; handle_type, INVAL &gt; &amp;&amp;h) noexcept'],['../classwinstd_1_1handle.html',1,'winstd::handle&lt; T, INVAL &gt;']]],
+  ['handle_0',['handle',['../classwinstd_1_1handle.html',1,'winstd::handle&lt; T, INVAL &gt;'],['../classwinstd_1_1handle.html#a1b9c4f9529c9efa7d16dec8bab3b00e4',1,'winstd::handle::handle() noexcept'],['../classwinstd_1_1handle.html#a4a0f9b6caadf4a55c7bc0dcc0ce39dac',1,'winstd::handle::handle(handle_type h) noexcept'],['../classwinstd_1_1handle.html#ac52f342530bb97ce1ff255a7054547d5',1,'winstd::handle::handle(handle&lt; handle_type, INVAL &gt; &amp;&amp;h) noexcept']]],
   ['handle_3c_20bstr_2c_20inval_20_3e_1',['handle&lt; BSTR, INVAL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
   ['handle_3c_20eappacket_20_2a_2c_20inval_20_3e_2',['handle&lt; EapPacket *, INVAL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
   ['handle_3c_20handle_2c_20invalid_20_3e_3',['handle&lt; HANDLE, INVALID &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
@@ -27,16 +27,15 @@ var searchData=
   ['handle_3c_20reghandle_2c_20null_20_3e_24',['handle&lt; REGHANDLE, NULL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
   ['handle_3c_20safearray_20_2a_2c_20inval_20_3e_25',['handle&lt; SAFEARRAY *, INVAL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
   ['handle_3c_20sc_5fhandle_2c_20null_20_3e_26',['handle&lt; SC_HANDLE, NULL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
-  ['handle_3c_20t_20_2a_2c_20inval_20_3e_27',['handle&lt; T *, INVAL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
-  ['handle_3c_20t_2c_20null_20_3e_28',['handle&lt; T, NULL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
-  ['handle_3c_20tracehandle_2c_200_20_3e_29',['handle&lt; TRACEHANDLE, 0 &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
-  ['handle_3c_20tracehandle_2c_20invalid_5fprocesstrace_5fhandle_20_3e_30',['handle&lt; TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
-  ['handle_5ftype_31',['handle_type',['../classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81',1,'winstd::handle']]],
-  ['handles_32',['System Handles',['../group___win_std_sys_handles.html',1,'']]],
-  ['heap_33',['heap',['../classwinstd_1_1heap.html',1,'winstd']]],
-  ['heap_5fallocator_34',['heap_allocator',['../classwinstd_1_1heap__allocator.html',1,'winstd::heap_allocator&lt; _Ty &gt;'],['../classwinstd_1_1heap__allocator.html#a71fbccc1260209b367f2ddfe96c5825a',1,'winstd::heap_allocator::heap_allocator(HANDLE heap)'],['../classwinstd_1_1heap__allocator.html#a12f843aaf554b4ca91ea69f7a321daf3',1,'winstd::heap_allocator::heap_allocator(const heap_allocator&lt; _Other &gt; &amp;other)']]],
-  ['help_5flink_5fid_35',['help_link_id',['../classwinstd_1_1eap__runtime__error.html#af7179a9cc9ff633a0e7d5983a4680171',1,'winstd::eap_runtime_error']]],
-  ['helper_20classes_36',['Memory and Resource Helper Classes',['../index.html#autotoc_md3',1,'']]],
-  ['http_37',['http',['../classwinstd_1_1http.html',1,'winstd']]],
-  ['http_20client_38',['Windows HTTP Client',['../group___win_std_win_h_t_t_p.html',1,'']]]
+  ['handle_3c_20t_2c_20null_20_3e_27',['handle&lt; T, NULL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
+  ['handle_3c_20tracehandle_2c_200_20_3e_28',['handle&lt; TRACEHANDLE, 0 &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
+  ['handle_3c_20tracehandle_2c_20invalid_5fprocesstrace_5fhandle_20_3e_29',['handle&lt; TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
+  ['handle_5ftype_30',['handle_type',['../classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81',1,'winstd::handle']]],
+  ['handles_31',['System Handles',['../group___win_std_sys_handles.html',1,'']]],
+  ['heap_32',['heap',['../classwinstd_1_1heap.html',1,'winstd']]],
+  ['heap_5fallocator_33',['heap_allocator',['../classwinstd_1_1heap__allocator.html',1,'winstd::heap_allocator&lt; _Ty &gt;'],['../classwinstd_1_1heap__allocator.html#a71fbccc1260209b367f2ddfe96c5825a',1,'winstd::heap_allocator::heap_allocator(HANDLE heap)'],['../classwinstd_1_1heap__allocator.html#a12f843aaf554b4ca91ea69f7a321daf3',1,'winstd::heap_allocator::heap_allocator(const heap_allocator&lt; _Other &gt; &amp;other)']]],
+  ['help_5flink_5fid_34',['help_link_id',['../classwinstd_1_1eap__runtime__error.html#af7179a9cc9ff633a0e7d5983a4680171',1,'winstd::eap_runtime_error']]],
+  ['helper_20classes_35',['Memory and Resource Helper Classes',['../index.html#autotoc_md3',1,'']]],
+  ['http_36',['http',['../classwinstd_1_1http.html',1,'winstd']]],
+  ['http_20client_37',['Windows HTTP Client',['../group___win_std_win_h_t_t_p.html',1,'']]]
 ];
