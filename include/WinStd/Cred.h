@@ -29,11 +29,9 @@ static BOOL CredProtectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR ps
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
-        std::unique_ptr<char[]> buf(new char[dwSize]);
-        if (CredProtectA(fAsSelf, const_cast<LPSTR>(pszCredentials), cchCredentials, buf.get(), &dwSize, ProtectionType)) {
-            sProtectedCredentials.assign(buf.get(), dwSize - 1);
+        sProtectedCredentials.resize(dwSize - 1);
+        if (CredProtectA(fAsSelf, const_cast<LPSTR>(pszCredentials), cchCredentials, &sProtectedCredentials[0], &dwSize, ProtectionType))
             return TRUE;
-        }
     }
 
     return FALSE;
@@ -57,11 +55,9 @@ static BOOL CredProtectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR p
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
-        std::unique_ptr<wchar_t[]> buf(new wchar_t[dwSize]);
-        if (CredProtectW(fAsSelf, const_cast<LPWSTR>(pszCredentials), cchCredentials, buf.get(), &dwSize, ProtectionType)) {
-            sProtectedCredentials.assign(buf.get(), dwSize - 1);
+        sProtectedCredentials.resize(dwSize - 1);
+        if (CredProtectW(fAsSelf, const_cast<LPWSTR>(pszCredentials), cchCredentials, &sProtectedCredentials[0], &dwSize, ProtectionType))
             return TRUE;
-        }
     }
 
     return FALSE;
@@ -81,11 +77,9 @@ static BOOL CredUnprotectA(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCSTR 
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
-        std::unique_ptr<char[]> buf(new char[dwSize]);
-        if (CredUnprotectA(fAsSelf, const_cast<LPSTR>(pszProtectedCredentials), cchCredentials, buf.get(), &dwSize)) {
-            sCredentials.assign(buf.get(), dwSize);
+        sCredentials.resize(dwSize - 1);
+        if (CredUnprotectA(fAsSelf, const_cast<LPSTR>(pszProtectedCredentials), cchCredentials, &sCredentials[0], &dwSize))
             return TRUE;
-        }
     }
 
     return FALSE;
@@ -109,11 +103,9 @@ static BOOL CredUnprotectW(_In_ BOOL fAsSelf, _In_count_(cchCredentials) LPCWSTR
         return TRUE;
     } else if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Allocate on heap and retry.
-        std::unique_ptr<wchar_t[]> buf(new wchar_t[dwSize]);
-        if (CredUnprotectW(fAsSelf, const_cast<LPWSTR>(pszProtectedCredentials), cchCredentials, buf.get(), &dwSize)) {
-            sCredentials.assign(buf.get(), dwSize);
+        sCredentials.resize(dwSize - 1);
+        if (CredUnprotectW(fAsSelf, const_cast<LPWSTR>(pszProtectedCredentials), cchCredentials, &sCredentials[0], &dwSize))
             return TRUE;
-        }
     }
 
     return FALSE;

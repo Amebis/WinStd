@@ -38,10 +38,10 @@ static DWORD GetModuleFileNameA(_In_opt_ HMODULE hModule, _Out_ std::basic_strin
     } else {
         for (DWORD dwCapacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(char);; dwCapacity *= 2) {
             // Allocate on heap and retry.
-            std::unique_ptr<char[]> szBuffer(new char[dwCapacity]);
-            dwResult = ::GetModuleFileNameA(hModule, szBuffer.get(), dwCapacity);
+            sValue.resize(dwCapacity - 1);
+            dwResult = ::GetModuleFileNameA(hModule, &sValue[0], dwCapacity);
             if (dwResult < dwCapacity) {
-                sValue.assign(szBuffer.get(), dwResult);
+                sValue.resize(dwResult);
                 return dwResult;
             }
         }
@@ -67,10 +67,10 @@ static DWORD GetModuleFileNameW(_In_opt_ HMODULE hModule, _Out_ std::basic_strin
     } else {
         for (DWORD dwCapacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t);; dwCapacity *= 2) {
             // Allocate on heap and retry.
-            std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwCapacity]);
-            dwResult = ::GetModuleFileNameW(hModule, szBuffer.get(), dwCapacity);
+            sValue.resize(dwCapacity - 1);
+            dwResult = ::GetModuleFileNameW(hModule, &sValue[0], dwCapacity);
             if (dwResult < dwCapacity) {
-                sValue.assign(szBuffer.get(), dwResult);
+                sValue.resize(dwResult);
                 return dwResult;
             }
         }
@@ -88,18 +88,9 @@ static _Success_(return != 0) int GetWindowTextA(_In_ HWND hWnd, _Out_ std::basi
     // Query the final string length first.
     iResult = ::GetWindowTextLengthA(hWnd);
     if (iResult > 0) {
-        if (++iResult < WINSTD_STACK_BUFFER_BYTES/sizeof(char)) {
-            // Read string data to stack.
-            char szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(char)];
-            iResult = ::GetWindowTextA(hWnd, szBuffer, _countof(szBuffer));
-            sValue.assign(szBuffer, iResult);
-        } else {
-            // Allocate buffer on heap and read the string data into it.
-            std::unique_ptr<char[]> szBuffer(new char[++iResult]);
-            iResult = ::GetWindowTextA(hWnd, szBuffer.get(), iResult);
-            sValue.assign(szBuffer.get(), iResult);
-        }
-        return iResult;
+        // Allocate buffer on heap and read the string data into it.
+        sValue.resize(iResult++);
+        return ::GetWindowTextA(hWnd, &sValue[0], iResult);
     }
 
     sValue.clear();
@@ -121,18 +112,9 @@ static _Success_(return != 0) int GetWindowTextW(_In_ HWND hWnd, _Out_ std::basi
     // Query the final string length first.
     iResult = ::GetWindowTextLengthW(hWnd);
     if (iResult > 0) {
-        if (++iResult < WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)) {
-            // Read string data to stack.
-            wchar_t szBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
-            iResult = ::GetWindowTextW(hWnd, szBuffer, _countof(szBuffer));
-            sValue.assign(szBuffer, iResult);
-        } else {
-            // Allocate buffer on heap and read the string data into it.
-            std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[++iResult]);
-            iResult = ::GetWindowTextW(hWnd, szBuffer.get(), iResult);
-            sValue.assign(szBuffer.get(), iResult);
-        }
-        return iResult;
+        // Allocate buffer on heap and read the string data into it.
+        sValue.resize(iResult++);
+        return ::GetWindowTextW(hWnd, &sValue[0], iResult);
     }
 
     sValue.clear();
@@ -185,14 +167,14 @@ static _Success_(return != 0) DWORD ExpandEnvironmentStringsA(_In_z_ LPCSTR lpSr
         if (sSizeOut > DWORD_MAX)
             throw std::invalid_argument("String too big");
         DWORD dwSizeIn = static_cast<DWORD>(sSizeOut);
-        std::unique_ptr<char[]> szBuffer(new char[(size_t)dwSizeIn + 2]); // Note: ANSI version requires one extra char.
-        sSizeOut = ::ExpandEnvironmentStringsA(lpSrc, szBuffer.get(), dwSizeIn);
+        sValue.resize((size_t)dwSizeIn + 1); // Note: ANSI version requires one extra char.
+        sSizeOut = ::ExpandEnvironmentStringsA(lpSrc, &sValue[0], dwSizeIn);
         if (sSizeOut == 0) {
             // Error or zero-length input.
             break;
         } else if (sSizeOut <= dwSizeIn) {
             // The buffer was sufficient.
-            sValue.assign(szBuffer.get(), sSizeOut - 1);
+            sValue.resize(sSizeOut - 1);
             return static_cast<DWORD>(sSizeOut);
         }
     }
@@ -213,14 +195,14 @@ static _Success_(return != 0) DWORD ExpandEnvironmentStringsW(_In_z_ LPCWSTR lpS
         if (sSizeOut > DWORD_MAX)
             throw std::invalid_argument("String too big");
         DWORD dwSizeIn = static_cast<DWORD>(sSizeOut);
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[(size_t)dwSizeIn + 1]);
-        sSizeOut = ::ExpandEnvironmentStringsW(lpSrc, szBuffer.get(), dwSizeIn);
+        sValue.resize(dwSizeIn);
+        sSizeOut = ::ExpandEnvironmentStringsW(lpSrc, &sValue[0], dwSizeIn);
         if (sSizeOut == 0) {
             // Error or zero-length input.
             break;
         } else if (sSizeOut <= dwSizeIn) {
             // The buffer was sufficient.
-            sValue.assign(szBuffer.get(), sSizeOut - 1);
+            sValue.resize(sSizeOut - 1);
             return static_cast<DWORD>(sSizeOut);
         }
     }
@@ -455,15 +437,17 @@ static LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
     } else if (lResult == ERROR_MORE_DATA) {
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ. Read it now.
-            std::unique_ptr<CHAR[]> szBuffer(new CHAR[dwSize / sizeof(CHAR)]);
-            if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
+            sValue.resize(dwSize / sizeof(CHAR) - 1);
+            if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(&sValue[0]), &dwSize)) == ERROR_SUCCESS) {
                 dwSize /= sizeof(CHAR);
-                sValue.assign(szBuffer.get(), dwSize && szBuffer[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
+                sValue.resize(dwSize && sValue[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
             }
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Read it and expand environment variables.
-            std::unique_ptr<CHAR[]> szBuffer(new CHAR[dwSize / sizeof(CHAR)]);
+            std::unique_ptr<CHAR[]> szBuffer(new CHAR[dwSize / sizeof(CHAR) + 1]);
             if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
+                dwSize /= sizeof(CHAR);
+                szBuffer[dwSize] = 0;
                 if (::ExpandEnvironmentStringsA(szBuffer.get(), sValue) == 0)
                     lResult = ::GetLastError();
             }
@@ -519,15 +503,17 @@ static LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
     } else if (lResult == ERROR_MORE_DATA) {
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ. Read it now.
-            std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[dwSize / sizeof(WCHAR)]);
-            if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
+            sValue.resize(dwSize / sizeof(WCHAR) - 1);
+            if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(&sValue[0]), &dwSize)) == ERROR_SUCCESS) {
                 dwSize /= sizeof(WCHAR);
-                sValue.assign(szBuffer.get(), dwSize && szBuffer[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
+                sValue.resize(dwSize && sValue[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
             }
         } else if (dwType == REG_EXPAND_SZ) {
             // The value is REG_EXPAND_SZ. Read it and expand environment variables.
-            std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[dwSize / sizeof(WCHAR)]);
+            std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[dwSize / sizeof(WCHAR) + 1]);
             if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(szBuffer.get()), &dwSize)) == ERROR_SUCCESS) {
+                dwSize /= sizeof(WCHAR);
+                szBuffer[dwSize] = 0;
                 if (::ExpandEnvironmentStringsW(szBuffer.get(), sValue) == 0)
                     lResult = ::GetLastError();
             }
@@ -623,8 +609,8 @@ static LSTATUS RegLoadMUIStringW(_In_ HKEY hKey, _In_opt_z_ LPCWSTR pszValue, _O
         sOut.assign(szStackBuffer, wcsnlen(szStackBuffer, dwSize/sizeof(wchar_t)));
     } else if (lResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap and retry.
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[(dwSize + sizeof(wchar_t) - 1)/sizeof(wchar_t)]);
-        sOut.assign(szBuffer.get(), (lResult = RegLoadMUIStringW(hKey, pszValue, szBuffer.get(), dwSize, &dwSize, Flags, pszDirectory)) == ERROR_SUCCESS ? wcsnlen(szBuffer.get(), dwSize/sizeof(wchar_t)) : 0);
+        sOut.resize((dwSize + sizeof(wchar_t) - 1)/sizeof(wchar_t) - 1);
+        sOut.resize((lResult = RegLoadMUIStringW(hKey, pszValue, &sOut[0], dwSize, &dwSize, Flags, pszDirectory)) == ERROR_SUCCESS ? wcsnlen(&sOut[0], dwSize/sizeof(wchar_t)) : 0);
     }
 
     return lResult;
@@ -653,10 +639,10 @@ static _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ L
                 for (int i = 10; i--;) {
                     // Allocate buffer. Then convert again.
                     cch = -cch;
-                    std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
-                    cch = ::NormalizeString(NormForm, lpSrcString, cwSrcLength, szBuffer.get(), cch);
+                    sDstString.resize((size_t)cch - 1);
+                    cch = ::NormalizeString(NormForm, lpSrcString, cwSrcLength, &sDstString[0], cch);
                     if (cch > 0) {
-                        sDstString.assign(szBuffer.get(), cwSrcLength != -1 ? wcsnlen(szStackBuffer, cch) : (size_t)cch - 1);
+                        sDstString.resize(cwSrcLength != -1 ? wcsnlen(&sDstString[0], cch) : (size_t)cch - 1);
                         break;
                     }
                     if (::GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
@@ -696,12 +682,10 @@ static _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ c
                 for (int i = 10; i--;) {
                     // Allocate buffer. Then convert again.
                     cch = -cch;
-                    std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
-                    cch = ::NormalizeString(NormForm, sSrcString.c_str(), (int)sSrcString.length(), szBuffer.get(), cch);
-                    if (cch > 0) {
-                        sDstString.assign(szBuffer.get(), cch);
+                    sDstString.resize(cch - 1);
+                    cch = ::NormalizeString(NormForm, sSrcString.c_str(), (int)sSrcString.length(), &sDstString[0], cch);
+                    if (cch > 0)
                         break;
-                    }
                     if (::GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
                         sDstString.clear();
                         break;
@@ -807,10 +791,8 @@ static _Success_(return != 0) int GetDateFormatA(_In_ LCID Locale, _In_ DWORD dw
     int iResult = GetDateFormatA(Locale, dwFlags, lpDate, lpFormat, NULL, 0);
     if (iResult) {
         // Allocate buffer on heap and retry.
-        std::unique_ptr<char[]> szBuffer(new char[iResult]);
-        iResult = GetDateFormatA(Locale, dwFlags, lpDate, lpFormat, szBuffer.get(), iResult);
-        sDate.assign(szBuffer.get(), iResult ? iResult - 1 : 0);
-        return iResult;
+        sDate.resize(iResult - 1);
+        return GetDateFormatA(Locale, dwFlags, lpDate, lpFormat, &sDate[0], iResult);
     }
 
     return iResult;
@@ -827,10 +809,8 @@ static _Success_(return != 0) int GetDateFormatW(_In_ LCID Locale, _In_ DWORD dw
     int iResult = GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, NULL, 0);
     if (iResult) {
         // Allocate buffer on heap and retry.
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[iResult]);
-        iResult = GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, szBuffer.get(), iResult);
-        sDate.assign(szBuffer.get(), iResult ? iResult - 1 : 0);
-        return iResult;
+        sDate.resize(iResult - 1);
+        return GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, &sDate[0], iResult);
     }
 
     return iResult;
@@ -976,10 +956,10 @@ static _Success_(return != 0) BOOL QueryFullProcessImageNameA(_In_ HANDLE hProce
     }
     for (DWORD dwCapacity = 2 * WINSTD_STACK_BUFFER_BYTES / sizeof(char); GetLastError() == ERROR_INSUFFICIENT_BUFFER; dwCapacity *= 2) {
         // Allocate on heap and retry.
-        std::unique_ptr<char[]> szBuffer(new char[dwCapacity]);
+        sExeName.resize(dwCapacity - 1);
         dwSize = dwCapacity;
-        if (::QueryFullProcessImageNameA(hProcess, dwFlags, szBuffer.get(), &dwSize)) {
-            sExeName.assign(szBuffer.get(), dwSize);
+        if (::QueryFullProcessImageNameA(hProcess, dwFlags, &sExeName[0], &dwSize)) {
+            sExeName.resize(dwSize);
             return TRUE;
         }
     }
@@ -1005,10 +985,10 @@ static _Success_(return != 0) BOOL QueryFullProcessImageNameW(_In_ HANDLE hProce
     }
     for (DWORD dwCapacity = 2 * WINSTD_STACK_BUFFER_BYTES / sizeof(wchar_t); GetLastError() == ERROR_INSUFFICIENT_BUFFER; dwCapacity *= 2) {
         // Allocate on heap and retry.
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwCapacity]);
+        sExeName.resize(dwCapacity - 1);
         dwSize = dwCapacity;
-        if (::QueryFullProcessImageNameW(hProcess, dwFlags, szBuffer.get(), &dwSize)) {
-            sExeName.assign(szBuffer.get(), dwSize);
+        if (::QueryFullProcessImageNameW(hProcess, dwFlags, &sExeName[0], &dwSize)) {
+            sExeName.resize(dwSize);
             return TRUE;
         }
     }
@@ -2145,11 +2125,9 @@ _Success_(return != 0) BOOL GetThreadPreferredUILanguages(_In_ DWORD dwFlags, _O
         ulSize = 0;
         GetThreadPreferredUILanguages(dwFlags, pulNumLanguages, NULL, &ulSize);
         // Allocate on heap and retry.
-        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[ulSize]);
-        if (GetThreadPreferredUILanguages(dwFlags, pulNumLanguages, szBuffer.get(), &ulSize)) {
-            sValue.assign(szBuffer.get(), ulSize - 1);
+        sValue.resize(ulSize - 1);
+        if (GetThreadPreferredUILanguages(dwFlags, pulNumLanguages, &sValue[0], &ulSize))
             return TRUE;
-        }
     }
     return FALSE;
 }

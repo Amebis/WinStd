@@ -43,15 +43,15 @@ static DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_
         sSize = SIZETAdd(sSize, 1024);
         if (sSize > DWORD_MAX)
             throw std::runtime_exception("Data too big");
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[sSize]);
+        sValue.resize(sSize - 1);
 
         // Try!
-        DWORD dwResult = ::pfnWlanReasonCodeToString(dwReasonCode, static_cast<DWORD>(sSize), szBuffer.get(), pReserved);
+        DWORD dwResult = ::pfnWlanReasonCodeToString(dwReasonCode, static_cast<DWORD>(sSize), &sValue[0], pReserved);
         if (dwResult == ERROR_SUCCESS) {
-            SIZE_T sLength = wcsnlen(szBuffer.get(), sSize);
+            SIZE_T sLength = wcsnlen(&sValue[0], sSize);
             if (sLength < sSize - 1) {
                 // Buffer was long enough.
-                sValue.assign(szBuffer.get(), sLength);
+                sValue.resize(sLength);
                 return ERROR_SUCCESS;
             }
         } else {

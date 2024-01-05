@@ -26,10 +26,8 @@ static DWORD CertGetNameStringA(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
     DWORD dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
 
     // Allocate buffer on heap to format the string data into and read it.
-    std::unique_ptr<char[]> szBuffer(new char[dwSize]);
-    dwSize = ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, szBuffer.get(), dwSize);
-    sNameString.assign(szBuffer.get(), dwSize - 1);
-    return dwSize;
+    sNameString.resize(dwSize - 1);
+    return ::CertGetNameStringA(pCertContext, dwType, dwFlags, pvTypePara, &sNameString[0], dwSize);
 }
 
 ///
@@ -44,10 +42,8 @@ static DWORD CertGetNameStringW(_In_ PCCERT_CONTEXT pCertContext, _In_ DWORD dwT
     DWORD dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, NULL, 0);
 
     // Allocate buffer on heap to format the string data into and read it.
-    std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[dwSize]);
-    dwSize = ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, szBuffer.get(), dwSize);
-    sNameString.assign(szBuffer.get(), dwSize - 1);
-    return dwSize;
+    sNameString.resize(dwSize - 1);
+    return ::CertGetNameStringW(pCertContext, dwType, dwFlags, pvTypePara, &sNameString[0], dwSize);
 }
 
 ///

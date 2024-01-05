@@ -34,10 +34,8 @@ static UINT MsiGetPropertyA(_In_ MSIHANDLE hInstall, _In_z_ LPCSTR szName, _Inou
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to read the string data into and read it.
-        std::unique_ptr<char[]> szBuffer(new char[++dwSize]);
-        uiResult = ::MsiGetPropertyA(hInstall, szName, szBuffer.get(), &dwSize);
-        sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
-        return uiResult;
+        sValue.resize(dwSize++);
+        return ::MsiGetPropertyA(hInstall, szName, &sValue[0], &dwSize);
     } else {
         // Return error code.
         return uiResult;
@@ -64,10 +62,8 @@ static UINT MsiGetPropertyW(_In_ MSIHANDLE hInstall, _In_z_ LPCWSTR szName, _Ino
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to read the string data into and read it.
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[++dwSize]);
-        uiResult = ::MsiGetPropertyW(hInstall, szName, szBuffer.get(), &dwSize);
-        sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
-        return uiResult;
+        sValue.resize(dwSize++);
+        return ::MsiGetPropertyW(hInstall, szName, &sValue[0], &dwSize);
     } else {
         // Return error code.
         return uiResult;
@@ -92,10 +88,8 @@ static UINT MsiRecordGetStringA(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to read the string data into and read it.
-        std::unique_ptr<char[]> szBuffer(new char[++dwSize]);
-        uiResult = ::MsiRecordGetStringA(hRecord, iField, szBuffer.get(), &dwSize);
-        sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
-        return uiResult;
+        sValue.resize(dwSize++);
+        return ::MsiRecordGetStringA(hRecord, iField, &sValue[0], &dwSize);
     } else {
         // Return error code.
         return uiResult;
@@ -122,10 +116,8 @@ static UINT MsiRecordGetStringW(_In_ MSIHANDLE hRecord, _In_ unsigned int iField
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to read the string data into and read it.
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[++dwSize]);
-        uiResult = ::MsiRecordGetStringW(hRecord, iField, szBuffer.get(), &dwSize);
-        sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
-        return uiResult;
+        sValue.resize(dwSize++);
+        return ::MsiRecordGetStringW(hRecord, iField, &sValue[0], &dwSize);
     } else {
         // Return error code.
         return uiResult;
@@ -150,10 +142,8 @@ static UINT MsiFormatRecordA(_In_opt_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        std::unique_ptr<char[]> szBuffer(new char[++dwSize]);
-        uiResult = ::MsiFormatRecordA(hInstall, hRecord, szBuffer.get(), &dwSize);
-        sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
-        return uiResult;
+        sValue.resize(dwSize++);
+        return ::MsiFormatRecordA(hInstall, hRecord, &sValue[0], &dwSize);
     } else {
         // Return error code.
         return uiResult;
@@ -180,10 +170,8 @@ static UINT MsiFormatRecordW(_In_opt_ MSIHANDLE hInstall, _In_ MSIHANDLE hRecord
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[++dwSize]);
-        uiResult = ::MsiFormatRecordW(hInstall, hRecord, szBuffer.get(), &dwSize);
-        sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
-        return uiResult;
+        sValue.resize(dwSize++);
+        return ::MsiFormatRecordW(hInstall, hRecord, &sValue[0], &dwSize);
     } else {
         // Return error code.
         return uiResult;
@@ -232,10 +220,8 @@ static UINT MsiGetTargetPathA(_In_ MSIHANDLE hInstall, _In_z_ LPCSTR szFolder, _
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        std::unique_ptr<char[]> szBuffer(new char[++dwSize]);
-        uiResult = ::MsiGetTargetPathA(hInstall, szFolder, szBuffer.get(), &dwSize);
-        sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
-        return uiResult;
+        sValue.resize(dwSize++);
+        return ::MsiGetTargetPathA(hInstall, szFolder, &sValue[0], &dwSize);
     } else {
         // Return error code.
         return uiResult;
@@ -262,10 +248,8 @@ static UINT MsiGetTargetPathW(_In_ MSIHANDLE hInstall, _In_z_ LPCWSTR szFolder, 
         return ERROR_SUCCESS;
     } else if (uiResult == ERROR_MORE_DATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[++dwSize]);
-        uiResult = ::MsiGetTargetPathW(hInstall, szFolder, szBuffer.get(), &dwSize);
-        sValue.assign(szBuffer.get(), uiResult == ERROR_SUCCESS ? dwSize : 0);
-        return uiResult;
+        sValue.resize(dwSize++);
+        return ::MsiGetTargetPathW(hInstall, szFolder, &sValue[0], &dwSize);
     } else {
         // Return error code.
         return uiResult;
@@ -288,10 +272,8 @@ static INSTALLSTATE MsiGetComponentPathA(_In_z_ LPCSTR szProduct, _In_z_ LPCSTR 
         return state;
     } else if (state == INSTALLSTATE_MOREDATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        std::unique_ptr<char[]> szBuffer(new char[++dwSize]);
-        state = ::MsiGetComponentPathA(szProduct, szComponent, szBuffer.get(), &dwSize);
-        sValue.assign(szBuffer.get(), state >= INSTALLSTATE_BROKEN ? dwSize : 0);
-        return state;
+        sValue.resize(dwSize++);
+        return ::MsiGetComponentPathA(szProduct, szComponent, &sValue[0], &dwSize);
     } else {
         // Return error code.
         return state;
@@ -318,10 +300,8 @@ static INSTALLSTATE MsiGetComponentPathW(_In_z_ LPCWSTR szProduct, _In_z_ LPCWST
         return state;
     } else if (state == INSTALLSTATE_MOREDATA) {
         // Allocate buffer on heap to format the string data into and read it.
-        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[++dwSize]);
-        state = ::MsiGetComponentPathW(szProduct, szComponent, szBuffer.get(), &dwSize);
-        sValue.assign(szBuffer.get(), state >= INSTALLSTATE_BROKEN ? dwSize : 0);
-        return state;
+        sValue.resize(dwSize++);
+        return ::MsiGetComponentPathW(szProduct, szComponent, &sValue[0], &dwSize);
     } else {
         // Return error code.
         return state;

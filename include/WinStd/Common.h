@@ -253,23 +253,6 @@ inline SIZE_T SIZETAdd(SIZE_T a, SIZE_T b)
 ///
 /// \returns Number of characters in result.
 ///
-#if _MSC_VER <= 1600
-static int vsnprintf(_Out_z_cap_(capacity) char *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg)
-{
-    return _vsnprintf(str, capacity, format, arg);
-}
-#endif
-
-///
-/// Formats string using `printf()`.
-///
-/// \param[out] str       Buffer to receive string
-/// \param[in ] capacity  Size of `str` in characters
-/// \param[in ] format    String template using `printf()` style
-/// \param[in ] arg       Arguments to `format`
-///
-/// \returns Number of characters in result.
-///
 static int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg) noexcept
 {
     return _vsnwprintf(str, capacity, format, arg);
@@ -290,22 +273,27 @@ static int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ 
     _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
 
     // Try with stack buffer first.
-    int count = vsnprintf(buf, _countof(buf) - 1, format, arg);
-    if (count >= 0) {
+    int count = vsnprintf(buf, _countof(buf), format, arg);
+    if (0 <= count && count < _countof(buf)) {
         // Copy from stack.
-        str.assign(buf, count);
-    } else {
-        for (size_t capacity = 2*WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem);; capacity *= 2) {
-            // Allocate on heap and retry.
-            auto buf_dyn = std::make_unique<_Elem[]>(capacity);
-            count = vsnprintf(buf_dyn.get(), capacity - 1, format, arg);
-            if (count >= 0) {
-                str.assign(buf_dyn.get(), count);
-                break;
-            }
+        str.append(buf, count);
+        return count;
+    }
+    if (count < 0) {
+        switch (errno) {
+        case 0:
+            count = vsnprintf(NULL, 0, format, arg);
+            assert(count >= 0);
+            break;
+        case EINVAL: throw std::invalid_argument("invalid vsnprintf arguments");
+        case EILSEQ: throw std::runtime_error("encoding error");
+        default: throw std::runtime_error("failed to format string");
         }
     }
-
+    size_t offset = str.size();
+    str.resize(offset + count);
+    if (vsnprintf(&str[offset], count + 1, format, arg) != count)
+        throw std::runtime_error("failed to format string");
     return count;
 }
 
@@ -346,9 +334,9 @@ static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ D
     else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Query the required output size. Allocate buffer. Then convert again.
         cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
-        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
-        sMultiByteStr.assign(szBuffer.get(), cchWideChar != -1 ? strnlen(szBuffer.get(), cch) : (size_t)cch - 1);
+        sMultiByteStr.resize(cch);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, &sMultiByteStr[0], cch, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.resize(cchWideChar != -1 ? strnlen(&sMultiByteStr[0], cch) : (size_t)cch - 1);
     }
 
     return cch;
@@ -399,9 +387,8 @@ static _Success_(return != 0) int WideCharToMultiByte(_In_ UINT CodePage, _In_ D
     else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Query the required output size. Allocate buffer. Then convert again.
         cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), NULL, 0, lpDefaultChar, lpUsedDefaultChar);
-        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
-        sMultiByteStr.assign(szBuffer.get(), cch);
+        sMultiByteStr.resize(cch);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), &sMultiByteStr[0], cch, lpDefaultChar, lpUsedDefaultChar);
     }
 
     return cch;
@@ -428,10 +415,9 @@ static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, 
     else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Query the required output size. Allocate buffer. Then convert again.
         cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, NULL, 0, lpDefaultChar, lpUsedDefaultChar);
-        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
-        sMultiByteStr.assign(szBuffer.get(), cchWideChar != -1 ? strnlen(szBuffer.get(), cch) : (size_t)cch - 1);
-        SecureZeroMemory(szBuffer.get(), sizeof(CHAR) * cch);
+        sMultiByteStr.resize(cch);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, &sMultiByteStr[0], cch, lpDefaultChar, lpUsedDefaultChar);
+        sMultiByteStr.resize(cchWideChar != -1 ? strnlen(&sMultiByteStr[0], cch) : (size_t)cch - 1);
     }
 
     SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
@@ -490,10 +476,8 @@ static _Success_(return != 0) int SecureWideCharToMultiByte(_In_ UINT CodePage, 
     else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Query the required output size. Allocate buffer. Then convert again.
         cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), NULL, 0, lpDefaultChar, lpUsedDefaultChar);
-        std::unique_ptr<CHAR[]> szBuffer(new CHAR[cch]);
-        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), szBuffer.get(), cch, lpDefaultChar, lpUsedDefaultChar);
-        sMultiByteStr.assign(szBuffer.get(), cch);
-        SecureZeroMemory(szBuffer.get(), sizeof(CHAR) * cch);
+        sMultiByteStr.resize(cch);
+        cch = ::WideCharToMultiByte(CodePage, dwFlags, sWideCharStr.c_str(), (int)sWideCharStr.length(), &sMultiByteStr[0], cch, lpDefaultChar, lpUsedDefaultChar);
     }
 
     SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
@@ -520,9 +504,9 @@ static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ D
     else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Query the required output size. Allocate buffer. Then convert again.
         cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
-        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szBuffer.get(), cch);
-        sWideCharStr.assign(szBuffer.get(), cbMultiByte != -1 ? wcsnlen(szBuffer.get(), cch) : (size_t)cch - 1);
+        sWideCharStr.resize(cch);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, &sWideCharStr[0], cch);
+        sWideCharStr.resize(cbMultiByte != -1 ? wcsnlen(&sWideCharStr[0], cch) : (size_t)cch - 1);
     }
 
     return cch;
@@ -573,9 +557,8 @@ static _Success_(return != 0) int MultiByteToWideChar(_In_ UINT CodePage, _In_ D
     else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Query the required output size. Allocate buffer. Then convert again.
         cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), NULL, 0);
-        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szBuffer.get(), cch);
-        sWideCharStr.assign(szBuffer.get(), cch);
+        sWideCharStr.resize(cch);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), &sWideCharStr[0], cch);
     }
 
     return cch;
@@ -602,10 +585,9 @@ static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, 
     else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Query the required output size. Allocate buffer. Then convert again.
         cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, NULL, 0);
-        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, szBuffer.get(), cch);
-        sWideCharStr.assign(szBuffer.get(), cbMultiByte != -1 ? wcsnlen(szBuffer.get(), cch) : (size_t)cch - 1);
-        SecureZeroMemory(szBuffer.get(), sizeof(WCHAR) * cch);
+        sWideCharStr.resize(cch);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, &sWideCharStr[0], cch);
+        sWideCharStr.resize(cbMultiByte != -1 ? wcsnlen(&sWideCharStr[0], cch) : (size_t)cch - 1);
     }
 
     SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
@@ -664,10 +646,8 @@ static _Success_(return != 0) int SecureMultiByteToWideChar(_In_ UINT CodePage, 
     else if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
         // Query the required output size. Allocate buffer. Then convert again.
         cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), NULL, 0);
-        std::unique_ptr<WCHAR[]> szBuffer(new WCHAR[cch]);
-        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), szBuffer.get(), cch);
-        sWideCharStr.assign(szBuffer.get(), cch);
-        SecureZeroMemory(szBuffer.get(), sizeof(WCHAR) * cch);
+        sWideCharStr.resize(cch);
+        cch = ::MultiByteToWideChar(CodePage, dwFlags, sMultiByteStr.c_str(), (int)sMultiByteStr.length(), &sWideCharStr[0], cch);
     }
 
     SecureZeroMemory(szStackBuffer, sizeof(szStackBuffer));
