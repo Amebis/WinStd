@@ -1,6 +1,6 @@
 ﻿/*
     ​SPDX-License-Identifier: MIT
-    Copyright © 1991-2023 Amebis
+    Copyright © 1991-2024 Amebis
 */
 
 /// \defgroup WinStdGdiAPI GDI API

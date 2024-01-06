@@ -1,6 +1,6 @@
 /*
 	SPDX-License-Identifier: MIT
-	Copyright © 2022-2023 Amebis
+	Copyright © 2022-2024 Amebis
 */
 
 #pragma once
