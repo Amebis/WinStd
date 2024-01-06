@@ -437,7 +437,7 @@ static LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCSTR pszName, _Out_ 
     } else if (lResult == ERROR_MORE_DATA) {
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ. Read it now.
-            sValue.resize(dwSize / sizeof(CHAR) - 1);
+            sValue.resize(dwSize / sizeof(CHAR));
             if ((lResult = ::RegQueryValueExA(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(&sValue[0]), &dwSize)) == ERROR_SUCCESS) {
                 dwSize /= sizeof(CHAR);
                 sValue.resize(dwSize && sValue[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
@@ -503,7 +503,7 @@ static LSTATUS RegQueryStringValue(_In_ HKEY hReg, _In_z_ LPCWSTR pszName, _Out_
     } else if (lResult == ERROR_MORE_DATA) {
         if (dwType == REG_SZ || dwType == REG_MULTI_SZ) {
             // The value is REG_SZ or REG_MULTI_SZ. Read it now.
-            sValue.resize(dwSize / sizeof(WCHAR) - 1);
+            sValue.resize(dwSize / sizeof(WCHAR));
             if ((lResult = ::RegQueryValueExW(hReg, pszName, NULL, NULL, reinterpret_cast<LPBYTE>(&sValue[0]), &dwSize)) == ERROR_SUCCESS) {
                 dwSize /= sizeof(WCHAR);
                 sValue.resize(dwSize && sValue[dwSize - 1] == 0 ? dwSize - 1 : dwSize);
@@ -682,7 +682,7 @@ static _Success_(return > 0) int NormalizeString(_In_ NORM_FORM NormForm, _In_ c
                 for (int i = 10; i--;) {
                     // Allocate buffer. Then convert again.
                     cch = -cch;
-                    sDstString.resize(cch - 1);
+                    sDstString.resize(cch);
                     cch = ::NormalizeString(NormForm, sSrcString.c_str(), (int)sSrcString.length(), &sDstString[0], cch);
                     if (cch > 0)
                         break;
