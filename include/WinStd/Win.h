@@ -1098,6 +1098,50 @@ namespace winstd
     typedef win_handle<NULL> mutex;
 
     ///
+    /// Locks given mutex in constructor and releases it in destructor
+    ///
+    class mutex_locker
+    {
+        WINSTD_NONCOPYABLE(mutex_locker)
+        WINSTD_NONMOVABLE(mutex_locker)
+
+    public:
+        ///
+        /// Waits until the specified mutex is in the signaled state or the time-out interval elapses.
+        ///
+        /// \param[in] hMutex          Mutex
+        /// \param[in] dwMilliseconds  The time-out interval, in milliseconds. If a nonzero value is specified, the function waits until the object is signaled or the interval elapses. If dwMilliseconds is zero, the function does not enter a wait state if the object is not signaled; it always returns immediately. If dwMilliseconds is INFINITE, the function will return only when the object is signaled.
+        ///
+        /// \sa [WaitForSingleObject function](https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-waitforsingleobject)
+        ///
+        mutex_locker(_In_ HANDLE hMutex, _In_ DWORD dwMilliseconds = INFINITE) : m_h(hMutex)
+        {
+            switch (WaitForSingleObject(m_h, dwMilliseconds)) {
+            case WAIT_OBJECT_0:
+            case WAIT_ABANDONED:
+                return;
+            case WAIT_TIMEOUT:
+                throw std::runtime_error("timeout");
+            case WAIT_FAILED:
+                throw win_runtime_error("WaitForSingleObject failed");
+            }
+        }
+
+        ///
+        /// Releases ownership of the mutex object
+        ///
+        /// \sa [ReleaseMutex function](https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-releasemutex)
+        ///
+        virtual ~mutex_locker()
+        {
+            ReleaseMutex(m_h);
+        }
+
+    protected:
+        HANDLE m_h;
+    };
+
+    ///
     /// File handle wrapper
     ///
     /// \sa [CreateFile function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx)
