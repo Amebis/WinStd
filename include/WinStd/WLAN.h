@@ -42,7 +42,7 @@ static DWORD WlanReasonCodeToString(_In_ DWORD dwReasonCode, _Inout_ std::basic_
         // Increment size and allocate buffer.
         sSize = SIZETAdd(sSize, 1024);
         if (sSize > DWORD_MAX)
-            throw std::runtime_exception("Data too big");
+            throw std::runtime_error("Data too big");
         sValue.resize(sSize - 1);
 
         // Try!
