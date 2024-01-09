@@ -158,10 +158,14 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga583555761f3d01787d5e5f0226472f4e" id="r_ga583555761f3d01787d5e5f0226472f4e"><td class="memTemplParams" colspan="2">template&lt;class _Elem , class _Traits , class _Ax &gt; </td></tr>
-<tr class="memitem:ga583555761f3d01787d5e5f0226472f4e"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ga583555761f3d01787d5e5f0226472f4e">vsprintf</a> (std::basic_string&lt; _Elem, _Traits, _Ax &gt; &amp;str, const _Elem *format, va_list arg)</td></tr>
-<tr class="memdesc:ga583555761f3d01787d5e5f0226472f4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats string using <code>printf()</code>.  <br /></td></tr>
-<tr class="separator:ga583555761f3d01787d5e5f0226472f4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd91e0470cf137501a57839ace29216f" id="r_gadd91e0470cf137501a57839ace29216f"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gadd91e0470cf137501a57839ace29216f"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#gadd91e0470cf137501a57839ace29216f">vsprintf</a> (std::basic_string&lt; char, _Traits, _Ax &gt; &amp;str, const char *format, va_list arg)</td></tr>
+<tr class="memdesc:gadd91e0470cf137501a57839ace29216f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats string using <code>printf()</code>.  <br /></td></tr>
+<tr class="separator:gadd91e0470cf137501a57839ace29216f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae2cc0f737040cfe19f775be500bbe1a" id="r_gaae2cc0f737040cfe19f775be500bbe1a"><td class="memTemplParams" colspan="2">template&lt;class _Traits , class _Ax &gt; </td></tr>
+<tr class="memitem:gaae2cc0f737040cfe19f775be500bbe1a"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#gaae2cc0f737040cfe19f775be500bbe1a">vsprintf</a> (std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;str, const wchar_t *format, va_list arg)</td></tr>
+<tr class="memdesc:gaae2cc0f737040cfe19f775be500bbe1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats string using <code>printf()</code>.  <br /></td></tr>
+<tr class="separator:gaae2cc0f737040cfe19f775be500bbe1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac397f655a858a069b3e521940af64331" id="r_gac397f655a858a069b3e521940af64331"><td class="memTemplParams" colspan="2">template&lt;class _Elem , class _Traits , class _Ax &gt; </td></tr>
 <tr class="memitem:gac397f655a858a069b3e521940af64331"><td class="memTemplItemLeft" align="right" valign="top">static int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#gac397f655a858a069b3e521940af64331">sprintf</a> (std::basic_string&lt; _Elem, _Traits, _Ax &gt; &amp;str, const _Elem *format,...)</td></tr>
 <tr class="memdesc:gac397f655a858a069b3e521940af64331"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats string using <code>printf()</code>.  <br /></td></tr>
@@ -227,7 +231,7 @@ Functions</h2></td></tr>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="comment">// Please note the PCSTR typecasting invokes an operator to return</span></div>
 <div class="line"><span class="comment">// pointer to formatted buffer rather than class reference itself.</span></div>
 <div class="line">cout &lt;&lt; (PCSTR)(<a class="code hl_class" href="classwinstd_1_1ref__unique__ptr.html">winstd::string_printf</a>(<span class="stringliteral">&quot;%i is less than %i.\n&quot;</span>, 1, 5));</div>
-<div class="ttc" id="aclasswinstd_1_1ref__unique__ptr_html"><div class="ttname"><a href="classwinstd_1_1ref__unique__ptr.html">winstd::ref_unique_ptr</a></div><div class="ttdoc">Helper class for returning pointers to std::unique_ptr.</div><div class="ttdef"><b>Definition</b> Common.h:838</div></div>
+<div class="ttc" id="aclasswinstd_1_1ref__unique__ptr_html"><div class="ttname"><a href="classwinstd_1_1ref__unique__ptr.html">winstd::ref_unique_ptr</a></div><div class="ttdoc">Helper class for returning pointers to std::unique_ptr.</div><div class="ttdef"><b>Definition</b> Common.h:863</div></div>
 </div><!-- fragment --> </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="gadd052e867c5d82d180924da9d0e16798" name="gadd052e867c5d82d180924da9d0e16798"></a>
@@ -864,13 +868,13 @@ template&lt;class _Elem , class _Traits , class _Ax &gt; </div>
 
 </div>
 </div>
-<a id="ga583555761f3d01787d5e5f0226472f4e" name="ga583555761f3d01787d5e5f0226472f4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga583555761f3d01787d5e5f0226472f4e">&#9670;&#160;</a></span>vsprintf()</h2>
+<a id="gadd91e0470cf137501a57839ace29216f" name="gadd91e0470cf137501a57839ace29216f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadd91e0470cf137501a57839ace29216f">&#9670;&#160;</a></span>vsprintf() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class _Elem , class _Traits , class _Ax &gt; </div>
+template&lt;class _Traits , class _Ax &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -878,12 +882,59 @@ template&lt;class _Elem , class _Traits , class _Ax &gt; </div>
         <tr>
           <td class="memname">static int vsprintf </td>
           <td>(</td>
-          <td class="paramtype">std::basic_string&lt; _Elem, _Traits, _Ax &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>str</em>, </span></td>
+          <td class="paramtype">std::basic_string&lt; char, _Traits, _Ax &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>str</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const _Elem *</td>          <td class="paramname"><span class="paramname"><em>format</em>, </span></td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>format</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">va_list</td>          <td class="paramname"><span class="paramname"><em>arg</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Formats string using <code>printf()</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">str</td><td>Formatted string </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">format</td><td>String template using <code>printf()</code> style </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg</td><td>Arguments to <code>format</code></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of characters in result. </dd></dl>
+
+</div>
+</div>
+<a id="gaae2cc0f737040cfe19f775be500bbe1a" name="gaae2cc0f737040cfe19f775be500bbe1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaae2cc0f737040cfe19f775be500bbe1a">&#9670;&#160;</a></span>vsprintf() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class _Traits , class _Ax &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int vsprintf </td>
+          <td>(</td>
+          <td class="paramtype">std::basic_string&lt; wchar_t, _Traits, _Ax &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>str</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const wchar_t *</td>          <td class="paramname"><span class="paramname"><em>format</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1086,7 +1137,7 @@ template&lt;class _Traits1 , class _Ax1 , class _Traits2 , class _Ax2 &gt; </div
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jan 9 2024 18:47:00 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
+Generated on Tue Jan 9 2024 21:02:06 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
 </small></address>
 </body>
 </html>
