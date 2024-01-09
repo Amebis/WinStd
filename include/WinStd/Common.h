@@ -243,20 +243,19 @@ inline SIZE_T SIZETAdd(SIZE_T a, SIZE_T b)
 /// \addtogroup WinStdStrFormat
 /// @{
 
-///
-/// Formats string using `printf()`.
-///
-/// \param[out] str       Buffer to receive string
-/// \param[in ] capacity  Size of `str` in characters
-/// \param[in ] format    String template using `printf()` style
-/// \param[in ] arg       Arguments to `format`
-///
-/// \returns Number of characters in result.
-///
-static int vsnprintf(_Out_z_cap_(capacity) wchar_t *str, _In_ size_t capacity, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg) noexcept
+/// \cond internal
+static inline int __vsnprintf(_Out_z_cap_(capacity) char* str, _In_ size_t capacity, _In_z_ _Printf_format_string_params_(2) const char* format, _In_ va_list arg)
 {
+#pragma warning(suppress: 4996)
+    return _vsnprintf(str, capacity, format, arg);
+}
+
+static inline int __vsnprintf(_Out_z_cap_(capacity) wchar_t* str, _In_ size_t capacity, _In_z_ _Printf_format_string_params_(2) const wchar_t* format, _In_ va_list arg)
+{
+#pragma warning(suppress: 4996)
     return _vsnwprintf(str, capacity, format, arg);
 }
+/// \endcond
 
 ///
 /// Formats string using `printf()`.
@@ -273,7 +272,7 @@ static int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ 
     _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
 
     // Try with stack buffer first.
-    int count = vsnprintf(buf, _countof(buf), format, arg);
+    int count = __vsnprintf(buf, _countof(buf), format, arg);
     if (0 <= count && count < _countof(buf)) {
         // Copy from stack.
         str.append(buf, count);
@@ -282,7 +281,7 @@ static int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ 
     if (count < 0) {
         switch (errno) {
         case 0:
-            count = vsnprintf(NULL, 0, format, arg);
+            count = __vsnprintf(NULL, 0, format, arg);
             assert(count >= 0);
             break;
         case EINVAL: throw std::invalid_argument("invalid vsnprintf arguments");
@@ -292,7 +291,7 @@ static int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ 
     }
     size_t offset = str.size();
     str.resize(offset + count);
-    if (vsnprintf(&str[offset], count + 1, format, arg) != count)
+    if (__vsnprintf(&str[offset], count + 1, format, arg) != count)
         throw std::runtime_error("failed to format string");
     return count;
 }
