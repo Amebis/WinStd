@@ -243,19 +243,44 @@ inline SIZE_T SIZETAdd(SIZE_T a, SIZE_T b)
 /// \addtogroup WinStdStrFormat
 /// @{
 
-/// \cond internal
-static inline int __vsnprintf(_Out_z_cap_(capacity) char* str, _In_ size_t capacity, _In_z_ _Printf_format_string_params_(2) const char* format, _In_ va_list arg)
+///
+/// Formats string using `printf()`.
+///
+/// \param[out] str     Formatted string
+/// \param[in ] format  String template using `printf()` style
+/// \param[in ] arg     Arguments to `format`
+///
+/// \returns Number of characters in result.
+///
+template<class _Traits, class _Ax>
+static int vsprintf(_Inout_ std::basic_string<char, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const char *format, _In_ va_list arg)
 {
-#pragma warning(suppress: 4996)
-    return _vsnprintf(str, capacity, format, arg);
-}
+    char buf[WINSTD_STACK_BUFFER_BYTES/sizeof(char)];
 
-static inline int __vsnprintf(_Out_z_cap_(capacity) wchar_t* str, _In_ size_t capacity, _In_z_ _Printf_format_string_params_(2) const wchar_t* format, _In_ va_list arg)
-{
-#pragma warning(suppress: 4996)
-    return _vsnwprintf(str, capacity, format, arg);
+    // Try with stack buffer first.
+    int count = _vsnprintf(buf, _countof(buf), format, arg);
+    if (0 <= count && count < _countof(buf)) {
+        // Copy from stack.
+        str.append(buf, count);
+        return count;
+    }
+    if (count < 0) {
+        switch (errno) {
+        case 0:
+            count = _vsnprintf(NULL, 0, format, arg);
+            assert(count >= 0);
+            break;
+        case EINVAL: throw std::invalid_argument("invalid vsnprintf arguments");
+        case EILSEQ: throw std::runtime_error("encoding error");
+        default: throw std::runtime_error("failed to format string");
+        }
+    }
+    size_t offset = str.size();
+    str.resize(offset + count);
+    if (_vsnprintf(&str[offset], count + 1, format, arg) != count)
+        throw std::runtime_error("failed to format string");
+    return count;
 }
-/// \endcond
 
 ///
 /// Formats string using `printf()`.
@@ -266,13 +291,13 @@ static inline int __vsnprintf(_Out_z_cap_(capacity) wchar_t* str, _In_ size_t ca
 ///
 /// \returns Number of characters in result.
 ///
-template<class _Elem, class _Traits, class _Ax>
-static int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const _Elem *format, _In_ va_list arg)
+template<class _Traits, class _Ax>
+static int vsprintf(_Inout_ std::basic_string<wchar_t, _Traits, _Ax> &str, _In_z_ _Printf_format_string_ const wchar_t *format, _In_ va_list arg)
 {
-    _Elem buf[WINSTD_STACK_BUFFER_BYTES/sizeof(_Elem)];
+    wchar_t buf[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
 
     // Try with stack buffer first.
-    int count = __vsnprintf(buf, _countof(buf), format, arg);
+    int count = _vsnwprintf(buf, _countof(buf), format, arg);
     if (0 <= count && count < _countof(buf)) {
         // Copy from stack.
         str.append(buf, count);
@@ -281,7 +306,7 @@ static int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ 
     if (count < 0) {
         switch (errno) {
         case 0:
-            count = __vsnprintf(NULL, 0, format, arg);
+            count = _vsnwprintf(NULL, 0, format, arg);
             assert(count >= 0);
             break;
         case EINVAL: throw std::invalid_argument("invalid vsnprintf arguments");
@@ -291,7 +316,7 @@ static int vsprintf(_Inout_ std::basic_string<_Elem, _Traits, _Ax> &str, _In_z_ 
     }
     size_t offset = str.size();
     str.resize(offset + count);
-    if (__vsnprintf(&str[offset], count + 1, format, arg) != count)
+    if (_vsnwprintf(&str[offset], count + 1, format, arg) != count)
         throw std::runtime_error("failed to format string");
     return count;
 }
