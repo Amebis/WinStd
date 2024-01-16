@@ -9,7 +9,9 @@
 #pragma once
 
 #include "Common.h"
+#include <assert.h>
 #include <unknwn.h>
+#include <stdexcept>
 #include <string>
 
 namespace winstd
@@ -1209,3 +1211,521 @@ static _Check_return_ HRESULT CoGetObject(_In_ LPCWSTR pszName, _In_opt_ BIND_OP
 }
 
 /// @}
+
+/// \addtogroup WinStdCOMHelpers
+/// @{
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ IDispatch* value)
+{
+    V_VT(&v) = VT_DISPATCH;
+    V_DISPATCH(&v) = value;
+    value->AddRef();
+    return *(&v + 1);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ const CHAR value)
+{
+    V_VT(&v) = VT_I1;
+    V_I1(&v) = value;
+    return *(&v + 1);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ const BYTE value)
+{
+    V_VT(&v) = VT_UI1;
+    V_UI1(&v) = value;
+    return *(&v + 1);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ const SHORT value)
+{
+    V_VT(&v) = VT_I2;
+    V_I2(&v) = value;
+    return *(&v + 1);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ const USHORT value)
+{
+    V_VT(&v) = VT_UI2;
+    V_UI2(&v) = value;
+    return *(&v + 1);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ const LONG value)
+{
+    V_VT(&v) = VT_I4;
+    V_I4(&v) = value;
+    return *(&v + 1);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ const ULONG value)
+{
+    V_VT(&v) = VT_UI4;
+    V_UI4(&v) = value;
+    return *(&v + 1);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ const LONGLONG value)
+{
+    V_VT(&v) = VT_I8;
+    V_I8(&v) = value;
+    return *(&v + 1);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ const ULONGLONG value)
+{
+    V_VT(&v) = VT_UI8;
+    V_UI8(&v) = value;
+    return *(&v + 1);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ const FLOAT value)
+{
+    V_VT(&v) = VT_R4;
+    V_R4(&v) = value;
+    return *(&v + 1);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ const DOUBLE value)
+{
+    V_VT(&v) = VT_R8;
+    V_R8(&v) = value;
+    return *(&v + 1);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ const BOOL value)
+{
+    return v << (value ? VARIANT_TRUE : VARIANT_FALSE);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ LPCOLESTR value)
+{
+    V_VT(&v) = VT_BSTR;
+    V_BSTR(&v) = SysAllocString(value);
+    return *(&v + 1);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+template<class _Traits, class _Ax>
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ const std::basic_string<OLECHAR, _Traits, _Ax>& value)
+{
+    if (value.size() > UINT_MAX)
+        throw std::invalid_argument("string too long");
+    V_VT(&v) = VT_BSTR;
+    V_BSTR(&v) = SysAllocStringLen(value.data(), static_cast<UINT>(value.size()));
+    return *(&v + 1);
+}
+
+///
+/// Saves value to VARIANT
+///
+/// \note This operator saves GUID as BSTR string in "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}" notation.
+///
+/// \param[out] v      VARIANT to save value to. For performance reasons, no VariantClear is called before saving. Thus, v must not contain referenced data.
+/// \param[in]  value  Value to save
+///
+/// \return Reference to VARIANT successor in array of VARIANT(s)
+///
+inline VARIANT& operator <<(_Out_ VARIANT& v, _In_ const GUID& value)
+{
+    OLECHAR guid_niz[38 + 1];
+    V_VT(&v) = VT_BSTR;
+    V_BSTR(&v) = SysAllocStringLen(guid_niz, _swprintf_s_l(
+        guid_niz, _countof(guid_niz),
+        L"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}",
+        NULL,
+        value.Data1,
+        value.Data2,
+        value.Data3,
+        value.Data4[0], value.Data4[1],
+        value.Data4[2], value.Data4[3], value.Data4[4], value.Data4[5], value.Data4[6], value.Data4[7]));
+    return *(&v + 1);
+}
+
+/// @}
+
+namespace winstd
+{
+    /// \addtogroup WinStdCOMHelpers
+    /// @{
+
+    ///
+    /// Builds VBARRAY of uniform data
+    ///
+    /// \param[in] vt       Type of array element
+    /// \param[in] array    Pointer to data
+    /// \param[in] columns  Number of columns. When 1, SafeArrayCreateVector is used; when >1, SafeArrayCreate is used.
+    /// \param[in] rows     Number of rows
+    ///
+    /// \return Returns VBARRAY
+    ///
+    inline VARIANT BuildVBARRAY(_In_ VARTYPE vt, _In_opt_ LPCVOID array, _In_ ULONG columns, _In_ ULONG rows)
+    {
+        LPSAFEARRAY sa;
+        size_t n;
+        if (columns == 1) {
+            // Make vector when one column only.
+            sa = SafeArrayCreateVector(VT_VARIANT, 0, rows);
+            n = rows;
+        }
+        else {
+            // Make 2-dimensional array when more columns.
+            SAFEARRAYBOUND dim[2] = {
+                { columns, 0 },
+                { rows, 0 }
+            };
+            sa = SafeArrayCreate(VT_VARIANT, 2, dim);
+            n = columns * rows;
+        }
+        if (!sa)
+            throw std::bad_alloc();
+        assert(array || !n);
+
+        // Support VARIANT types that may be used for SAFEARRAY
+        // Source: https://learn.microsoft.com/en-us/windows/win32/api/wtypes/ne-wtypes-varenum#remarks
+        size_t delta_src;
+        VARIANT* v = NULL;
+        switch (vt) {
+        case VT_BOOL: delta_src = sizeof(V_BOOL(v)); break;
+        case VT_BSTR: delta_src = sizeof(V_BSTR(v)); break;
+        case VT_CY: delta_src = sizeof(V_CY(v)); break;
+        case VT_DATE: delta_src = sizeof(V_DATE(v)); break;
+        case VT_DECIMAL: delta_src = sizeof(V_DECIMAL(v)); break;
+        case VT_DISPATCH: delta_src = sizeof(V_DISPATCH(v)); break;
+        case VT_ERROR: delta_src = sizeof(V_ERROR(v)); break;
+        case VT_I1: delta_src = sizeof(V_I1(v)); break;
+        case VT_I2: delta_src = sizeof(V_I2(v)); break;
+        case VT_I4: delta_src = sizeof(V_I4(v)); break;
+        case VT_INT: delta_src = sizeof(V_INT(v)); break;
+        case VT_R4: delta_src = sizeof(V_R4(v)); break;
+        case VT_R8: delta_src = sizeof(V_R8(v)); break;
+        case VT_RECORD: delta_src = sizeof(V_RECORD(v)); break;
+        case VT_UI1: delta_src = sizeof(V_UI1(v)); break;
+        case VT_UI2: delta_src = sizeof(V_UI2(v)); break;
+        case VT_UI4: delta_src = sizeof(V_UI4(v)); break;
+        case VT_UINT: delta_src = sizeof(V_UINT(v)); break;
+        case VT_UNKNOWN: delta_src = sizeof(V_UNKNOWN(v)); break;
+        default: throw std::invalid_argument("unsupported VARIANT type");
+        };
+        size_t delta_dst = SafeArrayGetElemsize(sa);
+
+        {
+            safearray_accessor<BYTE> ssa(sa);
+            LPBYTE dst = ssa.data();
+            LPCBYTE src = reinterpret_cast<LPCBYTE>(array);
+            for (size_t i = 0; i < n; ++i, src += delta_src, dst += delta_dst) {
+                v = reinterpret_cast<VARIANT*>(dst);
+
+                // No VariantInit, since SafeArrayCreate(Vector) zero-initializes all elements.
+                // VariantInit(v);
+                V_VT(v) = vt;
+                memcpy(&(v->byref), src, delta_src);
+            }
+        }
+
+        VARIANT var;
+        V_VT(&var) = VT_ARRAY | VT_VARIANT;
+        V_ARRAY(&var) = sa;
+        return var;
+    }
+
+    ///
+    /// Builds VBARRAY of uniform data
+    ///
+    /// This template is using operator <<(VARIANT&, const T&) to write data to VBARRAY.
+    /// Such operator must be declared for given datatype T.
+    ///
+    /// \tparam T        Element type
+    /// \tparam columns  Number of columns. When 1, SafeArrayCreateVector is used; when >1, SafeArrayCreate is used.
+    ///
+    /// \param array     Pointer to data
+    /// \param rows      Number of rows of data
+    ///
+    /// \return Returns VBARRAY
+    ///
+    template <class T, ULONG columns = 1>
+    VARIANT BuildVBARRAY(_In_reads_opt_(rows) const T* array, _In_ ULONG rows)
+    {
+        assert(array || !rows);
+
+        LPSAFEARRAY sa;
+        if constexpr (columns == 1) {
+            // Make vector when one column only.
+            sa = SafeArrayCreateVector(VT_VARIANT, 0, rows);
+        }
+        else {
+            // Make 2-dimensional array when more columns.
+            SAFEARRAYBOUND dim[2] = {
+                { columns, 0 },
+                { rows, 0 }
+            };
+            sa = SafeArrayCreate(VT_VARIANT, _countof(dim), dim);
+        }
+        if (!sa)
+            throw std::bad_alloc();
+
+        assert(SafeArrayGetElemsize(sa) == sizeof(VARIANT));
+
+        {
+            safearray_accessor<VARIANT> ssa(sa);
+            VARIANT* dst = ssa.data();
+            for (size_t i = 0; i < rows; ++i) {
+                VARIANT* dst_next = &(*dst << array[i]);
+                assert(dst + columns == dst_next);
+                dst = dst_next;
+            }
+        }
+
+        VARIANT var;
+        V_VT(&var) = VT_ARRAY | VT_VARIANT;
+        V_ARRAY(&var) = sa;
+        return var;
+    }
+
+    ///
+    /// Builds VBARRAY containing BMP image
+    ///
+    /// \param[in] dc    Drawing context
+    /// \param[in] rows  Bitmap handle
+    ///
+    /// \return Returns VBARRAY
+    ///
+    inline VARIANT BuildVBARRAY(_In_ HDC dc, _In_ HBITMAP pic)
+    {
+        // Get picture parameters.
+        BITMAP bmp;
+        GetObject(pic, sizeof(bmp), reinterpret_cast<LPSTR>(&bmp));
+
+        // Estimate file parameters.
+        BITMAPINFOHEADER bmh = { sizeof(bmh) };
+        GetDIBits(dc, pic, 0, bmp.bmHeight, NULL, reinterpret_cast<LPBITMAPINFO>(&bmh), DIB_RGB_COLORS);
+
+        // Allocate.
+        size_t pallete_size = sizeof(RGBQUAD) * bmh.biClrUsed;
+        LPSAFEARRAY sa = SafeArrayCreateVector(VT_UI1, 0, static_cast<ULONG>(sizeof(BITMAPFILEHEADER) + sizeof(bmh) + pallete_size + bmh.biSizeImage));
+        if (!sa)
+            throw std::bad_alloc();
+
+        // Locate BITMAPFILEHEADER, BITMAPINFO and pixel map.
+        safearray_accessor<BYTE> ssa(sa);
+        auto header = reinterpret_cast<LPBITMAPFILEHEADER>(ssa.data());
+        auto info = reinterpret_cast<LPBITMAPINFO>(ssa.data() + sizeof(*header));
+        auto raster = ssa.data() + sizeof(*header) + sizeof(bmh) + pallete_size;
+
+        // Fill in BITMAPFILEHEADER.
+        memset(header, 0, sizeof(*header));
+#pragma warning(push)
+#pragma warning(disable: 6276) // "BM" is not an UTF16 char.
+        header->bfType = *reinterpret_cast<WORD*>("BM");
+#pragma warning(pop)
+        header->bfSize = static_cast<DWORD>(sizeof(*header) + sizeof(bmh) + pallete_size + bmh.biSizeImage);
+        header->bfOffBits = static_cast<DWORD>(sizeof(*header) + sizeof(bmh) + pallete_size);
+
+        // Fill in BITMAPINFO.
+        memcpy(&(info->bmiHeader), &bmh, sizeof(bmh));
+        memset(&(info->bmiColors), 0, pallete_size);
+
+        // Set pallete and pixel map.
+        GetDIBits(dc, pic, 0, bmp.bmHeight, raster, info, DIB_RGB_COLORS);
+
+        VARIANT var;
+        V_VT(&var) = VT_ARRAY | VT_UI1;
+        V_ARRAY(&var) = sa;
+        return var;
+    }
+
+    ///
+    /// Calls IDispatch::Invoke
+    ///
+    /// \tparam T  Original interface type
+    ///
+    /// \param[in] cp      Any interface of the class that implements IDispatch
+    /// \param[in] id      ID of method to invoke
+    /// \param[in] param   Parameters for the method to invoke
+    /// \param[in] locale  Locale for the invoke call
+    ///
+    template <class T>
+    void IDispatchInvoke(_In_ T* cp, _In_ DISPID id, _In_opt_ DISPPARAMS* param, _In_ LCID locale = LOCALE_USER_DEFAULT)
+    {
+        assert(cp);
+        com_obj<IEnumConnections> e;
+        HRESULT hr = cp->EnumConnections(&e);
+        if (FAILED(hr))
+            throw com_runtime_error(hr, "IDispatch::EnumConnections failed");
+
+        CONNECTDATA cd;
+        while (e->Next(1, &cd, NULL) == S_OK) {
+            com_obj<IDispatch> d(cd.pUnk);
+            d->Invoke(id, IID_NULL, locale, DISPATCH_METHOD, param, NULL, NULL, NULL);
+        }
+    }
+
+    ///
+    /// Check VARIANT value for integer value
+    ///
+    /// \tparam T        Integral type
+    ///
+    /// \param[in] var       Pointer to VARIANT value
+    /// \param[in] fallback  Value to return, for non-integral types.
+    ///
+    /// \return Value of VARIANT if integral; fallback otherwise.
+    ///
+    template <class T>
+    T VariantAsInteger(_In_ const VARIANT* var, _In_ T fallback = 0)
+    {
+        assert(var);
+        switch (V_VT(var)) {
+        case VT_UINT_PTR: return static_cast<T>(V_UINT_PTR(var));
+        case VT_INT_PTR: return static_cast<T>(V_INT_PTR(var));
+        case VT_UINT: return static_cast<T>(V_UINT(var));
+        case VT_INT: return static_cast<T>(V_INT(var));
+        case VT_UI4: return static_cast<T>(V_UI4(var));
+        case VT_I4: return static_cast<T>(V_I4(var));
+        case VT_UI2: return static_cast<T>(V_UI2(var));
+        case VT_I2: return static_cast<T>(V_I2(var));
+        case VT_UI1: return static_cast<T>(V_UI1(var));
+        case VT_I1: return static_cast<T>(V_I1(var));
+        }
+        return fallback;
+    }
+
+    ///
+    /// Check VARIANT value for boolean value
+    ///
+    /// \param[in] var       Pointer to VARIANT value
+    /// \param[in] fallback  Value to return, for non-boolean and non-numeric VARIANT types.
+    ///
+    /// \return TRUE if var is VT_BOOL and not VARIANT_FALSE, or VT_<numeric> and not zero; FALSE if var is VT_BOOL and VARIANT_FALSE, or VT_<numeric> and zero; fallback otherwise.
+    ///
+    inline BOOL VariantAsBoolean(_In_ const VARIANT* var, _In_ BOOL fallback = FALSE)
+    {
+        assert(var);
+        switch (V_VT(var)) {
+        case VT_BOOL: return V_BOOL(var) != VARIANT_FALSE;
+        case VT_UI4: return V_UI4(var) != 0;
+        case VT_I4: return V_I4(var) != 0;
+        case VT_UI2: return V_UI2(var) != 0;
+        case VT_I2: return V_I2(var) != 0;
+        case VT_UI1: return V_UI1(var) != 0;
+        case VT_I1: return V_I1(var) != 0;
+        case VT_UINT: return V_UINT(var) != 0;
+        case VT_INT: return V_INT(var) != 0;
+        case VT_UINT_PTR: return V_UINT_PTR(var) != 0;
+        case VT_INT_PTR: return V_INT_PTR(var) != 0;
+        }
+        return fallback;
+    }
+
+    /// @}
+}
