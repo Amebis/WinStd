@@ -823,7 +823,7 @@ namespace winstd
         ///
         /// Locks a global memory object and returns a pointer to the first byte of the object's memory block.
         ///
-        /// \sa [SafeArrayAccessData function](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-globallock)
+        /// \sa [GlobalLock function](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-globallock)
         ///
         globalmem_accessor(_In_ HGLOBAL hMem) : m_h(hMem)
         {
