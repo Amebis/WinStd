@@ -73,7 +73,8 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Windows HTTP Client</div></div>
 </div><!--header-->
 <div class="contents">
@@ -83,12 +84,96 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1http.html">winstd::http</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">HTTP handle wrapper class.  <a href="classwinstd_1_1http.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gafc5f6410cfa802b5bcb35ad754b95178" id="r_gafc5f6410cfa802b5bcb35ad754b95178"><td class="memItemLeft" align="right" valign="top">BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gafc5f6410cfa802b5bcb35ad754b95178">WinHttpQueryHeaders</a> (HINTERNET hRequest, DWORD dwInfoLevel, DWORD &amp;dwData)</td></tr>
+<tr class="memdesc:gafc5f6410cfa802b5bcb35ad754b95178"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves header information associated with an HTTP request.  <br /></td></tr>
+<tr class="separator:gafc5f6410cfa802b5bcb35ad754b95178"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3c0714f24f5ce35d3db8a26cabb8e429" id="r_ga3c0714f24f5ce35d3db8a26cabb8e429"><td class="memItemLeft" align="right" valign="top">BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga3c0714f24f5ce35d3db8a26cabb8e429">WinHttpQueryHeaders</a> (HINTERNET hRequest, DWORD dwInfoLevel, std::wstring &amp;sData)</td></tr>
+<tr class="memdesc:ga3c0714f24f5ce35d3db8a26cabb8e429"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves header information associated with an HTTP request.  <br /></td></tr>
+<tr class="separator:ga3c0714f24f5ce35d3db8a26cabb8e429"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gafc5f6410cfa802b5bcb35ad754b95178" name="gafc5f6410cfa802b5bcb35ad754b95178"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafc5f6410cfa802b5bcb35ad754b95178">&#9670;&#160;</a></span>WinHttpQueryHeaders() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">BOOL WinHttpQueryHeaders </td>
+          <td>(</td>
+          <td class="paramtype">HINTERNET</td>          <td class="paramname"><span class="paramname"><em>hRequest</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD</td>          <td class="paramname"><span class="paramname"><em>dwInfoLevel</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD &amp;</td>          <td class="paramname"><span class="paramname"><em>dwData</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves header information associated with an HTTP request. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://learn.microsoft.com/en-us/windows/win32/api/winhttp/nf-winhttp-winhttpqueryheaders">WinHttpQueryHeaders function</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga3c0714f24f5ce35d3db8a26cabb8e429" name="ga3c0714f24f5ce35d3db8a26cabb8e429"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3c0714f24f5ce35d3db8a26cabb8e429">&#9670;&#160;</a></span>WinHttpQueryHeaders() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">BOOL WinHttpQueryHeaders </td>
+          <td>(</td>
+          <td class="paramtype">HINTERNET</td>          <td class="paramname"><span class="paramname"><em>hRequest</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DWORD</td>          <td class="paramname"><span class="paramname"><em>dwInfoLevel</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::wstring &amp;</td>          <td class="paramname"><span class="paramname"><em>sData</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves header information associated with an HTTP request. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://learn.microsoft.com/en-us/windows/win32/api/winhttp/nf-winhttp-winhttpqueryheaders">WinHttpQueryHeaders function</a> </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jan 16 2024 15:12:05 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
+Generated on Mon Mar 11 2024 20:42:49 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
 </small></address>
 </body>
 </html>
