@@ -1518,6 +1518,35 @@ namespace winstd
     };
 
     ///
+    /// Saves GetLastError and restores SetLastError when going out of scope
+    ///
+    class last_error_saver
+    {
+    public:
+        ///
+        /// Saves the calling thread's last-error code value.
+        ///
+        /// \sa [GetLastError function](https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-getlasterror)
+        ///
+        last_error_saver(_In_ DWORD error = GetLastError()) :
+            m_error(error)
+        {}
+
+        ///
+        /// Sets the last-error code for the calling thread.
+        ///
+        /// \sa [SetLastError function](https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-setlasterror)
+        ///
+        ~last_error_saver()
+        {
+            SetLastError(m_error);
+        }
+
+    protected:
+        DWORD m_error;
+    };
+
+    ///
     /// Windows runtime error
     ///
     class win_runtime_error : public num_runtime_error<DWORD>
@@ -1580,7 +1609,7 @@ namespace winstd
         ///
         static std::string message(_In_ error_type num, _In_opt_ DWORD dwLanguageId = 0)
         {
-            error_type runtime_num = GetLastError();
+            last_error_saver last_error_save;
             std::wstring wstr;
             if (FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, 0, num, dwLanguageId, wstr, NULL)) {
                 // Stock Windows error messages contain CRLF. Well... Trim all the trailing white space.
@@ -1589,7 +1618,6 @@ namespace winstd
                 sprintf(wstr, num >= 0x10000 ? L"Error 0x%X" : L"Error %u", num);
             std::string str;
             WideCharToMultiByte(CP_UTF8, 0, wstr, str, NULL, NULL);
-            SetLastError(runtime_num);
             return str;
         }
     };

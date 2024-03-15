@@ -1590,9 +1590,8 @@ namespace winstd
             return;
 
         revert:
-            DWORD dwResult = GetLastError();
+            last_error_saver last_error_save;
             RevertToSelf();
-            SetLastError(dwResult);
         }
     };
 
