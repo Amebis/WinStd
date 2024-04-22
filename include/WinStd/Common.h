@@ -750,7 +750,7 @@ namespace winstd
         ///
         /// \sa [LocalFree function](https://msdn.microsoft.com/en-us/library/windows/desktop/aa366730.aspx)
         ///
-        void operator()(_Ty *_Ptr) const
+        void operator()(_Frees_ptr_opt_ _Ty *_Ptr) const
         {
             LocalFree(_Ptr);
         }
