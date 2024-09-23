@@ -30,7 +30,7 @@ var searchData=
   ['handle_3c_20t_2c_20null_20_3e_27',['handle&lt; T, NULL &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
   ['handle_3c_20tracehandle_2c_200_20_3e_28',['handle&lt; TRACEHANDLE, 0 &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
   ['handle_3c_20tracehandle_2c_20invalid_5fprocesstrace_5fhandle_20_3e_29',['handle&lt; TRACEHANDLE, INVALID_PROCESSTRACE_HANDLE &gt;',['../classwinstd_1_1handle.html',1,'winstd']]],
-  ['handle_5ftype_30',['handle_type',['../classwinstd_1_1handle.html#a3dda19199ecfbc378c932e7d84d0ea81',1,'winstd::handle']]],
+  ['handle_5ftype_30',['handle_type',['../classwinstd_1_1handle.html#ae5faed333075739a27c99372967e01a6',1,'winstd::handle']]],
   ['handles_31',['System Handles',['../group___win_std_sys_handles.html',1,'']]],
   ['heap_32',['heap',['../classwinstd_1_1heap.html',1,'winstd']]],
   ['heap_5fallocator_33',['heap_allocator',['../classwinstd_1_1heap__allocator.html',1,'winstd::heap_allocator&lt; _Ty &gt;'],['../classwinstd_1_1heap__allocator.html#a71fbccc1260209b367f2ddfe96c5825a',1,'winstd::heap_allocator::heap_allocator(HANDLE heap)'],['../classwinstd_1_1heap__allocator.html#a12f843aaf554b4ca91ea69f7a321daf3',1,'winstd::heap_allocator::heap_allocator(const heap_allocator&lt; _Other &gt; &amp;other)']]],

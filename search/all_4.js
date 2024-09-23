@@ -8,7 +8,7 @@ var searchData=
   ['delete_5fsubkey_5',['delete_subkey',['../classwinstd_1_1reg__key.html#a5b8ee8731e0caa51c84b271f43604f54',1,'winstd::reg_key']]],
   ['destroy_6',['destroy',['../classwinstd_1_1heap__allocator.html#aef179f33ca0ad99ffda16f004b146143',1,'winstd::heap_allocator']]],
   ['detach_7',['detach',['../classwinstd_1_1handle.html#ad5acf6ce53e092b8d4d53f909cf321f9',1,'winstd::handle']]],
-  ['difference_5ftype_8',['difference_type',['../classwinstd_1_1heap__allocator.html#a4b39b8176ea30e1ceb02642c44de7b43',1,'winstd::heap_allocator']]],
+  ['difference_5ftype_8',['difference_type',['../classwinstd_1_1heap__allocator.html#afed1865fcda214ad7bdc2a8a74413ec5',1,'winstd::heap_allocator']]],
   ['disable_5ftrace_9',['disable_trace',['../classwinstd_1_1event__session.html#a86ff12521bc1c863ea685b8a689fd81b',1,'winstd::event_session']]],
   ['dplhandle_10',['dplhandle',['../classwinstd_1_1dplhandle.html',1,'winstd::dplhandle&lt; T, INVAL &gt;'],['../classwinstd_1_1dplhandle.html#ac95cbfb481c0d5e6c60d130f3c270b59',1,'winstd::dplhandle::dplhandle() noexcept'],['../classwinstd_1_1dplhandle.html#ab1ac74d5f212fddc217d1a8190a01177',1,'winstd::dplhandle::dplhandle(handle_type h) noexcept'],['../classwinstd_1_1dplhandle.html#ac7439fc22a5754f8aeb2b0e1afd25b9c',1,'winstd::dplhandle::dplhandle(const dplhandle&lt; handle_type, INVAL &gt; &amp;h)'],['../classwinstd_1_1dplhandle.html#ac1aa19e060402006d8ff8404be6b07c3',1,'winstd::dplhandle::dplhandle(dplhandle&lt; handle_type, INVAL &gt; &amp;&amp;h) noexcept']]],
   ['dplhandle_3c_20bstr_2c_20null_20_3e_11',['dplhandle&lt; BSTR, NULL &gt;',['../classwinstd_1_1dplhandle.html',1,'winstd']]],

@@ -5,7 +5,7 @@ var searchData=
   ['pathremovebackslasha_2',['PathRemoveBackslashA',['../group___win_std_shell_w_a_p_i.html#gaa1ba3f71c61d6d0c7cb611f3cdc193a8',1,'Shell.h']]],
   ['pathremovebackslashw_3',['PathRemoveBackslashW',['../group___win_std_shell_w_a_p_i.html#ga5784e817cc8d4a8e45199e871f61da6c',1,'Shell.h']]],
   ['peap_4',['peap',['../group___win_std_e_a_p_a_p_i.html#gga50f5584ca708165f43cec42c42243315ab62d9100a672844bff4ac5cbc8de9fce',1,'winstd']]],
-  ['pointer_5',['pointer',['../classwinstd_1_1heap__allocator.html#ae04bc3ff970d32e6a2967072efdb06cd',1,'winstd::heap_allocator']]],
+  ['pointer_5',['pointer',['../classwinstd_1_1heap__allocator.html#a1dfe27a9db16c1266f780c82ba452f07',1,'winstd::heap_allocator']]],
   ['policy_6',['Security Policy',['../md__s_e_c_u_r_i_t_y.html',1,'']]],
   ['portable_7',['Portable',['../index.html#autotoc_md2',1,'']]],
   ['printf_5flpolestr_8',['PRINTF_LPOLESTR',['../group___win_std_str_format.html#ga1bb2b564655d7b0dee3ec63a0fda2eb5',1,'Common.h']]],

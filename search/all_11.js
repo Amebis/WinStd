@@ -31,7 +31,7 @@ var searchData=
   ['setup_5fdriver_5finfo_5flist_5fbuilder_28',['setup_driver_info_list_builder',['../classwinstd_1_1setup__driver__info__list__builder.html',1,'winstd::setup_driver_info_list_builder'],['../classwinstd_1_1setup__driver__info__list__builder.html#a4774edfbe680a3a496e243544a68c94f',1,'winstd::setup_driver_info_list_builder::setup_driver_info_list_builder()']]],
   ['shell_20api_29',['Shell API',['../group___win_std_shell_w_a_p_i.html',1,'']]],
   ['size_30',['size',['../classwinstd_1_1data__blob.html#ab2ad06e271e8503d7158408773054d23',1,'winstd::data_blob::size()'],['../classwinstd_1_1eap__packet.html#a2534ad15ae47e2d46354d9f535f4031f',1,'winstd::eap_packet::size()']]],
-  ['size_5ftype_31',['size_type',['../classwinstd_1_1heap__allocator.html#a01815f4f9097b1447c7ddaa2de868f59',1,'winstd::heap_allocator']]],
+  ['size_5ftype_31',['size_type',['../classwinstd_1_1heap__allocator.html#ae67b85ffe695b1123df8ee811c241248',1,'winstd::heap_allocator']]],
   ['sprintf_32',['sprintf',['../group___win_std_str_format.html#gac397f655a858a069b3e521940af64331',1,'Common.h']]],
   ['start_33',['start',['../group___win_std_e_a_p_a_p_i.html#gga50f5584ca708165f43cec42c42243315aea2b2676c28c0db26d39331a336c6b92',1,'winstd']]],
   ['status_34',['status',['../classwinstd_1_1event__trace__enabler.html#a726b84e91002da1243d512c37a060293',1,'winstd::event_trace_enabler::status()'],['../classwinstd_1_1dc__selector.html#aacb4060094f2c4b1747ffa76455b235d',1,'winstd::dc_selector::status()'],['../classwinstd_1_1setup__driver__info__list__builder.html#ae9c062e82afc1ee1eda5926a0567637e',1,'winstd::setup_driver_info_list_builder::status()']]],
