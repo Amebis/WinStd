@@ -49,8 +49,6 @@ static BOOLEAN GetUserNameExA(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std:
 template<class _Traits, class _Ax>
 static BOOLEAN GetUserNameExW(_In_ EXTENDED_NAME_FORMAT NameFormat, _Inout_ std::basic_string<wchar_t, _Traits, _Ax> &sName)
 {
-    assert(0); // TODO: Test this code.
-
     wchar_t szStackBuffer[WINSTD_STACK_BUFFER_BYTES/sizeof(wchar_t)];
     ULONG ulSize = _countof(szStackBuffer);
 
