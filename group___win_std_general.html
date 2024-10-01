@@ -88,8 +88,7 @@ $(function(){ initResizable(false); });
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">General</div></div>
 </div><!--header-->
 <div class="contents">
@@ -107,12 +106,6 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1globalmem__accessor.html">winstd::globalmem_accessor&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context scope automatic GlobalAlloc (un)access.  <a href="classwinstd_1_1globalmem__accessor.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1ref__unique__ptr.html">winstd::ref_unique_ptr&lt; _Ty, _Dx &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class for returning pointers to std::unique_ptr.  <a href="classwinstd_1_1ref__unique__ptr.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwinstd_1_1ref__unique__ptr_3_01___ty_0f_0e_00_01___dx_01_4.html">winstd::ref_unique_ptr&lt; _Ty[], _Dx &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class for returning pointers to std::unique_ptr (specialization for arrays)  <a href="classwinstd_1_1ref__unique__ptr_3_01___ty_0f_0e_00_01___dx_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -145,17 +138,6 @@ Typedefs</h2></td></tr>
 typedef std::string&#160;</td><td class="memItemRight" valign="bottom"><b>winstd::tstring</b></td></tr>
 <tr class="memdesc:ga8081292a94f5d070e644bdc90662d1fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multi-byte / Wide-character string (according to _UNICODE) <br /></td></tr>
 <tr class="separator:ga8081292a94f5d070e644bdc90662d1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gab4ddaca47a234b4f81a1c3314b3ba205" id="r_gab4ddaca47a234b4f81a1c3314b3ba205"><td class="memTemplParams" colspan="2">template&lt;class _Ty , class _Dx &gt; </td></tr>
-<tr class="memitem:gab4ddaca47a234b4f81a1c3314b3ba205"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1ref__unique__ptr.html">ref_unique_ptr</a>&lt; _Ty, _Dx &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#gab4ddaca47a234b4f81a1c3314b3ba205">winstd::get_ptr</a> (std::unique_ptr&lt; _Ty, _Dx &gt; &amp;owner) noexcept</td></tr>
-<tr class="memdesc:gab4ddaca47a234b4f81a1c3314b3ba205"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function template for returning pointers to std::unique_ptr.  <br /></td></tr>
-<tr class="separator:gab4ddaca47a234b4f81a1c3314b3ba205"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7ecb3b65341fd45c36fce1fe692ec19a" id="r_ga7ecb3b65341fd45c36fce1fe692ec19a"><td class="memTemplParams" colspan="2">template&lt;class _Ty , class _Dx &gt; </td></tr>
-<tr class="memitem:ga7ecb3b65341fd45c36fce1fe692ec19a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classwinstd_1_1ref__unique__ptr.html">ref_unique_ptr</a>&lt; _Ty[], _Dx &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ga7ecb3b65341fd45c36fce1fe692ec19a">winstd::get_ptr</a> (std::unique_ptr&lt; _Ty[], _Dx &gt; &amp;owner) noexcept</td></tr>
-<tr class="memdesc:ga7ecb3b65341fd45c36fce1fe692ec19a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function template for returning pointers to std::unique_ptr (specialization for arrays)  <br /></td></tr>
-<tr class="separator:ga7ecb3b65341fd45c36fce1fe692ec19a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -303,83 +285,10 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="gab4ddaca47a234b4f81a1c3314b3ba205" name="gab4ddaca47a234b4f81a1c3314b3ba205"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab4ddaca47a234b4f81a1c3314b3ba205">&#9670;&#160;</a></span>get_ptr() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class _Ty , class _Dx &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classwinstd_1_1ref__unique__ptr.html">ref_unique_ptr</a>&lt; _Ty, _Dx &gt; winstd::get_ptr </td>
-          <td>(</td>
-          <td class="paramtype">std::unique_ptr&lt; _Ty, _Dx &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>owner</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Helper function template for returning pointers to std::unique_ptr. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">owner</td><td>Original owner of the pointer</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A helper wrapper class to handle returning a reference to the pointer </dd></dl>
-
-</div>
-</div>
-<a id="ga7ecb3b65341fd45c36fce1fe692ec19a" name="ga7ecb3b65341fd45c36fce1fe692ec19a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7ecb3b65341fd45c36fce1fe692ec19a">&#9670;&#160;</a></span>get_ptr() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class _Ty , class _Dx &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classwinstd_1_1ref__unique__ptr.html">ref_unique_ptr</a>&lt; _Ty[], _Dx &gt; winstd::get_ptr </td>
-          <td>(</td>
-          <td class="paramtype">std::unique_ptr&lt; _Ty[], _Dx &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>owner</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Helper function template for returning pointers to std::unique_ptr (specialization for arrays) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">owner</td><td>Original owner of the pointer</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A helper wrapper class to handle returning a reference to the pointer </dd></dl>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 23 2024 12:55:50 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+Generated on Tue Oct 1 2024 11:48:34 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
 </small></address>
 </div><!-- doc-content -->
 </body>
