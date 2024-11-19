@@ -1249,25 +1249,25 @@ $(function(){ initResizable(false); });
 <div class="foldopen" id="foldopen01473" data-start="{" data-end="}">
 <div class="line"><a id="l01473" name="l01473"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m_helpers.html#ga9abe80ce7f67c4a86207f4f3f73da410"> 1473</a></span>    <span class="keyword">inline</span> VARIANT <a class="code hl_function" href="group___win_std_c_o_m_helpers.html#ga9abe80ce7f67c4a86207f4f3f73da410">BuildVBARRAY</a>(_In_ VARTYPE vt, _In_opt_ LPCVOID array, _In_ ULONG columns, _In_ ULONG rows)</div>
 <div class="line"><a id="l01474" name="l01474"></a><span class="lineno"> 1474</span>    {</div>
-<div class="line"><a id="l01475" name="l01475"></a><span class="lineno"> 1475</span>        LPSAFEARRAY sa;</div>
-<div class="line"><a id="l01476" name="l01476"></a><span class="lineno"> 1476</span>        <span class="keywordtype">size_t</span> n;</div>
-<div class="line"><a id="l01477" name="l01477"></a><span class="lineno"> 1477</span>        <span class="keywordflow">if</span> (columns == 1) {</div>
-<div class="line"><a id="l01478" name="l01478"></a><span class="lineno"> 1478</span>            <span class="comment">// Make vector when one column only.</span></div>
-<div class="line"><a id="l01479" name="l01479"></a><span class="lineno"> 1479</span>            sa = SafeArrayCreateVector(VT_VARIANT, 0, rows);</div>
-<div class="line"><a id="l01480" name="l01480"></a><span class="lineno"> 1480</span>            n = rows;</div>
-<div class="line"><a id="l01481" name="l01481"></a><span class="lineno"> 1481</span>        }</div>
-<div class="line"><a id="l01482" name="l01482"></a><span class="lineno"> 1482</span>        <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l01483" name="l01483"></a><span class="lineno"> 1483</span>            <span class="comment">// Make 2-dimensional array when more columns.</span></div>
-<div class="line"><a id="l01484" name="l01484"></a><span class="lineno"> 1484</span>            SAFEARRAYBOUND dim[2] = {</div>
-<div class="line"><a id="l01485" name="l01485"></a><span class="lineno"> 1485</span>                { columns, 0 },</div>
-<div class="line"><a id="l01486" name="l01486"></a><span class="lineno"> 1486</span>                { rows, 0 }</div>
-<div class="line"><a id="l01487" name="l01487"></a><span class="lineno"> 1487</span>            };</div>
-<div class="line"><a id="l01488" name="l01488"></a><span class="lineno"> 1488</span>            sa = SafeArrayCreate(VT_VARIANT, 2, dim);</div>
-<div class="line"><a id="l01489" name="l01489"></a><span class="lineno"> 1489</span>            n = columns * rows;</div>
-<div class="line"><a id="l01490" name="l01490"></a><span class="lineno"> 1490</span>        }</div>
-<div class="line"><a id="l01491" name="l01491"></a><span class="lineno"> 1491</span>        <span class="keywordflow">if</span> (!sa)</div>
-<div class="line"><a id="l01492" name="l01492"></a><span class="lineno"> 1492</span>            <span class="keywordflow">throw</span> std::bad_alloc();</div>
-<div class="line"><a id="l01493" name="l01493"></a><span class="lineno"> 1493</span>        assert(array || !n);</div>
+<div class="line"><a id="l01475" name="l01475"></a><span class="lineno"> 1475</span>        <span class="keyword">const</span> <span class="keywordtype">size_t</span> n = columns * rows;</div>
+<div class="line"><a id="l01476" name="l01476"></a><span class="lineno"> 1476</span>        <span class="keywordflow">if</span> (!array &amp;&amp; n)</div>
+<div class="line"><a id="l01477" name="l01477"></a><span class="lineno"> 1477</span>            <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;array is NULL&quot;</span>);</div>
+<div class="line"><a id="l01478" name="l01478"></a><span class="lineno"> 1478</span> </div>
+<div class="line"><a id="l01479" name="l01479"></a><span class="lineno"> 1479</span>        LPSAFEARRAY sa;</div>
+<div class="line"><a id="l01480" name="l01480"></a><span class="lineno"> 1480</span>        <span class="keywordflow">if</span> (columns == 1) {</div>
+<div class="line"><a id="l01481" name="l01481"></a><span class="lineno"> 1481</span>            <span class="comment">// Make vector when one column only.</span></div>
+<div class="line"><a id="l01482" name="l01482"></a><span class="lineno"> 1482</span>            sa = SafeArrayCreateVector(VT_VARIANT, 0, rows);</div>
+<div class="line"><a id="l01483" name="l01483"></a><span class="lineno"> 1483</span>        }</div>
+<div class="line"><a id="l01484" name="l01484"></a><span class="lineno"> 1484</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l01485" name="l01485"></a><span class="lineno"> 1485</span>            <span class="comment">// Make 2-dimensional array when more columns.</span></div>
+<div class="line"><a id="l01486" name="l01486"></a><span class="lineno"> 1486</span>            SAFEARRAYBOUND dim[2] = {</div>
+<div class="line"><a id="l01487" name="l01487"></a><span class="lineno"> 1487</span>                { columns, 0 },</div>
+<div class="line"><a id="l01488" name="l01488"></a><span class="lineno"> 1488</span>                { rows, 0 }</div>
+<div class="line"><a id="l01489" name="l01489"></a><span class="lineno"> 1489</span>            };</div>
+<div class="line"><a id="l01490" name="l01490"></a><span class="lineno"> 1490</span>            sa = SafeArrayCreate(VT_VARIANT, 2, dim);</div>
+<div class="line"><a id="l01491" name="l01491"></a><span class="lineno"> 1491</span>        }</div>
+<div class="line"><a id="l01492" name="l01492"></a><span class="lineno"> 1492</span>        <span class="keywordflow">if</span> (!sa)</div>
+<div class="line"><a id="l01493" name="l01493"></a><span class="lineno"> 1493</span>            <span class="keywordflow">throw</span> std::bad_alloc();</div>
 <div class="line"><a id="l01494" name="l01494"></a><span class="lineno"> 1494</span> </div>
 <div class="line"><a id="l01495" name="l01495"></a><span class="lineno"> 1495</span>        <span class="comment">// Support VARIANT types that may be used for SAFEARRAY</span></div>
 <div class="line"><a id="l01496" name="l01496"></a><span class="lineno"> 1496</span>        <span class="comment">// Source: https://learn.microsoft.com/en-us/windows/win32/api/wtypes/ne-wtypes-varenum#remarks</span></div>
@@ -1322,150 +1322,151 @@ $(function(){ initResizable(false); });
 <div class="foldopen" id="foldopen01558" data-start="{" data-end="}">
 <div class="line"><a id="l01558" name="l01558"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m_helpers.html#gab7395cc820a5d3a0b6782846b636e3e5"> 1558</a></span>    VARIANT <a class="code hl_function" href="group___win_std_c_o_m_helpers.html#ga9abe80ce7f67c4a86207f4f3f73da410">BuildVBARRAY</a>(_In_reads_opt_(rows) <span class="keyword">const</span> T* array, _In_ ULONG rows)</div>
 <div class="line"><a id="l01559" name="l01559"></a><span class="lineno"> 1559</span>    {</div>
-<div class="line"><a id="l01560" name="l01560"></a><span class="lineno"> 1560</span>        assert(array || !rows);</div>
-<div class="line"><a id="l01561" name="l01561"></a><span class="lineno"> 1561</span> </div>
-<div class="line"><a id="l01562" name="l01562"></a><span class="lineno"> 1562</span>        LPSAFEARRAY sa;</div>
-<div class="line"><a id="l01563" name="l01563"></a><span class="lineno"> 1563</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (columns == 1) {</div>
-<div class="line"><a id="l01564" name="l01564"></a><span class="lineno"> 1564</span>            <span class="comment">// Make vector when one column only.</span></div>
-<div class="line"><a id="l01565" name="l01565"></a><span class="lineno"> 1565</span>            sa = SafeArrayCreateVector(VT_VARIANT, 0, rows);</div>
-<div class="line"><a id="l01566" name="l01566"></a><span class="lineno"> 1566</span>        }</div>
-<div class="line"><a id="l01567" name="l01567"></a><span class="lineno"> 1567</span>        <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l01568" name="l01568"></a><span class="lineno"> 1568</span>            <span class="comment">// Make 2-dimensional array when more columns.</span></div>
-<div class="line"><a id="l01569" name="l01569"></a><span class="lineno"> 1569</span>            SAFEARRAYBOUND dim[2] = {</div>
-<div class="line"><a id="l01570" name="l01570"></a><span class="lineno"> 1570</span>                { columns, 0 },</div>
-<div class="line"><a id="l01571" name="l01571"></a><span class="lineno"> 1571</span>                { rows, 0 }</div>
-<div class="line"><a id="l01572" name="l01572"></a><span class="lineno"> 1572</span>            };</div>
-<div class="line"><a id="l01573" name="l01573"></a><span class="lineno"> 1573</span>            sa = SafeArrayCreate(VT_VARIANT, _countof(dim), dim);</div>
-<div class="line"><a id="l01574" name="l01574"></a><span class="lineno"> 1574</span>        }</div>
-<div class="line"><a id="l01575" name="l01575"></a><span class="lineno"> 1575</span>        <span class="keywordflow">if</span> (!sa)</div>
-<div class="line"><a id="l01576" name="l01576"></a><span class="lineno"> 1576</span>            <span class="keywordflow">throw</span> std::bad_alloc();</div>
-<div class="line"><a id="l01577" name="l01577"></a><span class="lineno"> 1577</span> </div>
-<div class="line"><a id="l01578" name="l01578"></a><span class="lineno"> 1578</span>        assert(SafeArrayGetElemsize(sa) == <span class="keyword">sizeof</span>(VARIANT));</div>
-<div class="line"><a id="l01579" name="l01579"></a><span class="lineno"> 1579</span> </div>
-<div class="line"><a id="l01580" name="l01580"></a><span class="lineno"> 1580</span>        {</div>
-<div class="line"><a id="l01581" name="l01581"></a><span class="lineno"> 1581</span>            <a class="code hl_class" href="classwinstd_1_1safearray__accessor.html">safearray_accessor&lt;VARIANT&gt;</a> ssa(sa);</div>
-<div class="line"><a id="l01582" name="l01582"></a><span class="lineno"> 1582</span>            VARIANT* dst = ssa.<a class="code hl_function" href="classwinstd_1_1safearray__accessor.html#a8b019e527bbd7a26abb9df734272cfd5">data</a>();</div>
-<div class="line"><a id="l01583" name="l01583"></a><span class="lineno"> 1583</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; rows; ++i) {</div>
-<div class="line"><a id="l01584" name="l01584"></a><span class="lineno"> 1584</span>                VARIANT* dst_next = &amp;(*dst &lt;&lt; array[i]);</div>
-<div class="line"><a id="l01585" name="l01585"></a><span class="lineno"> 1585</span>                assert(dst + columns == dst_next);</div>
-<div class="line"><a id="l01586" name="l01586"></a><span class="lineno"> 1586</span>                dst = dst_next;</div>
-<div class="line"><a id="l01587" name="l01587"></a><span class="lineno"> 1587</span>            }</div>
-<div class="line"><a id="l01588" name="l01588"></a><span class="lineno"> 1588</span>        }</div>
-<div class="line"><a id="l01589" name="l01589"></a><span class="lineno"> 1589</span> </div>
-<div class="line"><a id="l01590" name="l01590"></a><span class="lineno"> 1590</span>        VARIANT var;</div>
-<div class="line"><a id="l01591" name="l01591"></a><span class="lineno"> 1591</span>        V_VT(&amp;var) = VT_ARRAY | VT_VARIANT;</div>
-<div class="line"><a id="l01592" name="l01592"></a><span class="lineno"> 1592</span>        V_ARRAY(&amp;var) = sa;</div>
-<div class="line"><a id="l01593" name="l01593"></a><span class="lineno"> 1593</span>        <span class="keywordflow">return</span> var;</div>
-<div class="line"><a id="l01594" name="l01594"></a><span class="lineno"> 1594</span>    }</div>
+<div class="line"><a id="l01560" name="l01560"></a><span class="lineno"> 1560</span>        <span class="keywordflow">if</span> (!array &amp;&amp; rows)</div>
+<div class="line"><a id="l01561" name="l01561"></a><span class="lineno"> 1561</span>            <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;array is NULL&quot;</span>);</div>
+<div class="line"><a id="l01562" name="l01562"></a><span class="lineno"> 1562</span> </div>
+<div class="line"><a id="l01563" name="l01563"></a><span class="lineno"> 1563</span>        LPSAFEARRAY sa;</div>
+<div class="line"><a id="l01564" name="l01564"></a><span class="lineno"> 1564</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (columns == 1) {</div>
+<div class="line"><a id="l01565" name="l01565"></a><span class="lineno"> 1565</span>            <span class="comment">// Make vector when one column only.</span></div>
+<div class="line"><a id="l01566" name="l01566"></a><span class="lineno"> 1566</span>            sa = SafeArrayCreateVector(VT_VARIANT, 0, rows);</div>
+<div class="line"><a id="l01567" name="l01567"></a><span class="lineno"> 1567</span>        }</div>
+<div class="line"><a id="l01568" name="l01568"></a><span class="lineno"> 1568</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l01569" name="l01569"></a><span class="lineno"> 1569</span>            <span class="comment">// Make 2-dimensional array when more columns.</span></div>
+<div class="line"><a id="l01570" name="l01570"></a><span class="lineno"> 1570</span>            SAFEARRAYBOUND dim[2] = {</div>
+<div class="line"><a id="l01571" name="l01571"></a><span class="lineno"> 1571</span>                { columns, 0 },</div>
+<div class="line"><a id="l01572" name="l01572"></a><span class="lineno"> 1572</span>                { rows, 0 }</div>
+<div class="line"><a id="l01573" name="l01573"></a><span class="lineno"> 1573</span>            };</div>
+<div class="line"><a id="l01574" name="l01574"></a><span class="lineno"> 1574</span>            sa = SafeArrayCreate(VT_VARIANT, _countof(dim), dim);</div>
+<div class="line"><a id="l01575" name="l01575"></a><span class="lineno"> 1575</span>        }</div>
+<div class="line"><a id="l01576" name="l01576"></a><span class="lineno"> 1576</span>        <span class="keywordflow">if</span> (!sa)</div>
+<div class="line"><a id="l01577" name="l01577"></a><span class="lineno"> 1577</span>            <span class="keywordflow">throw</span> std::bad_alloc();</div>
+<div class="line"><a id="l01578" name="l01578"></a><span class="lineno"> 1578</span> </div>
+<div class="line"><a id="l01579" name="l01579"></a><span class="lineno"> 1579</span>        assert(SafeArrayGetElemsize(sa) == <span class="keyword">sizeof</span>(VARIANT));</div>
+<div class="line"><a id="l01580" name="l01580"></a><span class="lineno"> 1580</span> </div>
+<div class="line"><a id="l01581" name="l01581"></a><span class="lineno"> 1581</span>        {</div>
+<div class="line"><a id="l01582" name="l01582"></a><span class="lineno"> 1582</span>            <a class="code hl_class" href="classwinstd_1_1safearray__accessor.html">safearray_accessor&lt;VARIANT&gt;</a> ssa(sa);</div>
+<div class="line"><a id="l01583" name="l01583"></a><span class="lineno"> 1583</span>            VARIANT* dst = ssa.<a class="code hl_function" href="classwinstd_1_1safearray__accessor.html#a8b019e527bbd7a26abb9df734272cfd5">data</a>();</div>
+<div class="line"><a id="l01584" name="l01584"></a><span class="lineno"> 1584</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; rows; ++i) {</div>
+<div class="line"><a id="l01585" name="l01585"></a><span class="lineno"> 1585</span>                VARIANT* dst_next = &amp;(*dst &lt;&lt; array[i]);</div>
+<div class="line"><a id="l01586" name="l01586"></a><span class="lineno"> 1586</span>                assert(dst + columns == dst_next);</div>
+<div class="line"><a id="l01587" name="l01587"></a><span class="lineno"> 1587</span>                dst = dst_next;</div>
+<div class="line"><a id="l01588" name="l01588"></a><span class="lineno"> 1588</span>            }</div>
+<div class="line"><a id="l01589" name="l01589"></a><span class="lineno"> 1589</span>        }</div>
+<div class="line"><a id="l01590" name="l01590"></a><span class="lineno"> 1590</span> </div>
+<div class="line"><a id="l01591" name="l01591"></a><span class="lineno"> 1591</span>        VARIANT var;</div>
+<div class="line"><a id="l01592" name="l01592"></a><span class="lineno"> 1592</span>        V_VT(&amp;var) = VT_ARRAY | VT_VARIANT;</div>
+<div class="line"><a id="l01593" name="l01593"></a><span class="lineno"> 1593</span>        V_ARRAY(&amp;var) = sa;</div>
+<div class="line"><a id="l01594" name="l01594"></a><span class="lineno"> 1594</span>        <span class="keywordflow">return</span> var;</div>
+<div class="line"><a id="l01595" name="l01595"></a><span class="lineno"> 1595</span>    }</div>
 </div>
-<div class="line"><a id="l01595" name="l01595"></a><span class="lineno"> 1595</span> </div>
-<div class="foldopen" id="foldopen01604" data-start="{" data-end="}">
-<div class="line"><a id="l01604" name="l01604"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m_helpers.html#gac1763409b281d38dbda4aea09a17133f"> 1604</a></span>    <span class="keyword">inline</span> VARIANT <a class="code hl_function" href="group___win_std_c_o_m_helpers.html#ga9abe80ce7f67c4a86207f4f3f73da410">BuildVBARRAY</a>(_In_ HDC <a class="code hl_class" href="classwinstd_1_1dc.html">dc</a>, _In_ HBITMAP pic)</div>
-<div class="line"><a id="l01605" name="l01605"></a><span class="lineno"> 1605</span>    {</div>
-<div class="line"><a id="l01606" name="l01606"></a><span class="lineno"> 1606</span>        <span class="comment">// Get picture parameters.</span></div>
-<div class="line"><a id="l01607" name="l01607"></a><span class="lineno"> 1607</span>        BITMAP bmp;</div>
-<div class="line"><a id="l01608" name="l01608"></a><span class="lineno"> 1608</span>        GetObject(pic, <span class="keyword">sizeof</span>(bmp), <span class="keyword">reinterpret_cast&lt;</span>LPSTR<span class="keyword">&gt;</span>(&amp;bmp));</div>
-<div class="line"><a id="l01609" name="l01609"></a><span class="lineno"> 1609</span> </div>
-<div class="line"><a id="l01610" name="l01610"></a><span class="lineno"> 1610</span>        <span class="comment">// Estimate file parameters.</span></div>
-<div class="line"><a id="l01611" name="l01611"></a><span class="lineno"> 1611</span>        BITMAPINFOHEADER bmh = { <span class="keyword">sizeof</span>(bmh) };</div>
-<div class="line"><a id="l01612" name="l01612"></a><span class="lineno"> 1612</span>        GetDIBits(<a class="code hl_class" href="classwinstd_1_1dc.html">dc</a>, pic, 0, bmp.bmHeight, NULL, <span class="keyword">reinterpret_cast&lt;</span>LPBITMAPINFO<span class="keyword">&gt;</span>(&amp;bmh), DIB_RGB_COLORS);</div>
-<div class="line"><a id="l01613" name="l01613"></a><span class="lineno"> 1613</span> </div>
-<div class="line"><a id="l01614" name="l01614"></a><span class="lineno"> 1614</span>        <span class="comment">// Allocate.</span></div>
-<div class="line"><a id="l01615" name="l01615"></a><span class="lineno"> 1615</span>        <span class="keywordtype">size_t</span> pallete_size = <span class="keyword">sizeof</span>(RGBQUAD) * bmh.biClrUsed;</div>
-<div class="line"><a id="l01616" name="l01616"></a><span class="lineno"> 1616</span>        LPSAFEARRAY sa = SafeArrayCreateVector(VT_UI1, 0, <span class="keyword">static_cast&lt;</span>ULONG<span class="keyword">&gt;</span>(<span class="keyword">sizeof</span>(BITMAPFILEHEADER) + <span class="keyword">sizeof</span>(bmh) + pallete_size + bmh.biSizeImage));</div>
-<div class="line"><a id="l01617" name="l01617"></a><span class="lineno"> 1617</span>        <span class="keywordflow">if</span> (!sa)</div>
-<div class="line"><a id="l01618" name="l01618"></a><span class="lineno"> 1618</span>            <span class="keywordflow">throw</span> std::bad_alloc();</div>
-<div class="line"><a id="l01619" name="l01619"></a><span class="lineno"> 1619</span> </div>
-<div class="line"><a id="l01620" name="l01620"></a><span class="lineno"> 1620</span>        <span class="comment">// Locate BITMAPFILEHEADER, BITMAPINFO and pixel map.</span></div>
-<div class="line"><a id="l01621" name="l01621"></a><span class="lineno"> 1621</span>        <a class="code hl_class" href="classwinstd_1_1safearray__accessor.html">safearray_accessor&lt;BYTE&gt;</a> ssa(sa);</div>
-<div class="line"><a id="l01622" name="l01622"></a><span class="lineno"> 1622</span>        <span class="keyword">auto</span> header = <span class="keyword">reinterpret_cast&lt;</span>LPBITMAPFILEHEADER<span class="keyword">&gt;</span>(ssa.<a class="code hl_function" href="classwinstd_1_1safearray__accessor.html#a8b019e527bbd7a26abb9df734272cfd5">data</a>());</div>
-<div class="line"><a id="l01623" name="l01623"></a><span class="lineno"> 1623</span>        <span class="keyword">auto</span> info = <span class="keyword">reinterpret_cast&lt;</span>LPBITMAPINFO<span class="keyword">&gt;</span>(ssa.<a class="code hl_function" href="classwinstd_1_1safearray__accessor.html#a8b019e527bbd7a26abb9df734272cfd5">data</a>() + <span class="keyword">sizeof</span>(*header));</div>
-<div class="line"><a id="l01624" name="l01624"></a><span class="lineno"> 1624</span>        <span class="keyword">auto</span> raster = ssa.<a class="code hl_function" href="classwinstd_1_1safearray__accessor.html#a8b019e527bbd7a26abb9df734272cfd5">data</a>() + <span class="keyword">sizeof</span>(*header) + <span class="keyword">sizeof</span>(bmh) + pallete_size;</div>
-<div class="line"><a id="l01625" name="l01625"></a><span class="lineno"> 1625</span> </div>
-<div class="line"><a id="l01626" name="l01626"></a><span class="lineno"> 1626</span>        <span class="comment">// Fill in BITMAPFILEHEADER.</span></div>
-<div class="line"><a id="l01627" name="l01627"></a><span class="lineno"> 1627</span>        memset(header, 0, <span class="keyword">sizeof</span>(*header));</div>
-<div class="line"><a id="l01628" name="l01628"></a><span class="lineno"> 1628</span><span class="preprocessor">#pragma warning(push)</span></div>
-<div class="line"><a id="l01629" name="l01629"></a><span class="lineno"> 1629</span><span class="preprocessor">#pragma warning(disable: 6276) </span><span class="comment">// &quot;BM&quot; is not an UTF16 char.</span></div>
-<div class="line"><a id="l01630" name="l01630"></a><span class="lineno"> 1630</span>        header-&gt;bfType = *<span class="keyword">reinterpret_cast&lt;</span>WORD*<span class="keyword">&gt;</span>(<span class="stringliteral">&quot;BM&quot;</span>);</div>
-<div class="line"><a id="l01631" name="l01631"></a><span class="lineno"> 1631</span><span class="preprocessor">#pragma warning(pop)</span></div>
-<div class="line"><a id="l01632" name="l01632"></a><span class="lineno"> 1632</span>        header-&gt;bfSize = <span class="keyword">static_cast&lt;</span>DWORD<span class="keyword">&gt;</span>(<span class="keyword">sizeof</span>(*header) + <span class="keyword">sizeof</span>(bmh) + pallete_size + bmh.biSizeImage);</div>
-<div class="line"><a id="l01633" name="l01633"></a><span class="lineno"> 1633</span>        header-&gt;bfOffBits = <span class="keyword">static_cast&lt;</span>DWORD<span class="keyword">&gt;</span>(<span class="keyword">sizeof</span>(*header) + <span class="keyword">sizeof</span>(bmh) + pallete_size);</div>
-<div class="line"><a id="l01634" name="l01634"></a><span class="lineno"> 1634</span> </div>
-<div class="line"><a id="l01635" name="l01635"></a><span class="lineno"> 1635</span>        <span class="comment">// Fill in BITMAPINFO.</span></div>
-<div class="line"><a id="l01636" name="l01636"></a><span class="lineno"> 1636</span>        memcpy(&amp;(info-&gt;bmiHeader), &amp;bmh, <span class="keyword">sizeof</span>(bmh));</div>
-<div class="line"><a id="l01637" name="l01637"></a><span class="lineno"> 1637</span>        memset(&amp;(info-&gt;bmiColors), 0, pallete_size);</div>
-<div class="line"><a id="l01638" name="l01638"></a><span class="lineno"> 1638</span> </div>
-<div class="line"><a id="l01639" name="l01639"></a><span class="lineno"> 1639</span>        <span class="comment">// Set pallete and pixel map.</span></div>
-<div class="line"><a id="l01640" name="l01640"></a><span class="lineno"> 1640</span>        GetDIBits(<a class="code hl_class" href="classwinstd_1_1dc.html">dc</a>, pic, 0, bmp.bmHeight, raster, info, DIB_RGB_COLORS);</div>
-<div class="line"><a id="l01641" name="l01641"></a><span class="lineno"> 1641</span> </div>
-<div class="line"><a id="l01642" name="l01642"></a><span class="lineno"> 1642</span>        VARIANT var;</div>
-<div class="line"><a id="l01643" name="l01643"></a><span class="lineno"> 1643</span>        V_VT(&amp;var) = VT_ARRAY | VT_UI1;</div>
-<div class="line"><a id="l01644" name="l01644"></a><span class="lineno"> 1644</span>        V_ARRAY(&amp;var) = sa;</div>
-<div class="line"><a id="l01645" name="l01645"></a><span class="lineno"> 1645</span>        <span class="keywordflow">return</span> var;</div>
-<div class="line"><a id="l01646" name="l01646"></a><span class="lineno"> 1646</span>    }</div>
+<div class="line"><a id="l01596" name="l01596"></a><span class="lineno"> 1596</span> </div>
+<div class="foldopen" id="foldopen01605" data-start="{" data-end="}">
+<div class="line"><a id="l01605" name="l01605"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m_helpers.html#gac1763409b281d38dbda4aea09a17133f"> 1605</a></span>    <span class="keyword">inline</span> VARIANT <a class="code hl_function" href="group___win_std_c_o_m_helpers.html#ga9abe80ce7f67c4a86207f4f3f73da410">BuildVBARRAY</a>(_In_ HDC <a class="code hl_class" href="classwinstd_1_1dc.html">dc</a>, _In_ HBITMAP pic)</div>
+<div class="line"><a id="l01606" name="l01606"></a><span class="lineno"> 1606</span>    {</div>
+<div class="line"><a id="l01607" name="l01607"></a><span class="lineno"> 1607</span>        <span class="comment">// Get picture parameters.</span></div>
+<div class="line"><a id="l01608" name="l01608"></a><span class="lineno"> 1608</span>        BITMAP bmp;</div>
+<div class="line"><a id="l01609" name="l01609"></a><span class="lineno"> 1609</span>        GetObject(pic, <span class="keyword">sizeof</span>(bmp), <span class="keyword">reinterpret_cast&lt;</span>LPSTR<span class="keyword">&gt;</span>(&amp;bmp));</div>
+<div class="line"><a id="l01610" name="l01610"></a><span class="lineno"> 1610</span> </div>
+<div class="line"><a id="l01611" name="l01611"></a><span class="lineno"> 1611</span>        <span class="comment">// Estimate file parameters.</span></div>
+<div class="line"><a id="l01612" name="l01612"></a><span class="lineno"> 1612</span>        BITMAPINFOHEADER bmh = { <span class="keyword">sizeof</span>(bmh) };</div>
+<div class="line"><a id="l01613" name="l01613"></a><span class="lineno"> 1613</span>        GetDIBits(<a class="code hl_class" href="classwinstd_1_1dc.html">dc</a>, pic, 0, bmp.bmHeight, NULL, <span class="keyword">reinterpret_cast&lt;</span>LPBITMAPINFO<span class="keyword">&gt;</span>(&amp;bmh), DIB_RGB_COLORS);</div>
+<div class="line"><a id="l01614" name="l01614"></a><span class="lineno"> 1614</span> </div>
+<div class="line"><a id="l01615" name="l01615"></a><span class="lineno"> 1615</span>        <span class="comment">// Allocate.</span></div>
+<div class="line"><a id="l01616" name="l01616"></a><span class="lineno"> 1616</span>        <span class="keywordtype">size_t</span> pallete_size = <span class="keyword">sizeof</span>(RGBQUAD) * bmh.biClrUsed;</div>
+<div class="line"><a id="l01617" name="l01617"></a><span class="lineno"> 1617</span>        LPSAFEARRAY sa = SafeArrayCreateVector(VT_UI1, 0, <span class="keyword">static_cast&lt;</span>ULONG<span class="keyword">&gt;</span>(<span class="keyword">sizeof</span>(BITMAPFILEHEADER) + <span class="keyword">sizeof</span>(bmh) + pallete_size + bmh.biSizeImage));</div>
+<div class="line"><a id="l01618" name="l01618"></a><span class="lineno"> 1618</span>        <span class="keywordflow">if</span> (!sa)</div>
+<div class="line"><a id="l01619" name="l01619"></a><span class="lineno"> 1619</span>            <span class="keywordflow">throw</span> std::bad_alloc();</div>
+<div class="line"><a id="l01620" name="l01620"></a><span class="lineno"> 1620</span> </div>
+<div class="line"><a id="l01621" name="l01621"></a><span class="lineno"> 1621</span>        <span class="comment">// Locate BITMAPFILEHEADER, BITMAPINFO and pixel map.</span></div>
+<div class="line"><a id="l01622" name="l01622"></a><span class="lineno"> 1622</span>        <a class="code hl_class" href="classwinstd_1_1safearray__accessor.html">safearray_accessor&lt;BYTE&gt;</a> ssa(sa);</div>
+<div class="line"><a id="l01623" name="l01623"></a><span class="lineno"> 1623</span>        <span class="keyword">auto</span> header = <span class="keyword">reinterpret_cast&lt;</span>LPBITMAPFILEHEADER<span class="keyword">&gt;</span>(ssa.<a class="code hl_function" href="classwinstd_1_1safearray__accessor.html#a8b019e527bbd7a26abb9df734272cfd5">data</a>());</div>
+<div class="line"><a id="l01624" name="l01624"></a><span class="lineno"> 1624</span>        <span class="keyword">auto</span> info = <span class="keyword">reinterpret_cast&lt;</span>LPBITMAPINFO<span class="keyword">&gt;</span>(ssa.<a class="code hl_function" href="classwinstd_1_1safearray__accessor.html#a8b019e527bbd7a26abb9df734272cfd5">data</a>() + <span class="keyword">sizeof</span>(*header));</div>
+<div class="line"><a id="l01625" name="l01625"></a><span class="lineno"> 1625</span>        <span class="keyword">auto</span> raster = ssa.<a class="code hl_function" href="classwinstd_1_1safearray__accessor.html#a8b019e527bbd7a26abb9df734272cfd5">data</a>() + <span class="keyword">sizeof</span>(*header) + <span class="keyword">sizeof</span>(bmh) + pallete_size;</div>
+<div class="line"><a id="l01626" name="l01626"></a><span class="lineno"> 1626</span> </div>
+<div class="line"><a id="l01627" name="l01627"></a><span class="lineno"> 1627</span>        <span class="comment">// Fill in BITMAPFILEHEADER.</span></div>
+<div class="line"><a id="l01628" name="l01628"></a><span class="lineno"> 1628</span>        memset(header, 0, <span class="keyword">sizeof</span>(*header));</div>
+<div class="line"><a id="l01629" name="l01629"></a><span class="lineno"> 1629</span><span class="preprocessor">#pragma warning(push)</span></div>
+<div class="line"><a id="l01630" name="l01630"></a><span class="lineno"> 1630</span><span class="preprocessor">#pragma warning(disable: 6276) </span><span class="comment">// &quot;BM&quot; is not an UTF16 char.</span></div>
+<div class="line"><a id="l01631" name="l01631"></a><span class="lineno"> 1631</span>        header-&gt;bfType = *<span class="keyword">reinterpret_cast&lt;</span>WORD*<span class="keyword">&gt;</span>(<span class="stringliteral">&quot;BM&quot;</span>);</div>
+<div class="line"><a id="l01632" name="l01632"></a><span class="lineno"> 1632</span><span class="preprocessor">#pragma warning(pop)</span></div>
+<div class="line"><a id="l01633" name="l01633"></a><span class="lineno"> 1633</span>        header-&gt;bfSize = <span class="keyword">static_cast&lt;</span>DWORD<span class="keyword">&gt;</span>(<span class="keyword">sizeof</span>(*header) + <span class="keyword">sizeof</span>(bmh) + pallete_size + bmh.biSizeImage);</div>
+<div class="line"><a id="l01634" name="l01634"></a><span class="lineno"> 1634</span>        header-&gt;bfOffBits = <span class="keyword">static_cast&lt;</span>DWORD<span class="keyword">&gt;</span>(<span class="keyword">sizeof</span>(*header) + <span class="keyword">sizeof</span>(bmh) + pallete_size);</div>
+<div class="line"><a id="l01635" name="l01635"></a><span class="lineno"> 1635</span> </div>
+<div class="line"><a id="l01636" name="l01636"></a><span class="lineno"> 1636</span>        <span class="comment">// Fill in BITMAPINFO.</span></div>
+<div class="line"><a id="l01637" name="l01637"></a><span class="lineno"> 1637</span>        memcpy(&amp;(info-&gt;bmiHeader), &amp;bmh, <span class="keyword">sizeof</span>(bmh));</div>
+<div class="line"><a id="l01638" name="l01638"></a><span class="lineno"> 1638</span>        memset(&amp;(info-&gt;bmiColors), 0, pallete_size);</div>
+<div class="line"><a id="l01639" name="l01639"></a><span class="lineno"> 1639</span> </div>
+<div class="line"><a id="l01640" name="l01640"></a><span class="lineno"> 1640</span>        <span class="comment">// Set pallete and pixel map.</span></div>
+<div class="line"><a id="l01641" name="l01641"></a><span class="lineno"> 1641</span>        GetDIBits(<a class="code hl_class" href="classwinstd_1_1dc.html">dc</a>, pic, 0, bmp.bmHeight, raster, info, DIB_RGB_COLORS);</div>
+<div class="line"><a id="l01642" name="l01642"></a><span class="lineno"> 1642</span> </div>
+<div class="line"><a id="l01643" name="l01643"></a><span class="lineno"> 1643</span>        VARIANT var;</div>
+<div class="line"><a id="l01644" name="l01644"></a><span class="lineno"> 1644</span>        V_VT(&amp;var) = VT_ARRAY | VT_UI1;</div>
+<div class="line"><a id="l01645" name="l01645"></a><span class="lineno"> 1645</span>        V_ARRAY(&amp;var) = sa;</div>
+<div class="line"><a id="l01646" name="l01646"></a><span class="lineno"> 1646</span>        <span class="keywordflow">return</span> var;</div>
+<div class="line"><a id="l01647" name="l01647"></a><span class="lineno"> 1647</span>    }</div>
 </div>
-<div class="line"><a id="l01647" name="l01647"></a><span class="lineno"> 1647</span> </div>
-<div class="line"><a id="l01658" name="l01658"></a><span class="lineno"> 1658</span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="foldopen" id="foldopen01659" data-start="{" data-end="}">
-<div class="line"><a id="l01659" name="l01659"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m_helpers.html#ga191e4b679c9beb7a04e048f8c00d4884"> 1659</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="group___win_std_c_o_m_helpers.html#ga191e4b679c9beb7a04e048f8c00d4884">IDispatchInvoke</a>(_In_ T* cp, _In_ DISPID <span class="keywordtype">id</span>, _In_opt_ DISPPARAMS* param, _In_ LCID locale = LOCALE_USER_DEFAULT)</div>
-<div class="line"><a id="l01660" name="l01660"></a><span class="lineno"> 1660</span>    {</div>
-<div class="line"><a id="l01661" name="l01661"></a><span class="lineno"> 1661</span>        assert(cp);</div>
-<div class="line"><a id="l01662" name="l01662"></a><span class="lineno"> 1662</span>        <a class="code hl_class" href="classwinstd_1_1com__obj.html">com_obj&lt;IEnumConnections&gt;</a> e;</div>
-<div class="line"><a id="l01663" name="l01663"></a><span class="lineno"> 1663</span>        HRESULT hr = cp-&gt;EnumConnections(&amp;e);</div>
-<div class="line"><a id="l01664" name="l01664"></a><span class="lineno"> 1664</span>        <span class="keywordflow">if</span> (FAILED(hr))</div>
-<div class="line"><a id="l01665" name="l01665"></a><span class="lineno"> 1665</span>            <span class="keywordflow">throw</span> <a class="code hl_class" href="classwinstd_1_1com__runtime__error.html">com_runtime_error</a>(hr, <span class="stringliteral">&quot;IDispatch::EnumConnections failed&quot;</span>);</div>
-<div class="line"><a id="l01666" name="l01666"></a><span class="lineno"> 1666</span> </div>
-<div class="line"><a id="l01667" name="l01667"></a><span class="lineno"> 1667</span>        CONNECTDATA cd;</div>
-<div class="line"><a id="l01668" name="l01668"></a><span class="lineno"> 1668</span>        <span class="keywordflow">while</span> (e-&gt;Next(1, &amp;cd, NULL) == S_OK) {</div>
-<div class="line"><a id="l01669" name="l01669"></a><span class="lineno"> 1669</span>            <a class="code hl_class" href="classwinstd_1_1com__obj.html">com_obj&lt;IDispatch&gt;</a> d(cd.pUnk);</div>
-<div class="line"><a id="l01670" name="l01670"></a><span class="lineno"> 1670</span>            d-&gt;Invoke(<span class="keywordtype">id</span>, IID_NULL, locale, DISPATCH_METHOD, param, NULL, NULL, NULL);</div>
-<div class="line"><a id="l01671" name="l01671"></a><span class="lineno"> 1671</span>        }</div>
-<div class="line"><a id="l01672" name="l01672"></a><span class="lineno"> 1672</span>    }</div>
+<div class="line"><a id="l01648" name="l01648"></a><span class="lineno"> 1648</span> </div>
+<div class="line"><a id="l01659" name="l01659"></a><span class="lineno"> 1659</span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="foldopen" id="foldopen01660" data-start="{" data-end="}">
+<div class="line"><a id="l01660" name="l01660"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m_helpers.html#ga191e4b679c9beb7a04e048f8c00d4884"> 1660</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="group___win_std_c_o_m_helpers.html#ga191e4b679c9beb7a04e048f8c00d4884">IDispatchInvoke</a>(_In_ T* cp, _In_ DISPID <span class="keywordtype">id</span>, _In_opt_ DISPPARAMS* param, _In_ LCID locale = LOCALE_USER_DEFAULT)</div>
+<div class="line"><a id="l01661" name="l01661"></a><span class="lineno"> 1661</span>    {</div>
+<div class="line"><a id="l01662" name="l01662"></a><span class="lineno"> 1662</span>        assert(cp);</div>
+<div class="line"><a id="l01663" name="l01663"></a><span class="lineno"> 1663</span>        <a class="code hl_class" href="classwinstd_1_1com__obj.html">com_obj&lt;IEnumConnections&gt;</a> e;</div>
+<div class="line"><a id="l01664" name="l01664"></a><span class="lineno"> 1664</span>        HRESULT hr = cp-&gt;EnumConnections(&amp;e);</div>
+<div class="line"><a id="l01665" name="l01665"></a><span class="lineno"> 1665</span>        <span class="keywordflow">if</span> (FAILED(hr))</div>
+<div class="line"><a id="l01666" name="l01666"></a><span class="lineno"> 1666</span>            <span class="keywordflow">throw</span> <a class="code hl_class" href="classwinstd_1_1com__runtime__error.html">com_runtime_error</a>(hr, <span class="stringliteral">&quot;IDispatch::EnumConnections failed&quot;</span>);</div>
+<div class="line"><a id="l01667" name="l01667"></a><span class="lineno"> 1667</span> </div>
+<div class="line"><a id="l01668" name="l01668"></a><span class="lineno"> 1668</span>        CONNECTDATA cd;</div>
+<div class="line"><a id="l01669" name="l01669"></a><span class="lineno"> 1669</span>        <span class="keywordflow">while</span> (e-&gt;Next(1, &amp;cd, NULL) == S_OK) {</div>
+<div class="line"><a id="l01670" name="l01670"></a><span class="lineno"> 1670</span>            <a class="code hl_class" href="classwinstd_1_1com__obj.html">com_obj&lt;IDispatch&gt;</a> d(cd.pUnk);</div>
+<div class="line"><a id="l01671" name="l01671"></a><span class="lineno"> 1671</span>            d-&gt;Invoke(<span class="keywordtype">id</span>, IID_NULL, locale, DISPATCH_METHOD, param, NULL, NULL, NULL);</div>
+<div class="line"><a id="l01672" name="l01672"></a><span class="lineno"> 1672</span>        }</div>
+<div class="line"><a id="l01673" name="l01673"></a><span class="lineno"> 1673</span>    }</div>
 </div>
-<div class="line"><a id="l01673" name="l01673"></a><span class="lineno"> 1673</span> </div>
-<div class="line"><a id="l01684" name="l01684"></a><span class="lineno"> 1684</span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="foldopen" id="foldopen01685" data-start="{" data-end="}">
-<div class="line"><a id="l01685" name="l01685"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m_helpers.html#ga57c60521128fe90efde68dca7c5b54fe"> 1685</a></span>    T <a class="code hl_function" href="group___win_std_c_o_m_helpers.html#ga57c60521128fe90efde68dca7c5b54fe">VariantAsInteger</a>(_In_ <span class="keyword">const</span> VARIANT* var, _In_ T fallback = 0)</div>
-<div class="line"><a id="l01686" name="l01686"></a><span class="lineno"> 1686</span>    {</div>
-<div class="line"><a id="l01687" name="l01687"></a><span class="lineno"> 1687</span>        assert(var);</div>
-<div class="line"><a id="l01688" name="l01688"></a><span class="lineno"> 1688</span>        <span class="keywordflow">switch</span> (V_VT(var)) {</div>
-<div class="line"><a id="l01689" name="l01689"></a><span class="lineno"> 1689</span>        <span class="keywordflow">case</span> VT_UINT_PTR: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_UINT_PTR(var));</div>
-<div class="line"><a id="l01690" name="l01690"></a><span class="lineno"> 1690</span>        <span class="keywordflow">case</span> VT_INT_PTR: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_INT_PTR(var));</div>
-<div class="line"><a id="l01691" name="l01691"></a><span class="lineno"> 1691</span>        <span class="keywordflow">case</span> VT_UINT: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_UINT(var));</div>
-<div class="line"><a id="l01692" name="l01692"></a><span class="lineno"> 1692</span>        <span class="keywordflow">case</span> VT_INT: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_INT(var));</div>
-<div class="line"><a id="l01693" name="l01693"></a><span class="lineno"> 1693</span>        <span class="keywordflow">case</span> VT_UI4: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_UI4(var));</div>
-<div class="line"><a id="l01694" name="l01694"></a><span class="lineno"> 1694</span>        <span class="keywordflow">case</span> VT_I4: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_I4(var));</div>
-<div class="line"><a id="l01695" name="l01695"></a><span class="lineno"> 1695</span>        <span class="keywordflow">case</span> VT_UI2: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_UI2(var));</div>
-<div class="line"><a id="l01696" name="l01696"></a><span class="lineno"> 1696</span>        <span class="keywordflow">case</span> VT_I2: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_I2(var));</div>
-<div class="line"><a id="l01697" name="l01697"></a><span class="lineno"> 1697</span>        <span class="keywordflow">case</span> VT_UI1: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_UI1(var));</div>
-<div class="line"><a id="l01698" name="l01698"></a><span class="lineno"> 1698</span>        <span class="keywordflow">case</span> VT_I1: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_I1(var));</div>
-<div class="line"><a id="l01699" name="l01699"></a><span class="lineno"> 1699</span>        }</div>
-<div class="line"><a id="l01700" name="l01700"></a><span class="lineno"> 1700</span>        <span class="keywordflow">return</span> fallback;</div>
-<div class="line"><a id="l01701" name="l01701"></a><span class="lineno"> 1701</span>    }</div>
+<div class="line"><a id="l01674" name="l01674"></a><span class="lineno"> 1674</span> </div>
+<div class="line"><a id="l01685" name="l01685"></a><span class="lineno"> 1685</span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="foldopen" id="foldopen01686" data-start="{" data-end="}">
+<div class="line"><a id="l01686" name="l01686"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m_helpers.html#ga57c60521128fe90efde68dca7c5b54fe"> 1686</a></span>    T <a class="code hl_function" href="group___win_std_c_o_m_helpers.html#ga57c60521128fe90efde68dca7c5b54fe">VariantAsInteger</a>(_In_ <span class="keyword">const</span> VARIANT* var, _In_ T fallback = 0)</div>
+<div class="line"><a id="l01687" name="l01687"></a><span class="lineno"> 1687</span>    {</div>
+<div class="line"><a id="l01688" name="l01688"></a><span class="lineno"> 1688</span>        assert(var);</div>
+<div class="line"><a id="l01689" name="l01689"></a><span class="lineno"> 1689</span>        <span class="keywordflow">switch</span> (V_VT(var)) {</div>
+<div class="line"><a id="l01690" name="l01690"></a><span class="lineno"> 1690</span>        <span class="keywordflow">case</span> VT_UINT_PTR: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_UINT_PTR(var));</div>
+<div class="line"><a id="l01691" name="l01691"></a><span class="lineno"> 1691</span>        <span class="keywordflow">case</span> VT_INT_PTR: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_INT_PTR(var));</div>
+<div class="line"><a id="l01692" name="l01692"></a><span class="lineno"> 1692</span>        <span class="keywordflow">case</span> VT_UINT: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_UINT(var));</div>
+<div class="line"><a id="l01693" name="l01693"></a><span class="lineno"> 1693</span>        <span class="keywordflow">case</span> VT_INT: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_INT(var));</div>
+<div class="line"><a id="l01694" name="l01694"></a><span class="lineno"> 1694</span>        <span class="keywordflow">case</span> VT_UI4: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_UI4(var));</div>
+<div class="line"><a id="l01695" name="l01695"></a><span class="lineno"> 1695</span>        <span class="keywordflow">case</span> VT_I4: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_I4(var));</div>
+<div class="line"><a id="l01696" name="l01696"></a><span class="lineno"> 1696</span>        <span class="keywordflow">case</span> VT_UI2: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_UI2(var));</div>
+<div class="line"><a id="l01697" name="l01697"></a><span class="lineno"> 1697</span>        <span class="keywordflow">case</span> VT_I2: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_I2(var));</div>
+<div class="line"><a id="l01698" name="l01698"></a><span class="lineno"> 1698</span>        <span class="keywordflow">case</span> VT_UI1: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_UI1(var));</div>
+<div class="line"><a id="l01699" name="l01699"></a><span class="lineno"> 1699</span>        <span class="keywordflow">case</span> VT_I1: <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(V_I1(var));</div>
+<div class="line"><a id="l01700" name="l01700"></a><span class="lineno"> 1700</span>        }</div>
+<div class="line"><a id="l01701" name="l01701"></a><span class="lineno"> 1701</span>        <span class="keywordflow">return</span> fallback;</div>
+<div class="line"><a id="l01702" name="l01702"></a><span class="lineno"> 1702</span>    }</div>
 </div>
-<div class="line"><a id="l01702" name="l01702"></a><span class="lineno"> 1702</span> </div>
-<div class="foldopen" id="foldopen01711" data-start="{" data-end="}">
-<div class="line"><a id="l01711" name="l01711"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m_helpers.html#gaaf521a4f071e8ae5d1bf2ae76000b913"> 1711</a></span>    <span class="keyword">inline</span> BOOL <a class="code hl_function" href="group___win_std_c_o_m_helpers.html#gaaf521a4f071e8ae5d1bf2ae76000b913">VariantAsBoolean</a>(_In_ <span class="keyword">const</span> VARIANT* var, _In_ BOOL fallback = FALSE)</div>
-<div class="line"><a id="l01712" name="l01712"></a><span class="lineno"> 1712</span>    {</div>
-<div class="line"><a id="l01713" name="l01713"></a><span class="lineno"> 1713</span>        assert(var);</div>
-<div class="line"><a id="l01714" name="l01714"></a><span class="lineno"> 1714</span>        <span class="keywordflow">switch</span> (V_VT(var)) {</div>
-<div class="line"><a id="l01715" name="l01715"></a><span class="lineno"> 1715</span>        <span class="keywordflow">case</span> VT_BOOL: <span class="keywordflow">return</span> V_BOOL(var) != VARIANT_FALSE;</div>
-<div class="line"><a id="l01716" name="l01716"></a><span class="lineno"> 1716</span>        <span class="keywordflow">case</span> VT_UI4: <span class="keywordflow">return</span> V_UI4(var) != 0;</div>
-<div class="line"><a id="l01717" name="l01717"></a><span class="lineno"> 1717</span>        <span class="keywordflow">case</span> VT_I4: <span class="keywordflow">return</span> V_I4(var) != 0;</div>
-<div class="line"><a id="l01718" name="l01718"></a><span class="lineno"> 1718</span>        <span class="keywordflow">case</span> VT_UI2: <span class="keywordflow">return</span> V_UI2(var) != 0;</div>
-<div class="line"><a id="l01719" name="l01719"></a><span class="lineno"> 1719</span>        <span class="keywordflow">case</span> VT_I2: <span class="keywordflow">return</span> V_I2(var) != 0;</div>
-<div class="line"><a id="l01720" name="l01720"></a><span class="lineno"> 1720</span>        <span class="keywordflow">case</span> VT_UI1: <span class="keywordflow">return</span> V_UI1(var) != 0;</div>
-<div class="line"><a id="l01721" name="l01721"></a><span class="lineno"> 1721</span>        <span class="keywordflow">case</span> VT_I1: <span class="keywordflow">return</span> V_I1(var) != 0;</div>
-<div class="line"><a id="l01722" name="l01722"></a><span class="lineno"> 1722</span>        <span class="keywordflow">case</span> VT_UINT: <span class="keywordflow">return</span> V_UINT(var) != 0;</div>
-<div class="line"><a id="l01723" name="l01723"></a><span class="lineno"> 1723</span>        <span class="keywordflow">case</span> VT_INT: <span class="keywordflow">return</span> V_INT(var) != 0;</div>
-<div class="line"><a id="l01724" name="l01724"></a><span class="lineno"> 1724</span>        <span class="keywordflow">case</span> VT_UINT_PTR: <span class="keywordflow">return</span> V_UINT_PTR(var) != 0;</div>
-<div class="line"><a id="l01725" name="l01725"></a><span class="lineno"> 1725</span>        <span class="keywordflow">case</span> VT_INT_PTR: <span class="keywordflow">return</span> V_INT_PTR(var) != 0;</div>
-<div class="line"><a id="l01726" name="l01726"></a><span class="lineno"> 1726</span>        }</div>
-<div class="line"><a id="l01727" name="l01727"></a><span class="lineno"> 1727</span>        <span class="keywordflow">return</span> fallback;</div>
-<div class="line"><a id="l01728" name="l01728"></a><span class="lineno"> 1728</span>    }</div>
+<div class="line"><a id="l01703" name="l01703"></a><span class="lineno"> 1703</span> </div>
+<div class="foldopen" id="foldopen01712" data-start="{" data-end="}">
+<div class="line"><a id="l01712" name="l01712"></a><span class="lineno"><a class="line" href="group___win_std_c_o_m_helpers.html#gaaf521a4f071e8ae5d1bf2ae76000b913"> 1712</a></span>    <span class="keyword">inline</span> BOOL <a class="code hl_function" href="group___win_std_c_o_m_helpers.html#gaaf521a4f071e8ae5d1bf2ae76000b913">VariantAsBoolean</a>(_In_ <span class="keyword">const</span> VARIANT* var, _In_ BOOL fallback = FALSE)</div>
+<div class="line"><a id="l01713" name="l01713"></a><span class="lineno"> 1713</span>    {</div>
+<div class="line"><a id="l01714" name="l01714"></a><span class="lineno"> 1714</span>        assert(var);</div>
+<div class="line"><a id="l01715" name="l01715"></a><span class="lineno"> 1715</span>        <span class="keywordflow">switch</span> (V_VT(var)) {</div>
+<div class="line"><a id="l01716" name="l01716"></a><span class="lineno"> 1716</span>        <span class="keywordflow">case</span> VT_BOOL: <span class="keywordflow">return</span> V_BOOL(var) != VARIANT_FALSE;</div>
+<div class="line"><a id="l01717" name="l01717"></a><span class="lineno"> 1717</span>        <span class="keywordflow">case</span> VT_UI4: <span class="keywordflow">return</span> V_UI4(var) != 0;</div>
+<div class="line"><a id="l01718" name="l01718"></a><span class="lineno"> 1718</span>        <span class="keywordflow">case</span> VT_I4: <span class="keywordflow">return</span> V_I4(var) != 0;</div>
+<div class="line"><a id="l01719" name="l01719"></a><span class="lineno"> 1719</span>        <span class="keywordflow">case</span> VT_UI2: <span class="keywordflow">return</span> V_UI2(var) != 0;</div>
+<div class="line"><a id="l01720" name="l01720"></a><span class="lineno"> 1720</span>        <span class="keywordflow">case</span> VT_I2: <span class="keywordflow">return</span> V_I2(var) != 0;</div>
+<div class="line"><a id="l01721" name="l01721"></a><span class="lineno"> 1721</span>        <span class="keywordflow">case</span> VT_UI1: <span class="keywordflow">return</span> V_UI1(var) != 0;</div>
+<div class="line"><a id="l01722" name="l01722"></a><span class="lineno"> 1722</span>        <span class="keywordflow">case</span> VT_I1: <span class="keywordflow">return</span> V_I1(var) != 0;</div>
+<div class="line"><a id="l01723" name="l01723"></a><span class="lineno"> 1723</span>        <span class="keywordflow">case</span> VT_UINT: <span class="keywordflow">return</span> V_UINT(var) != 0;</div>
+<div class="line"><a id="l01724" name="l01724"></a><span class="lineno"> 1724</span>        <span class="keywordflow">case</span> VT_INT: <span class="keywordflow">return</span> V_INT(var) != 0;</div>
+<div class="line"><a id="l01725" name="l01725"></a><span class="lineno"> 1725</span>        <span class="keywordflow">case</span> VT_UINT_PTR: <span class="keywordflow">return</span> V_UINT_PTR(var) != 0;</div>
+<div class="line"><a id="l01726" name="l01726"></a><span class="lineno"> 1726</span>        <span class="keywordflow">case</span> VT_INT_PTR: <span class="keywordflow">return</span> V_INT_PTR(var) != 0;</div>
+<div class="line"><a id="l01727" name="l01727"></a><span class="lineno"> 1727</span>        }</div>
+<div class="line"><a id="l01728" name="l01728"></a><span class="lineno"> 1728</span>        <span class="keywordflow">return</span> fallback;</div>
+<div class="line"><a id="l01729" name="l01729"></a><span class="lineno"> 1729</span>    }</div>
 </div>
-<div class="line"><a id="l01729" name="l01729"></a><span class="lineno"> 1729</span> </div>
-<div class="line"><a id="l01731" name="l01731"></a><span class="lineno"> 1731</span>}</div>
+<div class="line"><a id="l01730" name="l01730"></a><span class="lineno"> 1730</span> </div>
+<div class="line"><a id="l01732" name="l01732"></a><span class="lineno"> 1732</span>}</div>
 <div class="ttc" id="aclasswinstd_1_1bstr_html"><div class="ttname"><a href="classwinstd_1_1bstr.html">winstd::bstr</a></div><div class="ttdoc">BSTR string wrapper.</div><div class="ttdef"><b>Definition</b> COM.h:198</div></div>
 <div class="ttc" id="aclasswinstd_1_1bstr_html_a01b4deb6467c16d9d8e8e14fe6c057fa"><div class="ttname"><a href="classwinstd_1_1bstr.html#a01b4deb6467c16d9d8e8e14fe6c057fa">winstd::bstr::bstr</a></div><div class="ttdeci">bstr(LPCOLESTR src)</div><div class="ttdoc">Constructs BSTR from OLE string.</div><div class="ttdef"><b>Definition</b> COM.h:205</div></div>
 <div class="ttc" id="aclasswinstd_1_1bstr_html_a1c6f4421d370e6029dfbf71315cdedc0"><div class="ttname"><a href="classwinstd_1_1bstr.html#a1c6f4421d370e6029dfbf71315cdedc0">winstd::bstr::duplicate_internal</a></div><div class="ttdeci">handle_type duplicate_internal(handle_type h) const override</div><div class="ttdoc">Duplicates the string.</div><div class="ttdef"><b>Definition</b> COM.h:277</div></div>
@@ -1569,10 +1570,10 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="aclasswinstd_1_1variant_html_af86e9a10fd9dbe6e18b33a59d04f3b44"><div class="ttname"><a href="classwinstd_1_1variant.html#af86e9a10fd9dbe6e18b33a59d04f3b44">winstd::variant::operator=</a></div><div class="ttdeci">variant &amp; operator=(unsigned long *pnSrc) noexcept</div><div class="ttdoc">Copy from unsigned long reference.</div><div class="ttdef"><b>Definition</b> COM.h:849</div></div>
 <div class="ttc" id="aclasswinstd_1_1variant_html_aff536ecc3c3a074fea648b7c60522a83"><div class="ttname"><a href="classwinstd_1_1variant.html#aff536ecc3c3a074fea648b7c60522a83">winstd::variant::operator=</a></div><div class="ttdeci">variant &amp; operator=(const VARIANT &amp;varSrc)</div><div class="ttdoc">Copy from another VARIANT.</div><div class="ttdef"><b>Definition</b> COM.h:524</div></div>
 <div class="ttc" id="agroup___win_std_c_o_m_helpers_html_ga02c5bf748ce4b40bde6863a4f2f60a36"><div class="ttname"><a href="group___win_std_c_o_m_helpers.html#ga02c5bf748ce4b40bde6863a4f2f60a36">operator&lt;&lt;</a></div><div class="ttdeci">VARIANT &amp; operator&lt;&lt;(VARIANT &amp;v, IDispatch *value)</div><div class="ttdoc">Saves value to VARIANT.</div><div class="ttdef"><b>Definition</b> COM.h:1226</div></div>
-<div class="ttc" id="agroup___win_std_c_o_m_helpers_html_ga191e4b679c9beb7a04e048f8c00d4884"><div class="ttname"><a href="group___win_std_c_o_m_helpers.html#ga191e4b679c9beb7a04e048f8c00d4884">winstd::IDispatchInvoke</a></div><div class="ttdeci">void IDispatchInvoke(T *cp, DISPID id, DISPPARAMS *param, LCID locale=LOCALE_USER_DEFAULT)</div><div class="ttdoc">Calls IDispatch::Invoke.</div><div class="ttdef"><b>Definition</b> COM.h:1659</div></div>
-<div class="ttc" id="agroup___win_std_c_o_m_helpers_html_ga57c60521128fe90efde68dca7c5b54fe"><div class="ttname"><a href="group___win_std_c_o_m_helpers.html#ga57c60521128fe90efde68dca7c5b54fe">winstd::VariantAsInteger</a></div><div class="ttdeci">T VariantAsInteger(const VARIANT *var, T fallback=0)</div><div class="ttdoc">Check VARIANT value for integer value.</div><div class="ttdef"><b>Definition</b> COM.h:1685</div></div>
+<div class="ttc" id="agroup___win_std_c_o_m_helpers_html_ga191e4b679c9beb7a04e048f8c00d4884"><div class="ttname"><a href="group___win_std_c_o_m_helpers.html#ga191e4b679c9beb7a04e048f8c00d4884">winstd::IDispatchInvoke</a></div><div class="ttdeci">void IDispatchInvoke(T *cp, DISPID id, DISPPARAMS *param, LCID locale=LOCALE_USER_DEFAULT)</div><div class="ttdoc">Calls IDispatch::Invoke.</div><div class="ttdef"><b>Definition</b> COM.h:1660</div></div>
+<div class="ttc" id="agroup___win_std_c_o_m_helpers_html_ga57c60521128fe90efde68dca7c5b54fe"><div class="ttname"><a href="group___win_std_c_o_m_helpers.html#ga57c60521128fe90efde68dca7c5b54fe">winstd::VariantAsInteger</a></div><div class="ttdeci">T VariantAsInteger(const VARIANT *var, T fallback=0)</div><div class="ttdoc">Check VARIANT value for integer value.</div><div class="ttdef"><b>Definition</b> COM.h:1686</div></div>
 <div class="ttc" id="agroup___win_std_c_o_m_helpers_html_ga9abe80ce7f67c4a86207f4f3f73da410"><div class="ttname"><a href="group___win_std_c_o_m_helpers.html#ga9abe80ce7f67c4a86207f4f3f73da410">winstd::BuildVBARRAY</a></div><div class="ttdeci">VARIANT BuildVBARRAY(VARTYPE vt, LPCVOID array, ULONG columns, ULONG rows)</div><div class="ttdoc">Builds VBARRAY of uniform data.</div><div class="ttdef"><b>Definition</b> COM.h:1473</div></div>
-<div class="ttc" id="agroup___win_std_c_o_m_helpers_html_gaaf521a4f071e8ae5d1bf2ae76000b913"><div class="ttname"><a href="group___win_std_c_o_m_helpers.html#gaaf521a4f071e8ae5d1bf2ae76000b913">winstd::VariantAsBoolean</a></div><div class="ttdeci">BOOL VariantAsBoolean(const VARIANT *var, BOOL fallback=FALSE)</div><div class="ttdoc">Check VARIANT value for boolean value.</div><div class="ttdef"><b>Definition</b> COM.h:1711</div></div>
+<div class="ttc" id="agroup___win_std_c_o_m_helpers_html_gaaf521a4f071e8ae5d1bf2ae76000b913"><div class="ttname"><a href="group___win_std_c_o_m_helpers.html#gaaf521a4f071e8ae5d1bf2ae76000b913">winstd::VariantAsBoolean</a></div><div class="ttdeci">BOOL VariantAsBoolean(const VARIANT *var, BOOL fallback=FALSE)</div><div class="ttdoc">Check VARIANT value for boolean value.</div><div class="ttdef"><b>Definition</b> COM.h:1712</div></div>
 <div class="ttc" id="agroup___win_std_c_o_m_html_ga825b73e9a34b1f496c577a951441b6f1"><div class="ttname"><a href="group___win_std_c_o_m.html#ga825b73e9a34b1f496c577a951441b6f1">CoGetObject</a></div><div class="ttdeci">static _Check_return_ HRESULT CoGetObject(LPCWSTR pszName, BIND_OPTS *pBindOptions, REFIID riid, winstd::com_obj&lt; T &gt; &amp;v)</div><div class="ttdoc">Converts a display name into a moniker that identifies the object named, and then binds to the object...</div><div class="ttdef"><b>Definition</b> COM.h:1204</div></div>
 <div class="ttc" id="agroup___win_std_c_o_m_html_gaa05e677aa01b9b1f2f8b58571532c965"><div class="ttname"><a href="group___win_std_c_o_m.html#gaa05e677aa01b9b1f2f8b58571532c965">CoCreateInstance</a></div><div class="ttdeci">static _Check_return_ HRESULT CoCreateInstance(REFCLSID rclsid, LPUNKNOWN pUnkOuter, DWORD dwClsContext, winstd::com_obj&lt; T &gt; &amp;v)</div><div class="ttdoc">Creates and default-initializes a single object of the class associated with a specified CLSID.</div><div class="ttdef"><b>Definition</b> COM.h:1189</div></div>
 <div class="ttc" id="agroup___win_std_general_html_ga11254c72ad33a6e0f5de31db708f784c"><div class="ttname"><a href="group___win_std_general.html#ga11254c72ad33a6e0f5de31db708f784c">WINSTD_NONCOPYABLE</a></div><div class="ttdeci">#define WINSTD_NONCOPYABLE(C)</div><div class="ttdoc">Declares a class as non-copyable.</div><div class="ttdef"><b>Definition</b> Common.h:67</div></div>
@@ -1585,7 +1586,7 @@ $(function(){ initResizable(false); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 11 2024 12:59:48 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+Generated on Tue Nov 19 2024 10:18:28 for WinStd by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
 </small></address>
 </div><!-- doc-content -->
 </body>
