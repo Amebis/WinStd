@@ -1472,12 +1472,14 @@ namespace winstd
     ///
     inline VARIANT BuildVBARRAY(_In_ VARTYPE vt, _In_opt_ LPCVOID array, _In_ ULONG columns, _In_ ULONG rows)
     {
+        const size_t n = columns * rows;
+        if (!array && n)
+            throw std::invalid_argument("array is NULL");
+
         LPSAFEARRAY sa;
-        size_t n;
         if (columns == 1) {
             // Make vector when one column only.
             sa = SafeArrayCreateVector(VT_VARIANT, 0, rows);
-            n = rows;
         }
         else {
             // Make 2-dimensional array when more columns.
@@ -1486,11 +1488,9 @@ namespace winstd
                 { rows, 0 }
             };
             sa = SafeArrayCreate(VT_VARIANT, 2, dim);
-            n = columns * rows;
         }
         if (!sa)
             throw std::bad_alloc();
-        assert(array || !n);
 
         // Support VARIANT types that may be used for SAFEARRAY
         // Source: https://learn.microsoft.com/en-us/windows/win32/api/wtypes/ne-wtypes-varenum#remarks
@@ -1557,7 +1557,8 @@ namespace winstd
     template <class T, ULONG columns = 1>
     VARIANT BuildVBARRAY(_In_reads_opt_(rows) const T* array, _In_ ULONG rows)
     {
-        assert(array || !rows);
+        if (!array && rows)
+            throw std::invalid_argument("array is NULL");
 
         LPSAFEARRAY sa;
         if constexpr (columns == 1) {
